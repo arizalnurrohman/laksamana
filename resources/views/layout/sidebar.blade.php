@@ -49,7 +49,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " aria-current="page"
-                                href="index.html">
+                                href="{{url('/')}}">
                                 <i class="icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">
                                     <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path opacity="0.4"
@@ -61,6 +61,80 @@
                                     </svg>
                                 </i>
                                 <span class="item-name">Dashboard</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#e-commerce" role="button" aria-expanded="false"
+                                aria-controls="sidebar-special">
+                                <i class="icon" data-bs-toggle="tooltip" title="E-commerce" data-bs-placement="right">
+                                    <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M5.91064 20.5886C5.91064 19.7486 6.59064 19.0686 7.43064 19.0686C8.26064 19.0686 8.94064 19.7486 8.94064 20.5886C8.94064 21.4186 8.26064 22.0986 7.43064 22.0986C6.59064 22.0986 5.91064 21.4186 5.91064 20.5886ZM17.1606 20.5886C17.1606 19.7486 17.8406 19.0686 18.6806 19.0686C19.5106 19.0686 20.1906 19.7486 20.1906 20.5886C20.1906 21.4186 19.5106 22.0986 18.6806 22.0986C17.8406 22.0986 17.1606 21.4186 17.1606 20.5886Z"
+                                            fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M20.1907 6.34909C20.8007 6.34909 21.2007 6.55909 21.6007 7.01909C22.0007 7.47909 22.0707 8.13909 21.9807 8.73809L21.0307 15.2981C20.8507 16.5591 19.7707 17.4881 18.5007 17.4881H7.59074C6.26074 17.4881 5.16074 16.4681 5.05074 15.1491L4.13074 4.24809L2.62074 3.98809C2.22074 3.91809 1.94074 3.52809 2.01074 3.12809C2.08074 2.71809 2.47074 2.44809 2.88074 2.50809L5.26574 2.86809C5.60574 2.92909 5.85574 3.20809 5.88574 3.54809L6.07574 5.78809C6.10574 6.10909 6.36574 6.34909 6.68574 6.34909H20.1907ZM14.1307 11.5481H16.9007C17.3207 11.5481 17.6507 11.2081 17.6507 10.7981C17.6507 10.3781 17.3207 10.0481 16.9007 10.0481H14.1307C13.7107 10.0481 13.3807 10.3781 13.3807 10.7981C13.3807 11.2081 13.7107 11.5481 14.1307 11.5481Z"
+                                            fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Konfigurasi</span>
+                                <i class="right-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" class="icon-18" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </i>
+                            </a>
+                            <ul class="sub-nav collapse" id="e-commerce" data-bs-parent="#sidebar-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link "
+                                        href="https://templates.iqonic.design/hope-ui/pro/html/e-commerce/index.html">
+                                        <i class="icon">
+                                            <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </i>
+                                        <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Admin Dashboard"
+                                            data-bs-placement="right"> AD </i>
+                                        <span class="item-name"> Data Akses<br>Pengguna</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link "
+                                        href="https://templates.iqonic.design/hope-ui/pro/html/e-commerce/vendor-dashboard.html">
+                                        <i class="icon">
+                                            <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="0.4"
+                                                    d="M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </i>
+                                        <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Wishlist" data-bs-placement="right"> VD
+                                        </i>
+                                        <span class="item-name">Permission</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+
+                        <li class="nav-item static-item">
+                            <a class="nav-link static-item disabled text-start" href="#" tabindex="-1">
+                                <span class="default-icon">CONTOH MENU</span>
+                                <span class="mini-icon">-</span>
                             </a>
                         </li>
                         <li class="nav-item">
