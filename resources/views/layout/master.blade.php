@@ -70,7 +70,7 @@
         <!-- Settings Script -->
         <script src="{{ url('assets/js/iqonic-script/setting.min.js') }}"></script>
         <!-- Settings Init Script -->
-        {{-- <script src="{{ url('assets/js/setting-init.js') }}"></script> --}}
+        <script src="{{ url('assets/js/setting-init.js') }}"></script>
         <!-- External Library Bundle Script -->
         <script src="{{ url('assets/js/core/external.min.js') }}"></script>
         <!-- Widgetchart Script -->
