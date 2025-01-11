@@ -63,6 +63,87 @@
                                 <span class="item-name">Dashboard</span>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="{{url('/')}}">
+                                <i class="icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">
+                                    <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4"
+                                            d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z"
+                                            fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z"
+                                            fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Residensial</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="{{url('/')}}">
+                                <i class="icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">
+                                    <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4"
+                                            d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z"
+                                            fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z"
+                                            fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Non Residensial</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="{{url('/')}}">
+                                <i class="icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">
+                                    <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4"
+                                            d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z"
+                                            fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z"
+                                            fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Pasien</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="{{url('/')}}">
+                                <i class="icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">
+                                    <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4"
+                                            d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z"
+                                            fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z"
+                                            fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Assessment</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page"
+                                href="{{url('/')}}">
+                                <i class="icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">
+                                    <svg width="20" class="icon-20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.4"
+                                            d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z"
+                                            fill="currentColor"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z"
+                                            fill="currentColor"></path>
+                                    </svg>
+                                </i>
+                                <span class="item-name">Asrama</span>
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#e-commerce" role="button" aria-expanded="false"
@@ -87,8 +168,19 @@
                             </a>
                             <ul class="sub-nav collapse" id="e-commerce" data-bs-parent="#sidebar-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link "
-                                        href="https://templates.iqonic.design/hope-ui/pro/html/e-commerce/index.html">
+                                    <a class="nav-link {{ Request::is('pengguna') ? 'active' : '' }} {{ Request::is('pengguna/*') ? 'active' : '' }}" href="{{ route('pengguna') }}">
+                                        <i class="icon">
+                                            <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.294 7.29105C17.294 10.2281 14.9391 12.5831 12 12.5831C9.0619 12.5831 6.70601 10.2281 6.70601 7.29105C6.70601 4.35402 9.0619 2 12 2C14.9391 2 17.294 4.35402 17.294 7.29105ZM12 22C7.66237 22 4 21.295 4 18.575C4 15.8539 7.68538 15.1739 12 15.1739C16.3386 15.1739 20 15.8789 20 18.599C20 21.32 16.3146 22 12 22Z" fill="currentColor" />
+                                              </svg>
+                                        </i>
+                                        <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Admin Dashboard"
+                                            data-bs-placement="right"> AD </i>
+                                        <span class="item-name"> Data Pengguna</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Request::is('akses-pengguna') ? 'active' : '' }} {{ Request::is('akses-pengguna/*') ? 'active' : '' }}" href="{{ route('akses_pengguna') }}">
                                         <i class="icon">
                                             <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -103,8 +195,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link "
-                                        href="https://templates.iqonic.design/hope-ui/pro/html/e-commerce/vendor-dashboard.html">
+                                    <a class="nav-link {{ Request::is('permission') ? 'active' : '' }} {{ Request::is('permission/*') ? 'active' : '' }}" href="{{ route('permission') }}"">
                                         <i class="icon">
                                             <svg width="20" class="icon-20" height="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -137,7 +228,7 @@
                                 <span class="mini-icon">-</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-none">
                             <a class="nav-link" aria-current="page" href="https://templates.iqonic.design/hope-ui/pro/html/"
                                 target="_blank">
                                 <i class="icon" data-bs-toggle="tooltip" title="Design System" data-bs-placement="right">
@@ -154,7 +245,7 @@
                                 <span class="item-name">Design System<span class="badge rounded-pill bg-success item-name">UI</span></span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-none">
                             <a class="nav-link" data-bs-toggle="collapse" href="#e-commerce" role="button" aria-expanded="false"
                                 aria-controls="sidebar-special">
                                 <i class="icon" data-bs-toggle="tooltip" title="E-commerce" data-bs-placement="right">

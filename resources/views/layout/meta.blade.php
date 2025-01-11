@@ -1,6 +1,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title data-setting="app_name" data-rightJoin="| Layanan Akses dan Koordinasi Sistem Asistensi, MAnajemen, dan NAvigasi Sosial">Laksamana</title>
+        <title data-setting="app_name" data-rightJoin=" | Layanan Akses dan Koordinasi Sistem Asistensi, MAnajemen, dan NAvigasi Sosial" data-leftJoin="@yield('page') - "></title>
         <meta name="description" content="ementerian Sosial Pekanbaru.">
         <meta name="keywords" content="Kementerian Sosial Pekanbaru,">
         <meta name="author" content="Fery Nanda Irawan">
