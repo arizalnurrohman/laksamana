@@ -16,3 +16,4 @@ Route::put('/permission/{id}', [App\Http\Controllers\PermissionController::class
 Route::get('/permission/{id}', [App\Http\Controllers\PermissionController::class, 'show'])->name('permission.show');
 Route::delete('/permission', [App\Http\Controllers\PermissionController::class, 'destroy'])->name('permission.destroy');
 
+Route::get('/menu', [App\Http\Controllers\MenuController::class, 'index'])->name('menu');
