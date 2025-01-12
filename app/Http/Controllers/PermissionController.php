@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 class PermissionController extends Controller
 {
     // function __construct()
@@ -33,8 +36,47 @@ class PermissionController extends Controller
     // }
     public function index()
     {
-        $data = [];#Pengguna::all();
-        $parent = "Pengguna";
-        return view('permission.index', compact('data','parent'));
+        // Role::create(['name' => 'admin']);
+        // Role::create(['name' => 'koordinator']);
+        // Role::create(['name' => 'anggota']);
+        // Role::create(['name' => 'kepala']);
+        // Role::create(['name' => 'assessment']);
+        $role = Role::all();
+        // dd($role);
+        return view('permission.index', compact('role'));
+    }
+
+    public function store(Request $request)
+    {
+        Role::create(['name' => $request->name]);
+        return redirect()->route('permission');
+    }
+    public function edit($id)
+    {
+        $role = Role::find($id);
+        return view('permission.edit', compact('role'));
+    }
+    public function update(Request $request, $id)
+    {
+        $role = Role::find($id);
+        $role->name = $request->name;
+        $role->save();
+        return redirect()->route('permission');
+    }
+    public function create()
+    {
+        return view('permission.create');
+    }
+    public function show($id)
+    {
+        $role = Role::find($id);
+        return view('permission.show', compact('role'));
+    }
+
+    public function destroy($id)
+    {
+        $role = Role::find($id);
+        $role->delete();
+        return redirect()->route('permission');
     }
 }
