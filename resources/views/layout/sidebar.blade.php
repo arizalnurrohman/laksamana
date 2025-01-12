@@ -92,7 +92,7 @@
                                             <i class="icon">{!! $child->icon !!}</i>
                                             <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Admin Dashboard"
                                                 data-bs-placement="right"> AD </i>
-                                            <span class="item-name"> {{$child->menu}}</span>
+                                            <span class="item-name"> {!!$child->menu!!}</span>
                                         </a>
                                     </li>
                                     @endforeach
@@ -104,7 +104,7 @@
                         
                         {{--  --}}
 
-                        <li class="nav-item static-item">
+                        <li class="nav-item static-item d-none">
                             <a class="nav-link static-item disabled text-start" href="#" tabindex="-1">
                                 <span class="default-icon">CONTOH MENU</span>
                                 <span class="mini-icon">-</span>
