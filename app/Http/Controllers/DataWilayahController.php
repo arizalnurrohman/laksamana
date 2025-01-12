@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AksesPenggunaController extends Controller
+class DataWilayahController extends Controller
 {
     // function __construct()
     // {
@@ -33,8 +33,7 @@ class AksesPenggunaController extends Controller
     // }
     public function index()
     {
-        $data = [];#Pengguna::all();
-        $parent = "Pengguna";
-        return view('akses_pengguna.index', compact('data','parent'));
+        $wilayah = [];
+        return view('data-wilayah.index', compact('wilayah'));
     }
 }

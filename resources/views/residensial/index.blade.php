@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($pengguna as $key=>$pgn)
+                            @foreach($residensial as $key=>$residen)
                             <tr>
                                 <td>1</td>
                                 <td>Tiger Nixon</td>

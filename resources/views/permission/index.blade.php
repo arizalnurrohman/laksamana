@@ -1,6 +1,4 @@
 @extends('layout.master')
-@section('page', 'Permission')
-@section('page_description', 'Menampilkan data Role dan Permission')
 @section('add-css')
 
 @endsection

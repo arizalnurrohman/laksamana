@@ -4,8 +4,8 @@
                             <div class="col-md-12">
                                 <div class="flex-wrap d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h1>@yield('page')</h1>
-                                        <p>@yield('page_description')</p>
+                                        <h1>@if ($activeMenu) {{ $activeMenu->menu }}  @endif</h1>
+                                        <p>@if ($activeMenu) {{ $activeMenu->description }}  @endif</p>
                                     </div>
                                     {{-- <div>
                                         <a href="#" class="btn btn-link btn-primary-subtle">

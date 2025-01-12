@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
-use App\Models\Menu;
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class DataAksesPengguna extends Controller
 {
     // function __construct()
     // {
@@ -35,34 +33,8 @@ class MenuController extends Controller
     // }
     public function index()
     {
-        $datamenu = Menu::whereNull('parent_id')->orderBy("sort","ASC")->get();
-        foreach($datamenu as $key => $val){
-            $val->child=Menu::where('parent_id',$val->id)->orderBy("sort","ASC")->count();
-        }
-        return view('menu.index', compact('datamenu'))->with('no', 1);
-    }
-
-    public function store(Request $request)
-    {
-        // dd($request->all());
-        $request->validate([
-            'menu' => 'required|string|max:255',
-            'url' => 'required|string|max:255',
-            'sort' => 'required|integer',
-            'parent_id' => 'nullable|exists:menu,id',
-        ]);
-        // dd($request->menu);
-        Menu::create([
-            'id' => (string) Str::uuid(),
-            'menu' => $request->menu,
-            'parent_id' => $request->parent_id,
-            'description' => $request->description,
-            'icon' => $request->icon,
-            'url' => $request->url,
-            'access' => $request->access,
-            'sort' => $request->sort,
-        ]);
-
-        return response()->json(['success' => true, 'message' => 'Menu berhasil ditambahkan.']);
+        $data = [];#Pengguna::all();
+        $parent = "Pengguna";
+        return view('data_akses_pengguna.index', compact('data','parent'));
     }
 }

@@ -1,5 +1,4 @@
 @extends('layout.master')
-@section('title', 'laksamana')
 @section('add-css')
 
 @endsection

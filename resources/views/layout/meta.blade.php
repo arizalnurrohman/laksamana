@@ -1,10 +1,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title data-setting="app_name" data-rightJoin=" | Layanan Akses dan Koordinasi Sistem Asistensi, MAnajemen, dan NAvigasi Sosial" data-leftJoin="@yield('page') - "></title>
+        <title data-setting="app_name" data-rightJoin=" | Layanan Akses dan Koordinasi Sistem Asistensi, MAnajemen, dan NAvigasi Sosial" data-leftJoin="@if ($activeMenu) {{ $activeMenu->menu }}  @endif - "></title>
         <meta name="description" content="ementerian Sosial Pekanbaru.">
         <meta name="keywords" content="Kementerian Sosial Pekanbaru,">
         <meta name="author" content="Fery Nanda Irawan">
         <meta name="DC.title" content="Laksamana | Layanan Akses dan Koordinasi Sistem Asistensi, MAnajemen, dan NAvigasi Sosial">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Google Font Api KEY-->
         {{-- <meta name="google_font_api" content="AIzaSyBG58yNdAjc20_8jAvLNSVi9E4Xhwjau_k"> --}}
