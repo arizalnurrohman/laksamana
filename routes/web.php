@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AsramaController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AssessementController;
@@ -28,6 +30,7 @@ Route::get('/assessement', [AssessementController::class, 'index'])->name('asses
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
 Route::get('/residensial', [ResidensialController::class, 'index'])->name('residensial');
 Route::get('/non-residensial', [NonResidensialController::class, 'index'])->name('nonresidensial');
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
 
 
 
@@ -40,3 +43,6 @@ Route::delete('/permission', [PermissionController::class, 'destroy'])->name('pe
 
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
+Route::get('/database', [DatabaseController::class, 'index'])->name('database');
+
+
