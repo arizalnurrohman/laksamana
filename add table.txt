@@ -5,6 +5,7 @@ provinsi OK
 kota OK
 agama ok
 pendidikan OK
-kategori_ppks
+kategori_ppks OK
+kategori_ppks_sub OK
 pengampu
 persyaratan , foto, kk, akte, foto_rujukan, 

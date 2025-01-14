@@ -6,7 +6,7 @@ use App\Models\Persyaratan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
-class KategoriKKPSController extends Controller
+class PersyaratanController extends Controller
 {
     // function __construct()
     // {
@@ -36,7 +36,7 @@ class KategoriKKPSController extends Controller
     public function index()
     {
         $persyaratan = Persyaratan::all();
-        return view('persyaratan.index', compact('persyaratan'));
+        return view('persyaratan.index', compact('persyaratan'))->with('no', 1);
     }
     public function store(Request $request)
     {
@@ -53,5 +53,20 @@ class KategoriKKPSController extends Controller
         ]);
 
         return response()->json(['message' => 'Data berhasil ditambahkan.']);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:laksa_ms_persyaratan,id',
+            'persyaratan' => 'required|string|max:255',
+        ]);
+
+        $persyaratan = Persyaratan::findOrFail($request->id);
+        $persyaratan->update([
+            'persyaratan' => $request->persyaratan,
+        ]);
+
+        return response()->json(['message' => 'Data berhasil diperbarui.']);
     }
 }

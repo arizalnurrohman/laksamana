@@ -6,11 +6,11 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <div class="card-header r d-flex align-items-center justify-content-between">
+            <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
-                    <h4 class="card-title">Data Menu</h4>
+                    <h4 class="card-title">Data @if ($activeMenu) {{ $activeMenu->menu }} @endif</h4>
                 </div>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMenuModal">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add{{ $activeMenu->access }}Modal">
                     <span class="btn-inner">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -20,25 +20,20 @@
                 </button>
             </div>
             <div class="card-body">
-                
                 <div class="table-responsive">
                     <table id="datatable" class="table table-striped" data-toggle="data-table">
                         <thead>
                             <tr>
-                                <th width="20px">No</th>
-                                <th>Name</th>
-                                <th width="10%">Url</th>
-                                <th width="10%">Access</th>
-                                <th width="20px">Salary</th>
+                                <th width="25">No</th>
+                                <th>Persyaratan</th>
+                                <th width="40">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($datamenu as $key=>$menu)
-                            <tr>
-                                <td><input class="form-control form-control-sm" type="text" value="{{$menu->sort}}" maxlength="2" style="width:35px;text-align:center"></td>
-                                <td>{{$menu->menu}} @if($menu->child>0) &nbsp;<span class="badge bg-warning">{{$menu->child}}</span> @endif</td>
-                                <td>{{$menu->url}}</td>
-                                <td>{{$menu->access}}</td>
+                            @foreach($persyaratan as $key=>$pgn)
+                            <tr id="{{$pgn->id}}">
+                                <td>{{$no++}}</td>
+                                <td>{{$pgn->persyaratan}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button class="btn btn-sm btn-icon btn-info">
@@ -68,17 +63,6 @@
                             </tr>
                             @endforeach
                         </tbody>
-                        {{-- <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot> --}}
                     </table>
                 </div>
             </div>
@@ -86,93 +70,128 @@
     </div>
 </div>
 
-<!-- Modal Tambah Data -->
-<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="add{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="add{{ $activeMenu->access }}ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Tambah Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add{{ $activeMenu->access }}Form">
+                    <div class="mb-3">
+                        <label for="persyaratan" class="form-label">Persyaratan</label>
+                        <input type="text" class="form-control" id="persyaratan" name="persyaratan" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Modal -->
+<!-- Update Modal -->
+<div class="modal fade" id="update{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="addMenuForm">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addMenuLabel">Tambah Data Menu</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm">
+                    <input type="hidden" id="updateId" name="id">
                     <div class="mb-3">
-                        <label for="menu" class="form-label">Menu Name</label>
-                        <input type="text" class="form-control" id="menu" name="menu" required>
+                        <label for="updatePersyaratan" class="form-label">Persyaratan</label>
+                        <input type="text" class="form-control" id="updatePersyaratan" name="persyaratan" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="parent_id" class="form-label">Parent Menu</label>
-                        <select class="form-select" id="parent_id" name="parent_id">
-                            <option value="">None</option>
-                            @foreach ($datamenu as $parent)
-                                <option value="{{ $parent->id }}">{{ $parent->menu }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="icon" class="form-label">Icon</label>
-                        <textarea class="form-control" id="icon" name="icon"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="url" class="form-label">URL</label>
-                        <input type="text" class="form-control" id="url" name="url" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="access" class="form-label">Access</label>
-                        <input type="text" class="form-control" id="access" name="access">
-                    </div>
-                    <div class="mb-3">
-                        <label for="sort" class="form-label">Sort</label>
-                        <input type="number" class="form-control" id="sort" name="sort" value="1" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Menu</button>
-                </div>
-            </form>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
  
 @endsection
 @section('add-js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
-        // Set token CSRF untuk setiap permintaan AJAX
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        // Submit form dengan AJAX
-        $('#addMenuForm').on('submit', function (e) {
+        $('#add{{ $activeMenu->access }}Form').on('submit', function (e) {
             e.preventDefault();
 
             $.ajax({
-                url: "{{ route('menu.store') }}", // Route ke controller
-                method: "POST",
-                data: $(this).serialize(),
+                url: '{{ route("persyaratan.store") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    persyaratan: $('#persyaratan').val(),
+                },
                 success: function (response) {
-                    if (response.success) {
-                        alert(response.message);
-                        $('#addMenuModal').modal('hide');
-                        location.reload(); // Reload halaman untuk update data
-                    } else {
-                        alert(response.message);
-                    }
+                    alert(response.message);
+                    location.reload(); // Reload halaman setelah sukses
                 },
                 error: function (xhr) {
                     alert('Terjadi kesalahan. Silakan coba lagi.');
-                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $('.btn-warning').on('click', function () {
+            const row = $(this).closest('tr'); // Dapatkan elemen <tr> terkait
+            const id = row.attr('id'); // Ambil ID dari atribut id pada <tr>
+            const persyaratan = row.find('td:eq(1)').text(); // Ambil Persyaratan dari kolom kedua
+
+            // Isi modal dengan data
+            $('#updateId').val(id.trim());
+            $('#updatePersyaratan').val(persyaratan.trim());
+
+            // Tampilkan modal
+            $('#update{{ $activeMenu->access }}Modal').modal('show');
+        });
+
+        // Submit update form via AJAX
+        $('#updateForm').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '{{ route("persyaratan.update") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: $('#updateId').val(),
+                    persyaratan: $('#updatePersyaratan').val(),
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message,
+                    });
+
+                    // Tutup modal
+                    $('#update{{ $activeMenu->access }}Modal').modal('hide');
+
+                    // Perbarui baris di tabel
+                    const id = $('#updateId').val();
+                    const updatedPersyaratan = $('#updatePersyaratan').val();
+
+                    // Cari baris berdasarkan ID
+                    const row = $(`tr#${id}`);
+                    row.find('td:eq(1)').text(updatedPersyaratan); // Perbarui kolom Persyaratan
+                    //window.location.href = window.location.href;
+                },error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Terjadi kesalahan saat mengupdate data.',
+                    });
                 }
             });
         });
     });
 </script>
+
 @endsection

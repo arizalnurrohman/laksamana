@@ -10,6 +10,7 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AssessementController;
 use App\Http\Controllers\DataWilayahController;
+use App\Http\Controllers\PersyaratanController;
 use App\Http\Controllers\ResidensialController;
 use App\Http\Controllers\KategoriKKPSController;
 use App\Http\Controllers\NonResidensialController;
@@ -26,6 +27,10 @@ Route::get('/data-wilayah', [DataWilayahController::class, 'index'])->name('data
 Route::get('/komponen-intervensi', [KomponenInterrvensiController::class, 'index'])->name('komponenintervensi');
 Route::get('/form-assessement', [FormAssessementController::class, 'index'])->name('formassessement');
 Route::get('/kategori-kkps', [KategoriKKPSController::class, 'index'])->name('kategorikkps');
+
+Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
+Route::post('/persyaratan/store', [PersyaratanController::class, 'store'])->name('persyaratan.store');
+Route::post('/persyaratan/update', [PersyaratanController::class, 'update'])->name('persyaratan.update');
 
 Route::get('/asrama', [AsramaController::class, 'index'])->name('asrama');
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');
