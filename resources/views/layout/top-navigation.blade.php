@@ -35,7 +35,7 @@
                       </div>
                       <div class="d-flex align-items-center justify-content-between product-offcanvas">
                         <div class="breadcrumb-title border-end me-3 pe-3 d-none d-xl-block">
-                            <small class="mb-0 text-capitalize">@if ($activeMenu) {{ $activeMenu->menu }} @endif</small>
+                            <small class="mb-0 text-capitalize">@if ($activeMenu) {{ $activeMenu->menu }} @else Dashboard @endif</small>
                         </div>
                         
                       </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AssessementController;
 use App\Http\Controllers\DataWilayahController;
 use App\Http\Controllers\ResidensialController;
+use App\Http\Controllers\KategoriKKPSController;
 use App\Http\Controllers\NonResidensialController;
 use App\Http\Controllers\FormAssessementController;
 use App\Http\Controllers\KomponenInterrvensiController;
@@ -24,6 +25,7 @@ Route::get('/data-akses-pengguna', [PenggunaController::class, 'index'])->name('
 Route::get('/data-wilayah', [DataWilayahController::class, 'index'])->name('datawilayah');
 Route::get('/komponen-intervensi', [KomponenInterrvensiController::class, 'index'])->name('komponenintervensi');
 Route::get('/form-assessement', [FormAssessementController::class, 'index'])->name('formassessement');
+Route::get('/kategori-kkps', [KategoriKKPSController::class, 'index'])->name('kategorikkps');
 
 Route::get('/asrama', [AsramaController::class, 'index'])->name('asrama');
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');

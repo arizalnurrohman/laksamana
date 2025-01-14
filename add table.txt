@@ -1,0 +1,10 @@
+petugas
+sumber_rujukan OK
+pasien OK
+provinsi OK
+kota OK
+agama ok
+pendidikan OK
+kategori_ppks
+pengampu
+persyaratan , foto, kk, akte, foto_rujukan, 
