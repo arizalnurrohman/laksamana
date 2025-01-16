@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2025 at 11:10 AM
+-- Generation Time: Jan 16, 2025 at 09:07 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `cache`
 --
-DROP TABLE IF EXISTS `cache`;
+
 CREATE TABLE `cache` (
   `key` varchar(255) NOT NULL,
   `value` mediumtext NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `cache` (
 --
 -- Table structure for table `cache_locks`
 --
-DROP TABLE IF EXISTS `cache_locks`;
+
 CREATE TABLE `cache_locks` (
   `key` varchar(255) NOT NULL,
   `owner` varchar(255) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE `cache_locks` (
 --
 -- Table structure for table `failed_jobs`
 --
-DROP TABLE IF EXISTS `failed_jobs`;
+
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `uuid` varchar(255) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE `failed_jobs` (
 --
 -- Table structure for table `jobs`
 --
-DROP TABLE IF EXISTS `jobs`;
+
 CREATE TABLE `jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `queue` varchar(255) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE `jobs` (
 --
 -- Table structure for table `job_batches`
 --
-DROP TABLE IF EXISTS `job_batches`;
+
 CREATE TABLE `job_batches` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -99,9 +99,410 @@ CREATE TABLE `job_batches` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `laksa_ms_agama`
+--
+
+CREATE TABLE `laksa_ms_agama` (
+  `id` varchar(36) NOT NULL,
+  `agama` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `laksa_ms_agama`
+--
+
+INSERT INTO `laksa_ms_agama` (`id`, `agama`) VALUES
+('41875d16-08f2-24cc-a568-a17c69655427', 'Protestan'),
+('5312618b-0fdd-0928-4d01-7940d10a96cf', 'Hindu'),
+('598529ef-424a-9c21-6821-b2a8d7b807e8', 'Khonghucu'),
+('a1859a74-915c-418a-1aa2-3f52064339d4', 'Buddha'),
+('ba6af749-0ecc-5ea9-a048-efc40f2b158f', 'Katolik'),
+('c4091389-34eb-7f56-1b6d-b1934f0115c9', 'Islam');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_kabupaten_kota`
+--
+
+CREATE TABLE `laksa_ms_kabupaten_kota` (
+  `id` varchar(36) NOT NULL,
+  `provinsi_id` varchar(36) DEFAULT NULL,
+  `kemendagri_id` varchar(36) DEFAULT NULL,
+  `kabupaten_kota` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `laksa_ms_kabupaten_kota`
+--
+
+INSERT INTO `laksa_ms_kabupaten_kota` (`id`, `provinsi_id`, `kemendagri_id`, `kabupaten_kota`) VALUES
+('3ff28fba-6b12-a4f1-680d-5f17fe422b53', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.72', 'Kota Dumai'),
+('46cc22d6-7259-63db-a540-7bf0905784cc', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.03', 'Kabupaten Bengkalis'),
+('5c4a63f1-2ae4-0630-482b-74a72cf071e9', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.08', 'Kabupaten Siak'),
+('7e97d60f-82d7-49f0-a359-4efb5fe3147f', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.04', 'Kabupaten Indragiri Hilir'),
+('9605ae84-5977-7c09-4e48-609ccdb5a5ad', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.07', 'Kabupaten Rokan Hilir'),
+('9bacc4bf-443e-8e47-373e-26a042069ecc', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.02', 'Kabupaten Indragiri Hulu'),
+('9e842512-2cc3-216f-1a52-c3672c293e20', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.05', 'Kabupaten Pelalawan'),
+('9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.01', 'Kabupaten Kampar'),
+('b7d47f01-15ac-8493-a774-6bb16a347a42', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.71', 'Kota Pekanbaru'),
+('c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.06', 'Kabupaten Rokan Hulu'),
+('daf4dded-7c0f-8bb8-8940-115c42f27351', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.09', 'Kabupaten Kuantan Singingi'),
+('dcd6779e-3433-7752-86d1-ddeafa391495', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '14.10', 'Kabupaten Kepulauan Meranti');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_kategori_ppks`
+--
+
+CREATE TABLE `laksa_ms_kategori_ppks` (
+  `id` varchar(36) NOT NULL,
+  `kategori` varchar(100) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_kategori_ppks_sub`
+--
+
+CREATE TABLE `laksa_ms_kategori_ppks_sub` (
+  `id` varchar(36) NOT NULL,
+  `kategori_id` varchar(36) DEFAULT NULL,
+  `sub_kategori_ppks` varchar(100) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_kecamatan`
+--
+
+CREATE TABLE `laksa_ms_kecamatan` (
+  `id` varchar(36) NOT NULL,
+  `kabupaten_kota_id` varchar(36) DEFAULT NULL,
+  `kemendagri_id` varchar(36) DEFAULT NULL,
+  `kecamatan` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `laksa_ms_kecamatan`
+--
+
+INSERT INTO `laksa_ms_kecamatan` (`id`, `kabupaten_kota_id`, `kemendagri_id`, `kecamatan`) VALUES
+('016d05df-06b4-3c39-4916-2543ef774113', '3ff28fba-6b12-a4f1-680d-5f17fe422b53', '14.72.07', 'Dumai Selatan'),
+('02f18a3c-5e1a-8081-934f-b7e926f69f4b', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.12', 'Kabun'),
+('030679a2-7053-7859-3cab-93c44e9e2863', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.03', 'Minas'),
+('037ef12f-83af-2732-5062-5bf63b177f18', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.10', 'Logas Tanah Darat'),
+('0477dfc3-4b6f-3102-3727-9f01c9629d1a', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.06', 'Gaung Anak Serka'),
+('0491f23e-5a50-2471-1aa7-19819ab894e0', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.09', 'Teluk Meranti'),
+('05153c7c-a50f-0f35-0a72-7f3a6b1245da', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.04', 'Pangkalan Lesung'),
+('083f0e2a-87f1-114c-88ce-3ba9f5367c6f', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.16', 'Pendalian IV Koto'),
+('08c15957-66a4-2a44-1e5a-993ffb691d44', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.18', 'Balai Jaya'),
+('08ea4954-3895-50d1-673e-7e10be1b4e12', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.05', 'Sungai Mandau'),
+('0c7ddc77-1a92-5506-355b-d1859ee04c17', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.08', 'Bunga Raya'),
+('0c88a329-28c6-6a91-28d6-7b6a58a02801', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.09', 'Rangsang Pesisir'),
+('0ce5768a-060b-5b45-44a2-4ca5485f8652', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.05', 'Senapelan'),
+('1000693b-98d1-3868-45eb-93cd286f5da9', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.11', 'Sungai Lala'),
+('108f772a-7e6d-4530-0f9a-9e5a84a707d1', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.07', 'Mandah'),
+('13120c76-416c-6d39-6b0c-b7e30b5e3152', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.14', 'Pekaitan'),
+('13e2205d-084c-3e29-69e0-df63a30265c3', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.19', 'Kampar Kiri Tengah'),
+('156086d7-6497-3992-1300-405daa122923', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.15', 'Bangkinang'),
+('1574a648-89df-9c8a-a10f-5c6b5d9b3548', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.01', 'Rengat'),
+('161f4e14-0f72-9388-2bcd-25bee5705ab2', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.02', 'Bangko'),
+('174a8e20-9a2a-1bf3-5383-8df8892a68d1', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.09', 'Lirik'),
+('179d02af-82bb-14e6-92a1-188632eb6f6b', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.06', 'Dayun'),
+('19ecd6b4-2c8c-8e46-72ef-cfed166b81b6', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.04', 'Tambusai'),
+('1c9243fd-a340-213e-9b6d-537d765c6744', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.13', 'Mempura'),
+('1e3cf99d-8d9c-7d01-8d88-3720be94140c', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.02', 'Rokan IV Koto'),
+('20770cda-1c01-0ca5-1b22-c398eba97a7b', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.16', 'Tanjung Medan'),
+('211a463e-5906-85c1-8ee2-3337b5bb557c', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.10', 'Kuala Kampar'),
+('23711022-5d02-018c-02dd-5caaf4d94c41', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.02', 'Enok'),
+('23ce82e0-6a72-2c70-0fa2-98ccf06e874f', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.21', 'Koto Kampar Hulu'),
+('2675bdb3-793a-04aa-4451-57a119b27c2a', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.10', 'Tanah Merah'),
+('2950a8b8-615d-0f38-8afc-9106faaa6ae8', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.08', 'Batang Gangsal'),
+('2b43d48f-09d0-39ea-0f40-3a2501ca0cfa', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.10', 'Kuala Cenaku'),
+('2d970043-1846-5c78-1a6c-59dd10c32b36', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.11', 'Rupat Utara'),
+('2e5834b7-3fb2-0683-2c91-42a0bd713312', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.17', 'Kampa'),
+('30238960-67a0-8e26-74dc-6347d73b0617', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.12', 'Hulu Kuantan'),
+('306f8c23-2be2-5fa7-1c0f-ba51e66e9ac5', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.01', 'Tebing Tinggi'),
+('30e7e6a3-3c8a-6868-7dcc-228002304363', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.02', 'Sungai Apit'),
+('31b5dc89-0a8e-1f12-6956-f20d34bc1129', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.03', 'Tanah Putih'),
+('34a19409-69b0-2533-20e1-1088574d7460', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.20', 'Gunung Sahilan'),
+('37d7272e-0d40-363e-1a55-d9f63ac91df0', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.10', 'Bangko Pusako'),
+('3acd568d-3198-8168-2781-f42e314b8c41', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.04', 'XIII Koto Kampar'),
+('3bedb730-0ea5-120f-5975-5b65991938dd', '3ff28fba-6b12-a4f1-680d-5f17fe422b53', '14.72.05', 'Medang Kampai'),
+('3c9531dc-7193-917d-9e6e-3c4a2c792eb9', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.12', 'Siak Kecil'),
+('3d22b93f-355d-1e96-529f-b27e6fba793d', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.20', 'Sungai Batang'),
+('3eb3fe43-9e80-3728-395c-027f4ad917e1', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.10', 'Tenayan Raya'),
+('407f3da6-0094-7377-47a1-8cacfe4c51fa', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.01', 'Bengkalis'),
+('40ba65b4-340e-a53a-5453-0bc45fdb8cea', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.13', 'Pinggir'),
+('4151350c-626a-6f82-440f-5eaeab834b14', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.08', 'Bunut'),
+('430c014d-517b-56b1-7976-099f48702e26', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.04', 'Rimba Melintang'),
+('43219355-8f09-205a-0819-14e3bf8485aa', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.07', 'Kampar Kiri'),
+('44b1bac1-171a-1dbf-7d0f-9098c50d7692', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.13', 'Rakit Kulim'),
+('45c75fa2-0921-6385-8ac2-28d5ad8c01a8', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.06', 'Pulau Merbau'),
+('46d2d88d-8158-a41e-a0af-948a95de3bbd', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.05', 'Merbau'),
+('473c71bc-457a-3d86-1fd8-6ea2e6863dfa', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.09', 'Mandau'),
+('4bf69f10-6964-931b-8b5b-646173ec7622', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.18', 'Kampar Utara'),
+('4dfbff04-3408-6e00-3769-b59dc0c00bef', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.01', 'Reteh'),
+('504de46d-2ec5-2fae-5b26-e187331b9d5e', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.06', 'Rumbai Barat'),
+('50e80f05-2cc0-54f8-8f41-fbe0615b9b76', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.08', 'Rambah Hilir'),
+('52767b32-5b54-4852-a098-8d478558a6ae', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.12', 'Tapung Hulu'),
+('5280a4c2-6d6b-56d0-2005-d6a5066857b9', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.10', 'Bangun Purba'),
+('528654da-8f62-0892-83d2-cde17105328c', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.14', 'Pagaran Tapah Darussalam'),
+('53714cf3-9a46-5027-8d8f-6f6d41824213', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.12', 'Sabak Auh'),
+('54e91419-82ce-40aa-572b-2fcc1a8092e9', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.02', 'Rangsang Barat'),
+('578d4328-11ef-2cc7-7de0-7b977ea25bf8', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.02', 'Pangkalan Kerinci'),
+('5882b89c-a67e-6a97-114c-473570843546', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.14', 'Rumbio Jaya'),
+('5a45068c-7d19-624f-40db-0ee8d8537f96', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.15', 'Pelangiran'),
+('5a4904c8-948a-4295-0db6-c5ed17b219aa', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.09', 'Marpoyan Damai'),
+('5a8e6f9b-55d0-3f24-a4f6-13241dec1024', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.01', 'Siak'),
+('5c9f65a8-4ab8-9d20-6487-6ccf5a507c90', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.07', 'Kerinci Kanan'),
+('60d5d604-6d61-a315-4765-f17e09619329', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.07', 'Bukit Raya'),
+('6223529d-4697-44c1-408c-c52b34404c7b', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.03', 'Kuala Indragiri'),
+('62b5e22c-a1b4-541d-a7c2-920a057e3b4a', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.11', 'Batang Tuaka'),
+('6655a0e2-7506-54fd-2791-3b770bb7586c', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.03', 'Tambang'),
+('6679d7ba-4878-6874-72b4-4fb9b62fa123', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.11', 'Tapung Hilir'),
+('673643ce-7a16-a5d2-0363-0244c799266c', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.06', 'Pasir Limau Kapas'),
+('67d33c4c-a50a-2ab3-9208-45042474178d', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.05', 'Peranap'),
+('69ad19cb-2b6b-9ae7-4398-169b9b5104f1', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.14', 'Kemuning'),
+('6d60fe81-a26f-6315-45af-826d705d946a', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.13', 'Kuantan Hilir Seberang'),
+('6dfa6465-061f-854f-7179-7cbf125267c4', '3ff28fba-6b12-a4f1-680d-5f17fe422b53', '14.72.02', 'Dumai Timur'),
+('6f657292-3cd3-23e4-91ef-fb0723aa9f54', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.04', 'Lima Puluh'),
+('71081505-8c30-a427-9e6a-0da85de59eb8', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.05', 'Bagan Sinembah'),
+('710fa39e-0da7-33d1-4f68-6a7f52b57d86', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.12', 'Rumbai'),
+('71787643-8c52-87f2-109b-dcd8686e927b', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.03', 'Singingi'),
+('72ae024d-58e3-68ae-2e33-5815dc3a7a8c', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.07', 'Batang Cenaku'),
+('76987c91-03ea-1b46-4158-09deda3e2ea5', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.03', 'Bukit Batu'),
+('7ba235c3-0d38-3966-7e73-baa972691c5b', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.01', 'Bangkinang Kota'),
+('7c1f2bea-4f3d-9f0b-18ab-8175e47e828f', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.16', 'Perhentian Raja'),
+('7ea882fe-466a-4c8e-264b-6b4b184a082e', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.01', 'Sukajadi'),
+('7fda265c-5ce3-6e6b-638f-6dbce5730068', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.09', 'Tambusai Utara'),
+('80bc70ed-0c85-56a7-5429-942131565d50', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.11', 'Simpang Kanan'),
+('80e2d346-6dc5-36cd-09f0-75ab6a006f21', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.06', 'Siak Hulu'),
+('81d79422-318c-5751-0d33-e3e8611f9172', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.09', 'Kampar Kiri Hulu'),
+('82039f5f-72f5-09fb-0776-8cba636269a8', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.10', 'Tapung'),
+('840e0fec-9999-04de-77c5-83d6c4ca267c', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.03', 'Rangsang'),
+('875b177c-12dd-6d98-9a76-7d5e216c6c35', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.01', 'Ujung Batu'),
+('8a1bf7c7-02db-46d0-9f67-d16319594fd9', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.15', 'Kubu Babussalam'),
+('8a8ecc2c-4a56-801c-8219-f9edb0711c68', '3ff28fba-6b12-a4f1-680d-5f17fe422b53', '14.72.06', 'Dumai Kota'),
+('8b390060-813b-7b74-594a-eed1a17c9083', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.16', 'Bathin Solapan'),
+('8c1c1289-21ad-020d-755d-924666f592fa', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.12', 'Lubuk Batu Jaya'),
+('8e5c489b-92a4-18ab-2408-a85cc3f146fb', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.08', 'Singingi Hilir'),
+('8ecbb3bc-2594-7c3b-614b-b5c276cc5552', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.14', 'Sentajo Raya'),
+('91ce0271-9e1f-a35f-9bdb-f6c6b8554dcd', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.01', 'Kubu'),
+('93e3aa88-90b0-5cb0-8905-334d97d116ae', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.13', 'Tuah Madani'),
+('94ac9f4e-a2ee-8c2c-a0a1-f539b9c453d3', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.11', 'Lubuk Dalam'),
+('95a329b7-81e4-6fc3-99f9-dbe7a33773f0', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.15', 'Kepenuhan Hulu'),
+('9bffe5ae-a010-a6c0-2831-601115638152', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.01', 'Kuantan Mudik'),
+('9d279036-4538-5183-37e0-e765364ca5ae', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.03', 'Sail'),
+('9db54551-0682-2456-805b-5b73e1634e16', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.18', 'Concong'),
+('9e36e295-0587-1e00-4fda-7b5396f656fc', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.17', 'Bagan Sinembah Raya'),
+('9e4f1598-4bb7-37e9-910d-3ecea14d98f9', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.06', 'Seberida'),
+('a218abbe-2a9b-7240-12f9-e196838e318d', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.04', 'Tembilahan'),
+('a259fe4d-a4d4-86a4-6086-434f53934ca8', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.04', 'Pasir Penyu'),
+('a4b90edc-08f6-013e-7a05-1bdb02652400', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.15', 'Rumbai Timur'),
+('a534a852-7428-0360-81f5-5f5a13fb0701', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.05', 'Kuok'),
+('a582b748-3f26-5425-35fe-d84ec3160f8c', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.06', 'Benai'),
+('a9bbcd4b-892a-543c-0304-191aebf57cbc', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.05', 'Cerenti'),
+('ac47aa9e-8055-6e27-12d7-b290d9451ed6', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.07', 'Rambah Samo'),
+('acac100f-11e7-80e7-69c5-227f35576ac3', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.04', 'Tualang'),
+('b070cf84-a3e2-12e8-0ea7-9399d8a12414', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.09', 'Pangean'),
+('b6051472-3d2a-1043-1907-9e5c990d8d3f', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.13', 'Tembilahan Hulu'),
+('b60c4611-72bf-74ea-060f-540f54ea5f8b', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.02', 'Rengat Barat'),
+('b7a5c970-76ae-0947-5f81-3c29e62c24dd', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.02', 'Pekanbaru Kota'),
+('b91f258f-981d-7ba4-3a4b-04abdf6b7bbb', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.12', 'Bandar Petalangan'),
+('b9e6934d-2bf1-9f74-8794-75e5cc452cfa', '3ff28fba-6b12-a4f1-680d-5f17fe422b53', '14.72.04', 'Sungai Sembilan'),
+('bbcf754e-52eb-3d3b-84bc-f40fbda90655', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.08', 'Kateman'),
+('bbe51e5f-0fde-6437-7c8e-0c5b4f261417', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.02', 'Bantan'),
+('bd692952-73da-6822-48cb-54cd6887524a', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.06', 'Pelalawan'),
+('bf377cd5-311b-7cd3-986e-f78e0d874179', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.11', 'Inuman'),
+('c1d89080-437c-5050-8286-9ed363e46030', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.10', 'Kandis'),
+('c30c7a2c-7a4b-045c-1c20-8860c1bba6fc', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.12', 'Gaung'),
+('c3d20a42-3455-0479-92ad-ab5f80cda601', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.05', 'Tempuling'),
+('c40097aa-6aeb-6bab-2525-1269ec1c4f4b', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.14', 'Kulim'),
+('c59ddf7c-6f42-85a5-9023-ec838a55419f', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.13', 'Bonai Darussalam'),
+('c62d5f52-5c88-a4c4-1ad5-d825709d6288', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.09', 'Koto Gasip'),
+('c78f89e3-2845-832b-8f8a-f36eaa9c8eab', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.07', 'Sinaboi'),
+('c880534b-9c24-5fd6-7aad-c7298cb84524', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.17', 'Pulau Burung'),
+('c88b0b45-0aec-000e-03f4-926f27d0359d', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.07', 'Tebing Tinggi Timur'),
+('c8ef9284-557d-8bf6-0f56-69cdcb943a6b', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.04', 'Tebing Tinggi Barat'),
+('ca4e7529-22e1-1473-368d-8b3edac06873', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.19', 'Kempas'),
+('cefdfdf5-0cd4-327f-174f-d973737f73b5', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.03', 'Rambah'),
+('cf014ce6-304c-0471-83d5-7b2265338613', '3ff28fba-6b12-a4f1-680d-5f17fe422b53', '14.72.01', 'Dumai Barat'),
+('d02ccc60-14c1-3a3f-795f-94b189886d2b', 'dcd6779e-3433-7752-86d1-ddeafa391495', '14.10.08', 'Tasik Putri Puyu'),
+('d0d02b43-809f-9605-4105-505ea38c6edc', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.08', 'Kampar Kiri Hilir'),
+('d3bfec28-4ba6-96d2-2c70-0c6dfe827863', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.08', 'Binawidya'),
+('d3f5d3db-490d-96d4-5bfa-48f61cc619ad', '5c4a63f1-2ae4-0630-482b-74a72cf071e9', '14.08.14', 'Pusako'),
+('d40b95ca-632e-25de-920a-117f80718b8f', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.07', 'Gunung Toar'),
+('d54ff9f9-77f8-71b4-1c34-4f067f59a5f7', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.13', 'Salo'),
+('d59a0c74-9790-545b-4124-0ca5fb2b3ad2', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.01', 'Ukui'),
+('d7c84796-6e05-656f-3deb-f58416ba63ec', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.15', 'Pucuk Rantau'),
+('d7d779cf-0de6-08b8-0e1d-7c41310c759f', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.03', 'Kelayang'),
+('d88261f9-7575-18bb-9a2b-efcf99a03f7b', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.09', 'Keritang'),
+('d9a58601-41d2-2431-2f85-b8f428e72202', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.08', 'Pujud'),
+('da067f5d-5d53-8e2f-0498-fd869e2989ac', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.13', 'Rantau Kopar'),
+('db09a308-9ca0-62fa-7ebc-b54fe3a77ee9', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.10', 'Rupat'),
+('db976b65-8e1a-27e3-5543-83afbf029cce', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '14.71.11', 'Payung Sekaki'),
+('defb2c32-a6ce-7fae-9326-754965d055c5', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.15', 'Talang Muandau'),
+('e09d829f-a6e8-1410-490e-dfff44c910ad', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.09', 'Tanah Putih Tanjung Melawan'),
+('e45a08d1-0547-5eef-920f-9176306e8f3b', '3ff28fba-6b12-a4f1-680d-5f17fe422b53', '14.72.03', 'Bukit Kapur'),
+('e574e02e-797d-5a6d-52c6-770bee0c93e5', '46cc22d6-7259-63db-a540-7bf0905784cc', '14.03.14', 'Bandar Laksamana'),
+('e9654cf2-80a5-8b9b-0d8a-f5087eee5599', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.04', 'Kuantan Hilir'),
+('eb493d53-1148-4f1d-748f-3e42ea593fbf', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.11', 'Tandun'),
+('ed10bdff-24ac-4526-2060-a15b88eb6480', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.05', 'Langgam'),
+('edc916ad-68ca-099e-5d1a-eae9facc9a8b', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.06', 'Kunto Darussalam'),
+('ee0d0e72-a2a1-22c4-6c8f-5d9e8fa3a207', '9605ae84-5977-7c09-4e48-609ccdb5a5ad', '14.07.12', 'Batu Hampar'),
+('f17d75a8-091b-771c-8e3b-401a13260307', '9bacc4bf-443e-8e47-373e-26a042069ecc', '14.02.14', 'Batang Peranap'),
+('f544ce61-0eec-a667-099b-cf50f8948db4', 'c8f855c5-5b12-2e0d-6ba3-df16f8a054b2', '14.06.05', 'Kepenuhan'),
+('f64aa420-12e9-0e2c-4199-ed6eb93d6cf5', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.11', 'Bandar Sei Kijang'),
+('f767d30b-7997-9096-345a-3e1468926e9c', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.07', 'Kerumutan'),
+('f9539a5a-5def-8c94-3dbb-5f8443ae4dc0', '7e97d60f-82d7-49f0-a359-4efb5fe3147f', '14.04.16', 'Teluk Belengkong'),
+('fd8f8b61-0770-4e31-260d-0772aa565645', '9e842512-2cc3-216f-1a52-c3672c293e20', '14.05.03', 'Pangkalan Kuras'),
+('ff5f790f-2b46-5825-64cb-60040f089a68', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '14.01.02', 'Kampar'),
+('ffc0b27e-0058-36f6-724c-7830eecf71ff', 'daf4dded-7c0f-8bb8-8940-115c42f27351', '14.09.02', 'Kuantan Tengah');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_pasien`
+--
+
+CREATE TABLE `laksa_ms_pasien` (
+  `id` varchar(36) NOT NULL,
+  `nama_lengkap` varchar(100) DEFAULT NULL,
+  `nik` varchar(16) DEFAULT NULL,
+  `nokk` varchar(16) DEFAULT NULL,
+  `tmp_lahir` varchar(100) DEFAULT NULL,
+  `provinsi_id` varchar(36) DEFAULT NULL,
+  `kota_id` varchar(36) DEFAULT NULL,
+  `kecamatan_id` varchar(36) DEFAULT NULL,
+  `kelurahan_desa_id` varchar(36) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `domisili_alamat` char(1) DEFAULT NULL,
+  `domisili` varchar(255) DEFAULT NULL,
+  `agama_id` varchar(36) DEFAULT NULL,
+  `pendidikan_id` varchar(36) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_pendidikan`
+--
+
+CREATE TABLE `laksa_ms_pendidikan` (
+  `id` varchar(36) DEFAULT '0',
+  `pendidikan` varchar(200) DEFAULT NULL,
+  `teks` varchar(200) DEFAULT NULL,
+  `level` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPRESSED;
+
+--
+-- Dumping data for table `laksa_ms_pendidikan`
+--
+
+INSERT INTO `laksa_ms_pendidikan` (`id`, `pendidikan`, `teks`, `level`) VALUES
+('ae71db46-2eb8-1085-8a49-3f0547641f01', '-Tidak Sekolah-', '', 1),
+('7ff7a10d-265b-790c-9454-ca35b1cd0195', 'BELUM SEKOLAH', '-Belum Sekolah-', 2),
+('86ef19a5-37ff-a513-57be-de60bae15bab', 'TK', 'TK', 3),
+('c31d1245-26cd-6681-8455-3aa4dc2f95e7', 'SD', 'SD', 4),
+('56c193ce-5057-a6d6-a447-3c08a35d00cc', 'SLB', '', 5),
+('fe610597-2931-751d-2077-3d70e2051157', 'SMP', 'SMP', 6),
+('225436e4-0b16-4479-3db4-b8f6202b5db6', 'SLTA', 'SLTA', 7),
+('be936978-20d6-571f-2a25-b037d1648a50', 'D - I', 'D - I', 8),
+('68fd8878-8502-19bd-7121-2147f5e7776d', 'D - II', 'D - II', 9),
+('fca3a7f1-918f-16b2-64a0-7eb35ac84735', 'SARJANA MUDA / D-III', 'D - III', 10),
+('aee9efe6-3f21-7b9c-81d4-b987d0936df3', 'SARJANA', 'S - 1', 11),
+('9204eac5-8209-18ba-6e75-f1ca9f1d1020', 'D - IV', 'D - IV', 12),
+('c4ffb948-20cb-9915-81f0-03e1659a90ae', 'AKTA IV', '', 13),
+('6063251e-680a-2496-495a-e25c3b5a3cd0', 'PENDIDIKAN PROFESI', '', 14),
+('f38bc278-3c38-6d7d-92fc-a63b39823f82', 'PASCA SARJANA', 'S - 2', 15),
+('8bec8433-099b-9aaf-50c6-951eff24531e', 'DOKTOR', 'S-3', 16);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_persyaratan`
+--
+
+CREATE TABLE `laksa_ms_persyaratan` (
+  `id` varchar(36) NOT NULL,
+  `persyaratan` varchar(100) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_provinsi`
+--
+
+CREATE TABLE `laksa_ms_provinsi` (
+  `id` varchar(36) NOT NULL,
+  `kemendagri_id` varchar(36) DEFAULT NULL,
+  `provinsi` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `laksa_ms_provinsi`
+--
+
+INSERT INTO `laksa_ms_provinsi` (`id`, `kemendagri_id`, `provinsi`) VALUES
+('a', '14', 'Provinsi Riau');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_residensial`
+--
+
+CREATE TABLE `laksa_ms_residensial` (
+  `id` varchar(36) NOT NULL,
+  `petugas_id` varchar(36) DEFAULT NULL,
+  `tgl_penerimaan` datetime DEFAULT NULL,
+  `sumber_id` varchar(36) DEFAULT NULL,
+  `pasien_id` varchar(36) DEFAULT NULL,
+  `kategori_ppks_id` varchar(36) DEFAULT NULL,
+  `masa_layanan` int(11) DEFAULT NULL,
+  `rencana_tgl_terminasi` date DEFAULT NULL,
+  `pengampu_id` varchar(36) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_ms_sumber_rujukan`
+--
+
+CREATE TABLE `laksa_ms_sumber_rujukan` (
+  `id` varchar(36) NOT NULL,
+  `sumber` varchar(255) DEFAULT NULL,
+  `prioritas` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menu`
 --
-DROP TABLE IF EXISTS `menu`;
+
 CREATE TABLE `menu` (
   `id` varchar(100) NOT NULL,
   `parent_id` varchar(100) DEFAULT NULL,
@@ -121,15 +522,17 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`id`, `parent_id`, `menu`, `description`, `icon`, `url`, `access`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Form Assessement', 'desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"icon-20\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M7.81 2H16.191C19.28 2 21 3.78 21 6.83V17.16C21 20.26 19.28 22 16.191 22H7.81C4.77 22 3 20.26 3 17.16V6.83C3 3.78 4.77 2 7.81 2ZM8.08 6.66V6.65H11.069C11.5 6.65 11.85 7 11.85 7.429C11.85 7.87 11.5 8.22 11.069 8.22H8.08C7.649 8.22 7.3 7.87 7.3 7.44C7.3 7.01 7.649 6.66 8.08 6.66ZM8.08 12.74H15.92C16.35 12.74 16.7 12.39 16.7 11.96C16.7 11.53 16.35 11.179 15.92 11.179H8.08C7.649 11.179 7.3 11.53 7.3 11.96C7.3 12.39 7.649 12.74 8.08 12.74ZM8.08 17.31H15.92C16.319 17.27 16.62 16.929 16.62 16.53C16.62 16.12 16.319 15.78 15.92 15.74H8.08C7.78 15.71 7.49 15.85 7.33 16.11C7.17 16.36 7.17 16.69 7.33 16.95C7.49 17.2 7.78 17.35 8.08 17.31Z\" fill=\"currentColor\"></path></svg>', 'form-assessement', 'formassessement', 5, NULL, NULL, NULL),
 ('09073338-96aa-42a9-88df-b607a460b562', NULL, 'Non Residensial', 'desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\">\r\n                                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M7.33049 2.00049H16.6695C20.0705 2.00049 21.9905 3.92949 22.0005 7.33049V16.6705C22.0005 20.0705 20.0705 22.0005 16.6695 22.0005H7.33049C3.92949 22.0005 2.00049 20.0705 2.00049 16.6705V7.33049C2.00049 3.92949 3.92949 2.00049 7.33049 2.00049ZM12.0495 17.8605C12.4805 17.8605 12.8395 17.5405 12.8795 17.1105V6.92049C12.9195 6.61049 12.7705 6.29949 12.5005 6.13049C12.2195 5.96049 11.8795 5.96049 11.6105 6.13049C11.3395 6.29949 11.1905 6.61049 11.2195 6.92049V17.1105C11.2705 17.5405 11.6295 17.8605 12.0495 17.8605ZM16.6505 17.8605C17.0705 17.8605 17.4295 17.5405 17.4805 17.1105V13.8305C17.5095 13.5095 17.3605 13.2105 17.0895 13.0405C16.8205 12.8705 16.4805 12.8705 16.2005 13.0405C15.9295 13.2105 15.7805 13.5095 15.8205 13.8305V17.1105C15.8605 17.5405 16.2195 17.8605 16.6505 17.8605ZM8.21949 17.1105C8.17949 17.5405 7.82049 17.8605 7.38949 17.8605C6.95949 17.8605 6.59949 17.5405 6.56049 17.1105V10.2005C6.53049 9.88949 6.67949 9.58049 6.95049 9.41049C7.21949 9.24049 7.56049 9.24049 7.83049 9.41049C8.09949 9.58049 8.25049 9.88949 8.21949 10.2005V17.1105Z\" fill=\"currentColor\" />\r\n                                      </svg>', 'non-residensial', 'nonresidensial', 2, '2025-01-12 01:10:15', '2025-01-12 01:10:15', NULL),
+('26943d26-2903-4bc3-9076-d759ca061c5c', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Persyaratan', 'desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"icon-20\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M7.81 2H16.191C19.28 2 21 3.78 21 6.83V17.16C21 20.26 19.28 22 16.191 22H7.81C4.77 22 3 20.26 3 17.16V6.83C3 3.78 4.77 2 7.81 2ZM8.08 6.66V6.65H11.069C11.5 6.65 11.85 7 11.85 7.429C11.85 7.87 11.5 8.22 11.069 8.22H8.08C7.649 8.22 7.3 7.87 7.3 7.44C7.3 7.01 7.649 6.66 8.08 6.66ZM8.08 12.74H15.92C16.35 12.74 16.7 12.39 16.7 11.96C16.7 11.53 16.35 11.179 15.92 11.179H8.08C7.649 11.179 7.3 11.53 7.3 11.96C7.3 12.39 7.649 12.74 8.08 12.74ZM8.08 17.31H15.92C16.319 17.27 16.62 16.929 16.62 16.53C16.62 16.12 16.319 15.78 15.92 15.74H8.08C7.78 15.71 7.49 15.85 7.33 16.11C7.17 16.36 7.17 16.69 7.33 16.95C7.49 17.2 7.78 17.35 8.08 17.31Z\" fill=\"currentColor\"></path></svg>', 'persyaratan', 'persyaratan', 4, '2025-01-15 21:15:30', '2025-01-15 21:15:30', NULL),
 ('2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', NULL, 'Data Master', 'descrip data master', '<svg width=\"20px\" height=\"20px\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                                        <path d=\"M7 8H4C2.9 8 2 7.1 2 6V4C2 2.9 2.9 2 4 2H7C8.1 2 9 2.9 9 4V6C9 7.1 8.1 8 7 8Z\" stroke=\"#292D32\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n                                        <path d=\"M20.8 7H17.2C16.54 7 16 6.45999 16 5.79999V4.20001C16 3.54001 16.54 3 17.2 3H20.8C21.46 3 22 3.54001 22 4.20001V5.79999C22 6.45999 21.46 7 20.8 7Z\" stroke=\"#292D32\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n                                        <path d=\"M20.8 14.5H17.2C16.54 14.5 16 13.96 16 13.3V11.7C16 11.04 16.54 10.5 17.2 10.5H20.8C21.46 10.5 22 11.04 22 11.7V13.3C22 13.96 21.46 14.5 20.8 14.5Z\" stroke=\"#292D32\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n                                        <path d=\"M9 5H16\" stroke=\"#292D32\" stroke-width=\"1.5\" stroke-miterlimit=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n                                        <path d=\"M12.5 5V18C12.5 19.1 13.4 20 14.5 20H16\" fill=\"white\"/>\r\n                                        <path d=\"M12.5 5V18C12.5 19.1 13.4 20 14.5 20H16\" stroke=\"#292D32\" stroke-width=\"1.5\" stroke-miterlimit=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n                                        <path d=\"M12.5 12.5H16\" stroke=\"#292D32\" stroke-width=\"1.5\" stroke-miterlimit=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n                                        <path d=\"M20.8 22H17.2C16.54 22 16 21.46 16 20.8V19.2C16 18.54 16.54 18 17.2 18H20.8C21.46 18 22 18.54 22 19.2V20.8C22 21.46 21.46 22 20.8 22Z\" stroke=\"#292D32\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n                                        </svg>', '#', 'datamaster', 8, '2025-01-12 02:46:19', NULL, NULL),
 ('36267512-8a78-42a4-b432-edb473d729ea', NULL, 'Residensial', 'keterangan Residensial', '<svg width=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"icon-20\" height=\"20\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M19.761 12.001C19.761 12.8145 20.429 13.4764 21.25 13.4764C21.664 13.4764 22 13.8093 22 14.2195V16.8958C22 19.159 20.142 21 17.858 21H6.143C3.859 21 2 19.159 2 16.8958V14.2195C2 13.8093 2.336 13.4764 2.75 13.4764C3.572 13.4764 4.24 12.8145 4.24 12.001C4.24 11.2083 3.599 10.6118 2.75 10.6118C2.551 10.6118 2.361 10.5335 2.22 10.3938C2.079 10.2541 2 10.0648 2 9.86866L2.002 7.10514C2.002 4.84201 3.86 3 6.144 3H17.856C20.14 3 21.999 4.84201 21.999 7.10514L22 9.78245C22 9.97864 21.921 10.1689 21.781 10.3076C21.64 10.4473 21.45 10.5256 21.25 10.5256C20.429 10.5256 19.761 11.1875 19.761 12.001ZM14.252 12.648L15.431 11.5105C15.636 11.3143 15.707 11.025 15.618 10.7575C15.53 10.4899 15.3 10.2997 15.022 10.261L13.393 10.0252L12.664 8.5627C12.539 8.31102 12.285 8.15446 12.002 8.15347H12C11.718 8.15347 11.464 8.31003 11.337 8.56171L10.608 10.0252L8.982 10.26C8.701 10.2997 8.471 10.4899 8.382 10.7575C8.294 11.025 8.365 11.3143 8.569 11.5105L9.748 12.648L9.47 14.2562C9.422 14.5336 9.535 14.8091 9.765 14.9746C9.895 15.0667 10.046 15.1143 10.199 15.1143C10.316 15.1143 10.434 15.0855 10.542 15.0291L12 14.2701L13.455 15.0271C13.707 15.1608 14.006 15.14 14.235 14.9736C14.466 14.8091 14.579 14.5336 14.531 14.2562L14.252 12.648Z\" fill=\"currentColor\"></path></svg>', 'residensial', 'residensial', 1, '2025-01-12 02:35:54', NULL, NULL),
 ('3a13cd66-29d4-476e-8398-3fbecbf038df', NULL, 'Konfigurasi', 'konf desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\">\r\n                                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M20.4023 13.58C20.76 13.77 21.036 14.07 21.2301 14.37C21.6083 14.99 21.5776 15.75 21.2097 16.42L20.4943 17.62C20.1162 18.26 19.411 18.66 18.6855 18.66C18.3278 18.66 17.9292 18.56 17.6022 18.36C17.3365 18.19 17.0299 18.13 16.7029 18.13C15.6911 18.13 14.8429 18.96 14.8122 19.95C14.8122 21.1 13.872 22 12.6968 22H11.3069C10.1215 22 9.18125 21.1 9.18125 19.95C9.16081 18.96 8.31259 18.13 7.30085 18.13C6.96361 18.13 6.65702 18.19 6.40153 18.36C6.0745 18.56 5.66572 18.66 5.31825 18.66C4.58245 18.66 3.87729 18.26 3.49917 17.62L2.79402 16.42C2.4159 15.77 2.39546 14.99 2.77358 14.37C2.93709 14.07 3.24368 13.77 3.59115 13.58C3.87729 13.44 4.06125 13.21 4.23498 12.94C4.74596 12.08 4.43937 10.95 3.57071 10.44C2.55897 9.87 2.23194 8.6 2.81446 7.61L3.49917 6.43C4.09191 5.44 5.35913 5.09 6.38109 5.67C7.27019 6.15 8.425 5.83 8.9462 4.98C9.10972 4.7 9.20169 4.4 9.18125 4.1C9.16081 3.71 9.27323 3.34 9.4674 3.04C9.84553 2.42 10.5302 2.02 11.2763 2H12.7172C13.4735 2 14.1582 2.42 14.5363 3.04C14.7203 3.34 14.8429 3.71 14.8122 4.1C14.7918 4.4 14.8838 4.7 15.0473 4.98C15.5685 5.83 16.7233 6.15 17.6226 5.67C18.6344 5.09 19.9118 5.44 20.4943 6.43L21.179 7.61C21.7718 8.6 21.4447 9.87 20.4228 10.44C19.5541 10.95 19.2475 12.08 19.7687 12.94C19.9322 13.21 20.1162 13.44 20.4023 13.58ZM9.10972 12.01C9.10972 13.58 10.4076 14.83 12.0121 14.83C13.6165 14.83 14.8838 13.58 14.8838 12.01C14.8838 10.44 13.6165 9.18 12.0121 9.18C10.4076 9.18 9.10972 10.44 9.10972 12.01Z\" fill=\"currentColor\" />\r\n                                      </svg>', '#', 'konfigurasi', 9, '2025-01-12 07:02:58', NULL, NULL),
 ('42c50614-5602-4b72-b48c-479a25eaf001', NULL, 'Laporan', 'desc laporan', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\">\r\n    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.92574 16.39H14.3119C14.7178 16.39 15.0545 16.05 15.0545 15.64C15.0545 15.23 14.7178 14.9 14.3119 14.9H8.92574C8.5198 14.9 8.18317 15.23 8.18317 15.64C8.18317 16.05 8.5198 16.39 8.92574 16.39ZM12.2723 9.9H8.92574C8.5198 9.9 8.18317 10.24 8.18317 10.65C8.18317 11.06 8.5198 11.39 8.92574 11.39H12.2723C12.6782 11.39 13.0149 11.06 13.0149 10.65C13.0149 10.24 12.6782 9.9 12.2723 9.9ZM19.3381 9.02561C19.5708 9.02292 19.8242 9.02 20.0545 9.02C20.302 9.02 20.5 9.22 20.5 9.47V17.51C20.5 19.99 18.5099 22 16.0545 22H8.17327C5.59901 22 3.5 19.89 3.5 17.29V6.51C3.5 4.03 5.5 2 7.96535 2H13.2525C13.5099 2 13.7079 2.21 13.7079 2.46V5.68C13.7079 7.51 15.203 9.01 17.0149 9.02C17.4381 9.02 17.8112 9.02316 18.1377 9.02593C18.3917 9.02809 18.6175 9.03 18.8168 9.03C18.9578 9.03 19.1405 9.02789 19.3381 9.02561ZM19.6111 7.566C18.7972 7.569 17.8378 7.566 17.1477 7.559C16.0527 7.559 15.1507 6.648 15.1507 5.542V2.906C15.1507 2.475 15.6685 2.261 15.9646 2.572C16.5004 3.13476 17.2368 3.90834 17.9699 4.67837C18.7009 5.44632 19.4286 6.21074 19.9507 6.759C20.2398 7.062 20.0279 7.565 19.6111 7.566Z\" fill=\"currentColor\" />\r\n  </svg>', 'laporan', 'laporan', 10, '2025-01-12 02:59:24', '2025-01-12 02:59:24', NULL),
 ('743c06c5-123e-41e1-9b54-2a9ddaed4506', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Komponen Intervensi', 'desc', '<svg width=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path opacity=\"0.4\" d=\"M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z\" fill=\"currentColor\"></path>\r\n                                                <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z\" fill=\"currentColor\"></path>\r\n                                              </svg>', 'komponen-intervensi', 'komponenintervensi', 2, '2025-01-12 00:58:40', '2025-01-12 00:58:40', NULL),
 ('87c3cbf6-0d9f-4c74-9b12-3d772f603272', '3a13cd66-29d4-476e-8398-3fbecbf038df', 'Permission', 'desc', '<svg width=\"20\" class=\"icon-20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\r\n                                                xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path opacity=\"0.4\"\r\n                                                    d=\"M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                            </svg>', 'permission', 'permission', 4, '2025-01-12 00:57:53', '2025-01-12 00:57:53', NULL),
-('8feec247-3990-44ee-afc4-5adb842012cc', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Form Assessement', 'desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"icon-20\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M7.81 2H16.191C19.28 2 21 3.78 21 6.83V17.16C21 20.26 19.28 22 16.191 22H7.81C4.77 22 3 20.26 3 17.16V6.83C3 3.78 4.77 2 7.81 2ZM8.08 6.66V6.65H11.069C11.5 6.65 11.85 7 11.85 7.429C11.85 7.87 11.5 8.22 11.069 8.22H8.08C7.649 8.22 7.3 7.87 7.3 7.44C7.3 7.01 7.649 6.66 8.08 6.66ZM8.08 12.74H15.92C16.35 12.74 16.7 12.39 16.7 11.96C16.7 11.53 16.35 11.179 15.92 11.179H8.08C7.649 11.179 7.3 11.53 7.3 11.96C7.3 12.39 7.649 12.74 8.08 12.74ZM8.08 17.31H15.92C16.319 17.27 16.62 16.929 16.62 16.53C16.62 16.12 16.319 15.78 15.92 15.74H8.08C7.78 15.71 7.49 15.85 7.33 16.11C7.17 16.36 7.17 16.69 7.33 16.95C7.49 17.2 7.78 17.35 8.08 17.31Z\" fill=\"currentColor\"></path></svg>', 'form-assessement', 'formassessement', 3, '2025-01-12 01:02:19', '2025-01-12 01:02:19', NULL),
 ('a6cf6e26-e1ea-4271-9fce-82961f3b5ca7', '3a13cd66-29d4-476e-8398-3fbecbf038df', 'Menu', 'menu desc', '<svg width=\"20\" class=\"icon-20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\r\n                                                xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path\r\n                                                    d=\"M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                            </svg>', 'menu', 'menu', 2, '2025-01-12 07:15:49', NULL, NULL),
+('acf5f180-8c43-4795-ad3e-7b32c1307afc', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Kategori KKPS', 'desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\">\r\n    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M7.33049 2.00049H16.6695C20.0705 2.00049 21.9905 3.92949 22.0005 7.33049V16.6705C22.0005 20.0705 20.0705 22.0005 16.6695 22.0005H7.33049C3.92949 22.0005 2.00049 20.0705 2.00049 16.6705V7.33049C2.00049 3.92949 3.92949 2.00049 7.33049 2.00049ZM12.0495 17.8605C12.4805 17.8605 12.8395 17.5405 12.8795 17.1105V6.92049C12.9195 6.61049 12.7705 6.29949 12.5005 6.13049C12.2195 5.96049 11.8795 5.96049 11.6105 6.13049C11.3395 6.29949 11.1905 6.61049 11.2195 6.92049V17.1105C11.2705 17.5405 11.6295 17.8605 12.0495 17.8605ZM16.6505 17.8605C17.0705 17.8605 17.4295 17.5405 17.4805 17.1105V13.8305C17.5095 13.5095 17.3605 13.2105 17.0895 13.0405C16.8205 12.8705 16.4805 12.8705 16.2005 13.0405C15.9295 13.2105 15.7805 13.5095 15.8205 13.8305V17.1105C15.8605 17.5405 16.2195 17.8605 16.6505 17.8605ZM8.21949 17.1105C8.17949 17.5405 7.82049 17.8605 7.38949 17.8605C6.95949 17.8605 6.59949 17.5405 6.56049 17.1105V10.2005C6.53049 9.88949 6.67949 9.58049 6.95049 9.41049C7.21949 9.24049 7.56049 9.24049 7.83049 9.41049C8.09949 9.58049 8.25049 9.88949 8.21949 10.2005V17.1105Z\" fill=\"currentColor\" />', 'kategori-kkps', 'kategorikkps', 6, '2025-01-12 01:02:19', '2025-01-12 01:02:19', NULL),
 ('c7a72709-ae65-492e-aebe-17083963f400', NULL, 'Pasien', 'desc', '<svg width=\"20px\" height=\"20px\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M15.8 21C15.8 21.3866 16.1134 21.7 16.5 21.7C16.8866 21.7 17.2 21.3866 17.2 21H15.8ZM4.8 21C4.8 21.3866 5.1134 21.7 5.5 21.7C5.8866 21.7 6.2 21.3866 6.2 21H4.8ZM6.2 18C6.2 17.6134 5.8866 17.3 5.5 17.3C5.1134 17.3 4.8 17.6134 4.8 18H6.2ZM12.3 21C12.3 21.3866 12.6134 21.7 13 21.7C13.3866 21.7 13.7 21.3866 13.7 21H12.3ZM13.7 18C13.7 17.6134 13.3866 17.3 13 17.3C12.6134 17.3 12.3 17.6134 12.3 18H13.7ZM11.7429 11.3125L11.3499 10.7333L11.3499 10.7333L11.7429 11.3125ZM16.2429 11.3125L15.8499 10.7333L15.8499 10.7333L16.2429 11.3125ZM3.2 21V19.5H1.8V21H3.2ZM8 14.7H11V13.3H8V14.7ZM15.8 19.5V21H17.2V19.5H15.8ZM11 14.7C13.651 14.7 15.8 16.849 15.8 19.5H17.2C17.2 16.0758 14.4242 13.3 11 13.3V14.7ZM3.2 19.5C3.2 16.849 5.34903 14.7 8 14.7V13.3C4.57583 13.3 1.8 16.0758 1.8 19.5H3.2ZM11 14.7H15.5V13.3H11V14.7ZM20.3 19.5V21H21.7V19.5H20.3ZM15.5 14.7C18.151 14.7 20.3 16.849 20.3 19.5H21.7C21.7 16.0758 18.9242 13.3 15.5 13.3V14.7ZM6.2 21V18H4.8V21H6.2ZM13.7 21V18H12.3V21H13.7ZM9.5 11.3C7.67746 11.3 6.2 9.82255 6.2 8.00001H4.8C4.8 10.5958 6.90426 12.7 9.5 12.7V11.3ZM6.2 8.00001C6.2 6.17746 7.67746 4.7 9.5 4.7V3.3C6.90426 3.3 4.8 5.40427 4.8 8.00001H6.2ZM9.5 4.7C11.3225 4.7 12.8 6.17746 12.8 8.00001H14.2C14.2 5.40427 12.0957 3.3 9.5 3.3V4.7ZM12.8 8.00001C12.8 9.13616 12.2264 10.1386 11.3499 10.7333L12.1358 11.8918C13.3801 11.0477 14.2 9.61973 14.2 8.00001H12.8ZM11.3499 10.7333C10.8225 11.091 10.1867 11.3 9.5 11.3V12.7C10.4757 12.7 11.3839 12.4019 12.1358 11.8918L11.3499 10.7333ZM14 4.7C15.8225 4.7 17.3 6.17746 17.3 8.00001H18.7C18.7 5.40427 16.5957 3.3 14 3.3V4.7ZM17.3 8.00001C17.3 9.13616 16.7264 10.1386 15.8499 10.7333L16.6358 11.8918C17.8801 11.0477 18.7 9.61973 18.7 8.00001H17.3ZM15.8499 10.7333C15.3225 11.091 14.6867 11.3 14 11.3V12.7C14.9757 12.7 15.8839 12.4019 16.6358 11.8918L15.8499 10.7333ZM11.9378 5.42349C12.5029 4.97049 13.2189 4.7 14 4.7V3.3C12.8892 3.3 11.8667 3.68622 11.0622 4.33114L11.9378 5.42349ZM14 11.3C13.3133 11.3 12.6775 11.091 12.1501 10.7333L11.3642 11.8918C12.1161 12.4019 13.0243 12.7 14 12.7V11.3Z\" fill=\"#000000\"/></svg>', 'pasien', 'pasien', 3, '2025-01-12 01:08:49', '2025-01-12 01:08:49', NULL),
 ('c99c4fd3-5f04-4ef6-8816-38318f650e67', '3a13cd66-29d4-476e-8398-3fbecbf038df', 'Data Pengguna', 'desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\">\n                                                <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M17.294 7.29105C17.294 10.2281 14.9391 12.5831 12 12.5831C9.0619 12.5831 6.70601 10.2281 6.70601 7.29105C6.70601 4.35402 9.0619 2 12 2C14.9391 2 17.294 4.35402 17.294 7.29105ZM12 22C7.66237 22 4 21.295 4 18.575C4 15.8539 7.68538 15.1739 12 15.1739C16.3386 15.1739 20 15.8789 20 18.599C20 21.32 16.3146 22 12 22Z\" fill=\"currentColor\" />\n                                              </svg>', 'pengguna', 'pengguna', 2, '2025-01-12 00:54:01', '2025-01-12 00:54:01', NULL),
 ('e198201a-f571-46c0-af86-d60876285041', '3a13cd66-29d4-476e-8398-3fbecbf038df', 'Data Akses<br>Pengguna', 'desc', '<svg width=\"20\" class=\"icon-20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\r\n                                                xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path\r\n                                                    d=\"M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                            </svg>', 'data-akses-pengguna', 'dataaksespengguna', 3, '2025-01-12 00:55:09', '2025-01-12 00:55:09', NULL),
@@ -142,7 +545,7 @@ INSERT INTO `menu` (`id`, `parent_id`, `menu`, `description`, `icon`, `url`, `ac
 --
 -- Table structure for table `migrations`
 --
-DROP TABLE IF EXISTS `migrations`;
+
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(255) NOT NULL,
@@ -164,7 +567,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 -- Table structure for table `model_has_permissions`
 --
-DROP TABLE IF EXISTS `model_has_permissions`;
+
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
   `model_type` varchar(255) NOT NULL,
@@ -176,7 +579,7 @@ CREATE TABLE `model_has_permissions` (
 --
 -- Table structure for table `model_has_roles`
 --
-DROP TABLE IF EXISTS `model_has_roles`;
+
 CREATE TABLE `model_has_roles` (
   `role_id` bigint(20) UNSIGNED NOT NULL,
   `model_type` varchar(255) NOT NULL,
@@ -188,7 +591,7 @@ CREATE TABLE `model_has_roles` (
 --
 -- Table structure for table `password_reset_tokens`
 --
-DROP TABLE IF EXISTS `password_reset_tokens`;
+
 CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -200,7 +603,7 @@ CREATE TABLE `password_reset_tokens` (
 --
 -- Table structure for table `permissions`
 --
-DROP TABLE IF EXISTS `permissions`;
+
 CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -214,7 +617,7 @@ CREATE TABLE `permissions` (
 --
 -- Table structure for table `roles`
 --
-DROP TABLE IF EXISTS `roles`;
+
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -239,7 +642,7 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 --
 -- Table structure for table `role_has_permissions`
 --
-DROP TABLE IF EXISTS `role_has_permissions`;
+
 CREATE TABLE `role_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
   `role_id` bigint(20) UNSIGNED NOT NULL
@@ -250,7 +653,7 @@ CREATE TABLE `role_has_permissions` (
 --
 -- Table structure for table `sessions`
 --
-DROP TABLE IF EXISTS `sessions`;
+
 CREATE TABLE `sessions` (
   `id` varchar(255) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -265,7 +668,7 @@ CREATE TABLE `sessions` (
 --
 -- Table structure for table `users`
 --
-DROP TABLE IF EXISTS `users`;
+
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -311,6 +714,66 @@ ALTER TABLE `jobs`
 -- Indexes for table `job_batches`
 --
 ALTER TABLE `job_batches`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_agama`
+--
+ALTER TABLE `laksa_ms_agama`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_kabupaten_kota`
+--
+ALTER TABLE `laksa_ms_kabupaten_kota`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_kategori_ppks`
+--
+ALTER TABLE `laksa_ms_kategori_ppks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_kategori_ppks_sub`
+--
+ALTER TABLE `laksa_ms_kategori_ppks_sub`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_kecamatan`
+--
+ALTER TABLE `laksa_ms_kecamatan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_pasien`
+--
+ALTER TABLE `laksa_ms_pasien`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_persyaratan`
+--
+ALTER TABLE `laksa_ms_persyaratan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_provinsi`
+--
+ALTER TABLE `laksa_ms_provinsi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_residensial`
+--
+ALTER TABLE `laksa_ms_residensial`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_sumber_rujukan`
+--
+ALTER TABLE `laksa_ms_sumber_rujukan`
   ADD PRIMARY KEY (`id`);
 
 --

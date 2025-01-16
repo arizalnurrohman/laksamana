@@ -5,6 +5,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/py
 .env
 .env.backup
 .env.production
