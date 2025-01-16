@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `cache`
 --
-
+DROP TABLE IF EXISTS `cache`;
 CREATE TABLE `cache` (
   `key` varchar(255) NOT NULL,
   `value` mediumtext NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `cache` (
 --
 -- Table structure for table `cache_locks`
 --
-
+DROP TABLE IF EXISTS `cache_locks`;
 CREATE TABLE `cache_locks` (
   `key` varchar(255) NOT NULL,
   `owner` varchar(255) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE `cache_locks` (
 --
 -- Table structure for table `failed_jobs`
 --
-
+DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `uuid` varchar(255) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE `failed_jobs` (
 --
 -- Table structure for table `jobs`
 --
-
+DROP TABLE IF EXISTS `jobs`;
 CREATE TABLE `jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `queue` varchar(255) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE `jobs` (
 --
 -- Table structure for table `job_batches`
 --
-
+DROP TABLE IF EXISTS `job_batches`;
 CREATE TABLE `job_batches` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE `job_batches` (
 --
 -- Table structure for table `menu`
 --
-
+DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
   `id` varchar(100) NOT NULL,
   `parent_id` varchar(100) DEFAULT NULL,
@@ -142,7 +142,7 @@ INSERT INTO `menu` (`id`, `parent_id`, `menu`, `description`, `icon`, `url`, `ac
 --
 -- Table structure for table `migrations`
 --
-
+DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(255) NOT NULL,
@@ -164,7 +164,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 -- Table structure for table `model_has_permissions`
 --
-
+DROP TABLE IF EXISTS `model_has_permissions`;
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
   `model_type` varchar(255) NOT NULL,
@@ -176,7 +176,7 @@ CREATE TABLE `model_has_permissions` (
 --
 -- Table structure for table `model_has_roles`
 --
-
+DROP TABLE IF EXISTS `model_has_roles`;
 CREATE TABLE `model_has_roles` (
   `role_id` bigint(20) UNSIGNED NOT NULL,
   `model_type` varchar(255) NOT NULL,
@@ -188,7 +188,7 @@ CREATE TABLE `model_has_roles` (
 --
 -- Table structure for table `password_reset_tokens`
 --
-
+DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -200,7 +200,7 @@ CREATE TABLE `password_reset_tokens` (
 --
 -- Table structure for table `permissions`
 --
-
+DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -214,7 +214,7 @@ CREATE TABLE `permissions` (
 --
 -- Table structure for table `roles`
 --
-
+DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -239,7 +239,7 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 --
 -- Table structure for table `role_has_permissions`
 --
-
+DROP TABLE IF EXISTS `role_has_permissions`;
 CREATE TABLE `role_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
   `role_id` bigint(20) UNSIGNED NOT NULL
@@ -250,7 +250,7 @@ CREATE TABLE `role_has_permissions` (
 --
 -- Table structure for table `sessions`
 --
-
+DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `id` varchar(255) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -265,7 +265,7 @@ CREATE TABLE `sessions` (
 --
 -- Table structure for table `users`
 --
-
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
