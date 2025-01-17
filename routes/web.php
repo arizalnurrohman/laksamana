@@ -26,7 +26,10 @@ Route::get('/data-akses-pengguna', [PenggunaController::class, 'index'])->name('
 Route::get('/data-wilayah', [DataWilayahController::class, 'index'])->name('datawilayah');
 Route::get('/komponen-intervensi', [KomponenInterrvensiController::class, 'index'])->name('komponenintervensi');
 Route::get('/form-assessement', [FormAssessementController::class, 'index'])->name('formassessement');
+
 Route::get('/kategori-kkps', [KategoriKKPSController::class, 'index'])->name('kategorikkps');
+Route::post('/kategori-kkps/store', [KategoriKKPSController::class, 'store'])->name('kategorikkps.store');
+Route::post('/kategori-kkps/update', [KategoriKKPSController::class, 'update'])->name('kategorikkps.update');
 
 Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
 Route::post('/persyaratan/store', [PersyaratanController::class, 'store'])->name('persyaratan.store');
@@ -42,8 +45,6 @@ Route::post('/residensial', [ResidensialController::class, 'store'])->name('resi
 
 Route::get('/non-residensial', [NonResidensialController::class, 'index'])->name('nonresidensial');
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
-
-
 
 Route::get('/permission', [PermissionController::class, 'index'])->name('permission');
 Route::post('/permission', [PermissionController::class, 'store'])->name('permission.store');

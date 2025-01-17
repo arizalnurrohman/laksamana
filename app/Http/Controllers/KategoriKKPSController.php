@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Persyaratan;
 use Illuminate\Support\Str;
+use App\Models\KategoriPPKS;
 use Illuminate\Http\Request;
 
 class KategoriKKPSController extends Controller
@@ -35,23 +35,37 @@ class KategoriKKPSController extends Controller
     // }
     public function index()
     {
-        $persyaratan = Persyaratan::all();
-        return view('persyaratan.index', compact('persyaratan'));
+        $kategori = KategoriPPKS::all();
+        return view('kategori_ppks.index', compact('kategori'))->with('no', 1);
     }
     public function store(Request $request)
     {
         $request->validate([
-            'persyaratan' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
         ]);
 
-        $lastSort = Persyaratan::max('sort') ?? 0;
+        $lastSort = KategoriPPKS::max('sort') ?? 0;
 
-        Persyaratan::create([
+        KategoriPPKS::create([
             'id' => Str::uuid()->toString(),
-            'persyaratan' => $request->persyaratan,
+            'kategori' => $request->kategori,
             'sort' => $lastSort + 1,
         ]);
 
         return response()->json(['message' => 'Data berhasil ditambahkan.']);
+    }
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:laksa_ms_kategori_ppks,id',
+            'kategori' => 'required|string|max:255',
+        ]);
+
+        $kategori = KategoriPPKS::findOrFail($request->id);
+        $kategori->update([
+            'kategori' => $request->kategori,
+        ]);
+
+        return response()->json(['message' => 'Data berhasil diperbarui.']);
     }
 }
