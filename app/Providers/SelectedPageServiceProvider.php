@@ -14,10 +14,10 @@ class SelectedPageServiceProvider extends ServiceProvider
         // Share the currently active menu with all views
         View::composer('*', function ($view) {
             // Ambil URL path dari request
-            $currentUrl = Request::path();
+            $currentSegment = Request::segment(1); // Mendapatkan segmen pertama dari URL
 
-            // Cari menu aktif berdasarkan URL
-            $activeMenu = Menu::where('url', $currentUrl)->first();
+            // Cari menu aktif berdasarkan segmen URL
+            $activeMenu = Menu::where('url', $currentSegment)->first();
 
             // Share menu aktif ke semua view
             $view->with('activeMenu', $activeMenu);

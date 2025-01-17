@@ -35,7 +35,11 @@ Route::post('/persyaratan/update', [PersyaratanController::class, 'update'])->na
 Route::get('/asrama', [AsramaController::class, 'index'])->name('asrama');
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
+
 Route::get('/residensial', [ResidensialController::class, 'index'])->name('residensial');
+Route::get('/residensial/create', [ResidensialController::class, 'create'])->name('residensial.create');
+Route::post('/residensial', [ResidensialController::class, 'store'])->name('residensial.store');
+
 Route::get('/non-residensial', [NonResidensialController::class, 'index'])->name('nonresidensial');
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
 

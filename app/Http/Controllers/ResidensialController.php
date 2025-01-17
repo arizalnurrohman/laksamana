@@ -2,7 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agama;
+use App\Models\Pegawai;
+use App\Models\Petugas;
+use App\Models\Provinsi;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
+use App\Models\Pendidikan;
 use Illuminate\Http\Request;
+use App\Models\SumberRujukan;
 
 class ResidensialController extends Controller
 {
@@ -35,5 +43,28 @@ class ResidensialController extends Controller
     {
         $residensial = [];
         return view('residensial.index', compact('residensial'));
+    }
+    public function create()
+    {
+        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_petugas.*","laksa_ms_petugas.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.id","=","laksa_ms_petugas.pegawai_id")->get();
+        $sumber_rujukan=SumberRujukan::all();
+        $agama = Agama::all();
+        $provinsi = Provinsi::all();
+        $kabupaten = Kabupaten::all();
+        $kecamatan = Kecamatan::all();
+        $pendidikan=Pendidikan::all();
+        return view('residensial.create', compact('petugas','sumber_rujukan','agama','provinsi','kabupaten','kecamatan','pendidikan'));
+    }
+    public function store(Request $request)
+    {
+        dd($request->all());
+        // $request->validate([
+        //     'name' => 'required|max:255',
+        //     'description' => 'nullable|max:1000',
+        // ]);
+
+        // Item::create($request->all());
+
+        // return redirect()->route('items.create')->with('success', 'Item berhasil ditambahkan!');
     }
 }
