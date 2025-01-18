@@ -28,6 +28,7 @@ Route::get('/komponen-intervensi', [KomponenInterrvensiController::class, 'index
 Route::get('/form-assessement', [FormAssessementController::class, 'index'])->name('formassessement');
 
 Route::get('/kategori-kkps', [KategoriKKPSController::class, 'index'])->name('kategorikkps');
+Route::get('/load-kategori-kkps', [KategoriKKPSController::class, 'load_data'])->name('load_kategorikkps');
 Route::post('/kategori-kkps/store', [KategoriKKPSController::class, 'store'])->name('kategorikkps.store');
 Route::post('/kategori-kkps/update', [KategoriKKPSController::class, 'update'])->name('kategorikkps.update');
 

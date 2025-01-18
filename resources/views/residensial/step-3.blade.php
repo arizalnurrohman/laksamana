@@ -7,12 +7,17 @@
             <h2 class="steps">Step 3 - 4</h2>
         </div>
     </div>
-    <div class="form-group">
-        <label class="form-label">Upload Your Photo:</label>
-        <input type="file" class="form-control" name="pic" accept="image/*">
-    </div>
-    <div class="form-group">
-        <label class="form-label">Upload Signature Photo:</label>
-        <input type="file" class="form-control" name="pic-2" accept="image/*">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-label" for="choices-single-default">Petugas Penerimaan</label>
+                <select class="form-select" data-trigger name="choices-single-default" id="choices-single-default">
+                    <option value="">Pilih Kategori PPKS</option>
+                    @foreach($kategori as $kategorix)
+                        <option value="{{$kategorix->id}}">{{$kategorix->kategori}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 </div>
