@@ -108,13 +108,19 @@
         });
 
         $('.btn-warning').on('click', function () {
-            const row = $(this).closest('tr'); // Dapatkan elemen <tr> terkait
-            const id = row.attr('id'); // Ambil ID dari atribut id pada <tr>
-            const kategori = row.find('td:eq(1)').text(); // Ambil Kategori dari kolom kedua
+            alert("aa");
+            // Cari elemen terdekat <tr> dari tombol yang diklik
+            const row = $(this).closest('tr'); 
+            
+            // Ambil ID dari atribut 'id' di dalam <div> dalam kolom <td>
+            const id = row.find('td div[role="group"]').attr('id'); 
+            
+            // Ambil teks kategori dari kolom kedua
+            const kategori = row.find('td:eq(1)').text(); 
 
             // Isi modal dengan data
-            $('#updateId').val(id.trim());
-            $('#updateKategori').val(kategori.trim());
+            $('#updateId').val(id.trim()); // Isi ID ke input modal
+            $('#updateKategori').val(kategori.trim()); // Isi kategori ke input modal
 
             // Tampilkan modal
             $('#update{{ $activeMenu->access }}Modal').modal('show');
