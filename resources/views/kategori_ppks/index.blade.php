@@ -85,34 +85,8 @@
 @section('add-js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function loadTabel() {
-        $("#list-data").DataTable().clear().destroy();
-        $("#list-data").DataTable({
-            "ajax": {
-                url: "{{route('load_kategorikkps')}}",
-                dataSrc: ''
-            },
-            "dataSrc": "0.Members",
-            lengthMenu: [
-                [10, 20, 50, -1],
-                [10, 20, 50, "Semua"],
-            ],
-            columns: [{
-                    "data": 'No'
-                },
-                {
-                    "data": 'Kategori'
-                },
-                {
-                    "data": 'Aksi'
-                }
-            ],
-
-            bLengthChange: false
-        });
-    }
     $(document).ready(function () {
-        loadTabel();
+        loadTabelData("list-data", "{{route('load_kategorikkps')}}", ['No', 'Kategori', 'Aksi']);
         $('#add{{ $activeMenu->access }}Form').on('submit', function (e) {
             e.preventDefault();
 

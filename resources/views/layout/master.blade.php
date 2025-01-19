@@ -82,6 +82,35 @@
         <script src="{{ url('assets/js/hope-ui1fc6.js?v=4.0.0') }}" defer></script>
         <script src="{{ url('assets/js/hope-uipro1fc6.js?v=4.0.0') }}" defer></script>
         <script src="{{ url('assets/js/sidebar1fc6.js?v=4.0.0') }}" defer></script>
+        <script type="text/javascript">
+            
+            function loadTabelData(table_id, url, columnNames,datasrc = "0.Members") {
+                //contoh penggunaan
+                // const columnNames = ['No', 'Kategori', 'Aksi']; // Data kolom yang diinginkan
+                // loadTabelData("list-data", "{{route('load_kategorikkps')}}", columnNames);
+                // Variabel columns diisi menggunakan looping
+                const columns = columnNames.map(columnName => {
+                    return { "data": columnName };
+                });
+
+                // Inisialisasi DataTable
+                $("#" + table_id).DataTable().clear().destroy();
+                $("#" + table_id).DataTable({
+                    "ajax": {
+                        url: url,
+                        dataSrc: ''
+                    },
+                    "dataSrc": datasrc,
+                    lengthMenu: [
+                        [10, 20, 50, -1],
+                        [10, 20, 50, "Semua"],
+                    ],
+                    columns: columns,
+                    bLengthChange: false
+                });
+            }
+
+        </script>
         @yield('add-js')    
     </body>
 <!-- Mirrored from templates.iqonic.design/hope-ui/pro/html/dashboard/blank-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Jan 2025 14:38:19 GMT -->
