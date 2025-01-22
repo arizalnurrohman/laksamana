@@ -28,7 +28,7 @@ Route::get('/komponen-intervensi', [KomponenInterrvensiController::class, 'index
 Route::get('/form-assessement', [FormAssessementController::class, 'index'])->name('formassessement');
 
 Route::get('/kategori-kkps', [KategoriKKPSController::class, 'index'])->name('kategorikkps');
-Route::get('/load-kategori-kkps', [KategoriKKPSController::class, 'load_data'])->name('load_kategorikkps');
+Route::get('/kategori-kkps/load-kategori-kkps', [KategoriKKPSController::class, 'load_data'])->name('load_kategorikkps');
 Route::post('/kategori-kkps/store', [KategoriKKPSController::class, 'store'])->name('kategorikkps.store');
 Route::post('/kategori-kkps/update', [KategoriKKPSController::class, 'update'])->name('kategorikkps.update');
 
@@ -38,7 +38,10 @@ Route::post('/persyaratan/update', [PersyaratanController::class, 'update'])->na
 
 Route::get('/asrama', [AsramaController::class, 'index'])->name('asrama');
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');
+
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
+Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
+Route::get('/pasien/load-pasien', [PasienController::class, 'load_data'])->name('load_pasien');
 
 Route::get('/residensial', [ResidensialController::class, 'index'])->name('residensial');
 Route::get('/residensial/create', [ResidensialController::class, 'create'])->name('residensial.create');

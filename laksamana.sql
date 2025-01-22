@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 19, 2025 at 07:56 AM
+-- Generation Time: Jan 22, 2025 at 07:57 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -103,12 +103,12 @@ CREATE TABLE `job_batches` (
 --
 
 CREATE TABLE `laksa_ms_agama` (
-  `id` varchar(36) NOT NULL,
-  `agama` varchar(100) DEFAULT NULL,
+  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `agama` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `laksa_ms_agama`
@@ -129,14 +129,14 @@ INSERT INTO `laksa_ms_agama` (`id`, `agama`, `created_at`, `updated_at`, `delete
 --
 
 CREATE TABLE `laksa_ms_kabupaten_kota` (
-  `id` varchar(36) NOT NULL,
-  `provinsi_id` varchar(36) DEFAULT NULL,
-  `kemendagri_id` varchar(36) DEFAULT NULL,
-  `kabupaten_kota` varchar(100) DEFAULT NULL,
+  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `provinsi_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kemendagri_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kabupaten_kota` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `laksa_ms_kabupaten_kota`
@@ -208,14 +208,14 @@ CREATE TABLE `laksa_ms_kategori_ppks_sub` (
 --
 
 CREATE TABLE `laksa_ms_kecamatan` (
-  `id` varchar(36) NOT NULL,
-  `kabupaten_kota_id` varchar(36) DEFAULT NULL,
-  `kemendagri_id` varchar(36) DEFAULT NULL,
-  `kecamatan` varchar(100) DEFAULT NULL,
+  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `kabupaten_kota_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kemendagri_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kecamatan` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `laksa_ms_kecamatan`
@@ -402,21 +402,25 @@ INSERT INTO `laksa_ms_kecamatan` (`id`, `kabupaten_kota_id`, `kemendagri_id`, `k
 --
 
 CREATE TABLE `laksa_ms_pasien` (
-  `id` varchar(36) NOT NULL,
-  `nama_lengkap` varchar(100) DEFAULT NULL,
-  `nik` varchar(16) DEFAULT NULL,
-  `nokk` varchar(16) DEFAULT NULL,
-  `tmp_lahir` varchar(100) DEFAULT NULL,
-  `provinsi_id` varchar(36) DEFAULT NULL,
-  `kota_id` varchar(36) DEFAULT NULL,
-  `kecamatan_id` varchar(36) DEFAULT NULL,
-  `kelurahan_desa_id` varchar(36) DEFAULT NULL,
-  `alamat` varchar(255) DEFAULT NULL,
-  `domisili_alamat` char(1) DEFAULT NULL,
-  `domisili` varchar(255) DEFAULT NULL,
-  `agama_id` varchar(36) DEFAULT NULL,
-  `pendidikan_id` varchar(36) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_lengkap` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nik` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nokk` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tmp_lahir` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tgl_lahir` date DEFAULT NULL,
+  `provinsi_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kota_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kecamatan_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kelurahan_desa_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `domisili_alamat` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `domisili` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `agama_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `pendidikan_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -449,36 +453,36 @@ INSERT INTO `laksa_ms_pegawai` (`id`, `nip`, `nama`, `created_at`, `updated_at`,
 --
 
 CREATE TABLE `laksa_ms_pendidikan` (
-  `id` varchar(36) DEFAULT '0',
-  `pendidikan` varchar(200) DEFAULT NULL,
-  `teks` varchar(200) DEFAULT NULL,
+  `id` varchar(36) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '0',
+  `pendidikan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `teks` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `level` int(11) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPRESSED;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPRESSED;
 
 --
 -- Dumping data for table `laksa_ms_pendidikan`
 --
 
 INSERT INTO `laksa_ms_pendidikan` (`id`, `pendidikan`, `teks`, `level`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('ae71db46-2eb8-1085-8a49-3f0547641f01', '-Tidak Sekolah-', '', 1, NULL, NULL, NULL),
+('225436e4-0b16-4479-3db4-b8f6202b5db6', 'SLTA', 'SLTA', 7, NULL, NULL, NULL),
+('56c193ce-5057-a6d6-a447-3c08a35d00cc', 'SLB', '', 5, NULL, NULL, NULL),
+('6063251e-680a-2496-495a-e25c3b5a3cd0', 'PENDIDIKAN PROFESI', '', 14, NULL, NULL, NULL),
+('68fd8878-8502-19bd-7121-2147f5e7776d', 'D - II', 'D - II', 9, NULL, NULL, NULL),
 ('7ff7a10d-265b-790c-9454-ca35b1cd0195', 'BELUM SEKOLAH', '-Belum Sekolah-', 2, NULL, NULL, NULL),
 ('86ef19a5-37ff-a513-57be-de60bae15bab', 'TK', 'TK', 3, NULL, NULL, NULL),
-('c31d1245-26cd-6681-8455-3aa4dc2f95e7', 'SD', 'SD', 4, NULL, NULL, NULL),
-('56c193ce-5057-a6d6-a447-3c08a35d00cc', 'SLB', '', 5, NULL, NULL, NULL),
-('fe610597-2931-751d-2077-3d70e2051157', 'SMP', 'SMP', 6, NULL, NULL, NULL),
-('225436e4-0b16-4479-3db4-b8f6202b5db6', 'SLTA', 'SLTA', 7, NULL, NULL, NULL),
-('be936978-20d6-571f-2a25-b037d1648a50', 'D - I', 'D - I', 8, NULL, NULL, NULL),
-('68fd8878-8502-19bd-7121-2147f5e7776d', 'D - II', 'D - II', 9, NULL, NULL, NULL),
-('fca3a7f1-918f-16b2-64a0-7eb35ac84735', 'SARJANA MUDA / D-III', 'D - III', 10, NULL, NULL, NULL),
-('aee9efe6-3f21-7b9c-81d4-b987d0936df3', 'SARJANA', 'S - 1', 11, NULL, NULL, NULL),
+('8bec8433-099b-9aaf-50c6-951eff24531e', 'DOKTOR', 'S-3', 16, NULL, NULL, NULL),
 ('9204eac5-8209-18ba-6e75-f1ca9f1d1020', 'D - IV', 'D - IV', 12, NULL, NULL, NULL),
+('ae71db46-2eb8-1085-8a49-3f0547641f01', '-Tidak Sekolah-', '', 1, NULL, NULL, NULL),
+('aee9efe6-3f21-7b9c-81d4-b987d0936df3', 'SARJANA', 'S - 1', 11, NULL, NULL, NULL),
+('be936978-20d6-571f-2a25-b037d1648a50', 'D - I', 'D - I', 8, NULL, NULL, NULL),
+('c31d1245-26cd-6681-8455-3aa4dc2f95e7', 'SD', 'SD', 4, NULL, NULL, NULL),
 ('c4ffb948-20cb-9915-81f0-03e1659a90ae', 'AKTA IV', '', 13, NULL, NULL, NULL),
-('6063251e-680a-2496-495a-e25c3b5a3cd0', 'PENDIDIKAN PROFESI', '', 14, NULL, NULL, NULL),
 ('f38bc278-3c38-6d7d-92fc-a63b39823f82', 'PASCA SARJANA', 'S - 2', 15, NULL, NULL, NULL),
-('8bec8433-099b-9aaf-50c6-951eff24531e', 'DOKTOR', 'S-3', 16, NULL, NULL, NULL);
+('fca3a7f1-918f-16b2-64a0-7eb35ac84735', 'SARJANA MUDA / D-III', 'D - III', 10, NULL, NULL, NULL),
+('fe610597-2931-751d-2077-3d70e2051157', 'SMP', 'SMP', 6, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -564,6 +568,7 @@ CREATE TABLE `laksa_ms_residensial` (
   `masa_layanan` int(11) DEFAULT NULL,
   `rencana_tgl_terminasi` date DEFAULT NULL,
   `pengampu_id` varchar(36) DEFAULT NULL,
+  `status` enum('draft','proses','selesai') NOT NULL DEFAULT 'draft',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -576,13 +581,13 @@ CREATE TABLE `laksa_ms_residensial` (
 --
 
 CREATE TABLE `laksa_ms_sumber_rujukan` (
-  `id` varchar(36) NOT NULL,
-  `sumber` varchar(255) DEFAULT NULL,
+  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `prioritas` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `laksa_ms_sumber_rujukan`
@@ -600,18 +605,18 @@ INSERT INTO `laksa_ms_sumber_rujukan` (`id`, `sumber`, `prioritas`, `created_at`
 --
 
 CREATE TABLE `menu` (
-  `id` varchar(100) NOT NULL,
-  `parent_id` varchar(100) DEFAULT NULL,
-  `menu` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `icon` text NOT NULL,
-  `url` varchar(100) NOT NULL,
-  `access` varchar(100) NOT NULL,
+  `id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parent_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `menu` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `icon` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `url` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `access` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `sort` tinyint(3) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `menu`
@@ -852,6 +857,12 @@ ALTER TABLE `laksa_ms_pasien`
 -- Indexes for table `laksa_ms_pegawai`
 --
 ALTER TABLE `laksa_ms_pegawai`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_pendidikan`
+--
+ALTER TABLE `laksa_ms_pendidikan`
   ADD PRIMARY KEY (`id`);
 
 --

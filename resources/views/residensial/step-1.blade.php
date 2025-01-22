@@ -22,7 +22,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Tanggal Masuk/Penerimaan: *</label>
-                <input type="text" class="form-control" name="uname" placeholder="UserName" />
+                <input type="date" class="form-control" name="uname" placeholder="UserName" />
             </div>
         </div>
         <div class="col-md-12">
