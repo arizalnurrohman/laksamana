@@ -165,17 +165,14 @@
     });
 
     function update_form(id) {
-        // AJAX request to get data by ID
         $.ajax({
-            url: `/persyaratan/edit/${id}`, // Route endpoint
+            url: `/persyaratan/edit/${id}`,
             type: 'GET',
             success: function (data) {
-                // Populate modal fields with data
                 $('#updateId').val(data.id);
                 $('#updatePersyaratan').val(data.persyaratan);
                 $('#updateUrutan').val(data.sort);
 
-                // Show the modal
                 $('#update{{ $activeMenu->access }}Modal').modal('show');
             },
             error: function (xhr, status, error) {
@@ -187,21 +184,20 @@
 
     function delete_form(id) {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "Apakah anda yakin?",
+            text: "akan menghapus data ini ?!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "ya, Hapus!"
         }).then((result) => {
             if (result.isConfirmed) {
-                // AJAX request to delete data
                 $.ajax({
-                    url: `/persyaratan/delete/${id}`, // Endpoint sesuai route
+                    url: `/persyaratan/delete/${id}`,
                     type: 'DELETE',
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Tambahkan CSRF token
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
                         Swal.fire({
@@ -218,7 +214,6 @@
                         });
                     },
                     error: function(xhr, status, error) {
-                        // Gagal dihapus
                         Swal.fire({
                             title: "Error!",
                             text: "Failed to delete the file. Please try again.",
