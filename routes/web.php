@@ -34,13 +34,20 @@ Route::post('/kategori-kkps/update', [KategoriKKPSController::class, 'update'])-
 
 Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
 Route::post('/persyaratan/store', [PersyaratanController::class, 'store'])->name('persyaratan.store');
+Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->name('pasien.edit');
 Route::post('/persyaratan/update', [PersyaratanController::class, 'update'])->name('persyaratan.update');
+Route::get('/persyaratan/load-persyaratan', [PersyaratanController::class, 'load_data'])->name('load_persyaratan');
+Route::delete('/persyaratan/delete/{id}', [PersyaratanController::class, 'destroy'])->name('persyaratan.delete');
+
 
 Route::get('/asrama', [AsramaController::class, 'index'])->name('asrama');
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');
 
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
 Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
+Route::post('/pasien', [PasienController::class, 'store'])->name('pasien.store');
+Route::get('/pasien/edit/{id}', [PasienController::class, 'edit'])->name('pasien.edit');
+Route::put('/pasien/{id}', [PasienController::class, 'update'])->name('pasien.update');
 Route::get('/pasien/load-pasien', [PasienController::class, 'load_data'])->name('load_pasien');
 
 Route::get('/residensial', [ResidensialController::class, 'index'])->name('residensial');

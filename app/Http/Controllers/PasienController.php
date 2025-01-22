@@ -37,8 +37,7 @@ class PasienController extends Controller
     //     $this->error    =array();
     //     $this->success  =false;
     // }
-    public function index()
-    {
+    public function index(){
         $pasien = [];
         return view('pasien.index', compact('pasien'));
     }
@@ -54,8 +53,21 @@ class PasienController extends Controller
         return view('pasien.create', compact('agama','provinsi','kabupaten','kecamatan','pendidikan'));
     }
 
-    public function load_data()
+    public function store(Request $request, $id)
     {
+        
+    }
+
+    public function edit($id){
+        $pasien = Pasien::findOrFail($id);
+        return view('pasien.edit', compact('pasien'));
+    }
+    public function update(Request $request, $id)
+    {
+        
+    }
+
+    public function load_data(){
         $pasien = Pasien::where("laksa_ms_pasien.id","!=",null)
                         ->select('laksa_ms_pasien.*','laksa_ms_provinsi.*','laksa_ms_kabupaten_kota.*','laksa_ms_kecamatan.*')
                         ->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_pasien.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
