@@ -40,7 +40,7 @@ Route::post('/kategori-kkps/sub-store', [KategoriKKPSController::class, 'sub_sto
 
 Route::get('/kategori-kkps/list-sub/child/{id}', [KategoriKKPSController::class, 'sub_child_ppsk'])->name('subchild_kategorikkps');
 Route::get('/kategori-kkps/list-sub/child/load_list/{id}', [KategoriKKPSController::class, 'load_sub_child_list_ppsk'])->name('load_subchildlist_kategorikkps');
-
+Route::delete('/kategori-kkps/list-sub/child/delete/{id}', [KategoriKKPSController::class, 'destroy_sub_child'])->name('subchild_kategorikkps.delete');
 
 
 Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');

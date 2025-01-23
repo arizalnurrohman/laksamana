@@ -99,6 +99,19 @@ class KategoriKKPSController extends Controller
         return response()->json($data);
     }
 
+    public function destroy_sub_child($id)
+    {
+        try {
+            // Cari dan hapus data
+            $persyaratan = KategoriPPKSSub::findOrFail($id);
+            $persyaratan->delete();
+
+            return response()->json(['message' => 'Data deleted successfully!'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete data.'], 500);
+        }
+    }
+
     public function load_sub_child_list_ppsk($id){
         $sub_child = KategoriPPKSSub::where('parent_id', $id)->orderby("sort","asc")->get();
         $data = array();
@@ -137,16 +150,23 @@ class KategoriKKPSController extends Controller
 
         $lastSort = KategoriPPKSSub::where("parent_id","=",$request->parent_id)->max('sort') ?? 0;
 
-        KategoriPPKSSub::create([
-            'id'                => Str::uuid()->toString(),
-            'kategori_id'       => $request->kategori_id,
-            'parent_id'         => $request->parent_id,
-            'sub_kategori_ppks' => $request->kategori_sub,
-            'sort'              => $lastSort + 1,
-        ]);
-
-
-        return response()->json(['message' => 'Data berhasil ditambahkan.']);
+        if($request->sub_id){
+            $subkategori = KategoriPPKSSub::findOrFail($request->sub_id);
+            $subkategori->update([
+                'sub_kategori_ppks' => $request->kategori_sub,
+            ]);
+            return response()->json(['message' => 'Data berhasil diperbarui.']);
+        }else{
+            KategoriPPKSSub::create([
+                'id'                => Str::uuid()->toString(),
+                'kategori_id'       => $request->kategori_id,
+                'parent_id'         => $request->parent_id,
+                'sub_kategori_ppks' => $request->kategori_sub,
+                'sort'              => $lastSort + 1,
+            ]);
+            return response()->json(['message' => 'Data berhasil ditambahkan.']);
+        }
+        
     }
 
     

@@ -1,6 +1,10 @@
 @extends('layout.master')
 @section('add-css')
-
+<style type="text/css">
+    .swal2-container {
+        z-index: 10000;
+    }
+</style>
 @endsection
 @section('content')
 <div class="row">
@@ -86,19 +90,20 @@
 </div>
 
 {{-- offcanvas --}}
-<div class="offcanvas offcanvas-end" style="z-index: 100000; width: 40%" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+<div class="offcanvas offcanvas-end" style="z-index: 10000; width: 40%" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Pilihan - Sub Kategori</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
         <div class="bd-example">
-            <form <?php /*action="{{ route('sub_kategorikkps.store') }}"*/ ?> method="POST" id="SubKategoriPPKSCanvas">
+            <form method="POST" id="SubKategoriPPKSCanvas">
                 <div class="mb-3">
                     <label for="pilihanSub" class="form-label">Pilihan Sub</label>
+                    <input type="hidden" id="sub_id_canvas" name="sub_id">
                     <input type="hidden" id="parent_id_canvas" name="parent_id">
                     <input type="hidden" id="kategori_id_canvas" name="kategori_id">
-                    <input type="text" class="form-control" id="kategori_sub_canvas" aria-describedby="kategori_subHelp">
+                    <input type="text" class="form-control" id="kategori_sub_canvas" aria-describedby="kategori_subHelp" required>
                     <div id="kategori_subHelp" class="form-text">Silahkan Isikan Pilihan Optional.</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Tambah Data</button>
@@ -474,12 +479,13 @@
 
     $('#SubKategoriPPKSCanvas').on('submit', function (e) {
         e.preventDefault();
-
+        const sub_id = $('#sub_id_canvas').val();
         $.ajax({
             url: '{{ route("sub_kategorikkps.store") }}',
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
+                sub_id: $('#sub_id_canvas').val(),
                 kategori_id: $('#kategori_id_canvas').val(),
                 kategori_sub: $('#kategori_sub_canvas').val(),
                 parent_id: $('#parent_id_canvas').val(),
@@ -500,6 +506,12 @@
                     const url_pilihan = `${baseUrl}/${parent_id}`;
                     loadTabelData("list-data-pilihan", url_pilihan, ['No', 'Pilihan', 'Aksi']);
                     $('#kategori_sub_canvas').val("");
+
+                    if(sub_id){
+                        $('#SubKategoriPPKSCanvas button[type="submit"]').text('Tambah Data');
+                        $('#sub_id_canvas').val("");
+                    }
+                    
                 });
             },
             error: function (xhr) {
@@ -507,6 +519,76 @@
             }
         });
     });
+
+    function updatechild_canvas(id){
+        const url = `/kategori-kkps/list-sub/child/${id}`;
+
+        $.get(url, function(data) {
+            if (data) {
+                $("#kategori_sub_canvas").val(data[0].sub_kategori_ppks);
+                $('#SubKategoriPPKSCanvas button[type="submit"]').text('Update Data');
+                $("#sub_id_canvas").val(data[0].id);
+                // const baseUrl = "{{ url('kategori-kkps/list-sub/child/load_list') }}";
+                // const url_pilihan = `${baseUrl}/${data[0].parent_id}`;
+                // loadTabelData("list-data-pilihan", url_pilihan, ['No', 'Pilihan', 'Aksi']);
+
+
+                
+            } else {
+                console.error('Data not found');
+            }
+        }).fail(function(error) {
+            console.error('There has been a problem with your AJAX request:', error);
+        });
+    } 
+
+    function deletechild_canvas(id){
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan menghapus data ini ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `kategori-kkps/list-sub/child/delete/${id}`,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon    : 'success',
+                            title   : 'Terhapus',
+                            html    : "Data telah dihapus.",
+                            showConfirmButton:  true ,
+                            timer   : 1000,
+                            customClass      : {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            const baseUrl = "{{ url('kategori-kkps/list-sub/child/load_list') }}";
+                            const parent_id = $('#parent_id_canvas').val();
+                            const url_pilihan = `${baseUrl}/${parent_id}`;
+                            loadTabelData("list-data-pilihan", url_pilihan, ['No', 'Pilihan', 'Aksi']);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
+    } 
+
+    
 
 
 
