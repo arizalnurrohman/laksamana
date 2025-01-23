@@ -59,10 +59,15 @@ Route::post('/pasien', [PasienController::class, 'store'])->name('pasien.store')
 Route::get('/pasien/edit/{id}', [PasienController::class, 'edit'])->name('pasien.edit');
 Route::put('/pasien/{id}', [PasienController::class, 'update'])->name('pasien.update');
 Route::get('/pasien/load-pasien', [PasienController::class, 'load_data'])->name('load_pasien');
+Route::delete('/pasien/delete/{id}', [PasienController::class, 'destroy'])->name('pasien.delete');
 
 Route::get('/residensial', [ResidensialController::class, 'index'])->name('residensial');
 Route::get('/residensial/create', [ResidensialController::class, 'create'])->name('residensial.create');
 Route::post('/residensial', [ResidensialController::class, 'store'])->name('residensial.store');
+Route::get('/residensial/edit/{id}', [ResidensialController::class, 'edit'])->name('residensial.edit');
+Route::put('/residensial/{id}', [ResidensialController::class, 'update'])->name('residensial.update');
+Route::get('/residensial/load-residensial', [ResidensialController::class, 'load_residensial'])->name('load_residensial');
+Route::delete('/residensial/delete/{id}', [ResidensialController::class, 'destroy'])->name('residensial.delete');
 
 Route::get('/non-residensial', [NonResidensialController::class, 'index'])->name('nonresidensial');
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');

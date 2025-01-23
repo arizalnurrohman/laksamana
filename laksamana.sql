@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2025 at 03:08 PM
+-- Generation Time: Jan 23, 2025 at 10:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -500,7 +500,8 @@ CREATE TABLE `laksa_ms_pasien` (
 --
 
 INSERT INTO `laksa_ms_pasien` (`id`, `nama_depan`, `nama_belakang`, `nik`, `nokk`, `tmp_lahir`, `tgl_lahir`, `provinsi_id`, `kota_id`, `kecamatan_id`, `kelurahan_desa_id`, `alamat`, `domisili_alamat`, `domisili`, `agama_id`, `pendidikan_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('2f068203-d88f-11ef-8650-244bfebc0c45', 'Arizal', '', '1471031302900022', '1471031302900111', 'Wonogiri', '1990-02-13', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '93e3aa88-90b0-5cb0-8905-334d97d116ae', NULL, 'jalan brotoseno perum widya perdana lestari blok A.10', 'y', NULL, 'c4091389-34eb-7f56-1b6d-b1934f0115c9', 'fca3a7f1-918f-16b2-64a0-7eb35ac84735', '2025-01-22 07:02:28', NULL, NULL);
+('079bef48-704c-4526-9fa0-9669a2f4bc04', 'ariew', 'zal', '123123', '2312312', 'qweqweq', '2025-01-23', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '08ea4954-3895-50d1-673e-7e10be1b4e12', 'qweqwe', 'qwe', '1', 'qwe', '41875d16-08f2-24cc-a568-a17c69655427', '56c193ce-5057-a6d6-a447-3c08a35d00cc', '2025-01-23 08:29:44', '2025-01-23 08:29:44', NULL),
+('2f068203-d88f-11ef-8650-244bfebc0c45', 'Arizal', 'Nur Rohman', '1471031302900022', '1471031302900111', 'Wonogiri', '1990-02-13', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '93e3aa88-90b0-5cb0-8905-334d97d116ae', NULL, 'jalan brotoseno perum widya perdana lestari blok A.10', 'y', NULL, 'c4091389-34eb-7f56-1b6d-b1934f0115c9', 'fca3a7f1-918f-16b2-64a0-7eb35ac84735', '2025-01-22 07:02:28', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -587,9 +588,10 @@ INSERT INTO `laksa_ms_persyaratan` (`id`, `persyaratan`, `sort`, `created_at`, `
 ('125a8923-0ef3-4590-89db-1227f60068a7', 'Persyaratan 345', 5, '2025-01-22 02:30:21', '2025-01-22 02:30:21', NULL),
 ('47a82cf3-460a-4308-8f30-df13773a8813', 'Persyaratan 34', 4, '2025-01-22 02:30:17', '2025-01-22 02:30:17', NULL),
 ('895c042a-1adf-4602-8d00-55c86aa0c1f2', 'Persyaratan 2', 2, '2025-01-22 02:29:08', '2025-01-22 02:29:08', NULL),
+('8b9dc95d-ef60-4159-ae11-fe323879b1fd', 'sdasd', 6, '2025-01-23 07:09:49', '2025-01-23 07:09:59', '2025-01-23 07:09:59'),
 ('8eaf0942-6320-4927-a149-89e56aff9d92', 'persyaratan 2 edit 2', 3, '2025-01-22 01:46:14', '2025-01-22 02:27:35', '2025-01-22 02:27:35'),
 ('9a4af102-d964-4e5f-a2a6-1b602c25de61', 'Persyaratan 3 3', 3, '2025-01-22 02:30:00', '2025-01-22 02:30:29', NULL),
-('d9b90edb-1c48-4615-a115-1e03b78629cc', 'satu edit e', 1, '2025-01-16 01:13:46', '2025-01-22 02:04:03', NULL),
+('d9b90edb-1c48-4615-a115-1e03b78629cc', 'satu edit ed', 1, '2025-01-16 01:13:46', '2025-01-23 07:09:56', NULL),
 ('ec26aaf4-a2e8-4208-8427-52375e6fead1', 'ABH', 2, '2025-01-17 01:18:24', '2025-01-22 02:28:59', '2025-01-22 02:28:59');
 
 -- --------------------------------------------------------

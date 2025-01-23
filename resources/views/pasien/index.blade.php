@@ -46,8 +46,11 @@
 @section('add-js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    function load_this_data(){
+        loadTabelData("list-data", "{{route('load_pasien')}}", ['No', 'NO KK/NIK/Nama', 'Tmp Lahir','Tgl lahir','Provinsi/Kab/Kota/Kecamatan','Aksi']);
+    }
     $(document).ready(function () {
-        loadTabelData("list-data", "{{route('load_pasien')}}", ['No', 'NO KK/NIK/Nama', 'Tmp Lahir','Tgl lahir','Provinsi/Kab/Kota/Kecamatan','Aksi']);				
+        load_this_data();				
         $('#add{{ $activeMenu->access }}Form').on('submit', function (e) {
             e.preventDefault();
 
@@ -68,5 +71,48 @@
             });
         });
     });
+
+    function delete_form(id) {
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan menghapus data ini ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/pasien/delete/${id}`,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon    : 'success',
+                            title   : 'Terhapus',
+                            html    : "Data telah dihapus.",
+                            showConfirmButton:  true ,
+                            timer   : 1000,
+                            customClass      : {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            load_this_data();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
+    }
 </script>
 @endsection

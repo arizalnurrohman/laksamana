@@ -22,42 +22,19 @@
             <div class="card-body">
                 <p class="mb-3">&nbsp;</p>
                 <div class="table-responsive">
-                    <table id="datatable" class="table table-striped" data-toggle="data-table">
+                    <table id="list-data" class="table">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Nama Pasien</th>
+                                <th>Tgl Penerimaan</th>
+                                <th>Sumber</th>
+                                <th>Petugas</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($residensial as $key=>$residen)
-                            <tr>
-                                <td>1</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            @endforeach
                         </tbody>
-                        {{-- <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot> --}}
                     </table>
                 </div>
             </div>
@@ -67,5 +44,140 @@
  
 @endsection
 @section('add-js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function load_this_data(){
+        loadTabelData("list-data", "{{route('load_residensial')}}", ['No', 'Nama Pasien','Tgl Penerimaan','Sumber','Petugas','Aksi']);
+    }
+    $(document).ready(function () {
+        load_this_data();
+        $('#add{{ $activeMenu->access }}Form').on('submit', function (e) {
+            e.preventDefault();
 
+            $.ajax({
+                url: '{{ route("kategorikkps.store") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    kategori: $('#kategori').val(),
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : response.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        $('#add{{ $activeMenu->access }}Modal').modal('hide');
+                        load_this_data();
+                    });
+                },
+                error: function (xhr) {
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
+            });
+        });
+
+        // Submit update form via AJAX
+        $('#updateForm').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '{{ route("kategorikkps.update") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: $('#updateId').val(),
+                    kategori: $('#updateKategori').val(),
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : response.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        $('#update{{ $activeMenu->access }}Modal').modal('hide');
+                        load_this_data();
+                    });
+                },error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Terjadi kesalahan saat mengupdate data.',
+                    });
+                }
+            });
+        });
+    });
+
+    function update_form(id) {
+        $.ajax({
+            url: `/kategori-kkps/edit/${id}`,
+            type: 'GET',
+            success: function (data) {
+                $('#updateId').val(data.id);
+                $('#updateKategori').val(data.kategori);
+                $('#updateUrutan').val(data.sort);
+
+                $('#update{{ $activeMenu->access }}Modal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error(`Error: ${error}`);
+                alert('Failed to fetch data. Please try again.');
+            }
+        });
+    }
+
+    function delete_form(id) {
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan menghapus data ini ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/kategori-kkps/delete/${id}`,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon    : 'success',
+                            title   : 'Terhapus',
+                            html    : "Data telah dihapus.",
+                            showConfirmButton:  true ,
+                            timer   : 1000,
+                            customClass      : {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            load_this_data();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>
 @endsection
