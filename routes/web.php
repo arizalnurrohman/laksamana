@@ -30,15 +30,20 @@ Route::get('/form-assessement', [FormAssessementController::class, 'index'])->na
 Route::get('/kategori-kkps', [KategoriKKPSController::class, 'index'])->name('kategorikkps');
 Route::get('/kategori-kkps/load-kategori-kkps', [KategoriKKPSController::class, 'load_data'])->name('load_kategorikkps');
 Route::post('/kategori-kkps/store', [KategoriKKPSController::class, 'store'])->name('kategorikkps.store');
+Route::get('/kategori-kkps/edit/{id}', [KategoriKKPSController::class, 'edit'])->name('kategorikkps.edit');
 Route::post('/kategori-kkps/update', [KategoriKKPSController::class, 'update'])->name('kategorikkps.update');
+Route::delete('/kategori-kkps/delete/{id}', [KategoriKKPSController::class, 'destroy'])->name('kategorikkps.delete');
+
+Route::get('/kategori-kkps/sub/{id}', [KategoriKKPSController::class, 'sub_ppsk'])->name('sub_kategorikkps');
+
+
 
 Route::get('/persyaratan', [PersyaratanController::class, 'index'])->name('persyaratan');
-Route::post('/persyaratan/store', [PersyaratanController::class, 'store'])->name('persyaratan.store');
-Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->name('pasien.edit');
-Route::post('/persyaratan/update', [PersyaratanController::class, 'update'])->name('persyaratan.update');
 Route::get('/persyaratan/load-persyaratan', [PersyaratanController::class, 'load_data'])->name('load_persyaratan');
+Route::post('/persyaratan/store', [PersyaratanController::class, 'store'])->name('persyaratan.store');
+Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->name('persyaratan.edit');
+Route::post('/persyaratan/update', [PersyaratanController::class, 'update'])->name('persyaratan.update');
 Route::delete('/persyaratan/delete/{id}', [PersyaratanController::class, 'destroy'])->name('persyaratan.delete');
-
 
 Route::get('/asrama', [AsramaController::class, 'index'])->name('asrama');
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');

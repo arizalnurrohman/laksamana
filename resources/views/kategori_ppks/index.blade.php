@@ -40,10 +40,10 @@
 
 <!-- Modal -->
 <div class="modal fade" id="add{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="add{{ $activeMenu->access }}ModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Tambah Data</h5>
+                <h5 class="modal-title" id="addModalLabel">Tambah Data {{ $activeMenu->menu }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -64,7 +64,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update Data</h5>
+                <h5 class="modal-title" id="updateModalLabel">Update Data {{ $activeMenu->menu }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -74,8 +74,26 @@
                         <label for="updateKategori" class="form-label">Kategori</label>
                         <input type="text" class="form-control" id="updateKategori" name="kategori" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="updateUrutan" class="form-label">Urutan</label>
+                        <input type="text" class="form-control" id="updateUrutan" name="urutan" required>
+                    </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="subPPKSModal" tabindex="-1" aria-labelledby="subPPKSModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subPPKSModalLabel">Detail Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-content">
+                <!-- Data akan ditampilkan di sini -->
             </div>
         </div>
     </div>
@@ -85,8 +103,11 @@
 @section('add-js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function () {
+    function load_this_data(){
         loadTabelData("list-data", "{{route('load_kategorikkps')}}", ['No', 'Kategori', 'Aksi']);
+    }
+    $(document).ready(function () {
+        load_this_data();
         $('#add{{ $activeMenu->access }}Form').on('submit', function (e) {
             e.preventDefault();
 
@@ -98,32 +119,24 @@
                     kategori: $('#kategori').val(),
                 },
                 success: function (response) {
-                    alert(response.message);
-                    location.reload(); // Reload halaman setelah sukses
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : response.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        $('#add{{ $activeMenu->access }}Modal').modal('hide');
+                        load_this_data();
+                    });
                 },
                 error: function (xhr) {
                     alert('Terjadi kesalahan. Silakan coba lagi.');
                 }
             });
-        });
-
-        $('.btn-warning').on('click', function () {
-            alert("aa");
-            // Cari elemen terdekat <tr> dari tombol yang diklik
-            const row = $(this).closest('tr'); 
-            
-            // Ambil ID dari atribut 'id' di dalam <div> dalam kolom <td>
-            const id = row.find('td div[role="group"]').attr('id'); 
-            
-            // Ambil teks kategori dari kolom kedua
-            const kategori = row.find('td:eq(1)').text(); 
-
-            // Isi modal dengan data
-            $('#updateId').val(id.trim()); // Isi ID ke input modal
-            $('#updateKategori').val(kategori.trim()); // Isi kategori ke input modal
-
-            // Tampilkan modal
-            $('#update{{ $activeMenu->access }}Modal').modal('show');
         });
 
         // Submit update form via AJAX
@@ -140,22 +153,18 @@
                 },
                 success: function (response) {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: response.message,
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : response.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        $('#update{{ $activeMenu->access }}Modal').modal('hide');
+                        load_this_data();
                     });
-
-                    // Tutup modal
-                    $('#update{{ $activeMenu->access }}Modal').modal('hide');
-
-                    // Perbarui baris di tabel
-                    const id = $('#updateId').val();
-                    const updatedKategori = $('#updateKategori').val();
-
-                    // Cari baris berdasarkan ID
-                    const row = $(`tr#${id}`);
-                    row.find('td:eq(1)').text(updatedKategori); // Perbarui kolom Kategori
-                    //window.location.href = window.location.href;
                 },error: function (xhr) {
                     Swal.fire({
                         icon: 'error',
@@ -166,6 +175,102 @@
             });
         });
     });
+
+    function update_form(id) {
+        $.ajax({
+            url: `/kategori-kkps/edit/${id}`,
+            type: 'GET',
+            success: function (data) {
+                $('#updateId').val(data.id);
+                $('#updateKategori').val(data.kategori);
+                $('#updateUrutan').val(data.sort);
+
+                $('#update{{ $activeMenu->access }}Modal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error(`Error: ${error}`);
+                alert('Failed to fetch data. Please try again.');
+            }
+        });
+    }
+
+    function delete_form(id) {
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan menghapus data ini ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/kategori-kkps/delete/${id}`,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon    : 'success',
+                            title   : 'Terhapus',
+                            html    : "Data telah dihapus.",
+                            showConfirmButton:  true ,
+                            timer   : 1000,
+                            customClass      : {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            load_this_data();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    function modalDetail(id) {
+        const url = `/kategori-kkps/sub/${id}`;
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Data retrieved:', data);
+                // Tampilkan data di modal atau sesuai kebutuhan
+                // Misalnya, render data ke dalam modal
+                displayModal(data);
+            })
+            .catch((error) => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+    }
+
+    function displayModal(data) {
+        // Render data ke modal
+        const modalContent = document.getElementById('modal-content');
+        modalContent.innerHTML = JSON.stringify(data, null, 2); // Ubah sesuai kebutuhan tampilan
+        // Tampilkan modal
+        const modal = new bootstrap.Modal(document.getElementById('subPPKSModal'));
+        modal.show();
+    }
 </script>
 
 @endsection
