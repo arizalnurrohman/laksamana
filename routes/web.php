@@ -35,6 +35,8 @@ Route::post('/kategori-kkps/update', [KategoriKKPSController::class, 'update'])-
 Route::delete('/kategori-kkps/delete/{id}', [KategoriKKPSController::class, 'destroy'])->name('kategorikkps.delete');
 
 Route::get('/kategori-kkps/sub/{id}', [KategoriKKPSController::class, 'sub_ppsk'])->name('sub_kategorikkps');
+Route::get('/kategori-kkps/load-kategori-kkps/{id}', [KategoriKKPSController::class, 'load_data_sub'])->name('load_kategorikkps_sub');
+
 
 
 

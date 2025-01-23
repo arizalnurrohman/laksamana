@@ -86,14 +86,26 @@
 </div>
 
 <div class="modal fade" id="subPPKSModal" tabindex="-1" aria-labelledby="subPPKSModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="subPPKSModalLabel">Detail Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modal-content">
-                <!-- Data akan ditampilkan di sini -->
+                <div class="table-responsive">
+                    <table id="list-data-sub" class="table">
+                        <thead>
+                            <tr>
+                                <th width="25">No</th>
+                                <th>Sub Kategori</th>
+                                <th width="40">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -237,6 +249,8 @@
         });
     }
 
+    <?php 
+    /*
     function modalDetail(id) {
         const url = `/kategori-kkps/sub/${id}`;
 
@@ -250,27 +264,44 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
-                return response.json();
+                // return response.json();
             })
             .then((data) => {
-                console.log('Data retrieved:', data);
-                // Tampilkan data di modal atau sesuai kebutuhan
+                // console.log('Data retrieved:', data);
                 // Misalnya, render data ke dalam modal
                 displayModal(data);
+                // alert(data.id);
+                // loadTabelData("list-data-sub", "{{route('load_kategorikkps_sub', ['id' => "+data.id+"])}}", ['No', 'Sub Kategori', 'Aksi']);
             })
             .catch((error) => {
                 console.error('There has been a problem with your fetch operation:', error);
             });
     }
+    */ ?>
 
-    function displayModal(data) {
-        // Render data ke modal
-        const modalContent = document.getElementById('modal-content');
-        modalContent.innerHTML = JSON.stringify(data, null, 2); // Ubah sesuai kebutuhan tampilan
-        // Tampilkan modal
+    function modalDetail(id) {
+        const url = `/kategori-kkps/sub/${id}`;
+
+        $.get(url, function(data) {
+            alert(data.id);
+            displayModal(data.id);
+        }).fail(function(error) {
+            console.error('There has been a problem with your AJAX request:', error);
+        });
+    }
+
+    function displayModal(idx) {
         const modal = new bootstrap.Modal(document.getElementById('subPPKSModal'));
         modal.show();
+
+        // Buat URL secara dinamis menggunakan data.id
+        const baseUrl = "{{ url('kategori-kkps/load-kategori-kkps') }}";
+        const url = `${baseUrl}/${idx}`;
+
+        loadTabelData("list-data-sub", url, ['No', 'Sub Kategori', 'Aksi']);
     }
+
+
 </script>
 
 @endsection
