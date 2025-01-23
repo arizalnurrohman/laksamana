@@ -34,9 +34,12 @@ Route::get('/kategori-kkps/edit/{id}', [KategoriKKPSController::class, 'edit'])-
 Route::post('/kategori-kkps/update', [KategoriKKPSController::class, 'update'])->name('kategorikkps.update');
 Route::delete('/kategori-kkps/delete/{id}', [KategoriKKPSController::class, 'destroy'])->name('kategorikkps.delete');
 
-Route::get('/kategori-kkps/sub/{id}', [KategoriKKPSController::class, 'sub_ppsk'])->name('sub_kategorikkps');
+Route::get('/kategori-kkps/list-sub/{id}', [KategoriKKPSController::class, 'sub_ppsk'])->name('sub_kategorikkps');
 Route::get('/kategori-kkps/load-kategori-kkps/{id}', [KategoriKKPSController::class, 'load_data_sub'])->name('load_kategorikkps_sub');
 Route::post('/kategori-kkps/sub-store', [KategoriKKPSController::class, 'sub_store'])->name('sub_kategorikkps.store');
+
+Route::get('/kategori-kkps/list-sub/child/{id}', [KategoriKKPSController::class, 'sub_child_ppsk'])->name('subchild_kategorikkps');
+Route::get('/kategori-kkps/list-sub/child/load_list/{id}', [KategoriKKPSController::class, 'load_sub_child_list_ppsk'])->name('load_subchildlist_kategorikkps');
 
 
 

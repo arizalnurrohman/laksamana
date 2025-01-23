@@ -93,11 +93,13 @@
     </div>
     <div class="offcanvas-body">
         <div class="bd-example">
-            <form>
+            <form <?php /*action="{{ route('sub_kategorikkps.store') }}"*/ ?> method="POST" id="SubKategoriPPKSCanvas">
                 <div class="mb-3">
                     <label for="pilihanSub" class="form-label">Pilihan Sub</label>
-                    <input type="text" class="form-control" id="pilihanSub" aria-describedby="pilihanSubHelp">
-                    <div id="pilihanSubHelp" class="form-text">Silahkan Isikan Pilihan Optional.</div>
+                    <input type="hidden" id="parent_id_canvas" name="parent_id">
+                    <input type="hidden" id="kategori_id_canvas" name="kategori_id">
+                    <input type="text" class="form-control" id="kategori_sub_canvas" aria-describedby="kategori_subHelp">
+                    <div id="kategori_subHelp" class="form-text">Silahkan Isikan Pilihan Optional.</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Tambah Data</button>
             </form>
@@ -108,7 +110,7 @@
                 <thead>
                     <tr>
                         <th width="25">No</th>
-                        <th>Kategori</th>
+                        <th>Pilihan</th>
                         <th width="40">Aksi</th>
                     </tr>
                 </thead>
@@ -360,7 +362,7 @@
     }
 
     function modalDetail(id) {
-        const url = `/kategori-kkps/sub/${id}`;
+        const url = `/kategori-kkps/list-sub/${id}`;
 
         $.get(url, function(data) {
             // 'data' adalah array, ambil elemen pertama
@@ -410,40 +412,101 @@
     }
 
     $('#addsub{{ $activeMenu->access }}Form').on('submit', function (e) {
-            e.preventDefault();
+        e.preventDefault();
 
-            $.ajax({
-                url: '{{ route("sub_kategorikkps.store") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    kategori_id: $('#addsub_kategoriId').val(),
-                    kategori_sub: $('#addsub_kategorisub').val(),
-                },
-                success: function (response) {
-                    Swal.fire({
-                        icon    : 'success',
-                        title   : 'Berhasil',
-                        html    : response.message,
-                        showConfirmButton:  true ,
-                        timer   : 1000,
-                        customClass      : {
-                            container: 'swal-container'
-                        }
-                    }).then(function() {
-                        $('#addsub{{ $activeMenu->access }}Modal').modal('hide');
-                        var idx = $('#addsub_kategoriId').val();
-                        const baseUrl = "{{ url('kategori-kkps/load-kategori-kkps') }}";
-                        const url = `${baseUrl}/${idx}`;
+        $.ajax({
+            url: '{{ route("sub_kategorikkps.store") }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                kategori_id: $('#addsub_kategoriId').val(),
+                kategori_sub: $('#addsub_kategorisub').val(),
+            },
+            success: function (response) {
+                Swal.fire({
+                    icon    : 'success',
+                    title   : 'Berhasil',
+                    html    : response.message,
+                    showConfirmButton:  true ,
+                    timer   : 1000,
+                    customClass      : {
+                        container: 'swal-container'
+                    }
+                }).then(function() {
+                    $('#addsub{{ $activeMenu->access }}Modal').modal('hide');
+                    var idx = $('#addsub_kategoriId').val();
+                    const baseUrl = "{{ url('kategori-kkps/load-kategori-kkps') }}";
+                    const url = `${baseUrl}/${idx}`;
 
-                        loadTabelData("list-data-sub", url, ['No', 'Sub Kategori', 'Aksi']);
-                    });
-                },
-                error: function (xhr) {
-                    alert('Terjadi kesalahan. Silakan coba lagi.');
-                }
-            });
+                    loadTabelData("list-data-sub", url, ['No', 'Sub Kategori', 'Aksi']);
+                });
+            },
+            error: function (xhr) {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
         });
+    });
+
+    function optionalOffCanvas(id) {
+        const url = `/kategori-kkps/list-sub/child/${id}`;
+
+        $.get(url, function(data) {
+            if (data) {
+                const offcanvasElement = document.getElementById('offcanvasWithBackdrop');
+                const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                offcanvas.show();
+
+                $(".offcanvas-title").html("Pilihan - Sub Kategori - " + data[0].sub_kategori_ppks);
+                $("#parent_id_canvas").val(data[0].id);
+                $("#kategori_id_canvas").val(data[0].kategori_id);
+                // $("#addsub_kategori").val(data.kategori);
+                const baseUrl = "{{ url('kategori-kkps/list-sub/child/load_list') }}";
+                const url_pilihan = `${baseUrl}/${data[0].id}`;
+                loadTabelData("list-data-pilihan", url_pilihan, ['No', 'Pilihan', 'Aksi']);
+                
+            } else {
+                console.error('Data not found');
+            }
+        }).fail(function(error) {
+            console.error('There has been a problem with your AJAX request:', error);
+        });
+    }
+
+    $('#SubKategoriPPKSCanvas').on('submit', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '{{ route("sub_kategorikkps.store") }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                kategori_id: $('#kategori_id_canvas').val(),
+                kategori_sub: $('#kategori_sub_canvas').val(),
+                parent_id: $('#parent_id_canvas').val(),
+            },
+            success: function (response) {
+                Swal.fire({
+                    icon    : 'success',
+                    title   : 'Berhasil',
+                    html    : response.message,
+                    showConfirmButton:  true ,
+                    timer   : 1000,
+                    customClass      : {
+                        container: 'swal-container'
+                    }
+                }).then(function() {
+                    const baseUrl = "{{ url('kategori-kkps/list-sub/child/load_list') }}";
+                    const parent_id = $('#parent_id_canvas').val();
+                    const url_pilihan = `${baseUrl}/${parent_id}`;
+                    loadTabelData("list-data-pilihan", url_pilihan, ['No', 'Pilihan', 'Aksi']);
+                    $('#kategori_sub_canvas').val("");
+                });
+            },
+            error: function (xhr) {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
+        });
+    });
 
 
 
