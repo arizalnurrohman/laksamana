@@ -73,32 +73,40 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
-                    <h4 class="card-title">New User Information</h4>
+                    <h4 class="card-title">Tambah data {{ $activeMenu->menu }}</h4>
                 </div>
             </div>
             <div class="card-body">
                 <div class="new-user-info">
-                    <form>
+                    <form action="{{ route('pasien.store') }}" method="POST" id="add{{ $activeMenu->access }}Form">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="fname">Nama Depan:</label>
-                                <input type="text" class="form-control" id="fname" placeholder="Nama Depan">
+                                <input type="text" class="form-control" name="nama_depan" id="nama_depan" placeholder="Nama Depan">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="lname">Nama Belakang:</label>
-                                <input type="text" class="form-control" id="lname" placeholder="Nama Belakang">
+                                <input type="text" class="form-control" name="nama_belakang" id="nama_belakang" placeholder="Nama Belakang">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add1">NIK:</label>
-                                <input type="text" class="form-control" id="add1" placeholder="NIK">
+                                <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add2">No KK:</label>
-                                <input type="text" class="form-control" id="add2" placeholder="No KK">
+                                <input type="text" class="form-control" name="nokk" id="nokk" placeholder="No KK">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="add1">Tempat Lahir:</label>
+                                <input type="text" class="form-control" name="tmp_lahir" id="tmp_lahir" placeholder="Tempat Lahir">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="add2">Tanggal Lahir:</label>
+                                <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add1">Agama:</label>
-                                <select class="form-select" data-trigger name="choices-single-default" id="choices-single-default">
+                                <select class="form-select" data-trigger name="agama" id="choices-single-default">
                                     <option value="">Pilih Agama</option>
                                     @foreach($agama as $agamax)
                                         <option value="{{$agamax->id}}">{{$agamax->agama}}</option>
@@ -107,7 +115,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add2">Pendidikan Terakhir:</label>
-                                <select class="form-select" data-trigger name="choices-single-default" id="choices-single-default">
+                                <select class="form-select" data-trigger name="pendidikan_terakhir" id="choices-single-default">
                                     <option value="">Pilih Pendidikan</option>
                                     @foreach($pendidikan as $pendidikanx)
                                         <option value="{{$pendidikanx->id}}">{{$pendidikanx->pendidikan}}</option>
@@ -117,14 +125,14 @@
                             <div class="form-group col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Alamat KTP: *</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                    <textarea class="form-control" name="alamat_ktp" rows="5"></textarea>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="form-label">Alamat Domisili: *</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                <textarea class="form-control" name="alamat_domisili" rows="5"></textarea>
                                 <div class="form-check d-block">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkedcheck" checked>
+                                    <input class="form-check-input" type="checkbox" value="1" name="check_alamat_domisili" id="checkedcheck">
                                     <label class="form-check-label" for="checkedcheck">
                                         Sama dengan Alamat KTP
                                     </label>
@@ -132,7 +140,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add1">Provinsi:</label>
-                                <select class="form-select" data-trigger name="choices-single-default" id="choices-single-default">
+                                <select class="form-select" data-trigger name="provinsi" id="choices-single-default">
                                     <option value="">Pilih Provinsi</option>
                                     @foreach($provinsi as $provinsix)
                                         <option value="{{$provinsix->id}}">{{$provinsix->provinsi}}</option>
@@ -141,7 +149,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add2">Kabupaten / Kota:</label>
-                                <select class="form-select" data-trigger name="choices-single-default" id="choices-single-default">
+                                <select class="form-select" data-trigger name="kabupaten_kota" id="choices-single-default">
                                     <option value="">Pilih Kabupaten</option>
                                     @foreach($kabupaten as $kabupatenx)
                                         <option value="{{$kabupatenx->id}}">{{$kabupatenx->kabupaten_kota}}</option>
@@ -150,7 +158,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add2">Kecamatan:</label>
-                                <select class="form-select" data-trigger name="choices-single-default" id="choices-single-default">
+                                <select class="form-select" data-trigger name="kecamatan" id="choices-single-default">
                                     <option value="">Pilih Kecamatan</option>
                                     @foreach($kecamatan as $kecamatanx)
                                         <option value="{{$kecamatanx->id}}">{{$kecamatanx->kecamatan}}</option>
@@ -159,14 +167,14 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add2">Kelurahan:</label>
-                                <input type="text" class="form-control" id="add1" placeholder="Street Address 1">
+                                <input type="text" class="form-control" id="add1" name="kelurahan" placeholder="Street Address 1">
                             </div>
                         </div>
                         
-                        <div class="checkbox">
+                        {{-- <div class="checkbox">
                             <label class="form-label"><input class="form-check-input me-2" type="checkbox" value="" id="flexchexked">Enable Two-Factor-Authentication</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add New User</button>
+                        </div> --}}
+                        <button type="submit" class="btn btn-primary btn-submit">Tambah Data @if ($activeMenu) {{ $activeMenu->menu }} @endif</button>
                     </form>
                 </div>
             </div>
@@ -179,26 +187,75 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
-        		
-        // $('#add{{ $activeMenu->access }}Form').on('submit', function (e) {
-        //     e.preventDefault();
+        //add{{ $activeMenu->access }}Form
+        $("#add{{ $activeMenu->access }}Form").submit(function(e){
+          e.preventDefault(); 
+            var btnx	=$('.btn-submit');
+            $(btnx).attr("disabled", true);
+            $(btnx).attr({type:'submit',value: 'Loading'});
+            $.ajax({
+              url:$(this).closest('form').attr('action'),
+              type:"post",
+              data:new FormData(this), 
+              processData:false,
+              contentType:false,
+              dataType: "json",
+              cache:false,
+              async:false,
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data){
+                  if($.isEmptyObject(data.errors)){
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        window.location = "{{ route('pasien') }}";
+                    });
+                  }else{
+                    $(btnx).removeAttr("disabled");
+                    $(btnx).attr({type:'submit',value: 'Simpan'});
+                    Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+                  }
+              },
+              error: function(err, exception) {
+                $(btnx).removeAttr("disabled");
+                $(btnx).attr({type:'submit',value: 'Simpan'});
 
-        //     $.ajax({
-        //         url: '{{ route("kategorikkps.store") }}',
-        //         method: 'POST',
-        //         data: {
-        //             _token: '{{ csrf_token() }}',
-        //             kategori: $('#kategori').val(),
-        //         },
-        //         success: function (response) {
-        //             alert(response.message);
-        //             location.reload(); // Reload halaman setelah sukses
-        //         },
-        //         error: function (xhr) {
-        //             alert('Terjadi kesalahan. Silakan coba lagi.');
-        //         }
-        //     });
-        // });
+                Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : "Sistem Gagal Memproses Data",
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+              },
+            });
+        });		
+        
     });
 </script>
 @endsection

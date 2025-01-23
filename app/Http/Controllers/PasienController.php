@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Models\Agama;
 use App\Models\Pasien;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Pendidikan;
+
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class PasienController extends Controller
 {
+    private $error;
+    private $success;
     // function __construct()
     // {
     //     $fix_roles      =array();
@@ -53,9 +58,105 @@ class PasienController extends Controller
         return view('pasien.create', compact('agama','provinsi','kabupaten','kecamatan','pendidikan'));
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        
+        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'],$this->detail_rules()['MESSAGE']);
+        if ($validator->fails()){
+            $this->error[]=($validator->errors()->all())[0];
+        }else{
+            // $pasien = new Pasien();
+            // if (!$pasien->where('nama_depan',"=", $request->nama_depan)->where('tgl_lahir',"=", $request->tgl_lahir)->exists()) {
+            //     $this->error[]="Data Pasien yang anda inputkan sudah ada";
+            // }else{
+                
+            // }
+            if (Pasien::where('nama_depan', $request->nama_depan)
+                    ->whereDate('tgl_lahir', $request->tgl_lahir)
+                    ->exists()) {
+                $this->error[] = "Data Pasien dengan nama dan tanggal lahir yang sama sudah ada.";
+            } else {
+                // Code tambahan jika diperlukan
+            }
+        }
+        if(!($this->error)){
+            $payload=[
+                'id'                => Str::uuid()->toString(),
+                'nama_depan'        => $request->nama_depan,
+                'nama_belakang'     => $request->nama_belakang,
+                'nik'               => $request->nik,
+                'nokk'              => $request->nokk,
+                'tmp_lahir'         => $request->tmp_lahir,
+                'tgl_lahir'         => $request->tgl_lahir,
+                'provinsi_id'       => $request->provinsi,
+                'kota_id'           => $request->kabupaten_kota,
+                'kecamatan_id'      => $request->kecamatan,
+                'kelurahan_desa_id' => $request->kelurahan,
+                'alamat'            => $request->alamat_ktp,
+                'domisili_alamat'   => $request->check_alamat_domisili,
+                'domisili'          => $request->alamat_domisili,
+                'agama_id'          => $request->agama,
+                'pendidikan_id'     => $request->pendidikan_terakhir,
+            ];
+            if(Pasien::create($payload)){
+                $this->success=true;
+            }
+        }
+        if($this->success){
+            $response=[
+                'status'=>'success',
+                'message'=>"Tambah data Pasien berhasil",
+            ];
+        }
+        if($this->error){
+            $response=[
+                'errors'=>'Error',
+                'message'=>$this->error,
+            ];
+        }
+        return response()->json($response);
+        exit;
+    }
+
+    function detail_rules(){
+        $rules=[
+            'nama_depan'            =>'required',
+            'nama_belakang'         =>'required',
+            'nik'                   =>'required|numeric|min:16',
+            'nokk'                  =>'required|numeric|min:16',
+            'tmp_lahir'             =>'required',
+            'tgl_lahir'             =>'required',
+            
+            'agama'                 =>'required',
+            'pendidikan_terakhir'   =>'required',
+            'alamat_ktp'            =>'required',
+
+            'provinsi'              =>'required',
+            'kabupaten_kota'        =>'required',
+            'kecamatan'             =>'required',
+            'kelurahan'             =>'required',
+        ];
+        $messages=[
+            'nama_depan.required'           => 'Kolom Nama Depan wajib diisi.',
+            'nama_belakang.required'        => 'Kolom Nama Belakang wajib diisi.',
+            'nik.required'                  => 'Kolom NIK wajib diisi.',
+            'nik.min'                       => 'Kolom NIK harus terdiri dari minimal 16 digit.',
+            'nik.numeric'                   => 'Kolom NIK harus angka.',
+            'nokk.required'                 => 'Kolom NO KK wajib diisi.',
+            'nokk.numeric'                  => 'Kolom NO KK harus angka.',
+            'nokk.min'                      => 'Kolom NO KK harus terdiri dari minimal 16 digit.',
+            'tmp_lahir.required'            => 'Kolom Tempat Lahir wajib diisi.',
+            'tgl_lahir.required'            => 'Kolom Tanggal Lahir wajib diisi.',
+
+            'agama.required'                => 'Kolom Agama wajib diisi.',
+            'pendidikan_terakhir.required'  => 'Kolom Pendidikan Terakhir wajib diisi.',
+            'alamat_ktp.required'           => 'Kolom Alamat KTP Tinggi wajib diisi.',
+
+            'provinsi.required'             => 'Kolom Provinsi Tinggi wajib diisi.',
+            'kabupaten_kota.required'       => 'Kolom Kabupaten Kota Rendah wajib diisi.',
+            'kecamatan.required'            => 'Kolom Kecamatan Tinggi wajib diisi.',
+            'kelurahan.required'            => 'Kolom Kelurahan Rendah wajib diisi.',
+        ];
+        return array("RULE"=>$rules,"MESSAGE"=>$messages);
     }
 
     public function edit($id){
@@ -79,7 +180,7 @@ class PasienController extends Controller
         $data=[];
         foreach ($pasien as $val) {
             $data[$no]['No']                =($no+1);
-            $data[$no]['NO KK/NIK/Nama']    =$val->nokk."<br>".$val->nik."<br>".$val->nama_lengkap;
+            $data[$no]['NO KK/NIK/Nama']    =$val->nokk."<br>".$val->nik."<br>".$val->nama_depan." ".$val->nama_belakang;
             $data[$no]['Tmp Lahir']         =$val->tmp_lahir;
             $data[$no]['Tgl lahir']         =date("d-m-Y",strtotime($val->tgl_lahir));
             $data[$no]['Provinsi/Kab/Kota/Kecamatan']  =$val->provinsi."<br>".$val->kabupaten_kota."<br>".$val->kecamatan;
