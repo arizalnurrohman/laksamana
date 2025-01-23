@@ -93,16 +93,44 @@ class KategoriKKPSController extends Controller
         return response()->json($data);
     }
 
+    public function sub_store(Request $request)
+    {
+        $request->validate([
+            'kategori_id' => 'required',
+            'kategori_sub' => 'required|string|max:255',
+        ]);
+
+        $lastSort = KategoriPPKSSub::max('sort') ?? 0;
+
+        KategoriPPKSSub::create([
+            'id' => Str::uuid()->toString(),
+            'kategori_id' => $request->kategori_id,
+            'sub_kategori_ppks' => $request->kategori_sub,
+            'sort' => $lastSort + 1,
+        ]);
+
+        return response()->json(['message' => 'Data berhasil ditambahkan.']);
+    }
+
     
     public function load_data_sub(Request $request,$id)
     {
-        $kategori_sub = KategoriPPKSSub::where("kategori_id","=",$id)->orderby("sort","asc")->get();
+        $kategori_sub = KategoriPPKSSub::select("laksa_ms_kategori_ppks_sub.*")->where("kategori_id","=",$id)->whereNull("parent_id")->orderby("sort","asc")->addSelect([
+            'total_child' => KategoriPPKSSub::selectRaw('COUNT(*)')
+                ->whereColumn('parent_id', '=', 'laksa_ms_kategori_ppks_sub.id')
+                ->take(1)
+        ])->get();
         $no=0;
         $data = array();
         foreach ($kategori_sub as $val) {
             $data[$no]['No']        =($no+1);
-            $data[$no]['Sub Kategori']  =$val->sub_kategori_ppks;
+            $data[$no]['Sub Kategori']  =$val->sub_kategori_ppks.($val->total_child >0 ? " [".$val->total_child."]" : "");
             $data[$no]['Aksi']      ='<div class="btn-group" role="group" aria-label="Group Aksi">
+                                        <button class="btn btn-sm btn-icon btn-success" onclick="optionalOffCanvas()">
+                                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                            </svg>
+                                        </button>
                                         <button class="btn btn-sm btn-icon btn-warning" Onclick="updatesub_form(\''.$val->id.'\')">
                                             <span class="btn-inner">
                                                 <svg fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-20" width="20" height="20" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.3764 20.0279L18.1628 8.66544C18.6403 8.0527 18.8101 7.3443 18.6509 6.62299C18.513 5.96726 18.1097 5.34377 17.5049 4.87078L16.0299 3.69906C14.7459 2.67784 13.1541 2.78534 12.2415 3.95706L11.2546 5.23735C11.1273 5.39752 11.1591 5.63401 11.3183 5.76301C11.3183 5.76301 13.812 7.76246 13.8651 7.80546C14.0349 7.96671 14.1622 8.1817 14.1941 8.43969C14.2471 8.94493 13.8969 9.41792 13.377 9.48242C13.1329 9.51467 12.8994 9.43942 12.7297 9.29967L10.1086 7.21422C9.98126 7.11855 9.79025 7.13898 9.68413 7.26797L3.45514 15.3303C3.0519 15.8355 2.91395 16.4912 3.0519 17.1255L3.84777 20.5761C3.89021 20.7589 4.04939 20.8879 4.24039 20.8879L7.74222 20.8449C8.37891 20.8341 8.97316 20.5439 9.3764 20.0279ZM14.2797 18.9533H19.9898C20.5469 18.9533 21 19.4123 21 19.9766C21 20.5421 20.5469 21 19.9898 21H14.2797C13.7226 21 13.2695 20.5421 13.2695 19.9766C13.2695 19.4123 13.7226 18.9533 14.2797 18.9533Z" fill="currentColor"></path></svg>
@@ -116,6 +144,11 @@ class KategoriKKPSController extends Controller
                                             </span>
                                         </button>
                                     </div>';
+                                    // <button class="btn btn-sm btn-icon btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">
+                                    //         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    //             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    //         </svg>
+                                    //     </button>
             $no++;
         }
         return \response()->json($data);

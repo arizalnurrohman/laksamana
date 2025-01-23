@@ -85,6 +85,40 @@
     </div>
 </div>
 
+{{-- offcanvas --}}
+<div class="offcanvas offcanvas-end" style="z-index: 100000; width: 40%" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Pilihan - Sub Kategori</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="bd-example">
+            <form>
+                <div class="mb-3">
+                    <label for="pilihanSub" class="form-label">Pilihan Sub</label>
+                    <input type="text" class="form-control" id="pilihanSub" aria-describedby="pilihanSubHelp">
+                    <div id="pilihanSubHelp" class="form-text">Silahkan Isikan Pilihan Optional.</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Tambah Data</button>
+            </form>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table id="list-data-pilihan" class="table">
+                <thead>
+                    <tr>
+                        <th width="25">No</th>
+                        <th>Kategori</th>
+                        <th width="40">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="subPPKSModal" tabindex="-1" aria-labelledby="subPPKSModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -112,9 +146,9 @@
                     <table id="list-data-sub" class="table">
                         <thead>
                             <tr>
-                                <th width="25" style="width: 25px">No</th>
+                                <th style="width: 25px !important">No</th>
                                 <th>Sub Kategori</th>
-                                <th width="40" style="width: 0px">Aksi</th>
+                                <th style="width: 30px  !important">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,14 +171,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="add{{ $activeMenu->access }}Form">
+                <form id="addsub{{ $activeMenu->access }}Form">
+                    <input type="hidden" id="addsub_kategoriId" name="id">
                     <div class="mb-3">
                         <label for="kategori" class="form-label">Kategori</label>
-                        <input type="text" class="form-control" id="kategori" name="kategori" required>
+                        <input type="text" class="form-control" id="addsub_kategori" name="kategori" required>
                     </div>
                     <div class="mb-3">
                         <label for="kategori" class="form-label">Sub Kategori</label>
-                        <input type="text" class="form-control" id="kategorisub" name="subkategori" required>
+                        <input type="text" class="form-control" id="addsub_kategorisub" name="subkategori" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
@@ -162,19 +197,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="updateForm">
-                    <input type="hidden" id="updateId" name="id">
+                <form id="updatesub{{ $activeMenu->access }}Form">
+                    <input type="hidden" id="update_KategoriId" name="id">
                     <div class="mb-3">
                         <label for="kategori" class="form-label">Kategori</label>
-                        <input type="text" class="form-control" id="updatekategori" name="kategori" required>
+                        <input type="text" class="form-control" id="update_kategoriid" name="kategori" required>
                     </div>
                     <div class="mb-3">
                         <label for="kategori" class="form-label">Sub Kategori</label>
-                        <input type="text" class="form-control" id="updatekategorisub" name="subkategori" required>
+                        <input type="text" class="form-control" id="update_kategorisub" name="subkategori" required>
                     </div>
                     <div class="mb-3">
                         <label for="updateUrutan" class="form-label">Urutan</label>
-                        <input type="text" class="form-control" id="updateUrutan" name="urutan" required>
+                        <input type="text" class="form-control" id="update_urutan" name="urutan" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
@@ -182,6 +217,8 @@
         </div>
     </div>
 </div>
+
+
 
  
 @endsection
@@ -351,11 +388,62 @@
     }
 
     function displayAddSubModal(id) {
-        let myModal = new
-        bootstrap.Modal(document.getElementById('addsub{{ $activeMenu->access }}Modal'), {});
-        myModal.show();
-        
+        const url = `/kategori-kkps/edit/${id}`;
+
+        $.get(url, function(data) {
+            // 'data' adalah array, ambil elemen pertama
+            if (data) {
+                // displayModal(data[0].id, data[0].kategori);
+                let myModal = new
+                bootstrap.Modal(document.getElementById('addsub{{ $activeMenu->access }}Modal'), {});
+                myModal.show();
+
+                $("#addsub_kategoriId").val(data.id);
+                $("#addsub_kategori").val(data.kategori);
+                
+            } else {
+                console.error('Data not found');
+            }
+        }).fail(function(error) {
+            console.error('There has been a problem with your AJAX request:', error);
+        });
     }
+
+    $('#addsub{{ $activeMenu->access }}Form').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '{{ route("sub_kategorikkps.store") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    kategori_id: $('#addsub_kategoriId').val(),
+                    kategori_sub: $('#addsub_kategorisub').val(),
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : response.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        $('#addsub{{ $activeMenu->access }}Modal').modal('hide');
+                        var idx = $('#addsub_kategoriId').val();
+                        const baseUrl = "{{ url('kategori-kkps/load-kategori-kkps') }}";
+                        const url = `${baseUrl}/${idx}`;
+
+                        loadTabelData("list-data-sub", url, ['No', 'Sub Kategori', 'Aksi']);
+                    });
+                },
+                error: function (xhr) {
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
+            });
+        });
 
 
 

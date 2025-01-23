@@ -36,7 +36,7 @@ Route::delete('/kategori-kkps/delete/{id}', [KategoriKKPSController::class, 'des
 
 Route::get('/kategori-kkps/sub/{id}', [KategoriKKPSController::class, 'sub_ppsk'])->name('sub_kategorikkps');
 Route::get('/kategori-kkps/load-kategori-kkps/{id}', [KategoriKKPSController::class, 'load_data_sub'])->name('load_kategorikkps_sub');
-
+Route::post('/kategori-kkps/sub-store', [KategoriKKPSController::class, 'sub_store'])->name('sub_kategorikkps.store');
 
 
 
