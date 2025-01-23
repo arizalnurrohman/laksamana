@@ -96,10 +96,9 @@ class KategoriKKPSController extends Controller
     
     public function load_data_sub(Request $request,$id)
     {
-        dd([$request->all(),$id]);
-
         $kategori_sub = KategoriPPKSSub::where("kategori_id","=",$id)->orderby("sort","asc")->get();
         $no=0;
+        $data = array();
         foreach ($kategori_sub as $val) {
             $data[$no]['No']        =($no+1);
             $data[$no]['Sub Kategori']  =$val->sub_kategori_ppks;
