@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use App\Models\KategoriPPKS;
 use Illuminate\Http\Request;
 use App\Models\KategoriPPKSSub;
+use DB;
 
 class KategoriKKPSController extends Controller
 {
@@ -99,7 +100,7 @@ class KategoriKKPSController extends Controller
     }
 
     public function load_sub_child_list_ppsk($id){
-        $sub_child = KategoriPPKSSub::where('parent_id', $id)->get();
+        $sub_child = KategoriPPKSSub::where('parent_id', $id)->orderby("sort","asc")->get();
         $data = array();
         $no=0;
         foreach ($sub_child as $val) {
@@ -151,11 +152,13 @@ class KategoriKKPSController extends Controller
     
     public function load_data_sub(Request $request,$id)
     {
-        $kategori_sub = KategoriPPKSSub::select("laksa_ms_kategori_ppks_sub.*")->where("kategori_id","=",$id)->whereNull("parent_id")->orderby("sort","asc")->addSelect([
+        $kategori_sub = KategoriPPKSSub::select("laksa_ms_kategori_ppks_sub.*")->where("kategori_id","=",$id)->whereNull("parent_id")->orderby("sort","asc");
+        $kategori_sub = $kategori_sub->addSelect([
             'total_child' => KategoriPPKSSub::selectRaw('COUNT(*)')
                 ->whereColumn('parent_id', '=', 'laksa_ms_kategori_ppks_sub.id')
                 ->take(1)
-        ])->get();
+        ]);
+        $kategori_sub=$kategori_sub->get();
         $no=0;
         $data = array();
         foreach ($kategori_sub as $val) {
