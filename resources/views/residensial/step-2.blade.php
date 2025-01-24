@@ -11,7 +11,15 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">Nama Lengkap: *</label>
-                <input type="text" class="form-control" name="fname" placeholder="Nama Lengkap" />
+                {{-- <input type="text" class="form-control" name="fname" placeholder="Nama Lengkap" /> --}}
+                <div class="input-group">
+                    <select data-placeholder="Pilih Pasien" class="select2-basic-single js-states form-select form-control" tabindex="1" id="pilih-pasien" name="instansi" style="width: 80%;">
+                        @foreach($pasien as $id => $pasienx)
+                            <option value="{{ $id }}">{{ $pasienx->nama_depan." ".$pasienx->nama_belakang }}</option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-btn"><button type="submit" class="btn btn-primary">Tambah</button></div>
+                </div>
             </div>
         </div>
         <div class="col-md-6">

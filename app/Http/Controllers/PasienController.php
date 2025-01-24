@@ -172,7 +172,52 @@ class PasienController extends Controller
     }
     public function update(Request $request, $id)
     {
-        
+        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'],$this->detail_rules()['MESSAGE']);
+        if ($validator->fails()){
+            $this->error[]=($validator->errors()->all())[0];
+        }else{
+            $pasien = Pasien::find($id);
+            if (!$pasien) {
+                $this->error[] = "Data Pasien tidak ada.";
+            }
+        }
+        if(!($this->error)){
+            $payload = [
+                'nama_depan'        => $request->nama_depan,
+                'nama_belakang'     => $request->nama_belakang,
+                'nik'               => $request->nik,
+                'nokk'              => $request->nokk,
+                'tmp_lahir'         => $request->tmp_lahir,
+                'tgl_lahir'         => $request->tgl_lahir,
+                'provinsi_id'       => $request->provinsi,
+                'kota_id'           => $request->kabupaten_kota,
+                'kecamatan_id'      => $request->kecamatan,
+                'kelurahan_desa_id' => $request->kelurahan,
+                'alamat'            => $request->alamat_ktp,
+                'domisili_alamat'   => $request->check_alamat_domisili,
+                'domisili'          => $request->alamat_domisili,
+                'agama_id'          => $request->agama,
+                'pendidikan_id'     => $request->pendidikan_terakhir,
+            ];
+    
+            if ($pasien->update($payload)) {
+                $this->success=true;
+            }
+        }
+        if($this->success){
+            $response=[
+                'status'=>'success',
+                'message'=>"Update data Pasien berhasil",
+            ];
+        }
+        if($this->error){
+            $response=[
+                'errors'=>'Error',
+                'message'=>$this->error,
+            ];
+        }
+        return response()->json($response);
+        exit;
     }
 
     public function destroy($id)

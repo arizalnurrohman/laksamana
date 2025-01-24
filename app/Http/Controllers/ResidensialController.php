@@ -10,6 +10,7 @@ use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Pendidikan;
 use App\Models\KategoriPPKS;
+use App\Models\Pasien;
 use App\Models\Residensial;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
@@ -56,7 +57,8 @@ class ResidensialController extends Controller
         $kecamatan = Kecamatan::all();
         $pendidikan=Pendidikan::all();
         $kategori = KategoriPPKS::all();
-        return view('residensial.create', compact('petugas','sumber_rujukan','agama','provinsi','kabupaten','kecamatan','pendidikan','kategori'));
+        $pasien = Pasien::all();
+        return view('residensial.create', compact('petugas','sumber_rujukan','agama','provinsi','kabupaten','kecamatan','pendidikan','kategori','pasien'));
     }
     public function store(Request $request)
     {

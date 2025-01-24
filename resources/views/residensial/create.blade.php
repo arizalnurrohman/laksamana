@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('add-css')
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
 <div class="row">                
@@ -44,7 +44,7 @@
                                     <path opacity="0.4" d="M17.44 6.2364L17.34 6.01665C17.07 5.44728 16.76 4.78801 16.57 4.40844C16.11 3.50943 15.32 3.00999 14.35 3H9.64C8.67 3.00999 7.89 3.50943 7.43 4.40844C7.23 4.80799 6.89 5.52719 6.61 6.11654L6.55 6.2364C6.52 6.31632 6.44 6.35627 6.36 6.35627C3.95 6.35627 2 8.3141 2 10.7114V16.6448C2 19.0422 3.95 21 6.36 21H17.64C20.04 21 22 19.0422 22 16.6448V10.7114C22 8.3141 20.04 6.35627 17.64 6.35627C17.55 6.35627 17.48 6.30633 17.44 6.2364Z" fill="currentColor"/>
                                 </svg>
                             </div>
-                            <span class="dark-wizard">KKPS</span>
+                            <span class="dark-wizard">PPKS</span>
                         </a>
                     </li>
                     <li id="confirm" class="mb-2 col-lg-3 col-md-6 text-start">
@@ -70,7 +70,7 @@
                 </fieldset>
                 <fieldset>
                     @include('residensial.step-3')
-                    <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Submit" >Submit</button>
+                    <button type="submit" name="next" class="btn btn-primary  action-button float-end" value="Submit" >Submit</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
                 <fieldset>
@@ -84,4 +84,131 @@
 @endsection
 @section('add-js')
 <script src="{{ url('assets/js/plugins/form-wizard.js') }}" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //add{{ $activeMenu->access }}Form
+        $('#pilih-pasien').select2({
+            placeholder: "Pilih Pasien",
+            allowClear: true
+        });
+        $("#form-wizard1").submit(function(e){
+          e.preventDefault(); 
+            var btnx	=$('.btn-submit');
+            $(btnx).attr("disabled", true);
+            $(btnx).attr({type:'submit',value: 'Loading'});
+            $.ajax({
+              url:$(this).closest('form').attr('action'),
+              type:"post",
+              data:new FormData(this), 
+              processData:false,
+              contentType:false,
+              dataType: "json",
+              cache:false,
+              async:false,
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data){
+                  if($.isEmptyObject(data.errors)){
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        window.location = "{{ route('pasien') }}";
+                    });
+                  }else{
+                    $(btnx).removeAttr("disabled");
+                    $(btnx).attr({type:'submit',value: 'Simpan'});
+                    Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+                  }
+              },
+              error: function(err, exception) {
+                $(btnx).removeAttr("disabled");
+                $(btnx).attr({type:'submit',value: 'Simpan'});
+
+                Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : "Sistem Gagal Memproses Data",
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+              },
+            });
+        });		
+    });
+
+    // (function() {
+    //     "use strict";
+    //     /*--------------single----------------*/
+    //     $(".select2-basic-single").select2({
+    //         dropdownParent: $('.modal')
+    //     });
+
+    //     /*--------------jomblo----------------*/
+    //     $("select#instansi").select2({
+    //         dropdownParent: $('#modalCek')
+    //     });
+
+    //     /*--------------tags----------------*/
+    //     $(".select2-basic-single-tag").select2({
+    //         tags: true
+    //     });
+
+    //     /*--------------multiple----------------*/
+    //     $(".select2-basic-multiple").select2();
+
+    //     /*--------------disble----------------*/
+    //     var $disabledResults = $(".select2-disabled ");
+    //     $disabledResults.select2();
+
+    //     /*--------------placeholder----------------*/
+    //     $('.select2-placeholder').select2({
+    //         placeholder: "Select a State",
+    //         allowClear: true
+    //     });
+    //     /*--------------maximum num----------------*/
+    //     $(".select2-multiple-limit").select2({
+    //         maximumSelectionLength: 3
+    //     });
+
+    //     /*--------------theme----------------*/
+    //     $(".select2-theme-single").select2({
+    //         theme: "classic"
+    //     });
+    //     /*--------------select 2----------------*/
+    //     $(".select2-option-creation").select2({
+    //         tags: true
+    //     });
+    //     /*--------------select 2 automatic----------------*/
+    //     $(".select2-automatic-tokenizer").select2({
+    //         tags: true,
+    //         tokenSeparators: [',', ' ']
+    //     })
+    // })();
+</script>
 @endsection

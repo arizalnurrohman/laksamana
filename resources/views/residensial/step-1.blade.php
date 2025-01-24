@@ -10,8 +10,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label class="form-label" for="choices-single-default">Petugas Penerimaan</label>
-                <select class="form-select" data-trigger name="choices-single-default" id="choices-single-default">
+                <label class="form-label" for="petugas_penerimaan">Petugas Penerimaan</label>
+                <select class="form-select" data-trigger name="residense_petugas" id="petugas_penerimaan">
                     <option value="">Pilih Petugas Penerimaan</option>
                     @foreach($petugas as $petugasx)
                         <option value="{{$petugasx->id}}">{{$petugasx->nama}}</option>
@@ -22,13 +22,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Tanggal Masuk/Penerimaan: *</label>
-                <input type="date" class="form-control" name="uname" placeholder="UserName" />
+                <input type="date" class="form-control" name="residense_tgl_penerimaan" placeholder="UserName" />
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">Sumber Rujukan: *</label>
-                <select class="form-select" data-trigger name="choices-single-default" id="choices-single-default">
+                <select class="form-select" data-trigger name="residense_sumber_rujukan" id="residense_sumber_rujukan">
                     <option value="">Pilih Sumber Rujukan</option>
                     @foreach($sumber_rujukan as $sumber_rujukanx)
                         <option value="{{$sumber_rujukanx->id}}">{{$sumber_rujukanx->sumber}}</option>

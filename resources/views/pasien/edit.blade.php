@@ -73,43 +73,45 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
-                    <h4 class="card-title">Tambah data {{ $activeMenu->menu }}</h4>
+                    <h4 class="card-title">Update data {{ $activeMenu->menu }}</h4>
                 </div>
             </div>
             <div class="card-body">
                 <div class="new-user-info">
-                    <form action="{{ route('pasien.store') }}" method="POST" id="add{{ $activeMenu->access }}Form">
+                    <form action="{{ route('pasien.update',$pasien->id) }}" method="POST" id="update{{ $activeMenu->access }}Form">
+                        @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="fname">Nama Depan:</label>
-                                <input type="text" class="form-control" name="nama_depan" id="nama_depan" placeholder="Nama Depan">
+                                <input type="text" class="form-control" name="nama_depan" id="nama_depan" placeholder="Nama Depan" value="{{$pasien->nama_depan}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="lname">Nama Belakang:</label>
-                                <input type="text" class="form-control" name="nama_belakang" id="nama_belakang" placeholder="Nama Belakang">
+                                <input type="text" class="form-control" name="nama_belakang" id="nama_belakang" placeholder="Nama Belakang" value="{{$pasien->nama_belakang}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add1">NIK:</label>
-                                <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK">
+                                <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK" value="{{$pasien->nik}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add2">No KK:</label>
-                                <input type="text" class="form-control" name="nokk" id="nokk" placeholder="No KK">
+                                <input type="text" class="form-control" name="nokk" id="nokk" placeholder="No KK" value="{{$pasien->nokk}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add1">Tempat Lahir:</label>
-                                <input type="text" class="form-control" name="tmp_lahir" id="tmp_lahir" placeholder="Tempat Lahir">
+                                <input type="text" class="form-control" name="tmp_lahir" id="tmp_lahir" placeholder="Tempat Lahir" value="{{$pasien->tmp_lahir}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add2">Tanggal Lahir:</label>
-                                <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir">
+                                <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir" value="{{$pasien->tgl_lahir}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add1">Agama:</label>
                                 <select class="form-select" data-trigger name="agama" id="choices-single-default">
                                     <option value="">Pilih Agama</option>
                                     @foreach($agama as $agamax)
-                                        <option value="{{$agamax->id}}">{{$agamax->agama}}</option>
+                                        <option value="{{$agamax->id}}" {{$pasien->agama_id == $agamax->id ? 'selected="selected"' : ''}}>{{$agamax->agama}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -118,21 +120,21 @@
                                 <select class="form-select" data-trigger name="pendidikan_terakhir" id="choices-single-default">
                                     <option value="">Pilih Pendidikan</option>
                                     @foreach($pendidikan as $pendidikanx)
-                                        <option value="{{$pendidikanx->id}}">{{$pendidikanx->pendidikan}}</option>
+                                        <option value="{{$pendidikanx->id}}" {{$pasien->pendidikan_id == $pendidikanx->id ? 'selected="selected"' : ''}}>{{$pendidikanx->pendidikan}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Alamat KTP: *</label>
-                                    <textarea class="form-control" name="alamat_ktp" rows="5"></textarea>
+                                    <textarea class="form-control" name="alamat_ktp" rows="5">{{$pasien->alamat}}</textarea>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="form-label">Alamat Domisili: *</label>
-                                <textarea class="form-control" name="alamat_domisili" rows="5"></textarea>
+                                <textarea class="form-control" name="alamat_domisili" rows="5">{{$pasien->domisili}}</textarea>
                                 <div class="form-check d-block">
-                                    <input class="form-check-input" type="checkbox" value="1" name="check_alamat_domisili" id="checkedcheck">
+                                    <input class="form-check-input" type="checkbox" value="1" name="check_alamat_domisili" id="checkedcheck" @if($pasien->domisili_alamat == 1) checked @endif>
                                     <label class="form-check-label" for="checkedcheck">
                                         Sama dengan Alamat KTP
                                     </label>
@@ -143,7 +145,7 @@
                                 <select class="form-select" data-trigger name="provinsi" id="choices-single-default">
                                     <option value="">Pilih Provinsi</option>
                                     @foreach($provinsi as $provinsix)
-                                        <option value="{{$provinsix->id}}">{{$provinsix->provinsi}}</option>
+                                        <option value="{{$provinsix->id}}" {{$pasien->provinsi_id == $provinsix->id ? 'selected="selected"' : ''}}>{{$provinsix->provinsi}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -152,7 +154,7 @@
                                 <select class="form-select" data-trigger name="kabupaten_kota" id="choices-single-default">
                                     <option value="">Pilih Kabupaten</option>
                                     @foreach($kabupaten as $kabupatenx)
-                                        <option value="{{$kabupatenx->id}}">{{$kabupatenx->kabupaten_kota}}</option>
+                                        <option value="{{$kabupatenx->id}}" {{$pasien->kota_id == $kabupatenx->id ? 'selected="selected"' : ''}}>{{$kabupatenx->kabupaten_kota}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -161,13 +163,13 @@
                                 <select class="form-select" data-trigger name="kecamatan" id="choices-single-default">
                                     <option value="">Pilih Kecamatan</option>
                                     @foreach($kecamatan as $kecamatanx)
-                                        <option value="{{$kecamatanx->id}}">{{$kecamatanx->kecamatan}}</option>
+                                        <option value="{{$kecamatanx->id}}" {{$pasien->kecamatan_id == $kecamatanx->id ? 'selected="selected"' : ''}}>{{$kecamatanx->kecamatan}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="add2">Kelurahan:</label>
-                                <input type="text" class="form-control" id="add1" name="kelurahan" placeholder="Street Address 1">
+                                <input type="text" class="form-control" id="add1" name="kelurahan" placeholder="Kelurahan" value="{{$pasien->kelurahan_desa_id}}">
                             </div>
                         </div>
                         
@@ -188,7 +190,7 @@
 <script>
     $(document).ready(function () {
         //add{{ $activeMenu->access }}Form
-        $("#add{{ $activeMenu->access }}Form").submit(function(e){
+        $("#update{{ $activeMenu->access }}Form").submit(function(e){
           e.preventDefault(); 
             var btnx	=$('.btn-submit');
             $(btnx).attr("disabled", true);
@@ -255,7 +257,6 @@
               },
             });
         });		
-        
     });
 </script>
 @endsection
