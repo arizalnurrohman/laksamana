@@ -50,87 +50,88 @@
 </style>
 @endsection
 @section('content')
-<div class="row">
-    <div class="col-xl-3 col-lg-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">Foto & Dokumen</h4>
+<form action="{{ route('pasien.store') }}" method="POST" enctype="multipart/form-data" id="add{{ $activeMenu->access }}Form">
+    <div class="row">
+        <!-- Foto & Dokumen Section -->
+        <div class="col-xl-3 col-lg-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Foto & Dokumen</h4>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <form>
+                <div class="card-body">
                     <div class="form-group text-center">
                         <div class="profile-img-edit position-relative">
                             <img src="../../assets/images/avatars/01.png" alt="profile-pic" class="theme-color-default-img profile-pic rounded avatar-100" loading="lazy">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="kategori_ppks">Upload Foto</label>
-                        <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
+                        <label class="form-label" for="foto">Upload Foto</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('fileInputFoto').click();">
                             <p class="text-secondary">Drag & drop files here or click to select files</p>
-                            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                            <input type="file" id="fileInputFoto" name="foto" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
                         </div>
-                        <div class="file-list" id="fileList"></div>
+                        <div class="file-list" id="fileListFoto"></div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="kategori_ppks">Upload KK</label>
-                        <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
+                        <label class="form-label" for="kk">Upload KK</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('fileInputKK').click();">
                             <p class="text-secondary">Drag & drop files here or click to select files</p>
-                            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                            <input type="file" id="fileInputKK" name="kk" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
                         </div>
-                        <div class="file-list" id="fileList"></div>
+                        <div class="file-list" id="fileListKK"></div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="kategori_ppks">Upload Akte Kelahiran</label>
-                        <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
+                        <label class="form-label" for="akte_kelahiran">Upload Akte Kelahiran</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('fileInputAkte').click();">
                             <p class="text-secondary">Drag & drop files here or click to select files</p>
-                            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                            <input type="file" id="fileInputAkte" name="akte_kelahiran" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
                         </div>
-                        <div class="file-list" id="fileList"></div>
+                        <div class="file-list" id="fileListAkte"></div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-9 col-lg-8">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">Tambah data {{ $activeMenu->menu }}</h4>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="new-user-info">
-                    <form action="{{ route('pasien.store') }}" method="POST" id="add{{ $activeMenu->access }}Form">
+        </div>
+
+        <!-- Data Pasien Section -->
+        <div class="col-xl-9 col-lg-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Tambah data {{ $activeMenu->menu }}</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="new-user-info">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="fname">Nama Depan:</label>
+                                <label class="form-label" for="nama_depan">Nama Depan:</label>
                                 <input type="text" class="form-control" name="nama_depan" id="nama_depan" placeholder="Nama Depan">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="lname">Nama Belakang:</label>
+                                <label class="form-label" for="nama_belakang">Nama Belakang:</label>
                                 <input type="text" class="form-control" name="nama_belakang" id="nama_belakang" placeholder="Nama Belakang">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add1">NIK:</label>
+                                <label class="form-label" for="nik">NIK:</label>
                                 <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">No KK:</label>
+                                <label class="form-label" for="nokk">No KK:</label>
                                 <input type="text" class="form-control" name="nokk" id="nokk" placeholder="No KK">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add1">Tempat Lahir:</label>
+                                <label class="form-label" for="tmp_lahir">Tempat Lahir:</label>
                                 <input type="text" class="form-control" name="tmp_lahir" id="tmp_lahir" placeholder="Tempat Lahir">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Tanggal Lahir:</label>
+                                <label class="form-label" for="tgl_lahir">Tanggal Lahir:</label>
                                 <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add1">Agama:</label>
-                                <select class="form-select" data-trigger name="agama" id="choices-single-default">
+                                <label class="form-label" for="agama">Agama:</label>
+                                <select class="form-select" name="agama" id="agama">
                                     <option value="">Pilih Agama</option>
                                     @foreach($agama as $agamax)
                                         <option value="{{$agamax->id}}">{{$agamax->agama}}</option>
@@ -138,8 +139,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Pendidikan Terakhir:</label>
-                                <select class="form-select" data-trigger name="pendidikan_terakhir" id="choices-single-default">
+                                <label class="form-label" for="pendidikan_terakhir">Pendidikan Terakhir:</label>
+                                <select class="form-select" name="pendidikan_terakhir" id="pendidikan_terakhir">
                                     <option value="">Pilih Pendidikan</option>
                                     @foreach($pendidikan as $pendidikanx)
                                         <option value="{{$pendidikanx->id}}">{{$pendidikanx->pendidikan}}</option>
@@ -147,10 +148,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label">Alamat KTP: *</label>
-                                    <textarea class="form-control" name="alamat_ktp" rows="5"></textarea>
-                                </div>
+                                <label class="form-label">Alamat KTP: *</label>
+                                <textarea class="form-control" name="alamat_ktp" rows="5"></textarea>
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="form-label">Alamat Domisili: *</label>
@@ -163,8 +162,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add1">Provinsi:</label>
-                                <select class="form-select" data-trigger name="provinsi" id="choices-single-default">
+                                <label class="form-label" for="provinsi">Provinsi:</label>
+                                <select class="form-select" name="provinsi" id="provinsi">
                                     <option value="">Pilih Provinsi</option>
                                     @foreach($provinsi as $provinsix)
                                         <option value="{{$provinsix->id}}">{{$provinsix->provinsi}}</option>
@@ -172,8 +171,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Kabupaten / Kota:</label>
-                                <select class="form-select" data-trigger name="kabupaten_kota" id="choices-single-default">
+                                <label class="form-label" for="kabupaten_kota">Kabupaten / Kota:</label>
+                                <select class="form-select" name="kabupaten_kota" id="kabupaten_kota">
                                     <option value="">Pilih Kabupaten</option>
                                     @foreach($kabupaten as $kabupatenx)
                                         <option value="{{$kabupatenx->id}}">{{$kabupatenx->kabupaten_kota}}</option>
@@ -181,8 +180,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Kecamatan:</label>
-                                <select class="form-select" data-trigger name="kecamatan" id="choices-single-default">
+                                <label class="form-label" for="kecamatan">Kecamatan:</label>
+                                <select class="form-select" name="kecamatan" id="kecamatan">
                                     <option value="">Pilih Kecamatan</option>
                                     @foreach($kecamatan as $kecamatanx)
                                         <option value="{{$kecamatanx->id}}">{{$kecamatanx->kecamatan}}</option>
@@ -190,21 +189,18 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Kelurahan:</label>
-                                <input type="text" class="form-control" id="add1" name="kelurahan" placeholder="Street Address 1">
+                                <label class="form-label" for="kelurahan">Kelurahan:</label>
+                                <input type="text" class="form-control" name="kelurahan" id="kelurahan" placeholder="Kelurahan">
                             </div>
                         </div>
-                        
-                        {{-- <div class="checkbox">
-                            <label class="form-label"><input class="form-check-input me-2" type="checkbox" value="" id="flexchexked">Enable Two-Factor-Authentication</label>
-                        </div> --}}
                         <button type="submit" class="btn btn-primary btn-submit">Tambah Data @if ($activeMenu) {{ $activeMenu->menu }} @endif</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+
  
 @endsection
 @section('add-js')
