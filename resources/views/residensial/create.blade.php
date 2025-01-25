@@ -12,7 +12,8 @@
             </div>
             </div>
             <div class="card-body">
-            <form id="form-wizard1" class="mt-3 text-center">
+            <form id="form-wizard1" class="mt-3 text-center" action="{{route('residensial.store')}}">
+                @csrf
                 <ul id="top-tab-list" class="p-0 row list-inline">
                     <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">
                         <a href="javascript:void(0);">
@@ -22,7 +23,7 @@
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.7688 8.71118H16.2312C18.5886 8.71118 20.5 10.5808 20.5 12.8867V17.8246C20.5 20.1305 18.5886 22.0001 16.2312 22.0001H7.7688C5.41136 22.0001 3.5 20.1305 3.5 17.8246V12.8867C3.5 10.5808 5.41136 8.71118 7.7688 8.71118ZM11.9949 17.3286C12.4928 17.3286 12.8891 16.941 12.8891 16.454V14.2474C12.8891 13.7703 12.4928 13.3827 11.9949 13.3827C11.5072 13.3827 11.1109 13.7703 11.1109 14.2474V16.454C11.1109 16.941 11.5072 17.3286 11.9949 17.3286Z" fill="currentColor"></path>
                                 </svg>
                             </div>
-                            <span class="dark-wizard">Residensial Penerimaan</span>
+                            <span class="dark-wizard">Residensial</span>
                         </a>
                     </li>
                     <li id="personal" class="mb-2 col-lg-3 col-md-6 text-start">
@@ -166,9 +167,8 @@
     $(document).ready(function () {
         $('#pilih-pasien').change(function () {
             // Trigger on selecting a patient
-            $('.btn-primary').click(function () {
+            $('.pilih_pasien').click(function () {
                 const pasienId = $('#pilih-pasien').val(); // Get selected pasien ID
-
                 if (pasienId) {
                     $.ajax({
                         url: '/residensial/get-pasien/' + pasienId, // Call the route
@@ -203,6 +203,53 @@
                 }
             });
         });
+
+        $('#kategori_ppks').change(function () {
+            const kategoriId = $(this).val(); // Ambil ID dari kategori yang dipilih
+
+            if (kategoriId) {
+                $.ajax({
+                    url: '/residensial/get-ppks/' + kategoriId, // Endpoint dengan ID kategori
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            $('.pilihan_lanjutan').removeClass('d-none');
+                            $('.pilihan_lanjutan').empty();
+                            data.sub_kategori.forEach(function (item) {
+                                var html_sub_kategori ='<div class="form-group">' +
+                                                            '<label class="form-label" for="kategori_ppks">'+item.sub_kategori_ppks+'</label>';
+                                                            if (item.option && item.option.length > 0) {
+                                                                html_sub_kategori+='<select class="form-select" data-trigger name="'+item.variable_form+'" id="'+item.variable_form+'">';
+                                                                        html_sub_kategori+='<option value="">Pilih '+item.sub_kategori_ppks+'</option>';
+                                                                        item.option.forEach(function (itemx) {
+                                                                            html_sub_kategori+='<option value="'+itemx.id+'">Pilih '+itemx.sub_kategori_ppks+'</option>';
+                                                                        });
+                                                                html_sub_kategori+='</select>';
+                                                            }else{
+                                                                html_sub_kategori+='<input type="text" class="form-control" name="'+item.variable_form+'" placeholder="'+item.sub_kategori_ppks+'" />';
+                                                            }
+
+                                                        html_sub_kategori+='</div>';
+
+                                    $('.pilihan_lanjutan').append(html_sub_kategori);
+                            });
+                        } else {
+                            $('.pilihan_lanjutan').addClass('d-none');
+                            alert('Data tidak ditemukan.');
+                        }
+                    },
+                    error: function () {
+                        alert('Terjadi kesalahan. Silakan coba lagi.');
+                    }
+                });
+            } else {
+                // Jika tidak ada kategori yang dipilih, kosongkan dropdown sub kategori
+                $('#sub_kategori_ppks').empty();
+                $('#sub_kategori_ppks').append('<option value="">Pilih Sub Kategori</option>');
+            }
+        });
+
     });
 
 

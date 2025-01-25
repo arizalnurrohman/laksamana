@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2025 at 02:34 AM
+-- Generation Time: Jan 25, 2025 at 09:30 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -196,7 +196,6 @@ INSERT INTO `laksa_ms_kategori_ppks` (`id`, `kategori`, `sort`, `created_at`, `u
 ('46779588-8e13-4fa9-815e-be6d7780b4b4', 'Korban Bencana', 8, '2025-01-17 01:26:34', '2025-01-17 01:26:34', NULL),
 ('6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Kelompok Rentan', 4, '2025-01-17 01:26:03', '2025-01-17 01:26:03', NULL),
 ('6f041a34-b60d-4297-a4c7-41575efcf3e7', 'ODHA', 6, '2025-01-17 01:26:16', '2025-01-17 01:26:16', NULL),
-('7e345ffe-5305-4075-a95b-995682b0954f', 'xx', 10, '2025-01-22 19:11:37', '2025-01-22 19:12:29', '2025-01-22 19:12:29'),
 ('b0dfec43-ccc7-4ef6-99ff-391fc2a1c494', 'Lanjut Usia', 3, '2025-01-17 01:25:54', '2025-01-17 01:25:54', NULL),
 ('b1895989-f137-4421-83bc-59206516da7f', 'Penyandang Disabilitas', 7, '2025-01-17 01:26:24', '2025-01-17 01:26:24', NULL),
 ('ce9e55eb-eee7-4cf5-8b32-c27253ba4213', 'NAPZA', 5, '2025-01-17 01:26:09', '2025-01-17 01:26:09', NULL),
@@ -212,6 +211,7 @@ CREATE TABLE `laksa_ms_kategori_ppks_sub` (
   `id` varchar(36) NOT NULL,
   `kategori_id` varchar(36) DEFAULT NULL,
   `sub_kategori_ppks` varchar(100) DEFAULT NULL,
+  `variable_form` varchar(100) DEFAULT NULL,
   `parent_id` varchar(36) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -223,55 +223,81 @@ CREATE TABLE `laksa_ms_kategori_ppks_sub` (
 -- Dumping data for table `laksa_ms_kategori_ppks_sub`
 --
 
-INSERT INTO `laksa_ms_kategori_ppks_sub` (`id`, `kategori_id`, `sub_kategori_ppks`, `parent_id`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('00280bc9-2f1a-452b-2d61-2a9b89e27fd7', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak yang dieksploitasi secara ekonomi', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('00505551-5658-82b1-855e-306902da3178', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dalam kondisi kritis yang membutuhkan akses ke layanan kesehatan', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('044ff0e9-439e-124e-8ef8-202485b34bd5', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Kejahatan Seksual', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('13157c96-d3f6-429f-864e-7edcab14b468', 'b1895989-f137-4421-83bc-59206516da7f', 'Ragam Penyandang Disabilitas', NULL, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('13462ab7-5874-4fad-b131-e07e75c4ff72', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'asd', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 5, '2025-01-23 06:38:57', '2025-01-23 06:39:03', '2025-01-23 06:39:03'),
-('1a482f35-6bf4-18da-0a2d-fe5ba1dc757b', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Perdagangan', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('25fe3af7-841a-7dbd-833e-43cd00e773f7', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Kekerasan Fisik', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('2867514a-9631-4f5e-66ac-2c39720f3f1d', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Jaringan Terorisme', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('2bc64477-9b2b-263a-88b7-e456d8d3707b', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Perlakuan Salah', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('2cbb13f2-016e-4cbc-4aca-c04c681d2e7f', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Penjualan', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('3c11bd19-0685-47c3-837c-f0e631f05fce', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Yang lain:', '5332d470-4c5d-4df2-98d5-45b60805c978', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('3c77ed14-604b-7313-5afe-914a4274632c', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Penyandang Disabilitas', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('3f519a01-5eee-7e7a-a64f-ab6095bca4e8', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Yang Menjadi Korban penyalahgunaan narkotika, alkohol,psikotoprika,dan zat adiktif lainnya', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('44e0d44d-c96e-4afa-9caf-0395c12d0c7a', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Diversi', '5332d470-4c5d-4df2-98d5-45b60805c978', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('4aebdf03-5293-4724-a3d8-f9f2fca857d9', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'No. Putusan Pengadilan', NULL, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('4eb28eab-7561-5e7e-42a5-c3ac2bfc114d', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Penculikan', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('5332d470-4c5d-4df2-98d5-45b60805c978', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Jenis Rujukan', NULL, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('62ca4c60-5969-0123-66cc-4f71220460ae', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dalam situasi darurat', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('8caad3d7-f8b7-4c01-8c95-4f2f973a4539', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'ABH Pelaku', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('8e381881-7053-7ac7-7234-9aaeb0767883', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dengan perilaku sosial menyimpang', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('8ec2abaf-6011-3f17-910b-01e8b13a0dfa', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dengan HIV/AIDS', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('90d1388a-2fe5-0d7d-100c-57bb59112fb3', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dari kelompok minoritas dan terisolasi', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('90f783ce-4070-8aa8-701b-25c10b9b6fb1', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak yang dieksploitasi secara seksual', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('928718ec-6054-4bb7-8b84-7b1feda36b28', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'ABH Korban', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 4, '2025-01-23 06:51:27', '2025-01-23 06:51:33', '2025-01-23 06:51:33'),
-('95be8e45-0158-a37b-a47b-4aabb7011377', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak yang berhadapan dengan hukum', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('999c6d0f-821e-48c7-2485-1bdc0c3d6da6', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak yang menjadi korban pornogra', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('9fbf8270-808f-4899-9030-cd8e821f5663', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Pencurian', 'ebc5f1dd-4e2b-4fe2-97be-477291a311dd', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('a46a35ed-441c-1350-2476-dd1577fb8d66', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dengan kasus perundungan (anak korban perundungan, anak pelaku perundungan, dan anak saksi peru', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('a9c1a2fc-dc31-4206-a875-c40a54dbbdac', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Pelecehan/Pencabulan', 'ebc5f1dd-4e2b-4fe2-97be-477291a311dd', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('ac538596-d6db-4831-b992-e2a7f3315fbe', 'b1895989-f137-4421-83bc-59206516da7f', 'Ragam Disabilitas Fisik', NULL, 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('ae69c3df-365f-435b-9586-5caeb077a07b', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'asda', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 5, '2025-01-23 07:06:47', '2025-01-23 07:06:50', '2025-01-23 07:06:50'),
-('bdb5fc88-e430-47f1-9ba4-cea2cac40244', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Ragam ABH', NULL, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('be9a2343-0021-43a7-9c54-46cd1d3832c1', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Hasil Putusan Pengadilan', '5332d470-4c5d-4df2-98d5-45b60805c978', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('bfa75352-310b-4ed7-aeb9-23a28c656143', '1dd96457-c226-4f42-a25b-693c9139823c', 'x', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('c69af842-2173-2229-90d3-3012747ea0ac', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Yatim, Piatu, Yatim Piatu (YAPI)', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('cfa0d589-5395-4fdd-b8f6-ed9532fdfd45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'asda', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 4, '2025-01-23 06:38:52', '2025-01-23 06:39:07', '2025-01-23 06:39:07'),
-('d62b1a10-86be-77d7-5bba-1c179ab20716', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Yang Menjadi Korban stigmatisasi dari pelabelan terkait dengan kondisi orangtuanya', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('d7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'ABH Korban', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('d87128fc-6a4b-4233-a4a0-472c59095c19', '1dd96457-c226-4f42-a25b-693c9139823c', 'Ragam Anak (AMPK)', NULL, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('dc744d90-42a5-47dc-8f57-282675396dde', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Rujukan Dinas Sosial/Masyarakat', '5332d470-4c5d-4df2-98d5-45b60805c978', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('e13f6055-45d9-9e98-85f5-d334093a747f', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Penelantaran', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('e34af134-cceb-4500-87bf-87d4ea98d6e8', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Tambah daa', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 4, '2025-01-23 06:59:10', '2025-01-23 07:06:57', '2025-01-23 07:06:57'),
-('e4b07705-7562-4fa5-b77f-3338802a9645', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Persetubuhan', 'ebc5f1dd-4e2b-4fe2-97be-477291a311dd', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('ea22e5d0-256f-40c7-9644-d7ec4b0f2d17', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Kekerasan Psikis', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('ebc5f1dd-4e2b-4fe2-97be-477291a311dd', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Informasi Kasus', NULL, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('f6d77f80-a4e6-45c4-98cc-86c7dab890dd', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'ABH Saksi', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('f8ce7f6c-e831-4aec-8563-028184567416', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Trafficking', 'ebc5f1dd-4e2b-4fe2-97be-477291a311dd', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
-('ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Ragam Kelompok Rentan', NULL, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL);
+INSERT INTO `laksa_ms_kategori_ppks_sub` (`id`, `kategori_id`, `sub_kategori_ppks`, `variable_form`, `parent_id`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('00280bc9-2f1a-452b-2d61-2a9b89e27fd7', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak yang dieksploitasi secara ekonomi', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('00505551-5658-82b1-855e-306902da3178', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dalam kondisi kritis yang membutuhkan akses ke layanan kesehatan', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('044ff0e9-439e-124e-8ef8-202485b34bd5', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Kejahatan Seksual', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('13157c96-d3f6-429f-864e-7edcab14b468', 'b1895989-f137-4421-83bc-59206516da7f', 'Ragam Penyandang Disabilitas', 'ragam_peyandang_disabilitas', NULL, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('13462ab7-5874-4fad-b131-e07e75c4ff72', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'asd', '', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 5, '2025-01-23 06:38:57', '2025-01-23 06:39:03', '2025-01-23 06:39:03'),
+('1790b96b-aeb3-426e-866a-67a5054a91d4', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Korban trafficking', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 7, '2025-01-25 01:05:06', '2025-01-25 01:05:06', NULL),
+('1a482f35-6bf4-18da-0a2d-fe5ba1dc757b', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Perdagangan', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('25fe3af7-841a-7dbd-833e-43cd00e773f7', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Kekerasan Fisik', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('2867514a-9631-4f5e-66ac-2c39720f3f1d', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Jaringan Terorisme', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('2bc64477-9b2b-263a-88b7-e456d8d3707b', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Perlakuan Salah', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('2cbb13f2-016e-4cbc-4aca-c04c681d2e7f', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Penjualan', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('2e410c4b-d2f2-45f2-aa83-92cb8ea82521', 'b1895989-f137-4421-83bc-59206516da7f', 'Amputasi, Lumpuh Layu/Kaku', NULL, 'ac538596-d6db-4831-b992-e2a7f3315fbe', 1, '2025-01-25 01:23:46', '2025-01-25 01:23:46', NULL),
+('36d2ff59-68f4-4ffd-a081-33da9baae7aa', '46779588-8e13-4fa9-815e-be6d7780b4b4', 'Orang Tua', '', '68695951-ba9d-4a51-a4b7-11313c8a4fd4', 2, '2025-01-25 01:03:44', '2025-01-25 01:03:44', NULL),
+('377f7714-38ce-48a9-baff-fe9576e36458', 'b1895989-f137-4421-83bc-59206516da7f', 'Disabilitas Fisik', NULL, '13157c96-d3f6-429f-864e-7edcab14b468', 1, '2025-01-25 01:23:21', '2025-01-25 01:23:21', NULL),
+('37aa74ff-0bbf-4be8-ab7c-7544dc8bcd7f', 'b1895989-f137-4421-83bc-59206516da7f', 'Disabilitas Mental', NULL, '13157c96-d3f6-429f-864e-7edcab14b468', 3, '2025-01-25 01:23:28', '2025-01-25 01:23:28', NULL),
+('3c11bd19-0685-47c3-837c-f0e631f05fce', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Yang lain:', '', '5332d470-4c5d-4df2-98d5-45b60805c978', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('3c77ed14-604b-7313-5afe-914a4274632c', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Penyandang Disabilitas', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('3e8bb6f2-56ab-445b-a995-bc3397c4967c', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Perempuan orang dengan rawan sosial ekonomi', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 10, '2025-01-25 01:05:20', '2025-01-25 01:05:20', NULL),
+('3f519a01-5eee-7e7a-a64f-ab6095bca4e8', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Yang Menjadi Korban penyalahgunaan narkotika, alkohol,psikotoprika,dan zat adiktif lainnya', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('448375a4-29cb-4ea9-a1d9-208611082989', 'b1895989-f137-4421-83bc-59206516da7f', 'Disabilitas Sensorik', NULL, '13157c96-d3f6-429f-864e-7edcab14b468', 4, '2025-01-25 01:23:32', '2025-01-25 01:23:32', NULL),
+('44e0d44d-c96e-4afa-9caf-0395c12d0c7a', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Diversi', '', '5332d470-4c5d-4df2-98d5-45b60805c978', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('4aebdf03-5293-4724-a3d8-f9f2fca857d9', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'No. Putusan Pengadilan', 'no_putusan_pengadilan', NULL, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('4b5aaf59-4284-4b7c-a227-68f4294423d7', 'b1895989-f137-4421-83bc-59206516da7f', 'Dwarfisme (Kerdil)', NULL, 'ac538596-d6db-4831-b992-e2a7f3315fbe', 5, '2025-01-25 01:24:04', '2025-01-25 01:24:10', NULL),
+('4bd3ee2c-88be-4989-803d-5b63a16fa0f9', 'b1895989-f137-4421-83bc-59206516da7f', 'Disabilitas Intelektual', NULL, '13157c96-d3f6-429f-864e-7edcab14b468', 2, '2025-01-25 01:23:25', '2025-01-25 01:23:25', NULL),
+('4eb28eab-7561-5e7e-42a5-c3ac2bfc114d', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Penculikan', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('5332d470-4c5d-4df2-98d5-45b60805c978', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Jenis Rujukan', 'jenis_rujukan', NULL, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('5d7628a4-e240-4d65-9348-a9a027dbb312', '46779588-8e13-4fa9-815e-be6d7780b4b4', 'Wali Pengampu/Pendamping', '', '68695951-ba9d-4a51-a4b7-11313c8a4fd4', 3, '2025-01-25 01:03:48', '2025-01-25 01:03:48', NULL),
+('62ca4c60-5969-0123-66cc-4f71220460ae', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dalam situasi darurat', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('68695951-ba9d-4a51-a4b7-11313c8a4fd4', '46779588-8e13-4fa9-815e-be6d7780b4b4', 'Penerima ATENSI', 'penerima_atensi', NULL, 9, '2025-01-25 01:03:28', '2025-01-25 01:03:28', NULL),
+('6e3449f5-b555-4158-83fb-f00ffac0807e', '46779588-8e13-4fa9-815e-be6d7780b4b4', 'Yang lain:', '', '68695951-ba9d-4a51-a4b7-11313c8a4fd4', 4, '2025-01-25 01:03:54', '2025-01-25 01:03:54', NULL),
+('82537df4-33d2-465a-bac6-e002fa285a32', '46779588-8e13-4fa9-815e-be6d7780b4b4', 'PPKS', '', '68695951-ba9d-4a51-a4b7-11313c8a4fd4', 1, '2025-01-25 01:03:40', '2025-01-25 01:03:40', NULL),
+('8caad3d7-f8b7-4c01-8c95-4f2f973a4539', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'ABH Pelaku', '', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('8e381881-7053-7ac7-7234-9aaeb0767883', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dengan perilaku sosial menyimpang', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('8e6f2cb5-d3f8-4a6c-8a4f-da2059b264b8', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Bekas Warga Binaan Lembaga Pemasyarakatan (BWBLP)', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 6, '2025-01-25 01:04:57', '2025-01-25 01:04:57', NULL),
+('8ec2abaf-6011-3f17-910b-01e8b13a0dfa', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dengan HIV/AIDS', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('90d1388a-2fe5-0d7d-100c-57bb59112fb3', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dari kelompok minoritas dan terisolasi', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('90f783ce-4070-8aa8-701b-25c10b9b6fb1', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak yang dieksploitasi secara seksual', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('928718ec-6054-4bb7-8b84-7b1feda36b28', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'ABH Korban', '', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 4, '2025-01-23 06:51:27', '2025-01-23 06:51:33', '2025-01-23 06:51:33'),
+('95be8e45-0158-a37b-a47b-4aabb7011377', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak yang berhadapan dengan hukum', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('999c6d0f-821e-48c7-2485-1bdc0c3d6da6', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak yang menjadi korban pornogra', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('9fbf8270-808f-4899-9030-cd8e821f5663', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Pencurian', '', 'ebc5f1dd-4e2b-4fe2-97be-477291a311dd', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('a05abcf9-a6a0-4c1d-973f-f2fe3d632ace', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Orang dalam kondisi kritis yang membutuhkan akses ke layanan kesehatan', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 11, '2025-01-25 01:05:24', '2025-01-25 01:05:24', NULL),
+('a2e2db57-bd0c-4de2-8fb4-dd24c04b55be', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Kelompok Minoritas', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 5, '2025-01-25 01:04:53', '2025-01-25 01:04:53', NULL),
+('a3d7eeef-64e7-4325-9454-6b8b553a755f', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Korban tindak kekerasan', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 8, '2025-01-25 01:05:12', '2025-01-25 01:05:12', NULL),
+('a46a35ed-441c-1350-2476-dd1577fb8d66', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak dengan kasus perundungan (anak korban perundungan, anak pelaku perundungan, dan anak saksi peru', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('a9c1a2fc-dc31-4206-a875-c40a54dbbdac', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Pelecehan/Pencabulan', '', 'ebc5f1dd-4e2b-4fe2-97be-477291a311dd', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('ac538596-d6db-4831-b992-e2a7f3315fbe', 'b1895989-f137-4421-83bc-59206516da7f', 'Ragam Disabilitas Fisik', 'ragam_disabilitas_fisik', NULL, 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('ae69c3df-365f-435b-9586-5caeb077a07b', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'asda', '', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 5, '2025-01-23 07:06:47', '2025-01-23 07:06:50', '2025-01-23 07:06:50'),
+('bd688d53-bee6-472c-b955-7fe0f8afb703', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Pemulung', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 4, '2025-01-25 01:04:49', '2025-01-25 01:04:49', NULL),
+('bdb5fc88-e430-47f1-9ba4-cea2cac40244', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Ragam ABH', 'ragam_abh', NULL, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('be9a2343-0021-43a7-9c54-46cd1d3832c1', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Hasil Putusan Pengadilan', '', '5332d470-4c5d-4df2-98d5-45b60805c978', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('bfa75352-310b-4ed7-aeb9-23a28c656143', '1dd96457-c226-4f42-a25b-693c9139823c', 'x', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('c06be19e-bc3d-4835-8c8d-c2aba213952c', 'b1895989-f137-4421-83bc-59206516da7f', 'Disabilitas Multi/Ganda', NULL, '13157c96-d3f6-429f-864e-7edcab14b468', 5, '2025-01-25 01:23:36', '2025-01-25 01:23:36', NULL),
+('c69af842-2173-2229-90d3-3012747ea0ac', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Yatim, Piatu, Yatim Piatu (YAPI)', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('cd824197-494b-4e9f-accf-e08c98717c80', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Gelandangan', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 2, '2025-01-25 01:04:43', '2025-01-25 01:04:43', NULL),
+('cfa0d589-5395-4fdd-b8f6-ed9532fdfd45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'asda', '', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 4, '2025-01-23 06:38:52', '2025-01-23 06:39:07', '2025-01-23 06:39:07'),
+('d28c6b26-0de2-45a5-929c-938a35d2234a', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Pekerja Migran Indonesia Bermasalah (PMIB)', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 9, '2025-01-25 01:05:16', '2025-01-25 01:05:16', NULL),
+('d60d7c1c-545a-4cec-8d31-a59d6b2086cc', 'b1895989-f137-4421-83bc-59206516da7f', 'Paraplegi, Cerebral Palsy', NULL, 'ac538596-d6db-4831-b992-e2a7f3315fbe', 2, '2025-01-25 01:23:50', '2025-01-25 01:23:50', NULL),
+('d62b1a10-86be-77d7-5bba-1c179ab20716', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Yang Menjadi Korban stigmatisasi dari pelabelan terkait dengan kondisi orangtuanya', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('d7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'ABH Korban', '', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('d87128fc-6a4b-4233-a4a0-472c59095c19', '1dd96457-c226-4f42-a25b-693c9139823c', 'Ragam Anak (AMPK)', 'ragam_anak', NULL, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('dc744d90-42a5-47dc-8f57-282675396dde', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Rujukan Dinas Sosial/Masyarakat', '', '5332d470-4c5d-4df2-98d5-45b60805c978', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('dc8ce479-8a9a-449d-826d-4389f74151f2', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Pengemis', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 3, '2025-01-25 01:04:46', '2025-01-25 01:04:46', NULL),
+('e13f6055-45d9-9e98-85f5-d334093a747f', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Penelantaran', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('e34af134-cceb-4500-87bf-87d4ea98d6e8', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Tambah daa', '', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 4, '2025-01-23 06:59:10', '2025-01-23 07:06:57', '2025-01-23 07:06:57'),
+('e4b07705-7562-4fa5-b77f-3338802a9645', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Persetubuhan', '', 'ebc5f1dd-4e2b-4fe2-97be-477291a311dd', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('ea22e5d0-256f-40c7-9644-d7ec4b0f2d17', '1dd96457-c226-4f42-a25b-693c9139823c', 'Anak Korban Kekerasan Psikis', '', 'd87128fc-6a4b-4233-a4a0-472c59095c19', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('ebc5f1dd-4e2b-4fe2-97be-477291a311dd', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Informasi Kasus', 'informasi_kasus', NULL, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('f1b0a013-0496-45b6-81a7-74ffdea2586d', 'b1895989-f137-4421-83bc-59206516da7f', 'Akibat Stroke', NULL, 'ac538596-d6db-4831-b992-e2a7f3315fbe', 3, '2025-01-25 01:23:55', '2025-01-25 01:23:55', NULL),
+('f4618157-927a-4264-8c60-369af6bc1b19', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Tuna Susila', '', 'ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', 1, '2025-01-25 01:04:39', '2025-01-25 01:04:39', NULL),
+('f6d77f80-a4e6-45c4-98cc-86c7dab890dd', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'ABH Saksi', '', 'bdb5fc88-e430-47f1-9ba4-cea2cac40244', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('f8ce7f6c-e831-4aec-8563-028184567416', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', 'Trafficking', '', 'ebc5f1dd-4e2b-4fe2-97be-477291a311dd', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+('fa462593-a806-441f-8b43-27ac5044fa84', 'b1895989-f137-4421-83bc-59206516da7f', 'Akibat Kusta', NULL, 'ac538596-d6db-4831-b992-e2a7f3315fbe', 4, '2025-01-25 01:23:58', '2025-01-25 01:23:58', NULL),
+('ff3bf176-f14f-415d-8d2f-a8d87d70d5f8', '6747b004-ea92-4976-a49c-d8cd2aa4a97a', 'Ragam Kelompok Rentan', 'ragam_kelompok_rentan', NULL, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -490,6 +516,9 @@ CREATE TABLE `laksa_ms_pasien` (
   `domisili` varchar(255) DEFAULT NULL,
   `agama_id` varchar(36) DEFAULT NULL,
   `pendidikan_id` varchar(36) DEFAULT NULL,
+  `up_foto` varchar(100) DEFAULT NULL,
+  `up_kk` varchar(100) DEFAULT NULL,
+  `up_akte_lahir` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -499,10 +528,10 @@ CREATE TABLE `laksa_ms_pasien` (
 -- Dumping data for table `laksa_ms_pasien`
 --
 
-INSERT INTO `laksa_ms_pasien` (`id`, `nama_depan`, `nama_belakang`, `nik`, `nokk`, `tmp_lahir`, `tgl_lahir`, `provinsi_id`, `kota_id`, `kecamatan_id`, `kelurahan_desa_id`, `alamat`, `domisili_alamat`, `domisili`, `agama_id`, `pendidikan_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('079bef48-704c-4526-9fa0-9669a2f4bc04', 'ariew', 'zal', '123123', '2312312', 'qweqweq', '2025-01-23', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '08ea4954-3895-50d1-673e-7e10be1b4e12', 'qweqwe', 'qwe', '1', 'qwe', '41875d16-08f2-24cc-a568-a17c69655427', '56c193ce-5057-a6d6-a447-3c08a35d00cc', '2025-01-23 08:29:44', '2025-01-23 15:06:21', '2025-01-23 15:06:21'),
-('2f068203-d88f-11ef-8650-244bfebc0c45', 'Arizal', 'Nur Rohman', '1471031302900022', '1471031302900111', 'Wonogiri', '1990-02-13', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '93e3aa88-90b0-5cb0-8905-334d97d116ae', 'xxxx', 'jalan brotoseno perum widya perdana lestari blok A.10', 'y', NULL, 'c4091389-34eb-7f56-1b6d-b1934f0115c9', 'fca3a7f1-918f-16b2-64a0-7eb35ac84735', '2025-01-22 07:02:28', NULL, NULL),
-('3ff3d400-7322-4f8f-9df0-e984f8950ea1', 'Nama Depan edit 2', 'Nbeakang', '123', '123', 'qweqweq', '2025-01-24', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '1574a648-89df-9c8a-a10f-5c6b5d9b3548', 'asda', 'asd', '1', 'asd', '41875d16-08f2-24cc-a568-a17c69655427', 'c31d1245-26cd-6681-8455-3aa4dc2f95e7', '2025-01-23 20:58:56', '2025-01-23 21:45:25', NULL);
+INSERT INTO `laksa_ms_pasien` (`id`, `nama_depan`, `nama_belakang`, `nik`, `nokk`, `tmp_lahir`, `tgl_lahir`, `provinsi_id`, `kota_id`, `kecamatan_id`, `kelurahan_desa_id`, `alamat`, `domisili_alamat`, `domisili`, `agama_id`, `pendidikan_id`, `up_foto`, `up_kk`, `up_akte_lahir`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('079bef48-704c-4526-9fa0-9669a2f4bc04', 'ariew', 'zal', '123123', '2312312', 'qweqweq', '2000-01-24', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '08ea4954-3895-50d1-673e-7e10be1b4e12', 'qweqwe', 'qwe', '1', 'qwe', '41875d16-08f2-24cc-a568-a17c69655427', '56c193ce-5057-a6d6-a447-3c08a35d00cc', '', '', '', '2025-01-23 08:29:44', '2025-01-23 15:06:21', '2025-01-23 15:06:21'),
+('2f068203-d88f-11ef-8650-244bfebc0c45', 'Arizal', 'Nur Rohman', '1471031302900022', '1471031302900111', 'Wonogiri', '1990-02-13', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '93e3aa88-90b0-5cb0-8905-334d97d116ae', 'xxxx', 'jalan brotoseno perum widya perdana lestari blok A.10', 'y', NULL, 'c4091389-34eb-7f56-1b6d-b1934f0115c9', 'fca3a7f1-918f-16b2-64a0-7eb35ac84735', '', '', '', '2025-01-22 07:02:28', NULL, NULL),
+('3ff3d400-7322-4f8f-9df0-e984f8950ea1', 'Nama Depan edit 2', 'Nbeakang', '123', '123', 'qweqweq', '2000-01-24', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '1574a648-89df-9c8a-a10f-5c6b5d9b3548', 'asda', 'asd', '1', 'asd', '41875d16-08f2-24cc-a568-a17c69655427', 'c31d1245-26cd-6681-8455-3aa4dc2f95e7', '', '', '', '2025-01-23 20:58:56', '2025-01-23 21:45:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -657,6 +686,7 @@ CREATE TABLE `laksa_ms_residensial` (
   `rencana_tgl_terminasi` date DEFAULT NULL,
   `pengampu_id` varchar(36) DEFAULT NULL,
   `status` enum('draft','proses','selesai') NOT NULL DEFAULT 'draft',
+  `up_dokumen_rujuk` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL

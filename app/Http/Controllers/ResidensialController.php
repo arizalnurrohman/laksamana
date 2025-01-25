@@ -2,21 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Agama;
+use App\Models\Pasien;
 use App\Models\Pegawai;
 use App\Models\Petugas;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Pendidikan;
-use App\Models\KategoriPPKS;
-use App\Models\Pasien;
 use App\Models\Residensial;
+use App\Models\KategoriPPKS;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
+use App\Models\KategoriPPKSSub;
+use Validator;
+use Illuminate\Support\Str;
 
 class ResidensialController extends Controller
 {
+    private $error;
+    private $success;
     // function __construct()
     // {
     //     $fix_roles      =array();
@@ -63,14 +69,79 @@ class ResidensialController extends Controller
     public function store(Request $request)
     {
         dd($request->all());
-        // $request->validate([
-        //     'name' => 'required|max:255',
-        //     'description' => 'nullable|max:1000',
-        // ]);
+        // Validasi input
+        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'], $this->detail_rules()['MESSAGE']);
 
-        // Item::create($request->all());
+        if ($validator->fails()) {
+            $this->error[] = ($validator->errors()->all())[0];
+        } else {
+            // Cek apakah data dengan pasien_id yang sama sudah ada untuk tanggal penerimaan yang sama
+            if (
+                Residensial::where('pasien_id', $request->pasien)->whereDate('tgl_penerimaan', $request->residense_tgl_penerimaan)->exists()
+            ) {
+                $this->error[] = "Data dengan pasien dan tanggal penerimaan yang sama sudah ada.";
+            }
+        }
 
-        // return redirect()->route('items.create')->with('success', 'Item berhasil ditambahkan!');
+        if (!$this->error) {
+            $payload = [
+                'id'                    => Str::uuid()->toString(),
+                'petugas_id'            => $request->residense_petugas,
+                'tgl_penerimaan'        => $request->residense_tgl_penerimaan,
+                'sumber_id'             => $request->residense_sumber_rujukan,
+                'pasien_id'             => $request->pasien,
+                'kategori_ppks_id'      => $request->kategori_ppks,
+                'masa_layanan'          => $request->masa_layanan ?? null,
+                'rencana_tgl_terminasi' => $request->rencana_tgl_terminasi ?? null,
+                'pengampu_id'           => $request->pengampu_id ?? null,
+                'status'                => $request->status ?? 'aktif',
+                'up_dokumen_rujuk'      => $request->up_dokumen_rujuk ?? null,
+            ];
+
+            // Simpan ke database
+            if (Residensial::create($payload)) {
+                $this->success = true;
+            }
+        }
+
+        if ($this->success) {
+            $response = [
+                'status' => 'success',
+                'message' => "Data residensial berhasil disimpan.",
+            ];
+        }
+
+        if ($this->error) {
+            $response = [
+                'errors' => 'Error',
+                'message' => $this->error,
+            ];
+        }
+
+        return response()->json($response);
+        exit;
+    }
+
+    public function detail_rules()
+    {
+        $rules = [
+            'residense_petugas'          => 'required',
+            'residense_tgl_penerimaan'  => 'required|date',
+            'residense_sumber_rujukan'  => 'required',
+            'pasien'                    => 'required|uuid',
+            'kategori_ppks'             => 'nullable',
+        ];
+
+        $messages = [
+            'residense_petugas.required'         => 'Kolom Petugas wajib diisi.',
+            'residense_tgl_penerimaan.required' => 'Kolom Tanggal Penerimaan wajib diisi.',
+            'residense_tgl_penerimaan.date'     => 'Kolom Tanggal Penerimaan harus berupa format tanggal yang valid.',
+            'residense_sumber_rujukan.required' => 'Kolom Sumber Rujukan wajib diisi.',
+            'pasien.required'                   => 'Kolom Pasien wajib diisi.',
+            'pasien.uuid'                       => 'Kolom Pasien harus berupa UUID yang valid.',
+        ];
+
+        return array("RULE" => $rules, "MESSAGE" => $messages);
     }
 
     public function load_residensial(){
@@ -109,30 +180,56 @@ class ResidensialController extends Controller
     //     $pasien = Pasien::findOrFail($request->id);
     //     return response()->json($pasien);
     // }
-    public function getPasien($id)
+    public function residensial_get_pasien($id)
     {
         // Cari pasien berdasarkan ID
-        $pasien = Pasien::find($id);
+        $pasien = Pasien::where("laksa_ms_pasien.id","!=",null);
+        $pasien = $pasien->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_pasien.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
+                         ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_pasien.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
+                         ->leftJoin('laksa_ms_provinsi', 'laksa_ms_pasien.provinsi_id', '=', 'laksa_ms_provinsi.id')
+                         ->leftJoin('laksa_ms_pendidikan', 'laksa_ms_pasien.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
+                         ->leftJoin('laksa_ms_agama', 'laksa_ms_pasien.agama_id', '=', 'laksa_ms_agama.id');
+        $pasien = $pasien->where("laksa_ms_pasien.id",$id)->first();
+
+        $birthDate      = Carbon::parse($pasien->tgl_lahir);
+        $currentDate    = Carbon::now();
 
         if ($pasien) {
             return response()->json([
-                'nik' => $pasien->nik,
-                'nokk' => $pasien->nokk,
+                'nik'       => $pasien->nik,
+                'nokk'      => $pasien->nokk,
                 'tmp_lahir' => $pasien->tmp_lahir,
                 'tgl_lahir' => $pasien->tgl_lahir,
-                'usia' => $pasien->usia,
-                'provinsi' => $pasien->provinsi,
-                'kabupaten' => $pasien->kabupaten,
+                'usia'      => floor($birthDate->diffInYears($currentDate)),
+                'provinsi'  => $pasien->provinsi,
+                'kabupaten' => $pasien->kabupaten_kota,
                 'kecamatan' => $pasien->kecamatan,
-                'kelurahan' => $pasien->kelurahan,
-                'alamat' => $pasien->alamat,
-                'domisili' => $pasien->domisili,
-                'agama' => $pasien->agama,
-                'pendidikan' => $pasien->pendidikan,
+                'kelurahan' => $pasien->kelurahan_desa_id,
+                'alamat'    => $pasien->alamat,
+                'domisili'  => $pasien->domisili,
+                'agama'     => $pasien->agama,
+                'pendidikan'=> $pasien->pendidikan,
             ]);
         } else {
             return response()->json(null, 404); // Data pasien tidak ditemukan
         }
+    }
+
+    public function getSubKategori($id)
+    {
+        // Ambil data sub kategori berdasarkan ID kategori
+        $subKategori = KategoriPPKSSub::where('kategori_id', $id)->where('parent_id',"=",null)->orderBy("sort","ASC")->get();
+        foreach($subKategori as $sk){
+            $sk->option=KategoriPPKSSub::where("parent_id","=",$sk->id)->orderBy("sort","ASC")->get();
+        }
+        if ($subKategori->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'Data tidak ditemukan.']);
+        }
+
+        return response()->json([
+            'success' => true,
+            'sub_kategori' => $subKategori
+        ]);
     }
 
 }

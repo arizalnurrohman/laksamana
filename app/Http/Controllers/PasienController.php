@@ -64,12 +64,6 @@ class PasienController extends Controller
         if ($validator->fails()){
             $this->error[]=($validator->errors()->all())[0];
         }else{
-            // $pasien = new Pasien();
-            // if (!$pasien->where('nama_depan',"=", $request->nama_depan)->where('tgl_lahir',"=", $request->tgl_lahir)->exists()) {
-            //     $this->error[]="Data Pasien yang anda inputkan sudah ada";
-            // }else{
-                
-            // }
             if (Pasien::where('nama_depan', $request->nama_depan)
                     ->whereDate('tgl_lahir', $request->tgl_lahir)
                     ->exists()) {
