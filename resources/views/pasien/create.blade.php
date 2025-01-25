@@ -1,6 +1,53 @@
 @extends('layout.master')
 @section('add-css')
+<style type="text/css">
+    .custom-dropzone {
+        border: 2px dashed #6c757d;
+        border-radius: 10px;
+        background: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, border-color 0.3s;
+    }
 
+    .custom-dropzone:hover {
+        border-color: #007bff;
+        background: #e9ecef;
+    }
+
+    .custom-dropzone input[type="file"] {
+        display: none;
+    }
+
+    .file-list {
+        margin-top: 10px;
+    }
+
+    .file-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 10px;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+
+    .file-list-item span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .file-list-item button {
+        background: transparent;
+        border: none;
+        color: red;
+        cursor: pointer;
+    }
+</style>
 @endsection
 @section('content')
 <div class="row">
@@ -8,62 +55,39 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
-                    <h4 class="card-title">Add New User</h4>
+                    <h4 class="card-title">Foto & Dokumen</h4>
                 </div>
             </div>
-                <div class="card-body">
+            <div class="card-body">
                 <form>
-                    <div class="form-group">
+                    <div class="form-group text-center">
                         <div class="profile-img-edit position-relative">
-                        <img src="../../assets/images/avatars/01.png" alt="profile-pic" class="theme-color-default-img profile-pic rounded avatar-100" loading="lazy">
-                        <img src="../../assets/images/avatars/avtar_1.png" alt="profile-pic" class="theme-color-purple-img profile-pic rounded avatar-100" loading="lazy">
-                        <img src="../../assets/images/avatars/avtar_2.png" alt="profile-pic" class="theme-color-blue-img profile-pic rounded avatar-100" loading="lazy">
-                        <img src="../../assets/images/avatars/avtar_4.png" alt="profile-pic" class="theme-color-green-img profile-pic rounded avatar-100" loading="lazy">
-                        <img src="../../assets/images/avatars/avtar_5.png" alt="profile-pic" class="theme-color-yellow-img profile-pic rounded avatar-100" loading="lazy">
-                        <img src="../../assets/images/avatars/avtar_3.png" alt="profile-pic" class="theme-color-pink-img profile-pic rounded avatar-100" loading="lazy">
-                        <div class="upload-icone bg-primary">
-                            <svg class="upload-button icon-14" width="14" height="14" viewBox="0 0 24 24">
-                                <path fill="#ffffff" d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
-                            </svg>
-                            <input class="file-upload" type="file" accept="image/*">
-                        </div>
-                        </div>
-                        <div class="img-extension mt-3">
-                        <div class="d-inline-block align-items-center">
-                            <span>Only</span>
-                            <a href="javascript:void(0);">.jpg</a>
-                            <a href="javascript:void(0);">.png</a>
-                            <a href="javascript:void(0);">.jpeg</a>
-                            <span>allowed</span>
-                        </div>
+                            <img src="../../assets/images/avatars/01.png" alt="profile-pic" class="theme-color-default-img profile-pic rounded avatar-100" loading="lazy">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">User Role:</label>
-                        <select name="type" class="selectpicker form-control" data-style="py-0">
-                        <option>Select</option>
-                        <option>Web Designer</option>
-                        <option>Web Developer</option>
-                        <option>Tester</option>
-                        <option>Php Developer</option>
-                        <option>Ios Developer </option>
-                        </select>
+                        <label class="form-label" for="kategori_ppks">Upload Foto</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
+                            <p class="text-secondary">Drag & drop files here or click to select files</p>
+                            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                        </div>
+                        <div class="file-list" id="fileList"></div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="furl">Facebook Url:</label>
-                        <input type="text" class="form-control" id="furl" placeholder="Facebook Url">
+                        <label class="form-label" for="kategori_ppks">Upload KK</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
+                            <p class="text-secondary">Drag & drop files here or click to select files</p>
+                            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                        </div>
+                        <div class="file-list" id="fileList"></div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="turl">Twitter Url:</label>
-                        <input type="text" class="form-control" id="turl" placeholder="Twitter Url">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="instaurl">Instagram Url:</label>
-                        <input type="text" class="form-control" id="instaurl" placeholder="Instagram Url">
-                    </div>
-                    <div class="form-group mb-0">
-                        <label class="form-label" for="lurl">Linkedin Url:</label>
-                        <input type="text" class="form-control" id="lurl" placeholder="Linkedin Url">
+                        <label class="form-label" for="kategori_ppks">Upload Akte Kelahiran</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
+                            <p class="text-secondary">Drag & drop files here or click to select files</p>
+                            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                        </div>
+                        <div class="file-list" id="fileList"></div>
                     </div>
                 </form>
             </div>
@@ -257,5 +281,36 @@
         });		
         
     });
+
+    // DROPZONE
+    const fileList = document.getElementById('fileList');
+
+    function handleFileUpload(event) {
+        const files = event.target.files;
+        fileList.innerHTML = ''; // Clear previous file list
+
+        Array.from(files).forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-list-item';
+            fileItem.innerHTML = `
+                <span>${file.name}</span>
+                <button onclick="removeFile(${index})">&times;</button>
+            `;
+            fileList.appendChild(fileItem);
+        });
+    }
+
+    function removeFile(index) {
+        const files = Array.from(document.getElementById('fileInput').files);
+        files.splice(index, 1);
+
+        // Create a new file list and set it back to the input
+        const dataTransfer = new DataTransfer();
+        files.forEach(file => dataTransfer.items.add(file));
+        document.getElementById('fileInput').files = dataTransfer.files;
+
+        // Refresh the displayed file list
+        handleFileUpload({ target: { files: dataTransfer.files } });
+    }
 </script>
 @endsection
