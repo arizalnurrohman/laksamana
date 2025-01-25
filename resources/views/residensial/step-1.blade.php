@@ -36,5 +36,16 @@
                 </select>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-label">Asrama: *</label>
+                <select class="form-select" data-trigger name="residense_sumber_rujukan" id="residense_sumber_rujukan">
+                    <option value="">Pilih Sumber Rujukan</option>
+                    @foreach($sumber_rujukan as $sumber_rujukanx)
+                        <option value="{{$sumber_rujukanx->id}}">{{$sumber_rujukanx->sumber}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 </div>

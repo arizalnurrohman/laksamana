@@ -94,7 +94,7 @@ class ResidensialController extends Controller
                 'masa_layanan'          => $request->masa_layanan ?? null,
                 'rencana_tgl_terminasi' => $request->rencana_tgl_terminasi ?? null,
                 'pengampu_id'           => $request->pengampu_id ?? null,
-                'status'                => $request->status ?? 'aktif',
+                'status'                => 'proses',
                 'up_dokumen_rujuk'      => $request->up_dokumen_rujuk ?? null,
             ];
 
