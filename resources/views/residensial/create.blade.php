@@ -1,6 +1,54 @@
 @extends('layout.master')
 @section('add-css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style type="text/css">
+    .custom-dropzone {
+        border: 2px dashed #6c757d;
+        border-radius: 10px;
+        background: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s, border-color 0.3s;
+    }
+
+    .custom-dropzone:hover {
+        border-color: #007bff;
+        background: #e9ecef;
+    }
+
+    .custom-dropzone input[type="file"] {
+        display: none;
+    }
+
+    .file-list {
+        margin-top: 10px;
+    }
+
+    .file-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 10px;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+
+    .file-list-item span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .file-list-item button {
+        background: transparent;
+        border: none;
+        color: red;
+        cursor: pointer;
+    }
+</style>
 @endsection
 @section('content')
 <div class="row">                
@@ -55,7 +103,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="dark-wizard">Finish</span>
+                            <span class="dark-wizard">Upload Dokumen</span>
                         </a>
                     </li>
                 </ul>
@@ -71,11 +119,13 @@
                 </fieldset>
                 <fieldset>
                     @include('residensial.step-3')
-                    <button type="submit" name="next" class="btn btn-primary  action-button float-end" value="Submit" >Submit</button>
+                    <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
                 <fieldset>
                     @include('residensial.step-4')
+                    <button type="submit" name="next" class="btn btn-primary action-button float-end" value="Submit" >Submit</button>
+                    <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
             </form>
             </div>
@@ -219,26 +269,27 @@
                             data.sub_kategori.forEach(function (item) {
                                 var html_sub_kategori = '<div class="form-group">' +
                                     '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
-                                if (item.option && item.option.length > 0) {
-                                    // Tambahkan select dengan event onchange
-                                    html_sub_kategori += '<select class="form-select \'' + item.id + '\'" data-trigger name="' + item.variable_form + '" id="' + item.variable_form + '" onchange="onSubKategoriChange(this, \'' + item.id + '\')">';
-                                    html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
-                                    item.option.forEach(function (itemx) {
-                                        html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
-                                    });
-                                    html_sub_kategori += '</select>';
-                                } else {
-                                    // Input teks jika tidak ada opsi
-                                    html_sub_kategori += '<input type="text" class="form-control" name="' + item.variable_form + '" placeholder="' + item.sub_kategori_ppks + '" />';
-                                }
+                                    if (item.option && item.option.length > 0) {
+                                        // Tambahkan select dengan event onchange
+                                        html_sub_kategori += '<select class="form-select" data-trigger name="' + item.variable_form + '" id="' + item.variable_form + '" onchange="onSubKategoriChange(this, \'' + item.id + '\')">';
+                                        html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
+                                        item.option.forEach(function (itemx) {
+                                            html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
+                                        });
+                                        html_sub_kategori += '</select>';
+                                    } else {
+                                        // Input teks jika tidak ada opsi
+                                        html_sub_kategori += '<input type="text" class="form-control" name="' + item.variable_form + '" placeholder="' + item.sub_kategori_ppks + '" />';
+                                    }
 
                                 html_sub_kategori += '</div>';
                                 $('.pilihan_lanjutan').append(html_sub_kategori);
                             });
-                        } else {
-                            $('.pilihan_lanjutan').addClass('d-none');
-                            alert('Data tidak ditemukan.');
                         }
+                        // else {
+                        //     $('.pilihan_lanjutan').addClass('d-none');
+                        //     alert('Data tidak ditemukan.');
+                        // }
                     },
                     error: function () {
                         alert('Terjadi kesalahan. Silakan coba lagi.');
@@ -254,58 +305,80 @@
     });
     // Fungsi untuk menangani event onchange
     function onSubKategoriChange(selectElement, childId) {
-        const selectedValue = $(selectElement).val();
-        // const textBoxHtml = '<div class="form-group">' +
-        //     '<label class="form-label">Input untuk ' + childId + '</label>' +
-        //     '<input type="text" class="form-control" name="input_' + selectElement.name + '" placeholder="Masukkan teks untuk ' + childId + '" />' +
-        //     '</div>';
+        const selectedValue = $(selectElement).val(); // Ambil value yang dipilih
 
-        // // Hapus input sebelumnya jika ada
-        // $('.extra-input').remove();
+        if (selectedValue) {
+            $.ajax({
+                url: '/residensial/get-ppks-child/' + selectedValue, // Gunakan value langsung
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        $('.pilihan_lanjutan_combo').removeClass("d-none");
+                        // Hapus elemen lama yang ada di .pilihan_lanjutan_combo
+                        $('.pilihan_lanjutan_combo').empty();
 
-        // // Tambahkan input baru jika ada value yang dipilih
-        // if (selectedValue) {
-        //     $('.pilihan_lanjutan').append('<div class="extra-input">' + textBoxHtml + '</div>');
-        // }
+                        // Looping untuk menambahkan data baru dari child
+                        data.sub_kategori.forEach(function (item) {
+                            var html_sub_kategori = '<div class="form-group">' +
+                                '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
+                            if (item.option && item.option.length > 0) {
+                                // Tambahkan select dengan event onchange
+                                html_sub_kategori += '<select class="form-select" data-trigger name="' + item.variable_form + '" id="' + item.variable_form + '" >';
+                                html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
+                                item.option.forEach(function (itemx) {
+                                    html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
+                                });
+                                html_sub_kategori += '</select>';
+                            } else {
+                                // Input teks jika tidak ada opsi
+                                html_sub_kategori += '<input type="text" class="form-control" name="' + item.variable_form + '" placeholder="' + item.sub_kategori_ppks + '" />';
+                            }
 
-        $.ajax({
-            url: '/residensial/get-ppks-child/' + $("."+childId).val(), // Endpoint dengan ID kategori
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                if (data.success) {
-                    // alert("ada");
-                    // $('.pilihan_lanjutan').removeClass('d-none');
-                    // $('.pilihan_lanjutan').empty();
-                    data.sub_kategori.forEach(function (item) {
-                        var html_sub_kategori = '<div class="form-group">' +
-                            '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
-                        if (item.option && item.option.length > 0) {
-                            // Tambahkan select dengan event onchange
-                            html_sub_kategori += '<select class="form-select" data-trigger name="' + item.variable_form + '" id="' + item.variable_form + '">';
-                            html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
-                            item.option.forEach(function (itemx) {
-                                html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
-                            });
-                            html_sub_kategori += '</select>';
-                        } else {
-                            // Input teks jika tidak ada opsi
-                            html_sub_kategori += '<input type="text" class="form-control" name="' + item.variable_form + '" placeholder="' + item.sub_kategori_ppks + '" />';
-                        }
-
-                        html_sub_kategori += '</div>';
-                        $('.pilihan_lanjutan').append(html_sub_kategori);
-                    });
-                } else {
-                    $('.pilihan_lanjutan').addClass('d-none');
-                    alert('Data tidak ditemukan.');
+                            html_sub_kategori += '</div>';
+                            $('.pilihan_lanjutan_combo').append(html_sub_kategori);
+                        });
+                    }
+                },
+                error: function () {
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
                 }
-            },
-            error: function () {
-                alert('Terjadi kesalahan. Silakan coba lagi.');
-            }
+            });
+        }
+    }
+
+
+    // DROPZONE
+    const fileList = document.getElementById('fileList');
+
+    function handleFileUpload(event) {
+        const files = event.target.files;
+        fileList.innerHTML = ''; // Clear previous file list
+
+        Array.from(files).forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-list-item';
+            fileItem.innerHTML = `
+                <span>${file.name}</span>
+                <button onclick="removeFile(${index})">&times;</button>
+            `;
+            fileList.appendChild(fileItem);
         });
     }
+
+    function removeFile(index) {
+        const files = Array.from(document.getElementById('fileInput').files);
+        files.splice(index, 1);
+
+        // Create a new file list and set it back to the input
+        const dataTransfer = new DataTransfer();
+        files.forEach(file => dataTransfer.items.add(file));
+        document.getElementById('fileInput').files = dataTransfer.files;
+
+        // Refresh the displayed file list
+        handleFileUpload({ target: { files: dataTransfer.files } });
+    }
+
 
 
 
