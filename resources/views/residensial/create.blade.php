@@ -223,7 +223,7 @@
                                                                 html_sub_kategori+='<select class="form-select" data-trigger name="'+item.variable_form+'" id="'+item.variable_form+'">';
                                                                         html_sub_kategori+='<option value="">Pilih '+item.sub_kategori_ppks+'</option>';
                                                                         item.option.forEach(function (itemx) {
-                                                                            html_sub_kategori+='<option value="'+itemx.id+'">Pilih '+itemx.sub_kategori_ppks+'</option>';
+                                                                            html_sub_kategori+='<option value="'+itemx.id+'">'+itemx.sub_kategori_ppks+'</option>';
                                                                         });
                                                                 html_sub_kategori+='</select>';
                                                             }else{
