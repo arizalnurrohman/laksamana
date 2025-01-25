@@ -68,6 +68,7 @@ Route::get('/residensial/edit/{id}', [ResidensialController::class, 'edit'])->na
 Route::put('/residensial/{id}', [ResidensialController::class, 'update'])->name('residensial.update');
 Route::get('/residensial/load-residensial', [ResidensialController::class, 'load_residensial'])->name('load_residensial');
 Route::delete('/residensial/delete/{id}', [ResidensialController::class, 'destroy'])->name('residensial.delete');
+Route::get('/residensial/get-pasien/{id}', [ResidensialController::class, 'residensial_get_pasien']);
 
 Route::get('/non-residensial', [NonResidensialController::class, 'index'])->name('nonresidensial');
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');

@@ -162,6 +162,51 @@
         });		
     });
 
+    
+    $(document).ready(function () {
+        $('#pilih-pasien').change(function () {
+            // Trigger on selecting a patient
+            $('.btn-primary').click(function () {
+                const pasienId = $('#pilih-pasien').val(); // Get selected pasien ID
+
+                if (pasienId) {
+                    $.ajax({
+                        url: '/residensial/get-pasien/' + pasienId, // Call the route
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data) {
+                                // Fill in the form fields with returned data
+                                $('input[name="nik"]').val(data.nik || '');
+                                $('input[name="nokk"]').val(data.nokk || '');
+                                $('input[name="tmp_lahir"]').val(data.tmp_lahir || '');
+                                $('input[name="tgl_lahir"]').val(data.tgl_lahir || '');
+                                $('input[name="usia"]').val(data.usia || '');
+                                $('input[name="provinsi"]').val(data.provinsi || '');
+                                $('input[name="kabupaten"]').val(data.kabupaten || '');
+                                $('input[name="kecamatan"]').val(data.kecamatan || '');
+                                $('input[name="kelurahan"]').val(data.kelurahan || '');
+                                $('textarea[name="alamat"]').val(data.alamat || '');
+                                $('textarea[name="domisili"]').val(data.domisili || '');
+                                $('input[name="agama"]').val(data.agama || '');
+                                $('input[name="pendidikan"]').val(data.pendidikan || '');
+                            } else {
+                                alert('Data pasien tidak ditemukan.');
+                            }
+                        },
+                        error: function () {
+                            alert('Terjadi kesalahan. Silakan coba lagi.');
+                        }
+                    });
+                } else {
+                    alert('Pilih pasien terlebih dahulu.');
+                }
+            });
+        });
+    });
+
+
+
     // (function() {
     //     "use strict";
     //     /*--------------single----------------*/

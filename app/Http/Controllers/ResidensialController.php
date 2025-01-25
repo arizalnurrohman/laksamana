@@ -103,4 +103,36 @@ class ResidensialController extends Controller
         }
         return \response()->json($data);
     }
+
+    // public function getPasien(Request $request)
+    // {
+    //     $pasien = Pasien::findOrFail($request->id);
+    //     return response()->json($pasien);
+    // }
+    public function getPasien($id)
+    {
+        // Cari pasien berdasarkan ID
+        $pasien = Pasien::find($id);
+
+        if ($pasien) {
+            return response()->json([
+                'nik' => $pasien->nik,
+                'nokk' => $pasien->nokk,
+                'tmp_lahir' => $pasien->tmp_lahir,
+                'tgl_lahir' => $pasien->tgl_lahir,
+                'usia' => $pasien->usia,
+                'provinsi' => $pasien->provinsi,
+                'kabupaten' => $pasien->kabupaten,
+                'kecamatan' => $pasien->kecamatan,
+                'kelurahan' => $pasien->kelurahan,
+                'alamat' => $pasien->alamat,
+                'domisili' => $pasien->domisili,
+                'agama' => $pasien->agama,
+                'pendidikan' => $pasien->pendidikan,
+            ]);
+        } else {
+            return response()->json(null, 404); // Data pasien tidak ditemukan
+        }
+    }
+
 }
