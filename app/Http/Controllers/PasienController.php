@@ -167,6 +167,7 @@ class PasienController extends Controller
     }
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $validator = Validator::make($request->all(), $this->detail_rules()['RULE'],$this->detail_rules()['MESSAGE']);
         if ($validator->fails()){
             $this->error[]=($validator->errors()->all())[0];

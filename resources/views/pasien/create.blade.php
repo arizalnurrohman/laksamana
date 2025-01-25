@@ -67,26 +67,28 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="foto">Upload Foto</label>
-                        <div class="custom-dropzone" onclick="document.getElementById('fileInputFoto').click();">
+                        <label class="form-label" for="kategori_ppks">Upload Foto</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('fotoInput').click();">
                             <p class="text-secondary">Drag & drop files here or click to select files</p>
-                            <input type="file" id="fileInputFoto" name="foto" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                            <input type="file" id="fotoInput" name="foto" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'foto')">
                         </div>
                         <div class="file-list" id="fileListFoto"></div>
                     </div>
+                    
                     <div class="form-group">
-                        <label class="form-label" for="kk">Upload KK</label>
-                        <div class="custom-dropzone" onclick="document.getElementById('fileInputKK').click();">
+                        <label class="form-label" for="kategori_ppks">Upload KK</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('kkInput').click();">
                             <p class="text-secondary">Drag & drop files here or click to select files</p>
-                            <input type="file" id="fileInputKK" name="kk" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                            <input type="file" id="kkInput" name="kk" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'kk')">
                         </div>
-                        <div class="file-list" id="fileListKK"></div>
+                        <div class="file-list" id="fileListKk"></div>
                     </div>
+                    
                     <div class="form-group">
-                        <label class="form-label" for="akte_kelahiran">Upload Akte Kelahiran</label>
-                        <div class="custom-dropzone" onclick="document.getElementById('fileInputAkte').click();">
+                        <label class="form-label" for="kategori_ppks">Upload Akte Kelahiran</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('akteInput').click();">
                             <p class="text-secondary">Drag & drop files here or click to select files</p>
-                            <input type="file" id="fileInputAkte" name="akte_kelahiran" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                            <input type="file" id="akteInput" name="akte" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'akte')">
                         </div>
                         <div class="file-list" id="fileListAkte"></div>
                     </div>
@@ -279,34 +281,42 @@
     });
 
     // DROPZONE
-    const fileList = document.getElementById('fileList');
-
-    function handleFileUpload(event) {
+    // Fungsi untuk menangani unggahan file
+    function handleFileUpload(event, inputType) {
         const files = event.target.files;
-        fileList.innerHTML = ''; // Clear previous file list
+        const fileList = document.getElementById('fileList' + capitalizeFirstLetter(inputType)); // Menentukan file list sesuai dengan input type
+        console.log(fileList);
+        fileList.innerHTML = ''; // Bersihkan daftar file sebelumnya
 
         Array.from(files).forEach((file, index) => {
             const fileItem = document.createElement('div');
             fileItem.className = 'file-list-item';
             fileItem.innerHTML = `
                 <span>${file.name}</span>
-                <button onclick="removeFile(${index})">&times;</button>
+                <button onclick="removeFile(event, '${inputType}', ${index})">&times;</button>
             `;
             fileList.appendChild(fileItem);
         });
     }
 
-    function removeFile(index) {
-        const files = Array.from(document.getElementById('fileInput').files);
+    // Fungsi untuk menghapus file
+    function removeFile(event, inputType, index) {
+        const inputElement = document.getElementById(inputType + 'Input');
+        const files = Array.from(inputElement.files);
         files.splice(index, 1);
 
-        // Create a new file list and set it back to the input
+        // Membuat DataTransfer untuk mengganti file yang telah dihapus
         const dataTransfer = new DataTransfer();
         files.forEach(file => dataTransfer.items.add(file));
-        document.getElementById('fileInput').files = dataTransfer.files;
+        inputElement.files = dataTransfer.files;
 
-        // Refresh the displayed file list
-        handleFileUpload({ target: { files: dataTransfer.files } });
+        // Refresh daftar file yang ditampilkan
+        handleFileUpload({ target: { files: dataTransfer.files } }, inputType);
+    }
+
+    // Fungsi untuk kapitalisasi huruf pertama pada string
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 </script>
 @endsection

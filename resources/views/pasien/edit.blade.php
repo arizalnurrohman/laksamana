@@ -50,61 +50,64 @@
 </style>
 @endsection
 @section('content')
-<div class="row">
-    <div class="col-xl-3 col-lg-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">Add New User</h4>
+{{-- <form action="{{ route('pasien.store') }}" method="POST" enctype="multipart/form-data" id="add{{ $activeMenu->access }}Form"> --}}
+<form action="{{ route('pasien.update', $pasien->id) }}" method="POST" id="update{{ $activeMenu->access }}Form" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Add New User</h4>
+                    </div>
                 </div>
-            </div>
                 <div class="card-body">
-                    <form>
-                        <div class="form-group text-center">
-                            <div class="profile-img-edit position-relative">
-                                <img src="../../assets/images/avatars/01.png" alt="profile-pic" class="theme-color-default-img profile-pic rounded avatar-100" loading="lazy">
-                            </div>
+                    
+                    <div class="form-group text-center">
+                        <div class="profile-img-edit position-relative">
+                            <img src="../../assets/images/avatars/01.png" alt="profile-pic" class="theme-color-default-img profile-pic rounded avatar-100" loading="lazy">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="kategori_ppks">Upload Foto</label>
-                            <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
-                                <p class="text-secondary">Drag & drop files here or click to select files</p>
-                                <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
-                            </div>
-                            <div class="file-list" id="fileList"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="kategori_ppks">Upload Foto</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('fotoInput').click();">
+                            <p class="text-secondary">Drag & drop files here or click to select files</p>
+                            <input type="file" id="fotoInput" name="foto" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'foto')">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="kategori_ppks">Upload KK</label>
-                            <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
-                                <p class="text-secondary">Drag & drop files here or click to select files</p>
-                                <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
-                            </div>
-                            <div class="file-list" id="fileList"></div>
+                        <div class="file-list" id="fileListFoto"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="kategori_ppks">Upload KK</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('kkInput').click();">
+                            <p class="text-secondary">Drag & drop files here or click to select files</p>
+                            <input type="file" id="kkInput" name="kk" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'kk')">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="kategori_ppks">Upload Akte Kelahiran</label>
-                            <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
-                                <p class="text-secondary">Drag & drop files here or click to select files</p>
-                                <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
-                            </div>
-                            <div class="file-list" id="fileList"></div>
+                        <div class="file-list" id="fileListKk"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="kategori_ppks">Upload Akte Kelahiran</label>
+                        <div class="custom-dropzone" onclick="document.getElementById('akteInput').click();">
+                            <p class="text-secondary">Drag & drop files here or click to select files</p>
+                            <input type="file" id="akteInput" name="akte" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'akte')">
                         </div>
-                    </form>
+                        <div class="file-list" id="fileListAkte"></div>
+                    </div>
+                    
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-xl-9 col-lg-8">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">Update data {{ $activeMenu->menu }}</h4>
+        <div class="col-xl-9 col-lg-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Update Data {{ $activeMenu->menu }}</h4>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <div class="new-user-info">
-                    <form action="{{ route('pasien.update',$pasien->id) }}" method="POST" id="update{{ $activeMenu->access }}Form">
-                        @csrf
-                        @method('PUT')
+                <div class="card-body">
+                    <div class="new-user-info">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="fname">Nama Depan:</label>
@@ -131,8 +134,8 @@
                                 <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir" value="{{$pasien->tgl_lahir}}">
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add1">Agama:</label>
-                                <select class="form-select" data-trigger name="agama" id="choices-single-default">
+                                <label class="form-label" for="agama">Agama:</label>
+                                <select class="form-select" data-trigger name="agama" id="agama">
                                     <option value="">Pilih Agama</option>
                                     @foreach($agama as $agamax)
                                         <option value="{{$agamax->id}}" {{$pasien->agama_id == $agamax->id ? 'selected="selected"' : ''}}>{{$agamax->agama}}</option>
@@ -140,8 +143,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Pendidikan Terakhir:</label>
-                                <select class="form-select" data-trigger name="pendidikan_terakhir" id="choices-single-default">
+                                <label class="form-label" for="pendidikan_terakhir">Pendidikan Terakhir:</label>
+                                <select class="form-select" data-trigger name="pendidikan_terakhir" id="pendidikan_terakhir">
                                     <option value="">Pilih Pendidikan</option>
                                     @foreach($pendidikan as $pendidikanx)
                                         <option value="{{$pendidikanx->id}}" {{$pasien->pendidikan_id == $pendidikanx->id ? 'selected="selected"' : ''}}>{{$pendidikanx->pendidikan}}</option>
@@ -149,13 +152,11 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label">Alamat KTP: *</label>
-                                    <textarea class="form-control" name="alamat_ktp" rows="5">{{$pasien->alamat}}</textarea>
-                                </div>
+                                <label class="form-label" for="alamat_ktp">Alamat KTP:</label>
+                                <textarea class="form-control" name="alamat_ktp" rows="5">{{$pasien->alamat}}</textarea>
                             </div>
                             <div class="form-group col-md-12">
-                                <label class="form-label">Alamat Domisili: *</label>
+                                <label class="form-label" for="alamat_domisili">Alamat Domisili:</label>
                                 <textarea class="form-control" name="alamat_domisili" rows="5">{{$pasien->domisili}}</textarea>
                                 <div class="form-check d-block">
                                     <input class="form-check-input" type="checkbox" value="1" name="check_alamat_domisili" id="checkedcheck" @if($pasien->domisili_alamat == 1) checked @endif>
@@ -165,8 +166,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add1">Provinsi:</label>
-                                <select class="form-select" data-trigger name="provinsi" id="choices-single-default">
+                                <label class="form-label" for="provinsi">Provinsi:</label>
+                                <select class="form-select" data-trigger name="provinsi" id="provinsi">
                                     <option value="">Pilih Provinsi</option>
                                     @foreach($provinsi as $provinsix)
                                         <option value="{{$provinsix->id}}" {{$pasien->provinsi_id == $provinsix->id ? 'selected="selected"' : ''}}>{{$provinsix->provinsi}}</option>
@@ -174,8 +175,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Kabupaten / Kota:</label>
-                                <select class="form-select" data-trigger name="kabupaten_kota" id="choices-single-default">
+                                <label class="form-label" for="kabupaten_kota">Kabupaten / Kota:</label>
+                                <select class="form-select" data-trigger name="kabupaten_kota" id="kabupaten_kota">
                                     <option value="">Pilih Kabupaten</option>
                                     @foreach($kabupaten as $kabupatenx)
                                         <option value="{{$kabupatenx->id}}" {{$pasien->kota_id == $kabupatenx->id ? 'selected="selected"' : ''}}>{{$kabupatenx->kabupaten_kota}}</option>
@@ -183,8 +184,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Kecamatan:</label>
-                                <select class="form-select" data-trigger name="kecamatan" id="choices-single-default">
+                                <label class="form-label" for="kecamatan">Kecamatan:</label>
+                                <select class="form-select" data-trigger name="kecamatan" id="kecamatan">
                                     <option value="">Pilih Kecamatan</option>
                                     @foreach($kecamatan as $kecamatanx)
                                         <option value="{{$kecamatanx->id}}" {{$pasien->kecamatan_id == $kecamatanx->id ? 'selected="selected"' : ''}}>{{$kecamatanx->kecamatan}}</option>
@@ -192,21 +193,17 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="add2">Kelurahan:</label>
-                                <input type="text" class="form-control" id="add1" name="kelurahan" placeholder="Kelurahan" value="{{$pasien->kelurahan_desa_id}}">
+                                <label class="form-label" for="kelurahan">Kelurahan:</label>
+                                <input type="text" class="form-control" id="kelurahan" name="kelurahan" placeholder="Kelurahan" value="{{$pasien->kelurahan_desa_id}}">
                             </div>
                         </div>
-                        
-                        {{-- <div class="checkbox">
-                            <label class="form-label"><input class="form-check-input me-2" type="checkbox" value="" id="flexchexked">Enable Two-Factor-Authentication</label>
-                        </div> --}}
                         <button type="submit" class="btn btn-primary btn-submit">Update Data @if ($activeMenu) {{ $activeMenu->menu }} @endif</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
  
 @endsection
 @section('add-js')
@@ -284,34 +281,43 @@
     });
 
     // DROPZONE
-    const fileList = document.getElementById('fileList');
-
-    function handleFileUpload(event) {
+    // Fungsi untuk menangani unggahan file
+    function handleFileUpload(event, inputType) {
         const files = event.target.files;
-        fileList.innerHTML = ''; // Clear previous file list
+        const fileList = document.getElementById('fileList' + capitalizeFirstLetter(inputType)); // Menentukan file list sesuai dengan input type
+        console.log(fileList);
+        fileList.innerHTML = ''; // Bersihkan daftar file sebelumnya
 
         Array.from(files).forEach((file, index) => {
             const fileItem = document.createElement('div');
             fileItem.className = 'file-list-item';
             fileItem.innerHTML = `
                 <span>${file.name}</span>
-                <button onclick="removeFile(${index})">&times;</button>
+                <button onclick="removeFile(event, '${inputType}', ${index})">&times;</button>
             `;
             fileList.appendChild(fileItem);
         });
     }
 
-    function removeFile(index) {
-        const files = Array.from(document.getElementById('fileInput').files);
+    // Fungsi untuk menghapus file
+    function removeFile(event, inputType, index) {
+        const inputElement = document.getElementById(inputType + 'Input');
+        const files = Array.from(inputElement.files);
         files.splice(index, 1);
 
-        // Create a new file list and set it back to the input
+        // Membuat DataTransfer untuk mengganti file yang telah dihapus
         const dataTransfer = new DataTransfer();
         files.forEach(file => dataTransfer.items.add(file));
-        document.getElementById('fileInput').files = dataTransfer.files;
+        inputElement.files = dataTransfer.files;
 
-        // Refresh the displayed file list
-        handleFileUpload({ target: { files: dataTransfer.files } });
+        // Refresh daftar file yang ditampilkan
+        handleFileUpload({ target: { files: dataTransfer.files } }, inputType);
     }
+
+    // Fungsi untuk kapitalisasi huruf pertama pada string
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
 </script>
 @endsection
