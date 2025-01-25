@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2025 at 11:30 AM
+-- Generation Time: Jan 25, 2025 at 12:59 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -557,6 +557,7 @@ CREATE TABLE `laksa_ms_pasien` (
 INSERT INTO `laksa_ms_pasien` (`id`, `nama_depan`, `nama_belakang`, `nik`, `nokk`, `tmp_lahir`, `tgl_lahir`, `provinsi_id`, `kota_id`, `kecamatan_id`, `kelurahan_desa_id`, `alamat`, `domisili_alamat`, `domisili`, `agama_id`, `pendidikan_id`, `up_foto`, `up_kk`, `up_akte_lahir`, `created_at`, `updated_at`, `deleted_at`) VALUES
 ('079bef48-704c-4526-9fa0-9669a2f4bc04', 'ariew', 'zal', '123123', '2312312', 'qweqweq', '2000-01-24', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '08ea4954-3895-50d1-673e-7e10be1b4e12', 'qweqwe', 'qwe', '1', 'qwe', '41875d16-08f2-24cc-a568-a17c69655427', '56c193ce-5057-a6d6-a447-3c08a35d00cc', '', '', '', '2025-01-23 08:29:44', '2025-01-23 15:06:21', '2025-01-23 15:06:21'),
 ('2f068203-d88f-11ef-8650-244bfebc0c45', 'Arizal', 'Nur Rohman', '1471031302900022', '1471031302900111', 'Wonogiri', '1990-02-13', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '93e3aa88-90b0-5cb0-8905-334d97d116ae', 'xxxx', 'jalan brotoseno perum widya perdana lestari blok A.10', NULL, NULL, 'c4091389-34eb-7f56-1b6d-b1934f0115c9', 'fca3a7f1-918f-16b2-64a0-7eb35ac84735', '', '', '', '2025-01-22 07:02:28', '2025-01-25 03:26:13', NULL),
+('2f2176b0-206f-4963-99c2-365e0525632c', 'alesha', 'farzan', '131231321311312', '12321312312', 'weaeqew', '2025-01-09', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '05153c7c-a50f-0f35-0a72-7f3a6b1245da', 'asdas', 'asd', '1', 'asd', '5312618b-0fdd-0928-4d01-7940d10a96cf', '8bec8433-099b-9aaf-50c6-951eff24531e', NULL, NULL, NULL, '2025-01-25 03:37:07', '2025-01-25 03:37:07', NULL),
 ('3ff3d400-7322-4f8f-9df0-e984f8950ea1', 'Nama Depan edit 2', 'Nbeakang', '123', '123', 'qweqweq', '2000-01-24', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '1574a648-89df-9c8a-a10f-5c6b5d9b3548', 'asda', 'asd', '1', 'asd', '41875d16-08f2-24cc-a568-a17c69655427', 'c31d1245-26cd-6681-8455-3aa4dc2f95e7', '', '', '', '2025-01-23 20:58:56', '2025-01-23 21:45:25', NULL);
 
 -- --------------------------------------------------------
