@@ -70,6 +70,7 @@ Route::get('/residensial/load-residensial', [ResidensialController::class, 'load
 Route::delete('/residensial/delete/{id}', [ResidensialController::class, 'destroy'])->name('residensial.delete');
 Route::get('/residensial/get-pasien/{id}', [ResidensialController::class, 'residensial_get_pasien']);
 Route::get('/residensial/get-ppks/{id}', [ResidensialController::class, 'getSubKategori']);
+Route::get('/residensial/get-ppks-child/{id}', [ResidensialController::class, 'getSubKategoriChild']);
 
 Route::get('/non-residensial', [NonResidensialController::class, 'index'])->name('nonresidensial');
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');

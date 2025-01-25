@@ -217,22 +217,23 @@
                             $('.pilihan_lanjutan').removeClass('d-none');
                             $('.pilihan_lanjutan').empty();
                             data.sub_kategori.forEach(function (item) {
-                                var html_sub_kategori ='<div class="form-group">' +
-                                                            '<label class="form-label" for="kategori_ppks">'+item.sub_kategori_ppks+'</label>';
-                                                            if (item.option && item.option.length > 0) {
-                                                                html_sub_kategori+='<select class="form-select" data-trigger name="'+item.variable_form+'" id="'+item.variable_form+'">';
-                                                                        html_sub_kategori+='<option value="">Pilih '+item.sub_kategori_ppks+'</option>';
-                                                                        item.option.forEach(function (itemx) {
-                                                                            html_sub_kategori+='<option value="'+itemx.id+'">'+itemx.sub_kategori_ppks+'</option>';
-                                                                        });
-                                                                html_sub_kategori+='</select>';
-                                                            }else{
-                                                                html_sub_kategori+='<input type="text" class="form-control" name="'+item.variable_form+'" placeholder="'+item.sub_kategori_ppks+'" />';
-                                                            }
+                                var html_sub_kategori = '<div class="form-group">' +
+                                    '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
+                                if (item.option && item.option.length > 0) {
+                                    // Tambahkan select dengan event onchange
+                                    html_sub_kategori += '<select class="form-select \'' + item.id + '\'" data-trigger name="' + item.variable_form + '" id="' + item.variable_form + '" onchange="onSubKategoriChange(this, \'' + item.id + '\')">';
+                                    html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
+                                    item.option.forEach(function (itemx) {
+                                        html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
+                                    });
+                                    html_sub_kategori += '</select>';
+                                } else {
+                                    // Input teks jika tidak ada opsi
+                                    html_sub_kategori += '<input type="text" class="form-control" name="' + item.variable_form + '" placeholder="' + item.sub_kategori_ppks + '" />';
+                                }
 
-                                                        html_sub_kategori+='</div>';
-
-                                    $('.pilihan_lanjutan').append(html_sub_kategori);
+                                html_sub_kategori += '</div>';
+                                $('.pilihan_lanjutan').append(html_sub_kategori);
                             });
                         } else {
                             $('.pilihan_lanjutan').addClass('d-none');
@@ -251,6 +252,60 @@
         });
 
     });
+    // Fungsi untuk menangani event onchange
+    function onSubKategoriChange(selectElement, childId) {
+        const selectedValue = $(selectElement).val();
+        // const textBoxHtml = '<div class="form-group">' +
+        //     '<label class="form-label">Input untuk ' + childId + '</label>' +
+        //     '<input type="text" class="form-control" name="input_' + selectElement.name + '" placeholder="Masukkan teks untuk ' + childId + '" />' +
+        //     '</div>';
+
+        // // Hapus input sebelumnya jika ada
+        // $('.extra-input').remove();
+
+        // // Tambahkan input baru jika ada value yang dipilih
+        // if (selectedValue) {
+        //     $('.pilihan_lanjutan').append('<div class="extra-input">' + textBoxHtml + '</div>');
+        // }
+
+        $.ajax({
+            url: '/residensial/get-ppks-child/' + $("."+childId).val(), // Endpoint dengan ID kategori
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data.success) {
+                    // alert("ada");
+                    // $('.pilihan_lanjutan').removeClass('d-none');
+                    // $('.pilihan_lanjutan').empty();
+                    data.sub_kategori.forEach(function (item) {
+                        var html_sub_kategori = '<div class="form-group">' +
+                            '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
+                        if (item.option && item.option.length > 0) {
+                            // Tambahkan select dengan event onchange
+                            html_sub_kategori += '<select class="form-select" data-trigger name="' + item.variable_form + '" id="' + item.variable_form + '">';
+                            html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
+                            item.option.forEach(function (itemx) {
+                                html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
+                            });
+                            html_sub_kategori += '</select>';
+                        } else {
+                            // Input teks jika tidak ada opsi
+                            html_sub_kategori += '<input type="text" class="form-control" name="' + item.variable_form + '" placeholder="' + item.sub_kategori_ppks + '" />';
+                        }
+
+                        html_sub_kategori += '</div>';
+                        $('.pilihan_lanjutan').append(html_sub_kategori);
+                    });
+                } else {
+                    $('.pilihan_lanjutan').addClass('d-none');
+                    alert('Data tidak ditemukan.');
+                }
+            },
+            error: function () {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
+        });
+    }
 
 
 

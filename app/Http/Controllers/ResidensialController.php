@@ -232,4 +232,22 @@ class ResidensialController extends Controller
         ]);
     }
 
+    public function getSubKategoriChild($id)
+    {
+        // Ambil data sub kategori berdasarkan ID kategori
+        $subKategoriChild = KategoriPPKSSub::where("parent_id","=",$id)->orderBy("sort","ASC")->get();
+        // $subKategoriChild = KategoriPPKSSub::where('kategori_id', $id)->where('parent_id',"=",null)->orderBy("sort","ASC")->get();
+        foreach($subKategoriChild as $sk){
+            $sk->option=KategoriPPKSSub::where("parent_id","=",$sk->id)->orderBy("sort","ASC")->get();
+        }
+        if ($subKategoriChild->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'Data tidak ditemukan.']);
+        }
+
+        return response()->json([
+            'success' => true,
+            'sub_kategori' => $subKategoriChild
+        ]);
+    }
+
 }
