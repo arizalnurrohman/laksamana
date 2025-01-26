@@ -38,11 +38,11 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label class="form-label">Asrama: *</label>
-                <select class="form-select" data-trigger name="residense_sumber_rujukan" id="residense_sumber_rujukan">
-                    <option value="">Pilih Sumber Rujukan</option>
-                    @foreach($sumber_rujukan as $sumber_rujukanx)
-                        <option value="{{$sumber_rujukanx->id}}">{{$sumber_rujukanx->sumber}}</option>
+                <label class="form-label">Gedung Asrama: *</label>
+                <select class="form-select" data-trigger name="residense_gedung_asrama" id="residense_gedung_asrama">
+                    <option value="">Pilih Gedung Asrama</option>
+                    @foreach($gedung as $gedungx)
+                        <option value="{{$gedungx->id}}">{{$gedungx->nama_gedung}}</option>
                     @endforeach
                 </select>
             </div>

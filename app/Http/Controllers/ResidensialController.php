@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Agama;
+use App\Models\Gedung;
 use App\Models\Pasien;
 use App\Models\Pegawai;
 use App\Models\Petugas;
@@ -65,8 +66,9 @@ class ResidensialController extends Controller
         $kecamatan = Kecamatan::all();
         $pendidikan=Pendidikan::all();
         $kategori = KategoriPPKS::all();
+        $gedung=Gedung::all();
         $pasien = Pasien::all();
-        return view('residensial.create', compact('petugas','sumber_rujukan','agama','provinsi','kabupaten','kecamatan','pendidikan','kategori','pasien'));
+        return view('residensial.create', compact('petugas','sumber_rujukan','agama','provinsi','kabupaten','kecamatan','pendidikan','kategori','pasien','gedung'));
     }
     public function store(Request $request)
     {
@@ -90,7 +92,7 @@ class ResidensialController extends Controller
             if ($request->hasFile('dokumen_rujukan')) {
                 $dokRujukan = $request->file('dokumen_rujukan')->store('uploads/dokumen_rujukan', 'public');
             }
-            dd($dokRujukan);
+            // dd($dokRujukan);
             $payload = [
                 'id'                    => Str::uuid()->toString(),
                 'petugas_id'            => $request->residense_petugas,
@@ -102,6 +104,7 @@ class ResidensialController extends Controller
                 'rencana_tgl_terminasi' => $request->rencana_tgl_terminasi ?? null,
                 'pengampu_id'           => $request->pengampu_id ?? null,
                 'status_id'             => $this->status_usulan,
+                'gedung_id'             => $request->residense_gedung_asrama,
                 'up_dokumen_rujukan'    => $dokRujukan,
             ];
 
@@ -152,15 +155,21 @@ class ResidensialController extends Controller
     }
 
     public function load_residensial(){
-        $sub_child = Residensial::select("laksa_tr_residensial.id as residensial_id")->orderby("created_at","DESC")->get();
+        $sub_child = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*");
+        $sub_child = $sub_child->orderby("laksa_tr_residensial.created_at","DESC");
+        $sub_child = $sub_child->leftJoin('laksa_ms_petugas', 'laksa_tr_residensial.petugas_id', '=', 'laksa_ms_petugas.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
+        $sub_child = $sub_child->get();
         $data = array();
         $no=0;
         foreach ($sub_child as $val) {
             $data[$no]['No']                =($no+1);
-            $data[$no]['Nama Pasien']       =$val->pasien_id;
-            $data[$no]['Tgl Penerimaan']    =$val->tgl_penerimaan;
-            $data[$no]['Sumber']            =$val->sumber_id;
-            $data[$no]['Petugas']           =$val->petugas_id;
+            $data[$no]['Nama Pasien']       =$val->nama_depan." ".$val->nama_belakang;
+            $data[$no]['Tgl Penerimaan']    =date("d-m-Y",strtotime($val->tgl_penerimaan));
+            $data[$no]['Sumber']            =$val->sumber;
+            $data[$no]['Petugas']           =$val->nama;
             $data[$no]['Aksi']              ='<div class="btn-group" role="group" aria-label="Group Aksi">
                                                 <a href="'.route("residensial.edit",$val->residensial_id).'">
                                                     <button class="btn btn-sm btn-icon btn-warning">

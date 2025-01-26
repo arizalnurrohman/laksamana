@@ -68,7 +68,6 @@ Route::get('/persyaratan/edit/{id}', [PersyaratanController::class, 'edit'])->na
 Route::post('/persyaratan/update', [PersyaratanController::class, 'update'])->name('persyaratan.update');
 Route::delete('/persyaratan/delete/{id}', [PersyaratanController::class, 'destroy'])->name('persyaratan.delete');
 
-Route::get('/asrama', [AsramaController::class, 'index'])->name('asrama');
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');
 
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
