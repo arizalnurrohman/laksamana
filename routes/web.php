@@ -25,7 +25,23 @@ Route::get('/data-akses-pengguna', [PenggunaController::class, 'index'])->name('
 
 Route::get('/data-wilayah', [DataWilayahController::class, 'index'])->name('datawilayah');
 Route::get('/komponen-intervensi', [KomponenInterrvensiController::class, 'index'])->name('komponenintervensi');
+
+#FORM ASSESSMENT
 Route::get('/form-assessement', [FormAssessementController::class, 'index'])->name('formassessement');
+Route::get('/form-assessement/load-form-assessement', [FormAssessementController::class, 'load_data'])->name('load_formassessement');
+Route::post('/form-assessement/store', [FormAssessementController::class, 'store'])->name('formassessement.store');
+Route::get('/form-assessement/edit/{id}', [FormAssessementController::class, 'edit'])->name('formassessement.edit');
+Route::post('/form-assessement/update', [FormAssessementController::class, 'update'])->name('formassessement.update');
+Route::delete('/form-assessement/delete/{id}', [FormAssessementController::class, 'destroy'])->name('formassessement.delete');
+
+Route::get('/form-assessement/list-sub/{id}', [FormAssessementController::class, 'get_assessment'])->name('sub_formassessement');
+Route::get('/form-assessement/load-form-assessement/{id}', [FormAssessementController::class, 'load_data_sub'])->name('load_formassessement_sub');
+Route::post('/form-assessement/sub-store', [FormAssessementController::class, 'sub_store'])->name('sub_formassessement.store');
+
+Route::get('/form-assessement/list-sub/child/{id}', [FormAssessementController::class, 'sub_child_assessement'])->name('subchild_formassessement');
+Route::get('/form-assessement/list-sub/child/load_list/{id}', [FormAssessementController::class, 'load_sub_child_list_assessment'])->name('load_subchildlist_formassessement');
+Route::delete('/form-assessement/list-sub/child/delete/{id}', [FormAssessementController::class, 'destroy_sub_child'])->name('subchild_formassessement.delete');
+#END OF------------------------------------------------------------------------------------------------------------------------------
 
 Route::get('/kategori-kkps', [KategoriKKPSController::class, 'index'])->name('kategorikkps');
 Route::get('/kategori-kkps/load-kategori-kkps', [KategoriKKPSController::class, 'load_data'])->name('load_kategorikkps');

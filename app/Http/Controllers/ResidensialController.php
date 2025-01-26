@@ -145,7 +145,7 @@ class ResidensialController extends Controller
     }
 
     public function load_residensial(){
-        $sub_child = Residensial::select("laksa_ms_residensial.id as residensial_id")->orderby("created_at","DESC")->get();
+        $sub_child = Residensial::select("laksa_tr_residensial.id as residensial_id")->orderby("created_at","DESC")->get();
         $data = array();
         $no=0;
         foreach ($sub_child as $val) {
@@ -183,13 +183,13 @@ class ResidensialController extends Controller
     public function residensial_get_pasien($id)
     {
         // Cari pasien berdasarkan ID
-        $pasien = Pasien::where("laksa_ms_pasien.id","!=",null);
-        $pasien = $pasien->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_pasien.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
-                         ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_pasien.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
-                         ->leftJoin('laksa_ms_provinsi', 'laksa_ms_pasien.provinsi_id', '=', 'laksa_ms_provinsi.id')
-                         ->leftJoin('laksa_ms_pendidikan', 'laksa_ms_pasien.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
-                         ->leftJoin('laksa_ms_agama', 'laksa_ms_pasien.agama_id', '=', 'laksa_ms_agama.id');
-        $pasien = $pasien->where("laksa_ms_pasien.id",$id)->first();
+        $pasien = Pasien::where("laksa_ms_ppks.id","!=",null);
+        $pasien = $pasien->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
+                         ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
+                         ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id')
+                         ->leftJoin('laksa_ms_pendidikan', 'laksa_ms_ppks.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
+                         ->leftJoin('laksa_ms_agama', 'laksa_ms_ppks.agama_id', '=', 'laksa_ms_agama.id');
+        $pasien = $pasien->where("laksa_ms_ppks.id",$id)->first();
 
         $birthDate      = Carbon::parse($pasien->tgl_lahir);
         $currentDate    = Carbon::now();

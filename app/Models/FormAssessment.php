@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Residensial extends Model
+class FormAssessment extends Model
 {
     use SoftDeletes;
 
-    protected $table    = 'laksa_tr_residensial';
-    protected $fillable = ['id','petugas_id','tgl_penerimaan','sumber_id','pasien_id','kategori_ppks_id','masa_layanan','rencana_tgl_terminasi','pengampu_id','status','created_at','updated_at','deleted_at'];
+    protected $table    = 'laksa_ms_form_assessment';
+    protected $fillable = ['id','assessment','sort','created_at','updated_at','deleted_at'];
     protected $dates    = ['deleted_at'];
     protected $keyType  = 'string';
 
