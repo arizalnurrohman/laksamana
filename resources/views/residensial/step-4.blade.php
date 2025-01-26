@@ -45,7 +45,7 @@
                 <label class="form-label" for="kategori_ppks">Dokumen Rujukan</label>
                 <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
                     <p class="text-secondary">Drag & drop files here or click to select files</p>
-                    <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                    <input type="file" id="fileInput" name="dokumen_rujukan" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
                 </div>
                 <div class="file-list" id="fileList"></div>
             </div>

@@ -60,7 +60,7 @@
             </div>
             </div>
             <div class="card-body">
-            <form id="form-wizard1" class="mt-3 text-center" action="{{route('residensial.store')}}">
+            <form id="form-wizard1" class="mt-3 text-center" action="{{route('residensial.store')}}"  method="POST" enctype="multipart/form-data">
                 @csrf
                 <ul id="top-tab-list" class="p-0 row list-inline">
                     <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">

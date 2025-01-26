@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2025 at 02:58 AM
+-- Generation Time: Jan 26, 2025 at 04:47 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -594,43 +594,6 @@ INSERT INTO `laksa_ms_kecamatan` (`id`, `kabupaten_kota_id`, `kemendagri_id`, `k
 -- --------------------------------------------------------
 
 --
--- Table structure for table `laksa_ms_pasien`
---
-
-CREATE TABLE `laksa_ms_pasien` (
-  `id` varchar(36) NOT NULL,
-  `nama_depan` varchar(100) DEFAULT NULL,
-  `nama_belakang` varchar(100) NOT NULL,
-  `nik` varchar(16) DEFAULT NULL,
-  `nokk` varchar(16) DEFAULT NULL,
-  `tmp_lahir` varchar(100) DEFAULT NULL,
-  `tgl_lahir` date DEFAULT NULL,
-  `provinsi_id` varchar(36) DEFAULT NULL,
-  `kota_id` varchar(36) DEFAULT NULL,
-  `kecamatan_id` varchar(36) DEFAULT NULL,
-  `kelurahan_desa_id` varchar(36) DEFAULT NULL,
-  `alamat` varchar(255) DEFAULT NULL,
-  `domisili_alamat` char(1) DEFAULT NULL,
-  `domisili` varchar(255) DEFAULT NULL,
-  `agama_id` varchar(36) DEFAULT NULL,
-  `pendidikan_id` varchar(36) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `laksa_ms_pasien`
---
-
-INSERT INTO `laksa_ms_pasien` (`id`, `nama_depan`, `nama_belakang`, `nik`, `nokk`, `tmp_lahir`, `tgl_lahir`, `provinsi_id`, `kota_id`, `kecamatan_id`, `kelurahan_desa_id`, `alamat`, `domisili_alamat`, `domisili`, `agama_id`, `pendidikan_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('079bef48-704c-4526-9fa0-9669a2f4bc04', 'ariew', 'zal', '123123', '2312312', 'qweqweq', '2025-01-23', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '08ea4954-3895-50d1-673e-7e10be1b4e12', 'qweqwe', 'qwe', '1', 'qwe', '41875d16-08f2-24cc-a568-a17c69655427', '56c193ce-5057-a6d6-a447-3c08a35d00cc', '2025-01-23 08:29:44', '2025-01-23 15:06:21', '2025-01-23 15:06:21'),
-('2f068203-d88f-11ef-8650-244bfebc0c45', 'Arizal', 'Nur Rohman', '1471031302900022', '1471031302900111', 'Wonogiri', '1990-02-13', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '93e3aa88-90b0-5cb0-8905-334d97d116ae', 'xxxx', 'jalan brotoseno perum widya perdana lestari blok A.10', 'y', NULL, 'c4091389-34eb-7f56-1b6d-b1934f0115c9', 'fca3a7f1-918f-16b2-64a0-7eb35ac84735', '2025-01-22 07:02:28', NULL, NULL),
-('3ff3d400-7322-4f8f-9df0-e984f8950ea1', 'Nama Depan edit 2', 'Nbeakang', '123', '123', 'qweqweq', '2025-01-24', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '1574a648-89df-9c8a-a10f-5c6b5d9b3548', 'asda', 'asd', '1', 'asd', '41875d16-08f2-24cc-a568-a17c69655427', 'c31d1245-26cd-6681-8455-3aa4dc2f95e7', '2025-01-23 20:58:56', '2025-01-23 21:45:25', NULL);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `laksa_ms_pegawai`
 --
 
@@ -745,6 +708,46 @@ INSERT INTO `laksa_ms_petugas` (`id`, `pegawai_id`, `created_at`, `updated_at`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `laksa_ms_ppks`
+--
+
+CREATE TABLE `laksa_ms_ppks` (
+  `id` varchar(36) NOT NULL,
+  `nama_depan` varchar(100) DEFAULT NULL,
+  `nama_belakang` varchar(100) NOT NULL,
+  `nik` varchar(16) DEFAULT NULL,
+  `nokk` varchar(16) DEFAULT NULL,
+  `tmp_lahir` varchar(100) DEFAULT NULL,
+  `tgl_lahir` date DEFAULT NULL,
+  `provinsi_id` varchar(36) DEFAULT NULL,
+  `kota_id` varchar(36) DEFAULT NULL,
+  `kecamatan_id` varchar(36) DEFAULT NULL,
+  `kelurahan_desa_id` varchar(36) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `domisili_alamat` char(1) DEFAULT NULL,
+  `domisili` varchar(255) DEFAULT NULL,
+  `agama_id` varchar(36) DEFAULT NULL,
+  `pendidikan_id` varchar(36) DEFAULT NULL,
+  `up_foto` varchar(100) DEFAULT NULL,
+  `up_kk` varchar(100) DEFAULT NULL,
+  `up_akte_lahir` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `laksa_ms_ppks`
+--
+
+INSERT INTO `laksa_ms_ppks` (`id`, `nama_depan`, `nama_belakang`, `nik`, `nokk`, `tmp_lahir`, `tgl_lahir`, `provinsi_id`, `kota_id`, `kecamatan_id`, `kelurahan_desa_id`, `alamat`, `domisili_alamat`, `domisili`, `agama_id`, `pendidikan_id`, `up_foto`, `up_kk`, `up_akte_lahir`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('079bef48-704c-4526-9fa0-9669a2f4bc04', 'ariew', 'zal', '123123', '2312312', 'qweqweq', '2025-01-23', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '08ea4954-3895-50d1-673e-7e10be1b4e12', 'qweqwe', 'qwe', '1', 'qwe', '41875d16-08f2-24cc-a568-a17c69655427', '56c193ce-5057-a6d6-a447-3c08a35d00cc', NULL, NULL, NULL, '2025-01-23 08:29:44', '2025-01-23 15:06:21', '2025-01-23 15:06:21'),
+('2f068203-d88f-11ef-8650-244bfebc0c45', 'Arizal', 'Nur Rohman', '1471031302900022', '1471031302900111', 'Wonogiri', '1990-02-13', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '93e3aa88-90b0-5cb0-8905-334d97d116ae', 'xxxx', 'jalan brotoseno perum widya perdana lestari blok A.10', NULL, NULL, 'c4091389-34eb-7f56-1b6d-b1934f0115c9', 'fca3a7f1-918f-16b2-64a0-7eb35ac84735', 'uploads/foto/5TaYmNUYLOFwfbyEbpuQ28yvmTvPNlBDCISl90VP.jpg', 'uploads/kk/uXnTBZLe2NpVuVR0t9v55QuRqHgUVyyRljw8BzEa.pdf', 'uploads/akte/7c1IF7ETbQG2lIhxwQynVLENq3t0FVMHr6dfVyLh.pdf', '2025-01-22 07:02:28', '2025-01-25 19:39:59', NULL),
+('3ff3d400-7322-4f8f-9df0-e984f8950ea1', 'Nama Depan edit 2', 'Nbeakang', '123', '123', 'qweqweq', '2025-01-24', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '1574a648-89df-9c8a-a10f-5c6b5d9b3548', 'asda', 'asd', '1', 'asd', '41875d16-08f2-24cc-a568-a17c69655427', 'c31d1245-26cd-6681-8455-3aa4dc2f95e7', 'uploads/foto/dR8eQkZ8wHPyB4Yk5VOEFtT4dhCMmDrr0kdPPfpr.png', 'uploads/kk/nBZyAHZBUmKRRqaTkcAQLDTqqqWeivwP9uezNq1h.jpg', 'uploads/akte/MSewrIHdrPuNZlUoH4FStBn8zqivdBkdJTu0TjmW.jpg', '2025-01-23 20:58:56', '2025-01-25 19:33:37', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `laksa_ms_provinsi`
 --
 
@@ -773,10 +776,31 @@ INSERT INTO `laksa_ms_provinsi` (`id`, `kemendagri_id`, `provinsi`, `created_at`
 CREATE TABLE `laksa_ms_status` (
   `id` varchar(36) NOT NULL,
   `status` varchar(100) DEFAULT NULL,
+  `jenis_layanan` enum('residensial','non-residensial','','') NOT NULL,
+  `sort` tinyint(3) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `laksa_ms_status`
+--
+
+INSERT INTO `laksa_ms_status` (`id`, `status`, `jenis_layanan`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('1ba4b694-db8b-11ef-9f06-244bfebc0c45', 'Dokumen Serah Terima Selesai di Generate', 'residensial', 6, NULL, NULL, NULL),
+('23ac51ea-db8b-11ef-9f06-244bfebc0c45', 'Menunggu Proses Assessment', 'residensial', 7, NULL, NULL, NULL),
+('2ae4ad34-db8b-11ef-9f06-244bfebc0c45', 'Proses Assessment Selesai', 'residensial', 8, NULL, NULL, NULL),
+('3cdad447-db8b-11ef-9f06-244bfebc0c45', 'Menunggu Proses Penentuan Layanan', 'residensial', 9, NULL, NULL, NULL),
+('462ce22c-db8b-11ef-9f06-244bfebc0c45', 'Tahap Rehabilitasi', 'residensial', 10, NULL, NULL, NULL),
+('56bd1150-db8b-11ef-9f06-244bfebc0c45', 'Evaluasi Laporan Perkembangan', 'residensial', 11, NULL, NULL, NULL),
+('651a521f-db8b-11ef-9f06-244bfebc0c45', 'Proses Terminasi', 'residensial', 12, NULL, NULL, NULL),
+('7078dbc5-db8a-11ef-9f06-244bfebc0c45', 'Menunggu Persetujuan Kepala', 'residensial', 4, NULL, NULL, NULL),
+('7918fc82-db8a-11ef-9f06-244bfebc0c45', 'Kepala Menyetujui Usulan Residensial', 'residensial', 5, NULL, NULL, NULL),
+('a961e7f6-db89-11ef-9f06-244bfebc0c45', 'Draft - Usulan Residensial', 'residensial', 1, NULL, NULL, NULL),
+('b4a5adb3-db89-11ef-9f06-244bfebc0c45', 'Draft - Usulan Non Residensial', 'non-residensial', 0, NULL, NULL, NULL),
+('b995d70b-db89-11ef-9f06-244bfebc0c45', 'Input - Residensial', 'residensial', 2, NULL, NULL, NULL),
+('be10c279-db89-11ef-9f06-244bfebc0c45', 'Proses - Residensial', 'residensial', 3, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -853,8 +877,9 @@ CREATE TABLE `laksa_tr_residensial` (
   `masa_layanan` int(11) DEFAULT NULL,
   `rencana_tgl_terminasi` date DEFAULT NULL,
   `pengampu_id` varchar(36) DEFAULT NULL,
-  `status` enum('draft','proses','selesai') NOT NULL DEFAULT 'draft',
+  `status_id` varchar(36) DEFAULT 'draft',
   `gedung_id` varchar(36) DEFAULT NULL,
+  `up_dokumen_rujukan` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -864,9 +889,28 @@ CREATE TABLE `laksa_tr_residensial` (
 -- Dumping data for table `laksa_tr_residensial`
 --
 
-INSERT INTO `laksa_tr_residensial` (`id`, `petugas_id`, `tgl_penerimaan`, `sumber_id`, `pasien_id`, `kategori_ppks_id`, `masa_layanan`, `rencana_tgl_terminasi`, `pengampu_id`, `status`, `gedung_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('2f0e271d-7a16-4bdc-ad37-c49459f00478', '1', '2025-01-21 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', NULL, NULL, NULL, 'proses', '', '2025-01-25 05:50:09', '2025-01-25 05:50:09', NULL),
-('e678e24a-8f79-4f8c-9d9a-bc8d419d1bfa', '2', '2025-01-22 00:00:00', '2', '3ff3d400-7322-4f8f-9df0-e984f8950ea1', '1dd96457-c226-4f42-a25b-693c9139823c', NULL, NULL, NULL, 'proses', '', '2025-01-25 05:55:10', '2025-01-25 05:55:10', NULL);
+INSERT INTO `laksa_tr_residensial` (`id`, `petugas_id`, `tgl_penerimaan`, `sumber_id`, `pasien_id`, `kategori_ppks_id`, `masa_layanan`, `rencana_tgl_terminasi`, `pengampu_id`, `status_id`, `gedung_id`, `up_dokumen_rujukan`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('1f329cbd-c83a-40a8-9d14-fcb4af695c80', '1', '2025-01-15 00:00:00', '1', '3ff3d400-7322-4f8f-9df0-e984f8950ea1', 'b1895989-f137-4421-83bc-59206516da7f', NULL, NULL, NULL, 'draft', NULL, NULL, '2025-01-25 20:38:46', '2025-01-25 20:38:46', NULL),
+('2f0e271d-7a16-4bdc-ad37-c49459f00478', '1', '2025-01-21 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', NULL, NULL, NULL, 'proses', '', '', '2025-01-25 05:50:09', '2025-01-25 05:50:09', NULL),
+('e678e24a-8f79-4f8c-9d9a-bc8d419d1bfa', '2', '2025-01-22 00:00:00', '2', '3ff3d400-7322-4f8f-9df0-e984f8950ea1', '1dd96457-c226-4f42-a25b-693c9139823c', NULL, NULL, NULL, 'proses', '', '', '2025-01-25 05:55:10', '2025-01-25 05:55:10', NULL),
+('f117e973-58e0-4861-aaba-cf668b589bcb', '2', '2025-01-14 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', '1dd96457-c226-4f42-a25b-693c9139823c', NULL, NULL, NULL, 'draft', NULL, NULL, '2025-01-25 20:37:28', '2025-01-25 20:37:28', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_tr_status`
+--
+
+CREATE TABLE `laksa_tr_status` (
+  `id` varchar(36) NOT NULL,
+  `jenis_layanan` enum('residensial','non-residensial') DEFAULT NULL,
+  `layanan_id` varchar(36) DEFAULT NULL,
+  `status_id` varchar(36) DEFAULT NULL,
+  `user_id` varchar(36) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -901,6 +945,7 @@ INSERT INTO `menu` (`id`, `parent_id`, `menu`, `description`, `icon`, `url`, `ac
 ('3a13cd66-29d4-476e-8398-3fbecbf038df', NULL, 'Konfigurasi', 'konf desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\">\r\n                                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M20.4023 13.58C20.76 13.77 21.036 14.07 21.2301 14.37C21.6083 14.99 21.5776 15.75 21.2097 16.42L20.4943 17.62C20.1162 18.26 19.411 18.66 18.6855 18.66C18.3278 18.66 17.9292 18.56 17.6022 18.36C17.3365 18.19 17.0299 18.13 16.7029 18.13C15.6911 18.13 14.8429 18.96 14.8122 19.95C14.8122 21.1 13.872 22 12.6968 22H11.3069C10.1215 22 9.18125 21.1 9.18125 19.95C9.16081 18.96 8.31259 18.13 7.30085 18.13C6.96361 18.13 6.65702 18.19 6.40153 18.36C6.0745 18.56 5.66572 18.66 5.31825 18.66C4.58245 18.66 3.87729 18.26 3.49917 17.62L2.79402 16.42C2.4159 15.77 2.39546 14.99 2.77358 14.37C2.93709 14.07 3.24368 13.77 3.59115 13.58C3.87729 13.44 4.06125 13.21 4.23498 12.94C4.74596 12.08 4.43937 10.95 3.57071 10.44C2.55897 9.87 2.23194 8.6 2.81446 7.61L3.49917 6.43C4.09191 5.44 5.35913 5.09 6.38109 5.67C7.27019 6.15 8.425 5.83 8.9462 4.98C9.10972 4.7 9.20169 4.4 9.18125 4.1C9.16081 3.71 9.27323 3.34 9.4674 3.04C9.84553 2.42 10.5302 2.02 11.2763 2H12.7172C13.4735 2 14.1582 2.42 14.5363 3.04C14.7203 3.34 14.8429 3.71 14.8122 4.1C14.7918 4.4 14.8838 4.7 15.0473 4.98C15.5685 5.83 16.7233 6.15 17.6226 5.67C18.6344 5.09 19.9118 5.44 20.4943 6.43L21.179 7.61C21.7718 8.6 21.4447 9.87 20.4228 10.44C19.5541 10.95 19.2475 12.08 19.7687 12.94C19.9322 13.21 20.1162 13.44 20.4023 13.58ZM9.10972 12.01C9.10972 13.58 10.4076 14.83 12.0121 14.83C13.6165 14.83 14.8838 13.58 14.8838 12.01C14.8838 10.44 13.6165 9.18 12.0121 9.18C10.4076 9.18 9.10972 10.44 9.10972 12.01Z\" fill=\"currentColor\" />\r\n                                      </svg>', '#', 'konfigurasi', 9, '2025-01-12 07:02:58', NULL, NULL),
 ('42c50614-5602-4b72-b48c-479a25eaf001', NULL, 'Laporan', 'desc laporan', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\">\r\n    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.92574 16.39H14.3119C14.7178 16.39 15.0545 16.05 15.0545 15.64C15.0545 15.23 14.7178 14.9 14.3119 14.9H8.92574C8.5198 14.9 8.18317 15.23 8.18317 15.64C8.18317 16.05 8.5198 16.39 8.92574 16.39ZM12.2723 9.9H8.92574C8.5198 9.9 8.18317 10.24 8.18317 10.65C8.18317 11.06 8.5198 11.39 8.92574 11.39H12.2723C12.6782 11.39 13.0149 11.06 13.0149 10.65C13.0149 10.24 12.6782 9.9 12.2723 9.9ZM19.3381 9.02561C19.5708 9.02292 19.8242 9.02 20.0545 9.02C20.302 9.02 20.5 9.22 20.5 9.47V17.51C20.5 19.99 18.5099 22 16.0545 22H8.17327C5.59901 22 3.5 19.89 3.5 17.29V6.51C3.5 4.03 5.5 2 7.96535 2H13.2525C13.5099 2 13.7079 2.21 13.7079 2.46V5.68C13.7079 7.51 15.203 9.01 17.0149 9.02C17.4381 9.02 17.8112 9.02316 18.1377 9.02593C18.3917 9.02809 18.6175 9.03 18.8168 9.03C18.9578 9.03 19.1405 9.02789 19.3381 9.02561ZM19.6111 7.566C18.7972 7.569 17.8378 7.566 17.1477 7.559C16.0527 7.559 15.1507 6.648 15.1507 5.542V2.906C15.1507 2.475 15.6685 2.261 15.9646 2.572C16.5004 3.13476 17.2368 3.90834 17.9699 4.67837C18.7009 5.44632 19.4286 6.21074 19.9507 6.759C20.2398 7.062 20.0279 7.565 19.6111 7.566Z\" fill=\"currentColor\" />\r\n  </svg>', 'laporan', 'laporan', 10, '2025-01-12 02:59:24', '2025-01-12 02:59:24', NULL),
 ('743c06c5-123e-41e1-9b54-2a9ddaed4506', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Komponen Intervensi', 'desc', '<svg width=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path opacity=\"0.4\" d=\"M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z\" fill=\"currentColor\"></path>\r\n                                                <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z\" fill=\"currentColor\"></path>\r\n                                              </svg>', 'komponen-intervensi', 'komponenintervensi', 2, '2025-01-12 00:58:40', '2025-01-12 00:58:40', NULL),
+('7ca9b226-45cb-475d-8a52-0cb192f46cd2', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Gedung Asrama', 'desc', '<svg width=\"20px\" height=\"20px\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n<path d=\"M14 21.0001V15.0001H10V21.0001M19 9.77818V16.2001C19 17.8802 19 18.7203 18.673 19.362C18.3854 19.9265 17.9265 20.3855 17.362 20.6731C16.7202 21.0001 15.8802 21.0001 14.2 21.0001H9.8C8.11984 21.0001 7.27976 21.0001 6.63803 20.6731C6.07354 20.3855 5.6146 19.9265 5.32698 19.362C5 18.7203 5 17.8802 5 16.2001V9.77753M21 12.0001L15.5668 5.96405C14.3311 4.59129 13.7133 3.9049 12.9856 3.65151C12.3466 3.42894 11.651 3.42899 11.0119 3.65165C10.2843 3.90516 9.66661 4.59163 8.43114 5.96458L3 12.0001\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n</svg>', 'gedung-asrama', 'gedung_asrama', 7, '2025-01-25 20:43:56', '2025-01-25 20:43:56', NULL),
 ('87c3cbf6-0d9f-4c74-9b12-3d772f603272', '3a13cd66-29d4-476e-8398-3fbecbf038df', 'Permission', 'desc', '<svg width=\"20\" class=\"icon-20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\r\n                                                xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path opacity=\"0.4\"\r\n                                                    d=\"M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                            </svg>', 'permission', 'permission', 4, '2025-01-12 00:57:53', '2025-01-12 00:57:53', NULL),
 ('a6cf6e26-e1ea-4271-9fce-82961f3b5ca7', '3a13cd66-29d4-476e-8398-3fbecbf038df', 'Menu', 'menu desc', '<svg width=\"20\" class=\"icon-20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\r\n                                                xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path\r\n                                                    d=\"M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                            </svg>', 'menu', 'menu', 2, '2025-01-12 07:15:49', NULL, NULL),
 ('acf5f180-8c43-4795-ad3e-7b32c1307afc', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Kategori PPKS', 'desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\">\r\n    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M7.33049 2.00049H16.6695C20.0705 2.00049 21.9905 3.92949 22.0005 7.33049V16.6705C22.0005 20.0705 20.0705 22.0005 16.6695 22.0005H7.33049C3.92949 22.0005 2.00049 20.0705 2.00049 16.6705V7.33049C2.00049 3.92949 3.92949 2.00049 7.33049 2.00049ZM12.0495 17.8605C12.4805 17.8605 12.8395 17.5405 12.8795 17.1105V6.92049C12.9195 6.61049 12.7705 6.29949 12.5005 6.13049C12.2195 5.96049 11.8795 5.96049 11.6105 6.13049C11.3395 6.29949 11.1905 6.61049 11.2195 6.92049V17.1105C11.2705 17.5405 11.6295 17.8605 12.0495 17.8605ZM16.6505 17.8605C17.0705 17.8605 17.4295 17.5405 17.4805 17.1105V13.8305C17.5095 13.5095 17.3605 13.2105 17.0895 13.0405C16.8205 12.8705 16.4805 12.8705 16.2005 13.0405C15.9295 13.2105 15.7805 13.5095 15.8205 13.8305V17.1105C15.8605 17.5405 16.2195 17.8605 16.6505 17.8605ZM8.21949 17.1105C8.17949 17.5405 7.82049 17.8605 7.38949 17.8605C6.95949 17.8605 6.59949 17.5405 6.56049 17.1105V10.2005C6.53049 9.88949 6.67949 9.58049 6.95049 9.41049C7.21949 9.24049 7.56049 9.24049 7.83049 9.41049C8.09949 9.58049 8.25049 9.88949 8.21949 10.2005V17.1105Z\" fill=\"currentColor\" />', 'kategori-kkps', 'kategorikkps', 6, '2025-01-12 01:02:19', '2025-01-12 01:02:19', NULL),
@@ -909,6 +954,7 @@ INSERT INTO `menu` (`id`, `parent_id`, `menu`, `description`, `icon`, `url`, `ac
 ('e198201a-f571-46c0-af86-d60876285041', '3a13cd66-29d4-476e-8398-3fbecbf038df', 'Data Akses<br>Pengguna', 'desc', '<svg width=\"20\" class=\"icon-20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\r\n                                                xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path\r\n                                                    d=\"M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                            </svg>', 'data-akses-pengguna', 'dataaksespengguna', 3, '2025-01-12 00:55:09', '2025-01-12 00:55:09', NULL),
 ('e7c6d36b-0b6e-45e5-afec-7ea29f18dcdf', NULL, 'Assessment', 'desc', '<svg fill=\"#000000\" width=\"20px\" height=\"20px\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m11.997 1.771h-.001c-5.647 0-10.226 4.578-10.226 10.226s4.578 10.226 10.226 10.226c5.647 0 10.226-4.578 10.226-10.226 0-5.647-4.578-10.225-10.225-10.226zm.198 2.252c.801 0 1.45.649 1.45 1.45s-.649 1.45-1.45 1.45-1.45-.649-1.45-1.45c0-.801.649-1.45 1.45-1.45zm5.307 3.668c-.087.117-.216.199-.364.223h-.003l-3.445.53c-.03.002-.056.017-.074.038-.018.022.343 4.274.343 4.274l1.958 5.337c.055.104.087.226.087.357 0 .295-.165.551-.407.681l-.004.002c-.074.033-.161.053-.253.053-.001 0-.001 0-.002 0-.33-.016-.608-.224-.728-.513l-.002-.006s-2.508-5.691-2.522-5.734c-.016-.047-.06-.081-.112-.081-.048 0-.088.031-.103.074v.001c-.014.041-2.522 5.734-2.522 5.734-.121.294-.399.501-.727.518h-.002c-.001 0-.001 0-.002 0-.091 0-.178-.019-.256-.054l.004.002c-.176-.08-.308-.229-.364-.411l-.001-.005c-.025-.078-.04-.168-.04-.261 0-.133.029-.258.082-.371l-.002.005s1.91-5.165 1.911-5.174l.355-4.363c0-.003 0-.006 0-.01 0-.054-.04-.099-.092-.107h-.001l-3.36-.52c-.271-.043-.475-.275-.475-.554 0-.31.251-.561.561-.561.03 0 .06.002.089.007h-.003l3.223.498h3.421c.007.002.015.003.024.003s.016-.001.024-.003h-.001l3.244-.497c.024-.004.052-.006.08-.006.28 0 .513.203.56.47v.003c.004.026.007.057.007.088 0 .124-.04.238-.109.33l.001-.002z\"/><path d=\"m12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12c0-6.627-5.373-12-12-12zm0 22.975c-.001 0-.003 0-.004 0-6.064 0-10.979-4.916-10.979-10.979s4.916-10.979 10.979-10.979c6.064 0 10.979 4.916 10.979 10.979v.004c-.002 6.061-4.915 10.973-10.975 10.975z\"/></svg>', 'assessement', 'assessement', 4, '2025-01-12 01:07:36', '2025-01-12 01:07:36', NULL),
 ('e8de949f-0364-418a-9462-c6fb69cd9a37', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Data Wilayah', 'desc', '<i class=\"icon\">\r\n                                            <svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"icon-20\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\"><path d=\"M21.4354 2.58198C20.9352 2.0686 20.1949 1.87734 19.5046 2.07866L3.408 6.75952C2.6797 6.96186 2.16349 7.54269 2.02443 8.28055C1.88237 9.0315 2.37858 9.98479 3.02684 10.3834L8.0599 13.4768C8.57611 13.7939 9.24238 13.7144 9.66956 13.2835L15.4329 7.4843C15.723 7.18231 16.2032 7.18231 16.4934 7.4843C16.7835 7.77623 16.7835 8.24935 16.4934 8.55134L10.72 14.3516C10.2918 14.7814 10.2118 15.4508 10.5269 15.9702L13.6022 21.0538C13.9623 21.6577 14.5826 22 15.2628 22C15.3429 22 15.4329 22 15.513 21.9899C16.2933 21.8893 16.9135 21.3558 17.1436 20.6008L21.9156 4.52479C22.1257 3.84028 21.9356 3.09537 21.4354 2.58198Z\" fill=\"currentColor\"></path></svg>\r\n                                        </i>', 'data-wilayah', 'datawilayah', 3, '2025-01-12 02:48:46', NULL, NULL),
+('f109e8d8-796c-4bcb-922e-01ed5f6d7040', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', 'Status', 'status', '<svg class=\"icon-20\" width=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">                                    <path d=\"M15.7161 16.2234H8.49609\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>                                    <path d=\"M15.7161 12.0369H8.49609\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>                                    <path d=\"M11.2521 7.86011H8.49707\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>                                    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M15.909 2.74976C15.909 2.74976 8.23198 2.75376 8.21998 2.75376C5.45998 2.77076 3.75098 4.58676 3.75098 7.35676V16.5528C3.75098 19.3368 5.47298 21.1598 8.25698 21.1598C8.25698 21.1598 15.933 21.1568 15.946 21.1568C18.706 21.1398 20.416 19.3228 20.416 16.5528V7.35676C20.416 4.57276 18.693 2.74976 15.909 2.74976Z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>                                </svg>', 'status-usulan', 'status_usulan', 6, '2025-01-25 19:56:03', '2025-01-25 19:56:03', NULL),
 ('fbea6e50-2edf-4751-adf1-cfb0fc5972cb', NULL, 'Asrama', 'desc', '<svg width=\"20px\" height=\"20px\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                                        <path d=\"M22 22L2 22\" stroke=\"#1C274C\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\r\n                                        <path d=\"M2 11L6.06296 7.74968M22 11L13.8741 4.49931C12.7784 3.62279 11.2216 3.62279 10.1259 4.49931L9.34398 5.12486\" stroke=\"#1C274C\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\r\n                                        <path d=\"M15.5 5.5V3.5C15.5 3.22386 15.7239 3 16 3H18.5C18.7761 3 19 3.22386 19 3.5V8.5\" stroke=\"#1C274C\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\r\n                                        <path d=\"M4 22V9.5\" stroke=\"#1C274C\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\r\n                                        <path d=\"M20 9.5V13.5M20 22V17.5\" stroke=\"#1C274C\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\r\n                                        <path d=\"M15 22V17C15 15.5858 15 14.8787 14.5607 14.4393C14.1213 14 13.4142 14 12 14C10.5858 14 9.87868 14 9.43934 14.4393M9 22V17\" stroke=\"#1C274C\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n                                        <path d=\"M14 9.5C14 10.6046 13.1046 11.5 12 11.5C10.8954 11.5 10 10.6046 10 9.5C10 8.39543 10.8954 7.5 12 7.5C13.1046 7.5 14 8.39543 14 9.5Z\" stroke=\"#1C274C\" stroke-width=\"1.5\"/>\r\n                                        </svg>', 'asrama', 'asrama', 5, '2025-01-12 01:04:33', '2025-01-12 01:04:33', NULL);
 
 -- --------------------------------------------------------
@@ -1136,12 +1182,6 @@ ALTER TABLE `laksa_ms_kecamatan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `laksa_ms_pasien`
---
-ALTER TABLE `laksa_ms_pasien`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `laksa_ms_pegawai`
 --
 ALTER TABLE `laksa_ms_pegawai`
@@ -1163,6 +1203,12 @@ ALTER TABLE `laksa_ms_persyaratan`
 -- Indexes for table `laksa_ms_petugas`
 --
 ALTER TABLE `laksa_ms_petugas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_ppks`
+--
+ALTER TABLE `laksa_ms_ppks`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1199,6 +1245,12 @@ ALTER TABLE `laksa_tr_non_residensial`
 -- Indexes for table `laksa_tr_residensial`
 --
 ALTER TABLE `laksa_tr_residensial`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_tr_status`
+--
+ALTER TABLE `laksa_tr_status`
   ADD PRIMARY KEY (`id`);
 
 --

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AsramaController;
+use App\Http\Controllers\GedungController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DatabaseController;
@@ -109,3 +110,10 @@ Route::post('/status-usulan/store', [StatusUsulanController::class, 'store'])->n
 Route::get('/status-usulan/edit/{id}', [StatusUsulanController::class, 'edit'])->name('status_usulan.edit');
 Route::post('/status-usulan/update', [StatusUsulanController::class, 'update'])->name('status_usulan.update');
 Route::delete('/status-usulan/delete/{id}', [StatusUsulanController::class, 'destroy'])->name('status_usulan.delete');
+
+Route::get('/gedung-asrama', [GedungController::class, 'index'])->name('gedung_asrama');
+Route::get('/gedung-asrama/load-gedung-asrama', [GedungController::class, 'load_data'])->name('load_gedung_asrama');
+Route::post('/gedung-asrama/store', [GedungController::class, 'store'])->name('gedung_asrama.store');
+Route::get('/gedung-asrama/edit/{id}', [GedungController::class, 'edit'])->name('gedung_asrama.edit');
+Route::post('/gedung-asrama/update', [GedungController::class, 'update'])->name('gedung_asrama.update');
+Route::delete('/gedung-asrama/delete/{id}', [GedungController::class, 'destroy'])->name('gedung_asrama.delete');

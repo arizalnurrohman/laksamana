@@ -23,8 +23,9 @@ class ResidensialController extends Controller
 {
     private $error;
     private $success;
-    // function __construct()
-    // {
+    private $status_usulan;
+    function __construct()
+    {
     //     $fix_roles      =array();
     //     $this->page_attribut  =getPageAttribute();
         
@@ -47,7 +48,8 @@ class ResidensialController extends Controller
 
     //     $this->error    =array();
     //     $this->success  =false;
-    // }
+        $this->status_usulan="b995d70b-db89-11ef-9f06-244bfebc0c45";
+    }
     public function index()
     {
         $residensial = [];
@@ -84,6 +86,11 @@ class ResidensialController extends Controller
         }
 
         if (!$this->error) {
+            $dokRujukan = null;
+            if ($request->hasFile('dokumen_rujukan')) {
+                $dokRujukan = $request->file('dokumen_rujukan')->store('uploads/dokumen_rujukan', 'public');
+            }
+            dd($dokRujukan);
             $payload = [
                 'id'                    => Str::uuid()->toString(),
                 'petugas_id'            => $request->residense_petugas,
@@ -94,8 +101,8 @@ class ResidensialController extends Controller
                 'masa_layanan'          => $request->masa_layanan ?? null,
                 'rencana_tgl_terminasi' => $request->rencana_tgl_terminasi ?? null,
                 'pengampu_id'           => $request->pengampu_id ?? null,
-                'status_id'             => 'proses',
-                'up_dokumen_rujuk'      => $request->up_dokumen_rujuk ?? null,
+                'status_id'             => $this->status_usulan,
+                'up_dokumen_rujukan'    => $dokRujukan,
             ];
 
             // Simpan ke database
