@@ -240,6 +240,27 @@
                                 $('textarea[name="domisili"]').val(data.domisili || '');
                                 $('input[name="agama"]').val(data.agama || '');
                                 $('input[name="pendidikan"]').val(data.pendidikan || '');
+
+                                // Update Foto
+                                if (data.dokumen && data.dokumen.foto) {
+                                    $('#fotoPasien').attr('src', data.dokumen.foto);
+                                } else {
+                                    $('#fotoPasien').attr('src', 'https://dummyimage.com/200x200/cccccc/ffffff');
+                                }
+
+                                // Update Kartu Keluarga
+                                if (data.dokumen && data.dokumen.kk) {
+                                    $('#iframeKk').attr('src', data.dokumen.kk);
+                                } else {
+                                    $('#iframeKk').attr('src', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+                                }
+
+                                // Update Akte Kelahiran
+                                if (data.dokumen && data.dokumen.akte) {
+                                    $('#iframeAkte').attr('src', data.dokumen.akte);
+                                } else {
+                                    $('#iframeAkte').attr('src', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+                                }
                             } else {
                                 alert('Data pasien tidak ditemukan.');
                             }
@@ -253,6 +274,7 @@
                 }
             });
         });
+
 
         $('#kategori_ppks').change(function () {
             const kategoriId = $(this).val(); // Ambil ID dari kategori yang dipilih

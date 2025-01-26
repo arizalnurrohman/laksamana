@@ -15,11 +15,13 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label" for="kategori_ppks">Foto</label>
-                <img src="https://dummyimage.com/200x200/cccccc/ffffff" width="100%" height="200px">
+                <br>
+                <img id="fotoPasien" src="https://dummyimage.com/200x200/cccccc/ffffff" width="200px">
             </div>
             <div class="form-group">
                 <label class="form-label" for="kategori_ppks">Akte Kelahiran</label>
                 <iframe 
+                    id="iframeAkte" 
                     src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" 
                     class="w-100 border rounded" 
                     style="height: 400px;" 
@@ -28,8 +30,9 @@
                 </iframe>
             </div>
             <div class="form-group">
-                <label class="form-label" for="kategori_ppks">Scan KK</label>
+                <label class="form-label" for="kategori_ppks">Kartu Keluarga</label>
                 <iframe 
+                    id="iframeKk" 
                     src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" 
                     class="w-100 border rounded" 
                     style="height: 400px;" 
@@ -37,6 +40,7 @@
                     title="PDF Viewer">
                 </iframe>
             </div>
+            
             <div class="form-group">
                 <label class="form-label" for="kategori_ppks">Dokumen Rujukan</label>
                 <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">

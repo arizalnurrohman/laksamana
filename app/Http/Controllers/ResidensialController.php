@@ -183,37 +183,43 @@ class ResidensialController extends Controller
     public function residensial_get_pasien($id)
     {
         // Cari pasien berdasarkan ID
-        $pasien = Pasien::where("laksa_ms_ppks.id","!=",null);
+        $pasien = Pasien::where("laksa_ms_ppks.id", "!=", null);
         $pasien = $pasien->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
-                         ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
-                         ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id')
-                         ->leftJoin('laksa_ms_pendidikan', 'laksa_ms_ppks.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
-                         ->leftJoin('laksa_ms_agama', 'laksa_ms_ppks.agama_id', '=', 'laksa_ms_agama.id');
-        $pasien = $pasien->where("laksa_ms_ppks.id",$id)->first();
+                        ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
+                        ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id')
+                        ->leftJoin('laksa_ms_pendidikan', 'laksa_ms_ppks.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
+                        ->leftJoin('laksa_ms_agama', 'laksa_ms_ppks.agama_id', '=', 'laksa_ms_agama.id');
+        $pasien = $pasien->where("laksa_ms_ppks.id", $id)->first();
 
-        $birthDate      = Carbon::parse($pasien->tgl_lahir);
-        $currentDate    = Carbon::now();
+        $birthDate   = Carbon::parse($pasien->tgl_lahir);
+        $currentDate = Carbon::now();
 
         if ($pasien) {
             return response()->json([
-                'nik'       => $pasien->nik,
-                'nokk'      => $pasien->nokk,
-                'tmp_lahir' => $pasien->tmp_lahir,
-                'tgl_lahir' => $pasien->tgl_lahir,
-                'usia'      => floor($birthDate->diffInYears($currentDate)),
-                'provinsi'  => $pasien->provinsi,
-                'kabupaten' => $pasien->kabupaten_kota,
-                'kecamatan' => $pasien->kecamatan,
-                'kelurahan' => $pasien->kelurahan_desa_id,
-                'alamat'    => $pasien->alamat,
-                'domisili'  => $pasien->domisili,
-                'agama'     => $pasien->agama,
-                'pendidikan'=> $pasien->pendidikan,
+                'nik'        => $pasien->nik,
+                'nokk'       => $pasien->nokk,
+                'tmp_lahir'  => $pasien->tmp_lahir,
+                'tgl_lahir'  => $pasien->tgl_lahir,
+                'usia'       => floor($birthDate->diffInYears($currentDate)),
+                'provinsi'   => $pasien->provinsi,
+                'kabupaten'  => $pasien->kabupaten_kota,
+                'kecamatan'  => $pasien->kecamatan,
+                'kelurahan'  => $pasien->kelurahan_desa_id,
+                'alamat'     => $pasien->alamat,
+                'domisili'   => $pasien->domisili,
+                'agama'      => $pasien->agama,
+                'pendidikan' => $pasien->pendidikan,
+                'dokumen'    => [
+                    'foto' => $pasien->up_foto ? asset('storage/' . $pasien->up_foto) : null,
+                    'kk'   => $pasien->up_kk ? asset('storage/' . $pasien->up_kk) : null,
+                    'akte' => $pasien->up_akte_lahir ? asset('storage/' . $pasien->up_akte_lahir) : null,
+                ],
             ]);
         } else {
             return response()->json(null, 404); // Data pasien tidak ditemukan
         }
     }
+
 
     public function getSubKategori($id)
     {
