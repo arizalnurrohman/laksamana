@@ -13,6 +13,7 @@ use App\Http\Controllers\DataWilayahController;
 use App\Http\Controllers\PersyaratanController;
 use App\Http\Controllers\ResidensialController;
 use App\Http\Controllers\KategoriKKPSController;
+use App\Http\Controllers\StatusUsulanController;
 use App\Http\Controllers\NonResidensialController;
 use App\Http\Controllers\FormAssessementController;
 use App\Http\Controllers\KomponenInterrvensiController;
@@ -102,4 +103,9 @@ Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
 Route::get('/database', [DatabaseController::class, 'index'])->name('database');
 
-
+Route::get('/status-usulan', [StatusUsulanController::class, 'index'])->name('status_usulan');
+Route::get('/status-usulan/load-status', [StatusUsulanController::class, 'load_data'])->name('load_status');
+Route::post('/status-usulan/store', [StatusUsulanController::class, 'store'])->name('status_usulan.store');
+Route::get('/status-usulan/edit/{id}', [StatusUsulanController::class, 'edit'])->name('status_usulan.edit');
+Route::post('/status-usulan/update', [StatusUsulanController::class, 'update'])->name('status_usulan.update');
+Route::delete('/status-usulan/delete/{id}', [StatusUsulanController::class, 'destroy'])->name('status_usulan.delete');
