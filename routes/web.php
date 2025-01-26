@@ -17,6 +17,7 @@ use App\Http\Controllers\KategoriKKPSController;
 use App\Http\Controllers\StatusUsulanController;
 use App\Http\Controllers\NonResidensialController;
 use App\Http\Controllers\FormAssessementController;
+use App\Http\Controllers\PersetujuanKepalaController;
 use App\Http\Controllers\KomponenInterrvensiController;
 
 Route::get('/', function () {
@@ -116,3 +117,5 @@ Route::post('/gedung-asrama/store', [GedungController::class, 'store'])->name('g
 Route::get('/gedung-asrama/edit/{id}', [GedungController::class, 'edit'])->name('gedung_asrama.edit');
 Route::post('/gedung-asrama/update', [GedungController::class, 'update'])->name('gedung_asrama.update');
 Route::delete('/gedung-asrama/delete/{id}', [GedungController::class, 'destroy'])->name('gedung_asrama.delete');
+
+Route::get('/persetujuan-kepala', [PersetujuanKepalaController::class, 'index'])->name('persetujuankepala');
