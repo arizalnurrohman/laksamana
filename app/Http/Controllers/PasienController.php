@@ -60,21 +60,39 @@ class PasienController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'],$this->detail_rules()['MESSAGE']);
-        if ($validator->fails()){
-            $this->error[]=($validator->errors()->all())[0];
-        }else{
+        // Validasi data
+        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'], $this->detail_rules()['MESSAGE']);
+
+        if ($validator->fails()) {
+            $this->error[] = ($validator->errors()->all())[0];
+        } else {
             if (Pasien::where('nama_depan', $request->nama_depan)
-                    ->whereDate('tgl_lahir', $request->tgl_lahir)
-                    ->exists()) {
+                ->whereDate('tgl_lahir', $request->tgl_lahir)
+                ->exists()) {
                 $this->error[] = "Data Pasien dengan nama dan tanggal lahir yang sama sudah ada.";
-            } else {
-                // Code tambahan jika diperlukan
             }
         }
-        if(!($this->error)){
-            $payload=[
+
+        if (!$this->error) {
+            // Simpan file unggahan
+            $fotoPath = null;
+            $kkPath = null;
+            $aktePath = null;
+
+            if ($request->hasFile('foto')) {
+                $fotoPath = $request->file('foto')->store('uploads/foto', 'public');
+            }
+
+            if ($request->hasFile('kk')) {
+                $kkPath = $request->file('kk')->store('uploads/kk', 'public');
+            }
+
+            if ($request->hasFile('akte')) {
+                $aktePath = $request->file('akte')->store('uploads/akte', 'public');
+            }
+
+            // Payload data pasien
+            $payload = [
                 'id'                => Str::uuid()->toString(),
                 'nama_depan'        => $request->nama_depan,
                 'nama_belakang'     => $request->nama_belakang,
@@ -91,26 +109,33 @@ class PasienController extends Controller
                 'domisili'          => $request->alamat_domisili,
                 'agama_id'          => $request->agama,
                 'pendidikan_id'     => $request->pendidikan_terakhir,
+                'up_foto'           => $fotoPath,
+                'up_kk'             => $kkPath,
+                'up_akte_lahir'     => $aktePath,
             ];
-            if(Pasien::create($payload)){
-                $this->success=true;
+
+            if (Pasien::create($payload)) {
+                $this->success = true;
             }
         }
-        if($this->success){
-            $response=[
-                'status'=>'success',
-                'message'=>"Tambah data Pasien berhasil",
+
+        if ($this->success) {
+            $response = [
+                'status'  => 'success',
+                'message' => "Tambah data Pasien berhasil",
             ];
         }
-        if($this->error){
-            $response=[
-                'errors'=>'Error',
-                'message'=>$this->error,
+
+        if ($this->error) {
+            $response = [
+                'errors'  => 'Error',
+                'message' => $this->error,
             ];
         }
+
         return response()->json($response);
-        exit;
     }
+
 
     function detail_rules(){
         $rules=[
@@ -167,17 +192,45 @@ class PasienController extends Controller
     }
     public function update(Request $request, $id)
     {
-        dd($request->all());
-        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'],$this->detail_rules()['MESSAGE']);
-        if ($validator->fails()){
-            $this->error[]=($validator->errors()->all())[0];
-        }else{
+        // Validasi data
+        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'], $this->detail_rules()['MESSAGE']);
+
+        if ($validator->fails()) {
+            $this->error[] = ($validator->errors()->all())[0];
+        } else {
             $pasien = Pasien::find($id);
             if (!$pasien) {
                 $this->error[] = "Data Pasien tidak ada.";
             }
         }
-        if(!($this->error)){
+
+        if (!$this->error) {
+            $fotoPath = $pasien->up_foto;
+            $kkPath = $pasien->up_kk;
+            $aktePath = $pasien->up_akte_lahir;
+
+            // Hapus file lama jika ada file baru yang diunggah
+            if ($request->hasFile('foto')) {
+                if ($fotoPath && \Storage::disk('public')->exists($fotoPath)) {
+                    \Storage::disk('public')->delete($fotoPath);
+                }
+                $fotoPath = $request->file('foto')->store('uploads/foto', 'public');
+            }
+
+            if ($request->hasFile('kk')) {
+                if ($kkPath && \Storage::disk('public')->exists($kkPath)) {
+                    \Storage::disk('public')->delete($kkPath);
+                }
+                $kkPath = $request->file('kk')->store('uploads/kk', 'public');
+            }
+
+            if ($request->hasFile('akte')) {
+                if ($aktePath && \Storage::disk('public')->exists($aktePath)) {
+                    \Storage::disk('public')->delete($aktePath);
+                }
+                $aktePath = $request->file('akte')->store('uploads/akte', 'public');
+            }
+
             $payload = [
                 'nama_depan'        => $request->nama_depan,
                 'nama_belakang'     => $request->nama_belakang,
@@ -194,27 +247,33 @@ class PasienController extends Controller
                 'domisili'          => $request->alamat_domisili,
                 'agama_id'          => $request->agama,
                 'pendidikan_id'     => $request->pendidikan_terakhir,
+                'up_foto'           => $fotoPath,
+                'up_kk'             => $kkPath,
+                'up_akte_lahir'     => $aktePath,
             ];
-    
+
             if ($pasien->update($payload)) {
-                $this->success=true;
+                $this->success = true;
             }
         }
-        if($this->success){
-            $response=[
-                'status'=>'success',
-                'message'=>"Update data Pasien berhasil",
+
+        if ($this->success) {
+            $response = [
+                'status'  => 'success',
+                'message' => "Update data Pasien berhasil",
             ];
         }
-        if($this->error){
-            $response=[
-                'errors'=>'Error',
-                'message'=>$this->error,
+
+        if ($this->error) {
+            $response = [
+                'errors'  => 'Error',
+                'message' => $this->error,
             ];
         }
+
         return response()->json($response);
-        exit;
     }
+
 
     public function destroy($id)
     {
@@ -230,11 +289,11 @@ class PasienController extends Controller
     }
 
     public function load_data(){
-        $pasien = Pasien::where("laksa_ms_pasien.id","!=",null)
-                        ->select('laksa_ms_pasien.*','laksa_ms_provinsi.*','laksa_ms_kabupaten_kota.*','laksa_ms_kecamatan.*',"laksa_ms_pasien.id as pasien_id")
-                        ->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_pasien.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
-                        ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_pasien.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
-                        ->leftJoin('laksa_ms_provinsi', 'laksa_ms_pasien.provinsi_id', '=', 'laksa_ms_provinsi.id')
+        $pasien = Pasien::where("laksa_ms_ppks.id","!=",null)
+                        ->select('laksa_ms_ppks.*','laksa_ms_provinsi.*','laksa_ms_kabupaten_kota.*','laksa_ms_kecamatan.*',"laksa_ms_ppks.id as pasien_id")
+                        ->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
+                        ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
+                        ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id')
                         ->get();
         $no=0;
         #'No', 'NO KK/NIK/Name', 'Tmp Lahir','Tgl lahir','Provinsi/Kab/Kota/Kecamatan','Aksi'

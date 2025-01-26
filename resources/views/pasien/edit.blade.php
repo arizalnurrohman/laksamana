@@ -47,6 +47,10 @@
         color: red;
         cursor: pointer;
     }
+    .modal-body img {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 </style>
 @endsection
 @section('content')
@@ -59,14 +63,18 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
-                        <h4 class="card-title">Add New User</h4>
+                        <h4 class="card-title">Foto dan Dokumen</h4>
                     </div>
                 </div>
                 <div class="card-body">
                     
                     <div class="form-group text-center">
                         <div class="profile-img-edit position-relative">
-                            <img src="../../assets/images/avatars/01.png" alt="profile-pic" class="theme-color-default-img profile-pic rounded avatar-100" loading="lazy">
+                            @if($pasien->up_foto)
+                                <img src="{{ asset('storage/' . $pasien->up_foto) }}" alt="Foto Pasien" class="rounded avatar-100" style="max-width: 200px;  cursor: pointer;" data-bs-toggle="modal" data-bs-target="#zoomModal">
+                            @else
+                                <p>Foto tidak tersedia</p>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group">
@@ -79,16 +87,27 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="kategori_ppks">Upload KK</label>
+                        <label class="form-label" for="kategori_ppks">Kartu Keluarga</label>
+                        @if($pasien->up_kk)
+                            <br>
+                            <a href="#" class="text-decoration-underline text-primary" data-bs-toggle="modal" data-bs-target="#previewKkModal" title="Lihat Dokumen">
+                                <i class="bi bi-eye-fill"></i> Lihat Dokumen
+                            </a><br><br>
+                        @endif
                         <div class="custom-dropzone" onclick="document.getElementById('kkInput').click();">
                             <p class="text-secondary">Drag & drop files here or click to select files</p>
                             <input type="file" id="kkInput" name="kk" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'kk')">
                         </div>
                         <div class="file-list" id="fileListKk"></div>
                     </div>
-                    
                     <div class="form-group">
-                        <label class="form-label" for="kategori_ppks">Upload Akte Kelahiran</label>
+                        <label class="form-label" for="kategori_ppks">Akte Kelahiran</label>
+                        @if($pasien->up_akte_lahir)
+                            <br>
+                            <a href="#" class="text-decoration-underline text-primary" data-bs-toggle="modal" data-bs-target="#previewAkteModal" title="Lihat Dokumen">
+                                <i class="bi bi-eye-fill"></i> Lihat Dokumen
+                            </a><br><br>
+                        @endif
                         <div class="custom-dropzone" onclick="document.getElementById('akteInput').click();">
                             <p class="text-secondary">Drag & drop files here or click to select files</p>
                             <input type="file" id="akteInput" name="akte" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'akte')">
@@ -204,7 +223,56 @@
         </div>
     </div>
 </form>
- 
+<!-- Modal -->
+<div class="modal fade" id="zoomModal" tabindex="-1" aria-labelledby="zoomModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                @if($pasien->up_foto)
+                    <img src="{{ asset('storage/' . $pasien->up_foto) }}" alt="Foto Pasien" style="max-width: 100%; max-height: 100%;">
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for Kartu Keluarga -->
+<div class="modal fade" id="previewKkModal" tabindex="-1" aria-labelledby="previewKkLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewKkLabel">Preview Kartu Keluarga</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                @if(Str::endsWith($pasien->up_kk, '.pdf'))
+                    <iframe src="{{ asset('storage/' . $pasien->up_kk) }}" style="width: 100%; height: 600px;" frameborder="0"></iframe>
+                @else
+                    <img src="{{ asset('storage/' . $pasien->up_kk) }}" alt="Kartu Keluarga" style="max-width: 100%; max-height: 600px;">
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Akte Kelahiran -->
+<div class="modal fade" id="previewAkteModal" tabindex="-1" aria-labelledby="previewAkteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewAkteLabel">Preview Akte Kelahiran</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                @if(Str::endsWith($pasien->up_akte_lahir, '.pdf'))
+                    <iframe src="{{ asset('storage/' . $pasien->up_akte_lahir) }}" style="width: 100%; height: 600px;" frameborder="0"></iframe>
+                @else
+                    <img src="{{ asset('storage/' . $pasien->up_akte_lahir) }}" alt="Akte Kelahiran" style="max-width: 100%; max-height: 600px;">
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('add-js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
