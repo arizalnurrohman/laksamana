@@ -51,7 +51,7 @@ class ResidensialController extends Controller
 
     //     $this->error    =array();
     //     $this->success  =false;
-        $this->status_usulan="b995d70b-db89-11ef-9f06-244bfebc0c45";
+        $this->status_usulan=["b995d70b-db89-11ef-9f06-244bfebc0c45","3cdad447-db8b-11ef-9f06-244bfebc0c45"];
     }
     public function index()
     {
@@ -107,12 +107,13 @@ class ResidensialController extends Controller
                 'masa_layanan'          => $request->masa_layanan ?? null,
                 'rencana_tgl_terminasi' => $request->rencana_tgl_terminasi ?? null,
                 'pengampu_id'           => $request->pengampu_id ?? null,
-                'status_id'             => $this->status_usulan,
+                'status_id'             => "b995d70b-db89-11ef-9f06-244bfebc0c45",
                 'masa_layanan'          => $request->residense_masa_layanan,
                 'rencana_tgl_terminasi' => $request->residense_rencana_terminasi,
                 'gedung_id'             => $request->residense_gedung_asrama,
                 'pengampu_id'           => $request->residense_pengampu,
                 'up_dokumen_rujukan'    => $dokRujukan,
+                'jenis_layanan'         => "Residensial",
                 
             ];
 
@@ -187,7 +188,7 @@ class ResidensialController extends Controller
         $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
-        $sub_child = $sub_child->where("status_id","=",$this->status_usulan);
+        $sub_child = $sub_child->whereIn("status_id",$this->status_usulan);
         $sub_child = $sub_child->get();
         $data = array();
         $no=0;

@@ -25,7 +25,8 @@
                         <thead>
                             <tr>
                                 <th width="25">No</th>
-                                <th>Rehabilitasi</th>
+                                <th>Nama PPKS</th>
+                                <th width="40">Rehabilitasi</th>
                                 <th width="40">Aksi</th>
                             </tr>
                         </thead>
@@ -43,7 +44,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function load_this_data(){
-        loadTabelData("list-data", "{{route('load_rehabilitasi')}}", ['No', 'Rehabilitasi','Aksi']);
+        loadTabelData("list-data", "{{route('load_rehabilitasi')}}", ['No', 'Nama PPKS','Rehabilitasi','Aksi']);
     }
     $(document).ready(function () {
         load_this_data();
