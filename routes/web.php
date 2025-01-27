@@ -71,6 +71,8 @@ Route::post('/persyaratan/update', [PersyaratanController::class, 'update'])->na
 Route::delete('/persyaratan/delete/{id}', [PersyaratanController::class, 'destroy'])->name('persyaratan.delete');
 
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');
+Route::get('/assessement/load-assessement', [AssessementController::class, 'load_assessement'])->name('load_assessement');
+Route::get('/assessement/assessement/{id}', [AssessementController::class, 'get_assessement'])->name('check_assessement');
 
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
 Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
@@ -90,7 +92,8 @@ Route::delete('/residensial/delete/{id}', [ResidensialController::class, 'destro
 Route::get('/residensial/get-pasien/{id}', [ResidensialController::class, 'residensial_get_pasien']);
 Route::get('/residensial/get-ppks/{id}', [ResidensialController::class, 'getSubKategori']);
 Route::get('/residensial/get-ppks-child/{id}', [ResidensialController::class, 'getSubKategoriChild']);
-Route::post('/residensial/kirim-accessor/', [ResidensialController::class, 'store_kirim_assessor'])->name('residensial.kirim_accessor');
+Route::post('/residensial/kirim-accessor/{id}', [ResidensialController::class, 'store_kirim_assessor'])->name('residensial.kirim_accessor');
+
 
 
 Route::get('/non-residensial', [NonResidensialController::class, 'index'])->name('nonresidensial');

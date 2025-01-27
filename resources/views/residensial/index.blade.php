@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
- </div>
+</div>
  
 @endsection
 @section('add-js')
@@ -180,7 +180,7 @@
         });
     }
 
-    function send_form(id){
+    function send_form(id) {
         Swal.fire({
             title: "Apakah anda yakin?",
             text: "akan Mengiriimkan ke Assesor data ini ?!",
@@ -197,14 +197,15 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
+                    data: { id: id }, // Menambahkan id sebagai data yang dikirim
                     success: function(response) {
                         Swal.fire({
-                            icon    : 'success',
-                            title   : 'Terhapus',
-                            html    : "Data telah Terkirim.",
-                            showConfirmButton:  true ,
-                            timer   : 1000,
-                            customClass      : {
+                            icon: 'success',
+                            title: 'Terkirim',
+                            html: "Data telah Terkirim.",
+                            showConfirmButton: true,
+                            timer: 1000,
+                            customClass: {
                                 container: 'swal-container'
                             }
                         }).then(function() {
@@ -222,5 +223,6 @@
             }
         });
     }
+
 </script>
 @endsection

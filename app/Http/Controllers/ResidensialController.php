@@ -295,38 +295,28 @@ class ResidensialController extends Controller
 
     public function store_kirim_assessor(Request $request, $id)
     {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validasi gagal',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-
         try {
-            // Cari data assessor berdasarkan ID
-            $residendsial = Residensial::findOrFail($id);
+            // Cari data residensial berdasarkan ID
+            $residendsial = Residensial::find($id);
 
-            // Update status dan catatan
-            $residendsial->status_id = "23ac51ea-db8b-11ef-9f06-244bfebc0c45";#Menunggu Proses Assessment
+            // Jika data tidak ditemukan, kembalikan respons 404
+            if (!$residendsial) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data residensial tidak ditemukan.',
+                ], 404);
+            }
+
+            // Update status residensial
+            $residendsial->status_id = "23ac51ea-db8b-11ef-9f06-244bfebc0c45"; // Menunggu Proses Assessment
             $residendsial->save();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Status assessor berhasil diperbarui.',
+                'message' => 'Status residensial berhasil diperbarui.',
                 'data' => $residendsial,
             ], 200);
 
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Assessor tidak ditemukan.',
-            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
