@@ -35,6 +35,7 @@
 </div>
 @endsection
 @section('add-js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function load_this_data(){
         loadTabelData("list-data", "{{route('load_assessement')}}", ['No', 'Nama Pasien','Tgl Penerimaan','Sumber','Petugas','Aksi']);
@@ -46,7 +47,7 @@
     function send_form(id) {
         Swal.fire({
             title: "Apakah anda yakin?",
-            text: "akan Mengiriimkan ke Assesor data ini ?!",
+            text: "akan Mengiriimkan ke Koordinator untuk dibuatkan Berita Acara ?!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -55,7 +56,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/residensial/kirim-accessor/${id}`,
+                    url: `/assessement/kirim-koordinator/${id}`,
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

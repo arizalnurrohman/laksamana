@@ -18,6 +18,7 @@ use App\Http\Controllers\KategoriKKPSController;
 use App\Http\Controllers\StatusUsulanController;
 use App\Http\Controllers\NonResidensialController;
 use App\Http\Controllers\FormAssessementController;
+use App\Http\Controllers\PenentuanLayananController;
 use App\Http\Controllers\PersetujuanKepalaController;
 use App\Http\Controllers\KomponenInterrvensiController;
 
@@ -74,6 +75,7 @@ Route::get('/assessement', [AssessementController::class, 'index'])->name('asses
 Route::get('/assessement/load-assessement', [AssessementController::class, 'load_assessement'])->name('load_assessement');
 Route::get('/assessement/assessement/{id}', [AssessementController::class, 'get_assessement'])->name('check_assessement');
 Route::post('/assessement', [AssessementController::class, 'store'])->name('assessement.store');
+Route::post('/assessement/kirim-koordinator/{id}', [AssessementController::class, 'store_kirim_koordinator'])->name('assessement.kirim_koordinator');
 
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
 Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
@@ -131,3 +133,6 @@ Route::get('/persetujuan-kepala/load-persetujuan-kepala', [PersetujuanKepalaCont
 Route::get('/persetujuan-kepala/edit/{id}', [PersetujuanKepalaController::class, 'edit'])->name('persetujuankepala.detail');
 
 Route::get('/pengampu', [PengampuController::class, 'index'])->name('pengampu');
+Route::get('/penentuan-layanan', [PenentuanLayananController::class, 'index'])->name('penentuanlayanan');
+Route::get('/rehabilitasi', [RehabilitasiController::class, 'index'])->name('rehabilitasi');
+
