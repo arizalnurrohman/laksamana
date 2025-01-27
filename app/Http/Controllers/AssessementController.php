@@ -8,14 +8,13 @@ use App\Models\Agama;
 use App\Models\Gedung;
 use App\Models\Pasien;
 use App\Models\Bantuan;
-use App\Models\FormAssessment;
-use App\Models\FormAssessmentSub;
 use App\Models\Pegawai;
 use App\Models\Petugas;
 use App\Models\Pengampu;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use App\Models\Assessment;
 use App\Models\Pendidikan;
 use App\Models\Residensial;
 use Illuminate\Support\Str;
@@ -23,7 +22,10 @@ use App\Models\KategoriPPKS;
 use App\Models\StatusUsulan;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
+use App\Models\FormAssessment;
 use App\Models\KategoriPPKSSub;
+use App\Models\FormAssessmentSub;
+use App\Models\FormAssessmentFormValue;
 
 class AssessementController extends Controller
 {
@@ -114,62 +116,92 @@ class AssessementController extends Controller
             }
         }
 
+        $komponen_layanan_yang_diberikan=FormAssessmentSub::where("parent_id","=","1f3d613e-1c7b-4204-9f88-4d6b70e4da8e")->get();
+
         // dd($assessement_form);
         
-        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan','assessement_form'));
+        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan','assessement_form','komponen_layanan_yang_diberikan'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         // dd($request->all());
-        // dd($request->assessment);
-        // Pastikan Anda sudah memvalidasi data di $request->assessment sebelumnya
-        $assessments = $request->input('assessment');
-        $assessmentId = 1111; // Set nilai assessment_id
-        $now = Carbon::now(); // Waktu saat ini untuk created_at dan updated_at
+        #id 	residensial_id 	tgl_assessment 	satuan_kerja 	bantuan_id 	assessment_json 	created_at 	updated_at 	deleted_at 	
+        $payload = [
+            'id'               => Str::uuid()->toString(),
+            'residensial_id'   => $request->residensial_id,
+            'tgl_assessment'   => date('Y-m-d H:i:s'),
+            'satuan_kerja'     => '123',
+            'bantuan_id'       => '123',
+            'assessment_json'  => json_encode($request->assessment),
+            'uraian_komponen_layanan'=>$request->uraian_komponen_layanan,
 
-        // Data yang akan disimpan
-        $dataToInsert = [];
+            'intervensi_komponen_yang_diberikan'    =>$request->intervensi_komponen,
+            'intervensi_uraian_komponen_layanan'    =>$request->intervensi_uraian_komponen,
+            'intervensi_waktu_pemebrian_layanan'    =>$request->intervensi_waktu_pemberian,
+            'intervensi_pihak_yang_terlibat'        =>$request->intervensi_pihak_yang_terlibat,
+            'rencana_intervensi_lanjutan'           =>json_encode($request->bentuk_layanan),
+            'rekomendasi_catatan'                   =>$request->rekomendasi_catatan,
+        ];
 
-        foreach ($assessments as $formAssessmentId => $subAssessment) {
-            foreach ($subAssessment as $formAssessmentSubId => $value) {
-                // Jika value adalah file, simpan ke storage
-                if ($value instanceof \Illuminate\Http\UploadedFile) {
-                    // Simpan file ke folder 'assessments' di storage
-                    $filePath = $value->store('assessments', 'public');
+        if (Assessment::create($payload)) {
+            $this->success = true;
+        }
 
-                    // Masukkan data file ke database
-                    $dataToInsert[] = [
-                        'id' => Str::uuid()->toString(),
-                        'form_assessment_id' => $formAssessmentId,
-                        'form_assessment_sub_id' => $formAssessmentSubId,
-                        'assessment_id' => $assessmentId,
-                        'assessment_value' => $filePath, // Path file yang disimpan
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ];
-                } elseif (!is_null($value) && $value !== '') {
-                    // Masukkan data teks ke database
-                    $dataToInsert[] = [
-                        'id' => Str::uuid()->toString(),
-                        'form_assessment_id' => $formAssessmentId,
-                        'form_assessment_sub_id' => $formAssessmentSubId,
-                        'assessment_id' => $assessmentId,
-                        'assessment_value' => $value,
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ];
+        if($this->success){
+            // Pastikan Anda sudah memvalidasi data di $request->assessment sebelumnya
+            $assessments            = $request->assessment;
+            $assessmentId           = $payload['id']; // Set nilai assessment_id
+            $now                    = Carbon::now(); // Waktu saat ini untuk created_at dan updated_at
+            // dd($assessments);
+            // Data yang akan disimpan
+            $dataToInsert = [];
+            foreach ($assessments as $formAssessmentId => $subAssessment) {
+                
+                foreach ($subAssessment as $formAssessmentSubId => $value) {
+                    // Jika value adalah file, simpan ke storage
+                    if ($value instanceof \Illuminate\Http\UploadedFile) {
+                        // Simpan file ke folder 'uploads/assessment' di storage
+                        $filePath = $value->store('uploads/assessment', 'public');
+
+                        // Masukkan data file ke array untuk dimasukkan ke database
+                        $dataToInsert[] = [
+                            'id'                        => Str::uuid()->toString(),
+                            'form_assessment_id'        => $formAssessmentId,
+                            'form_assessment_sub_id'    => $formAssessmentSubId,
+                            'assessment_id'             => $assessmentId,
+                            'assessment_value'          => $filePath, // Path file yang disimpan
+                            'assessment_type'           =>'file',
+                            'created_at'                => $now,
+                            'updated_at'                => $now,
+                            
+                        ];
+                    } elseif (!is_null($value) && $value !== '') {
+                        // Masukkan data teks ke array untuk dimasukkan ke database
+                        $dataToInsert[] = [
+                            'id'                        => Str::uuid()->toString(),
+                            'form_assessment_id'        => $formAssessmentId,
+                            'form_assessment_sub_id'    => $formAssessmentSubId,
+                            'assessment_id'             => $assessmentId,
+                            'assessment_value'          => $value,
+                            'assessment_type'           =>'text',
+                            'created_at'                => $now,
+                            'updated_at'                => $now,
+                        ];
+                    }
                 }
             }
-        }
 
-        // Masukkan data ke database menggunakan batch insert
-        if (!empty($dataToInsert)) {
-            Residensial::create($dataToInsert);
+            // Masukkan data ke database menggunakan batch insert
+            if (!empty($dataToInsert)) {
+                FormAssessmentFormValue::insert($dataToInsert);
+            }
         }
-
+        
         return response()->json(['message' => 'Data berhasil disimpan!'], 201);
     }
-    
+
+
     public function load_assessement(){
         $sub_child = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
         $sub_child = $sub_child->orderby("laksa_tr_residensial.created_at","DESC");

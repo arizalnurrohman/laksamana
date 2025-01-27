@@ -15,7 +15,7 @@
             <form id="form-wizard1" class="mt-3 text-center" action="{{route('assessement.store')}}"  method="POST" enctype="multipart/form-data">
                 @csrf
                 <ul id="top-tab-list" class="p-0 row list-inline">
-                    <input type="text" name="residensial_id" value="{{$residensial->id}}" id="residensial_id">
+                    <input type="hidden" name="residensial_id" value="{{$residensial->id}}" id="residensial_id">
                     <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
@@ -60,7 +60,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="dark-wizard">Dokumen</span>
+                            <span class="dark-wizard">Intervensi</span>
                         </a>
                     </li>
                 </ul>
@@ -80,7 +80,7 @@
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
                 <fieldset>
-                    {{-- @include('assessement.step-4') --}}
+                    @include('assessement.step-4')
                     <button type="submit" name="next" class="btn btn-primary action-button float-end" value="Submit" >Submit</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>

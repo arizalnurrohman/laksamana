@@ -50,5 +50,13 @@
                 </div>
             @endforeach
         @endforeach
+        
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-label">Uraian Komponen Layanan: *</label>
+                <textarea class="form-control" name="uraian_komponen_layanan" rows="5"></textarea>
+            </div>
+        </div>
+
     </div>
 </div>
