@@ -61,29 +61,109 @@ class PersetujuanKepalaController extends Controller
 
     public function edit($id){
         // dd($id);
-        $residensial    = Residensial::findOrFail($id);
+        // $residensial    = Residensial::findOrFail($id);
+        $residensial = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*","laksa_ms_gedung.*","laksa_ms_pengampu.*");
+        $residensial = $residensial->orderby("laksa_tr_residensial.created_at","DESC");
+        $residensial = $residensial->leftJoin('laksa_ms_petugas', 'laksa_tr_residensial.petugas_id', '=', 'laksa_ms_petugas.id');
+        $residensial = $residensial->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        $residensial = $residensial->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
+        $residensial = $residensial->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
+        $residensial = $residensial->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
+        $residensial = $residensial->leftJoin('laksa_ms_gedung', 'laksa_tr_residensial.gedung_id', '=', 'laksa_ms_gedung.id');
+        $residensial = $residensial->leftJoin('laksa_ms_pengampu', 'laksa_tr_residensial.pengampu_id', '=', 'laksa_ms_pengampu.id');
+        $residensial = $residensial->where("laksa_tr_residensial.id","=",$id);
+        $residensial = $residensial->first();
+
+        $detail_ppks_value=[];
+        // dd(json_decode($residensial->kategori_ppks_json));
+        foreach(json_decode($residensial->kategori_ppks_json) as $key=>$detail_ppks){
+            if(is_array($detail_ppks)){
+                dd("objeck");
+            }else{
+                if(is_object($detail_ppks)){
+                    foreach($detail_ppks as $keyx=>$detail_ppksx){
+                        $detail_ppks_value[]=[
+                            "combo_box" =>(KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$keyx)->first())->sub_kategori_ppks,
+                            "key"       =>$keyx,
+                            "value"     =>is_null(KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$detail_ppksx)->first()) ? $detail_ppksx : (KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$detail_ppksx)->first())->sub_kategori_ppks,
+                        ];
+                    }
+                }else{
+                    $detail_ppks_value[]=[
+                        "combo_box" =>(KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$key)->first())->sub_kategori_ppks,
+                        "key"       =>$key,
+                        "value"     =>is_null(KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$detail_ppks)->first()) ? $detail_ppks : (KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$detail_ppks)->first())->sub_kategori_ppks,
+                    ];
+                }
+            }
+        }
+        $residensial->kondisi_ppks  =$detail_ppks_value;
+        
+
+        $pasien = Pasien::where("laksa_ms_ppks.id", "!=", null);
+        $pasien = $pasien->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
+                        ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
+                        ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id')
+                        ->leftJoin('laksa_ms_pendidikan', 'laksa_ms_ppks.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
+                        ->leftJoin('laksa_ms_agama', 'laksa_ms_ppks.agama_id', '=', 'laksa_ms_agama.id');
+        $pasien = $pasien->where("laksa_ms_ppks.id", $residensial->pasien_id)->first();
+        
         $agama          = Agama::all();
         $provinsi       = Provinsi::all();
         $kabupaten      = Kabupaten::all();
         $kecamatan      = Kecamatan::all();
         $pendidikan     = Pendidikan::all();
 
-        return view('persetujuan-kepala.detail', compact('agama','provinsi','kabupaten','kecamatan','pendidikan','residensial'));
+        return view('persetujuan-kepala.detail', compact('agama','provinsi','kabupaten','kecamatan','pendidikan','residensial','pasien'));
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        try {
+            // Cari data residensial berdasarkan ID
+            $residendsial = Residensial::find($request->residensial_id);
+
+            // Jika data tidak ditemukan, kembalikan respons 404
+            if (!$residendsial) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data residensial tidak ditemukan.',
+                ], 404);
+            }
+
+            // Update status residensial
+            $residendsial->status_id = "23ac51ea-db8b-11ef-9f06-244bfebc0c45"; // Menunggu Persetujuan Kepala
+            $residendsial->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status residensial berhasil diperbarui.',
+                'data' => $residendsial,
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat memperbarui status.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function load_persetujuan_kepala(){
-        $sub_child = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
-        $sub_child = $sub_child->orderby("laksa_tr_residensial.created_at","DESC");
-        $sub_child = $sub_child->leftJoin('laksa_ms_petugas', 'laksa_tr_residensial.petugas_id', '=', 'laksa_ms_petugas.id');
-        $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
-        $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
-        $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
-        $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
-        $sub_child = $sub_child->where("status_id","=",$this->status_usulan);
-        $sub_child = $sub_child->get();
+        $residensial = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
+        $residensial = $residensial->orderby("laksa_tr_residensial.created_at","DESC");
+        $residensial = $residensial->leftJoin('laksa_ms_petugas', 'laksa_tr_residensial.petugas_id', '=', 'laksa_ms_petugas.id');
+        $residensial = $residensial->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        $residensial = $residensial->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
+        $residensial = $residensial->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
+        $residensial = $residensial->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
+        $residensial = $residensial->where("status_id","=",$this->status_usulan);
+        $residensial = $residensial->get();
         $data = array();
         $no=0;
-        foreach ($sub_child as $val) {
+        foreach ($residensial as $val) {
             $data[$no]['No']                =($no+1);
             $data[$no]['Nama Pasien']       =$val->nama_depan.' '.$val->nama_belakang.'<br><span class="badge rounded-pill bg-warning">'.$val->status.'</span>';
             $data[$no]['Tgl Penerimaan']    =date("d-m-Y",strtotime($val->tgl_penerimaan));

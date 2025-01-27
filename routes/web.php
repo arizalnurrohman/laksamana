@@ -126,6 +126,7 @@ Route::post('/gedung-asrama/update', [GedungController::class, 'update'])->name(
 Route::delete('/gedung-asrama/delete/{id}', [GedungController::class, 'destroy'])->name('gedung_asrama.delete');
 
 Route::get('/persetujuan-kepala', [PersetujuanKepalaController::class, 'index'])->name('persetujuankepala');
+Route::post('/persetujuan-kepala', [PersetujuanKepalaController::class, 'store'])->name('persetujuankepala.store');
 Route::get('/persetujuan-kepala/load-persetujuan-kepala', [PersetujuanKepalaController::class, 'load_persetujuan_kepala'])->name('load_persetujuan_kepala');
 Route::get('/persetujuan-kepala/edit/{id}', [PersetujuanKepalaController::class, 'edit'])->name('persetujuankepala.detail');
 

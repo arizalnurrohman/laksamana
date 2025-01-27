@@ -60,8 +60,9 @@
             </div>
             </div>
             <div class="card-body">
-            <form id="form-wizard1" class="mt-3 text-center" action="{{route('residensial.store')}}"  method="POST" enctype="multipart/form-data">
+            <form id="form-wizard1" class="mt-3 text-center" action="{{route('persetujuankepala.store')}}"  method="POST" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="residensial_id" value="{{$residensial->residensial_id}}">
                 <ul id="top-tab-list" class="p-0 row list-inline">
                     <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">
                         <a href="javascript:void(0);">
@@ -93,7 +94,7 @@
                                     <path opacity="0.4" d="M17.44 6.2364L17.34 6.01665C17.07 5.44728 16.76 4.78801 16.57 4.40844C16.11 3.50943 15.32 3.00999 14.35 3H9.64C8.67 3.00999 7.89 3.50943 7.43 4.40844C7.23 4.80799 6.89 5.52719 6.61 6.11654L6.55 6.2364C6.52 6.31632 6.44 6.35627 6.36 6.35627C3.95 6.35627 2 8.3141 2 10.7114V16.6448C2 19.0422 3.95 21 6.36 21H17.64C20.04 21 22 19.0422 22 16.6448V10.7114C22 8.3141 20.04 6.35627 17.64 6.35627C17.55 6.35627 17.48 6.30633 17.44 6.2364Z" fill="currentColor"/>
                                 </svg>
                             </div>
-                            <span class="dark-wizard">Assessment</span>
+                            <span class="dark-wizard">Kategori PPKS</span>
                         </a>
                     </li>
                     <li id="confirm" class="mb-2 col-lg-3 col-md-6 text-start">
@@ -109,21 +110,21 @@
                 </ul>
                 <!-- fieldsets -->
                 <fieldset>
-                    {{-- @include('residensial.step-1') --}}
+                    @include('persetujuan-kepala.step-1')
                     <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
                 </fieldset>
                 <fieldset>
-                    {{-- @include('residensial.step-2') --}}
-                    <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
-                    <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
-                </fieldset>
-                <fieldset>
-                    {{-- @include('residensial.step-3') --}}
+                    @include('persetujuan-kepala.step-2')
                     <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
                 <fieldset>
-                    {{-- @include('residensial.step-4') --}}
+                    @include('persetujuan-kepala.step-3')
+                    <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
+                    <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
+                </fieldset>
+                <fieldset>
+                    @include('persetujuan-kepala.step-4')
                     <button type="submit" name="next" class="btn btn-primary action-button float-end" value="Submit" >Setujui</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
@@ -173,7 +174,7 @@
                             container: 'swal-container'
                         }
                     }).then(function() {
-                        window.location = "{{ route('residensial') }}";
+                        window.location = "{{ route('persetujuankepala') }}";
                     });
                   }else{
                     $(btnx).removeAttr("disabled");
@@ -212,244 +213,6 @@
             });
         });		
     });
-
     
-    $(document).ready(function () {
-        $('#pilih-pasien').change(function () {
-            // Trigger on selecting a patient
-            $('.pilih_pasien').click(function () {
-                const pasienId = $('#pilih-pasien').val(); // Get selected pasien ID
-                if (pasienId) {
-                    $.ajax({
-                        url: '/residensial/get-pasien/' + pasienId, // Call the route
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data) {
-                                // Fill in the form fields with returned data
-                                $('input[name="nik"]').val(data.nik || '');
-                                $('input[name="nokk"]').val(data.nokk || '');
-                                $('input[name="tmp_lahir"]').val(data.tmp_lahir || '');
-                                $('input[name="tgl_lahir"]').val(data.tgl_lahir || '');
-                                $('input[name="usia"]').val(data.usia || '');
-                                $('input[name="provinsi"]').val(data.provinsi || '');
-                                $('input[name="kabupaten"]').val(data.kabupaten || '');
-                                $('input[name="kecamatan"]').val(data.kecamatan || '');
-                                $('input[name="kelurahan"]').val(data.kelurahan || '');
-                                $('textarea[name="alamat"]').val(data.alamat || '');
-                                $('textarea[name="domisili"]').val(data.domisili || '');
-                                $('input[name="agama"]').val(data.agama || '');
-                                $('input[name="pendidikan"]').val(data.pendidikan || '');
-
-                                // Update Foto
-                                if (data.dokumen && data.dokumen.foto) {
-                                    $('#fotoPasien').attr('src', data.dokumen.foto);
-                                } else {
-                                    $('#fotoPasien').attr('src', 'https://dummyimage.com/200x200/cccccc/ffffff');
-                                }
-
-                                // Update Kartu Keluarga
-                                if (data.dokumen && data.dokumen.kk) {
-                                    $('#iframeKk').attr('src', data.dokumen.kk);
-                                } else {
-                                    $('#iframeKk').attr('src', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
-                                }
-
-                                // Update Akte Kelahiran
-                                if (data.dokumen && data.dokumen.akte) {
-                                    $('#iframeAkte').attr('src', data.dokumen.akte);
-                                } else {
-                                    $('#iframeAkte').attr('src', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
-                                }
-                            } else {
-                                alert('Data pasien tidak ditemukan.');
-                            }
-                        },
-                        error: function () {
-                            alert('Terjadi kesalahan. Silakan coba lagi.');
-                        }
-                    });
-                } else {
-                    alert('Pilih pasien terlebih dahulu.');
-                }
-            });
-        });
-
-
-        $('#kategori_ppks').change(function () {
-            const kategoriId = $(this).val(); // Ambil ID dari kategori yang dipilih
-
-            if (kategoriId) {
-                $.ajax({
-                    url: '/residensial/get-ppks/' + kategoriId, // Endpoint dengan ID kategori
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.success) {
-                            $('.pilihan_lanjutan').removeClass('d-none');
-                            $('.pilihan_lanjutan').empty();
-                            data.sub_kategori.forEach(function (item) {
-                                var html_sub_kategori = '<div class="form-group">' +
-                                    '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
-                                    if (item.option && item.option.length > 0) {
-                                        // Tambahkan select dengan event onchange
-                                        html_sub_kategori += '<select class="form-select" data-trigger name="detail_ppks[' + item.id + ']" id="' + item.variable_form + '" onchange="onSubKategoriChange(this, \'' + item.id + '\')">';
-                                        html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
-                                        item.option.forEach(function (itemx) {
-                                            html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
-                                        });
-                                        html_sub_kategori += '</select>';
-                                    } else {
-                                        // Input teks jika tidak ada opsi
-                                        html_sub_kategori += '<input type="text" class="form-control" name="detail_ppks[' + item.id + ']" placeholder="' + item.sub_kategori_ppks + '" />';
-                                    }
-
-                                html_sub_kategori += '</div>';
-                                $('.pilihan_lanjutan').append(html_sub_kategori);
-                            });
-                        }
-                        else {
-                            $('.pilihan_lanjutan').addClass('d-none');
-                            // alert('Data tidak ditemukan.');
-                        }
-                    },
-                    error: function () {
-                        alert('Terjadi kesalahan. Silakan coba lagi.');
-                    }
-                });
-            } else {
-                // Jika tidak ada kategori yang dipilih, kosongkan dropdown sub kategori
-                $('#sub_kategori_ppks').empty();
-                $('#sub_kategori_ppks').append('<option value="">Pilih Sub Kategori</option>');
-            }
-        });
-
-    });
-    // Fungsi untuk menangani event onchange
-    function onSubKategoriChange(selectElement, childId) {
-        const selectedValue = $(selectElement).val(); // Ambil value yang dipilih
-
-        if (selectedValue) {
-            $.ajax({
-                url: '/residensial/get-ppks-child/' + selectedValue, // Gunakan value langsung
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    if (data.success) {
-                        $('.pilihan_lanjutan_combo').removeClass("d-none");
-                        // Hapus elemen lama yang ada di .pilihan_lanjutan_combo
-                        $('.pilihan_lanjutan_combo').empty();
-
-                        // Looping untuk menambahkan data baru dari child
-                        data.sub_kategori.forEach(function (item) {
-                            var html_sub_kategori = '<div class="form-group">' +
-                                '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
-                            if (item.option && item.option.length > 0) {
-                                // Tambahkan select dengan event onchange
-                                html_sub_kategori += '<select class="form-select" data-trigger name="detail_ppks['+childId+'][' + item.id + ']" id="' + item.variable_form + '" >';
-                                html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
-                                item.option.forEach(function (itemx) {
-                                    html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
-                                });
-                                html_sub_kategori += '</select>';
-                            } else {
-                                // Input teks jika tidak ada opsi
-                                html_sub_kategori += '<input type="text" class="form-control" name="detail_ppks['+childId+'][' + item.id + ']" placeholder="' + item.sub_kategori_ppks + '" />';
-                            }
-
-                            html_sub_kategori += '</div>';
-                            $('.pilihan_lanjutan_combo').append(html_sub_kategori);
-                        });
-                    }
-                },
-                error: function () {
-                    alert('Terjadi kesalahan. Silakan coba lagi.');
-                }
-            });
-        }
-    }
-
-
-    // DROPZONE
-    const fileList = document.getElementById('fileList');
-
-    function handleFileUpload(event) {
-        const files = event.target.files;
-        fileList.innerHTML = ''; // Clear previous file list
-
-        Array.from(files).forEach((file, index) => {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-list-item';
-            fileItem.innerHTML = `
-                <span>${file.name}</span>
-                <button onclick="removeFile(${index})">&times;</button>
-            `;
-            fileList.appendChild(fileItem);
-        });
-    }
-
-    function removeFile(index) {
-        const files = Array.from(document.getElementById('fileInput').files);
-        files.splice(index, 1);
-
-        // Create a new file list and set it back to the input
-        const dataTransfer = new DataTransfer();
-        files.forEach(file => dataTransfer.items.add(file));
-        document.getElementById('fileInput').files = dataTransfer.files;
-
-        // Refresh the displayed file list
-        handleFileUpload({ target: { files: dataTransfer.files } });
-    }
-
-
-
-    // (function() {
-    //     "use strict";
-    //     /*--------------single----------------*/
-    //     $(".select2-basic-single").select2({
-    //         dropdownParent: $('.modal')
-    //     });
-
-    //     /*--------------jomblo----------------*/
-    //     $("select#instansi").select2({
-    //         dropdownParent: $('#modalCek')
-    //     });
-
-    //     /*--------------tags----------------*/
-    //     $(".select2-basic-single-tag").select2({
-    //         tags: true
-    //     });
-
-    //     /*--------------multiple----------------*/
-    //     $(".select2-basic-multiple").select2();
-
-    //     /*--------------disble----------------*/
-    //     var $disabledResults = $(".select2-disabled ");
-    //     $disabledResults.select2();
-
-    //     /*--------------placeholder----------------*/
-    //     $('.select2-placeholder').select2({
-    //         placeholder: "Select a State",
-    //         allowClear: true
-    //     });
-    //     /*--------------maximum num----------------*/
-    //     $(".select2-multiple-limit").select2({
-    //         maximumSelectionLength: 3
-    //     });
-
-    //     /*--------------theme----------------*/
-    //     $(".select2-theme-single").select2({
-    //         theme: "classic"
-    //     });
-    //     /*--------------select 2----------------*/
-    //     $(".select2-option-creation").select2({
-    //         tags: true
-    //     });
-    //     /*--------------select 2 automatic----------------*/
-    //     $(".select2-automatic-tokenizer").select2({
-    //         tags: true,
-    //         tokenSeparators: [',', ' ']
-    //     })
-    // })();
 </script>
 @endsection

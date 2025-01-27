@@ -56,7 +56,7 @@ class AssessementController extends Controller
 
     //     $this->error    =array();
     //     $this->success  =false;
-        $this->status_usulan="23ac51ea-db8b-11ef-9f06-244bfebc0c45";
+        $this->status_usulan=["23ac51ea-db8b-11ef-9f06-244bfebc0c45",'2ae4ad34-db8b-11ef-9f06-244bfebc0c45'];
     }
     public function index()
     {
@@ -158,6 +158,8 @@ class AssessementController extends Controller
 
             if (Assessment::create($payload)) {
                 $this->success = true;
+                // Update data pada tabel Residensial
+                $updated = Residensial::where('id', $request->residensial_id)->update(["status_id"=>"2ae4ad34-db8b-11ef-9f06-244bfebc0c45"]);
             }
 
             if($this->success){
@@ -248,7 +250,7 @@ class AssessementController extends Controller
         $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
-        $sub_child = $sub_child->where("status_id","=",$this->status_usulan);
+        $sub_child = $sub_child->whereIn("status_id",$this->status_usulan);
         $sub_child = $sub_child->get();
         $data = array();
         $no=0;
