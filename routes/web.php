@@ -73,6 +73,7 @@ Route::delete('/persyaratan/delete/{id}', [PersyaratanController::class, 'destro
 Route::get('/assessement', [AssessementController::class, 'index'])->name('assessement');
 Route::get('/assessement/load-assessement', [AssessementController::class, 'load_assessement'])->name('load_assessement');
 Route::get('/assessement/assessement/{id}', [AssessementController::class, 'get_assessement'])->name('check_assessement');
+Route::post('/assessement', [AssessementController::class, 'store'])->name('assessement.store');
 
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
 Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');

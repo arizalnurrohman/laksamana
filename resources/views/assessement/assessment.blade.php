@@ -12,9 +12,10 @@
             </div>
             </div>
             <div class="card-body">
-            <form id="form-wizard1" class="mt-3 text-center" action="{{route('residensial.store')}}"  method="POST" enctype="multipart/form-data">
+            <form id="form-wizard1" class="mt-3 text-center" action="{{route('assessement.store')}}"  method="POST" enctype="multipart/form-data">
                 @csrf
                 <ul id="top-tab-list" class="p-0 row list-inline">
+                    <input type="text" name="residensial_id" value="{{$residensial->id}}" id="residensial_id">
                     <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
@@ -92,5 +93,74 @@
 @section('add-js')
 <script src="{{ url('assets/js/plugins/form-wizard.js') }}" defer></script>
 <script>
+    $(document).ready(function () {
+        $("#form-wizard1").submit(function(e){
+          e.preventDefault(); 
+            var btnx	=$('.btn-submit');
+            $(btnx).attr("disabled", true);
+            $(btnx).attr({type:'submit',value: 'Loading'});
+            $.ajax({
+              url:$(this).closest('form').attr('action'),
+              type:"post",
+              data:new FormData(this), 
+              processData:false,
+              contentType:false,
+              dataType: "json",
+              cache:false,
+              async:false,
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data){
+                  if($.isEmptyObject(data.errors)){
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        window.location = "{{ route('residensial') }}";
+                    });
+                  }else{
+                    $(btnx).removeAttr("disabled");
+                    $(btnx).attr({type:'submit',value: 'Simpan'});
+                    Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+                  }
+              },
+              error: function(err, exception) {
+                $(btnx).removeAttr("disabled");
+                $(btnx).attr({type:'submit',value: 'Simpan'});
+
+                Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : "Sistem Gagal Memproses Data",
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+              },
+            });
+        });
+    });
 </script>
 @endsection-

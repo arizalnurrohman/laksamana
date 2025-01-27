@@ -9,6 +9,7 @@ use App\Models\Gedung;
 use App\Models\Pasien;
 use App\Models\Bantuan;
 use App\Models\FormAssessment;
+use App\Models\FormAssessmentSub;
 use App\Models\Pegawai;
 use App\Models\Petugas;
 use App\Models\Pengampu;
@@ -104,12 +105,71 @@ class AssessementController extends Controller
         }
         $residensial->kondisi_ppks  =$detail_ppks_value;
 
-        $assessement_form=FormAssessment::get();
+        $assessement_form=FormAssessment::orderBy("sort","ASC")->get();
+
+        foreach($assessement_form as $af){
+            $af->child=FormAssessmentSub::where("form_assessment_id","=",$af->id)->where("parent_id","=",null)->orderBy("sort","ASC")->get();
+            foreach($af->child as $option){
+                $option->option=FormAssessmentSub::where("parent_id","=",$option->id)->orderBy("sort","ASC")->get();
+            }
+        }
+
+        // dd($assessement_form);
         
-        // dd($detail_ppks_value);
-        
-        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan'));
+        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan','assessement_form'));
     }
+
+    public function store(Request $request){
+        // dd($request->all());
+        // dd($request->assessment);
+        // Pastikan Anda sudah memvalidasi data di $request->assessment sebelumnya
+        $assessments = $request->input('assessment');
+        $assessmentId = 1111; // Set nilai assessment_id
+        $now = Carbon::now(); // Waktu saat ini untuk created_at dan updated_at
+
+        // Data yang akan disimpan
+        $dataToInsert = [];
+
+        foreach ($assessments as $formAssessmentId => $subAssessment) {
+            foreach ($subAssessment as $formAssessmentSubId => $value) {
+                // Jika value adalah file, simpan ke storage
+                if ($value instanceof \Illuminate\Http\UploadedFile) {
+                    // Simpan file ke folder 'assessments' di storage
+                    $filePath = $value->store('assessments', 'public');
+
+                    // Masukkan data file ke database
+                    $dataToInsert[] = [
+                        'id' => Str::uuid()->toString(),
+                        'form_assessment_id' => $formAssessmentId,
+                        'form_assessment_sub_id' => $formAssessmentSubId,
+                        'assessment_id' => $assessmentId,
+                        'assessment_value' => $filePath, // Path file yang disimpan
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                } elseif (!is_null($value) && $value !== '') {
+                    // Masukkan data teks ke database
+                    $dataToInsert[] = [
+                        'id' => Str::uuid()->toString(),
+                        'form_assessment_id' => $formAssessmentId,
+                        'form_assessment_sub_id' => $formAssessmentSubId,
+                        'assessment_id' => $assessmentId,
+                        'assessment_value' => $value,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                }
+            }
+        }
+
+        // Masukkan data ke database menggunakan batch insert
+        if (!empty($dataToInsert)) {
+            Residensial::create($dataToInsert);
+        }
+
+        return response()->json(['message' => 'Data berhasil disimpan!'], 201);
+    }
+    
     public function load_assessement(){
         $sub_child = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
         $sub_child = $sub_child->orderby("laksa_tr_residensial.created_at","DESC");
