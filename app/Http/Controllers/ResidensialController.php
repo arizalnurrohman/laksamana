@@ -307,7 +307,7 @@ class ResidensialController extends Controller
         ]);
     }
 
-    public function store_kirim_assessor(Request $request, $id)
+    public function store_kirim_kekepala(Request $request, $id)
     {
         try {
             // Cari data residensial berdasarkan ID
@@ -322,7 +322,7 @@ class ResidensialController extends Controller
             }
 
             // Update status residensial
-            $residendsial->status_id = "23ac51ea-db8b-11ef-9f06-244bfebc0c45"; // Menunggu Proses Assessment
+            $residendsial->status_id = "7078dbc5-db8a-11ef-9f06-244bfebc0c45"; // Menunggu Persetujuan Kepala
             $residendsial->save();
 
             return response()->json([

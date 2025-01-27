@@ -183,7 +183,7 @@
     function send_form(id) {
         Swal.fire({
             title: "Apakah anda yakin?",
-            text: "akan Mengiriimkan ke Assesor data ini ?!",
+            text: "akan Mengirimkan ke Kepala data ini ?!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -192,7 +192,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/residensial/kirim-accessor/${id}`,
+                    url: `/residensial/kirim-kekepala/${id}`,
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

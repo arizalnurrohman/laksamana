@@ -92,6 +92,7 @@
 @endsection
 @section('add-js')
 <script src="{{ url('assets/js/plugins/form-wizard.js') }}" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
         $("#form-wizard1").submit(function(e){
@@ -123,7 +124,7 @@
                             container: 'swal-container'
                         }
                     }).then(function() {
-                        window.location = "{{ route('residensial') }}";
+                        window.location = "{{ route('assessement') }}";
                     });
                   }else{
                     $(btnx).removeAttr("disabled");

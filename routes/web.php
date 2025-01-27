@@ -93,7 +93,7 @@ Route::delete('/residensial/delete/{id}', [ResidensialController::class, 'destro
 Route::get('/residensial/get-pasien/{id}', [ResidensialController::class, 'residensial_get_pasien']);
 Route::get('/residensial/get-ppks/{id}', [ResidensialController::class, 'getSubKategori']);
 Route::get('/residensial/get-ppks-child/{id}', [ResidensialController::class, 'getSubKategoriChild']);
-Route::post('/residensial/kirim-accessor/{id}', [ResidensialController::class, 'store_kirim_assessor'])->name('residensial.kirim_accessor');
+Route::post('/residensial/kirim-kekepala/{id}', [ResidensialController::class, 'store_kirim_kekepala'])->name('residensial.kirim_kekepala');
 
 
 
@@ -126,4 +126,7 @@ Route::post('/gedung-asrama/update', [GedungController::class, 'update'])->name(
 Route::delete('/gedung-asrama/delete/{id}', [GedungController::class, 'destroy'])->name('gedung_asrama.delete');
 
 Route::get('/persetujuan-kepala', [PersetujuanKepalaController::class, 'index'])->name('persetujuankepala');
+Route::get('/persetujuan-kepala/load-persetujuan-kepala', [PersetujuanKepalaController::class, 'load_persetujuan_kepala'])->name('load_persetujuan_kepala');
+Route::get('/persetujuan-kepala/edit/{id}', [PersetujuanKepalaController::class, 'edit'])->name('persetujuankepala.detail');
+
 Route::get('/pengampu', [PengampuController::class, 'index'])->name('pengampu');
