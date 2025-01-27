@@ -103,6 +103,7 @@ class ResidensialController extends Controller
                 'sumber_id'             => $request->residense_sumber_rujukan,
                 'pasien_id'             => $request->pasien,
                 'kategori_ppks_id'      => $request->kategori_ppks,
+                'kategori_ppks_json'    => json_encode($request->detail_ppks),
                 'masa_layanan'          => $request->masa_layanan ?? null,
                 'rencana_tgl_terminasi' => $request->rencana_tgl_terminasi ?? null,
                 'pengampu_id'           => $request->pengampu_id ?? null,
@@ -112,10 +113,23 @@ class ResidensialController extends Controller
                 'gedung_id'             => $request->residense_gedung_asrama,
                 'pengampu_id'           => $request->residense_pengampu,
                 'up_dokumen_rujukan'    => $dokRujukan,
+                
             ];
 
             foreach($request->detail_ppks as $key=>$dppks){
-                $payload[$key]  =$dppks;
+                $key            =(KategoriPPKSSub::select("variable_form")->where("id","=",$key)->first())->variable_form;
+                
+                if(is_array($dppks)){
+                    foreach($dppks as $keyx=>$valx){
+                        $payload[$key]   =$keyx;
+                        $keyx            =(KategoriPPKSSub::select("variable_form")->where("id","=",$keyx)->first())->variable_form;
+                        $payload[$keyx]  =$valx;
+                    }
+                    
+                }else{
+                    $payload[$key]  =$dppks;
+                }
+
             }
             // dd($payload);
 

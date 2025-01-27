@@ -72,56 +72,60 @@
                 <label class="form-label">Hubungan dengan PPKS: *</label>
                 <select class="form-select" name="hubungan_dengan_ppks" id="hubungan_dengan_ppks">
                     <option value="">Pilih Hubungan dengan PPKS</option>
-                    <option value="{{$pendidikanx->id}}">{{$pendidikanx->pendidikan}}</option>
+                    <option value="Ayah">Ayah</option>
+                    <option value="Ibu">Ibu</option>
+                    <option value="Kakek">Kakek</option>
+                    <option value="Nenek">Nenek</option>
+                    <option value="Saudara Kandung">Saudara Kandung</option>
+                    <option value="Lainnya">Lainnya</option>
                 </select>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Apakah sudah masuk DTKS: *</label>
-                <select class="form-select" name="hubungan_dengan_ppks" id="hubungan_dengan_ppks">
+                <select class="form-select" name="apakah_sudah_masuk_dtks" id="hubungan_dengan_ppks">
                     <option value="">Pilih Apakah sudah masuk DTKS</option>
-                    <option value="{{$pendidikanx->id}}">{{$pendidikanx->pendidikan}}</option>
+                    <option value="Belum">Belum</option>
+                    <option value="Sudah">Sudah</option>
                 </select>
             </div>
         </div>
-
-
-        {{--  --}}
-        
         <div class="col-md-6">
             <div class="form-group">
-                <label class="form-label">Kab/Kota KTP: *</label>
-                <input type="text" class="form-control" name="kabupaten" placeholder="Kabupaten / Kota." />
+                <label class="form-label">Bantuan yang sudah diterima saat ini: *</label>
+                <select class="form-select" name="bantuan_yang_sudah_diterima" id="hubungan_dengan_ppks">
+                    <option value="">Pilih Bantuan yang sudah diterima</option>
+                    @foreach($bantuan as $bantuanx)
+                        <option value="{{$bantuanx->id}}">{{$bantuanx->jenis_bantuan}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label class="form-label">Kecamatan KTP: *</label>
-                <input type="text" class="form-control" name="kecamatan" placeholder="Kecamatan." />
+                <label class="form-label">Status Kawin: *</label>
+                <select class="form-select" name="hubungan_dengan_ppks" id="hubungan_dengan_ppks">
+                    <option value="">Pilih Status Kawin</option>
+                    <option value="Belum Kawin">Belum Kawin</option>
+                    <option value="Kawin">Kawin</option>
+                    <option value="Cerai Hidup">Cerai Hidup</option>
+                    <option value="Cerai Mati">Cerai Mati</option>
+                </select>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
-                <label class="form-label">Kelurahan KTP: *</label>
-                <input type="text" class="form-control" name="kelurahan" placeholder="Kelurahan KTP." />
+                <label class="form-label">Pekerjaan: *</label>
+                <input type="text" class="form-control" name="pekerjaan" placeholder="Pekerjaan." />
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
-                <label class="form-label">Alamat KTP: *</label>
-                <textarea class="form-control" name="alamat" rows="5"></textarea>
+                <label class="form-label">Pengeluaran per Bulan: *</label>
+                <input type="text" class="form-control" name="pengeluaran_per_bulan" placeholder="Pengeluaran per Bulan." />
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Alamat Domisili: *</label>
-                <textarea class="form-control" name="domisili" rows="5"></textarea>
-            </div>
-        </div>
-        {{--  --}}
-
-        
         
     </div>
 </div>

@@ -293,7 +293,7 @@
                                     '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
                                     if (item.option && item.option.length > 0) {
                                         // Tambahkan select dengan event onchange
-                                        html_sub_kategori += '<select class="form-select" data-trigger name="detail_ppks[' + item.variable_form + ']" id="' + item.variable_form + '" onchange="onSubKategoriChange(this, \'' + item.id + '\')">';
+                                        html_sub_kategori += '<select class="form-select" data-trigger name="detail_ppks[' + item.id + ']" id="' + item.variable_form + '" onchange="onSubKategoriChange(this, \'' + item.id + '\')">';
                                         html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
                                         item.option.forEach(function (itemx) {
                                             html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
@@ -301,7 +301,7 @@
                                         html_sub_kategori += '</select>';
                                     } else {
                                         // Input teks jika tidak ada opsi
-                                        html_sub_kategori += '<input type="text" class="form-control" name="detail_ppks[' + item.variable_form + ']" placeholder="' + item.sub_kategori_ppks + '" />';
+                                        html_sub_kategori += '<input type="text" class="form-control" name="detail_ppks[' + item.id + ']" placeholder="' + item.sub_kategori_ppks + '" />';
                                     }
 
                                 html_sub_kategori += '</div>';
@@ -346,7 +346,7 @@
                                 '<label class="form-label" for="kategori_ppks">' + item.sub_kategori_ppks + '</label>';
                             if (item.option && item.option.length > 0) {
                                 // Tambahkan select dengan event onchange
-                                html_sub_kategori += '<select class="form-select" data-trigger name="detail_ppks[' + item.variable_form + ']" id="' + item.variable_form + '" >';
+                                html_sub_kategori += '<select class="form-select" data-trigger name="detail_ppks['+childId+'][' + item.id + ']" id="' + item.variable_form + '" >';
                                 html_sub_kategori += '<option value="">Pilih ' + item.sub_kategori_ppks + '</option>';
                                 item.option.forEach(function (itemx) {
                                     html_sub_kategori += '<option value="' + itemx.id + '">' + itemx.sub_kategori_ppks + '</option>';
@@ -354,7 +354,7 @@
                                 html_sub_kategori += '</select>';
                             } else {
                                 // Input teks jika tidak ada opsi
-                                html_sub_kategori += '<input type="text" class="form-control" name="detail_ppks[' + item.variable_form + ']" placeholder="' + item.sub_kategori_ppks + '" />';
+                                html_sub_kategori += '<input type="text" class="form-control" name="detail_ppks['+childId+'][' + item.id + ']" placeholder="' + item.sub_kategori_ppks + '" />';
                             }
 
                             html_sub_kategori += '</div>';

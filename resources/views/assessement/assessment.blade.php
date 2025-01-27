@@ -49,7 +49,7 @@
                                     <path opacity="0.4" d="M17.44 6.2364L17.34 6.01665C17.07 5.44728 16.76 4.78801 16.57 4.40844C16.11 3.50943 15.32 3.00999 14.35 3H9.64C8.67 3.00999 7.89 3.50943 7.43 4.40844C7.23 4.80799 6.89 5.52719 6.61 6.11654L6.55 6.2364C6.52 6.31632 6.44 6.35627 6.36 6.35627C3.95 6.35627 2 8.3141 2 10.7114V16.6448C2 19.0422 3.95 21 6.36 21H17.64C20.04 21 22 19.0422 22 16.6448V10.7114C22 8.3141 20.04 6.35627 17.64 6.35627C17.55 6.35627 17.48 6.30633 17.44 6.2364Z" fill="currentColor"/>
                                 </svg>
                             </div>
-                            <span class="dark-wizard">Assessment</span>
+                            <span class="dark-wizard">Kondisi PPKS</span>
                         </a>
                     </li>
                     <li id="confirm" class="mb-2 col-lg-3 col-md-6 text-start">
@@ -74,7 +74,7 @@
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
                 <fieldset>
-                    {{-- @include('assessement.step-3') --}}
+                    @include('assessement.step-3')
                     <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>

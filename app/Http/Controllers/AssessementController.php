@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Agama;
 use App\Models\Gedung;
 use App\Models\Pasien;
+use App\Models\Bantuan;
 use App\Models\Pegawai;
 use App\Models\Petugas;
 use App\Models\Pengampu;
@@ -61,6 +62,9 @@ class AssessementController extends Controller
 
     public function get_assessement($id){
         $residensial = Residensial::findOrFail($id);
+        $pendidikan     = Pendidikan::all();
+        $bantuan     = Bantuan::orderBy("sort","ASC")->get();
+        $agama          = Agama::all();
         $pasien      = Pasien::where("laksa_ms_ppks.id","=",$residensial->pasien_id);
         $pasien      = $pasien->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
                         ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
@@ -74,7 +78,7 @@ class AssessementController extends Controller
                         ->leftJoin('laksa_ms_agama', 'laksa_ms_pengampu.agama_id', '=', 'laksa_ms_agama.id');
         $pengampu = $pengampu->first();   
         
-        return view('assessement.assessment', compact('residensial','pasien','pengampu'));
+        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan'));
     }
     public function load_assessement(){
         $sub_child = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
