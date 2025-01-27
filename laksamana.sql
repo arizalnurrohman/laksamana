@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2025 at 03:30 PM
+-- Generation Time: Jan 27, 2025 at 04:02 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -136,6 +136,15 @@ CREATE TABLE `laksa_ms_aspek` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `laksa_ms_aspek`
+--
+
+INSERT INTO `laksa_ms_aspek` (`id`, `aspek`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('e7ce00ea-dcbb-11ef-beef-244bfebc0c45', 'Aspek Kedisiplinan', 1, NULL, NULL, NULL),
+('e7ce0997-dcbb-11ef-beef-244bfebc0c45', 'Aspek Ketekunan', 2, NULL, NULL, NULL),
+('e7ce12f6-dcbb-11ef-beef-244bfebc0c45', 'Aspek Kreatifiitas/Inisiatif', 3, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -821,6 +830,15 @@ CREATE TABLE `laksa_ms_komponen_intervensi` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `laksa_ms_komponen_intervensi`
+--
+
+INSERT INTO `laksa_ms_komponen_intervensi` (`id`, `komponen`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('b99b69db-dcbb-11ef-beef-244bfebc0c45', 'Ibadah', 1, NULL, NULL, NULL),
+('c576f9ea-dcbb-11ef-beef-244bfebc0c45', 'Piket Asrama', 2, NULL, NULL, NULL),
+('cbacfe57-dcbb-11ef-beef-244bfebc0c45', 'Morning Meeting', 3, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1223,6 +1241,13 @@ CREATE TABLE `laksa_tr_rehabilitasi` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `laksa_tr_rehabilitasi`
+--
+
+INSERT INTO `laksa_tr_rehabilitasi` (`id`, `residensial_id`, `petugas_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('0cb2708d-dcbc-11ef-beef-244bfebc0c45', '721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', '1', '2025-01-08 15:02:12', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1241,6 +1266,13 @@ CREATE TABLE `laksa_tr_rehabilitasi_perkembangan` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `laksa_tr_rehabilitasi_perkembangan`
+--
+
+INSERT INTO `laksa_tr_rehabilitasi_perkembangan` (`id`, `rehabilitasi_id`, `tgl_perkembangan`, `foto_perkembangan`, `file_perkembangan`, `catatan_perkembangan`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('14f5cff3-dcbc-11ef-beef-244bfebc0c45', '0cb2708d-dcbc-11ef-beef-244bfebc0c45', '2025-01-27', NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1257,6 +1289,15 @@ CREATE TABLE `laksa_tr_rehabilitasi_perkembangan_nilai` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `laksa_tr_rehabilitasi_perkembangan_nilai`
+--
+
+INSERT INTO `laksa_tr_rehabilitasi_perkembangan_nilai` (`id`, `rehabilitasi_perkembangan_id`, `komponen_id`, `aspek_id`, `komponen_aspek_nilai`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('33cd632b-dcbc-11ef-beef-244bfebc0c45', '14f5cff3-dcbc-11ef-beef-244bfebc0c45', 'b99b69db-dcbb-11ef-beef-244bfebc0c45', 'e7ce00ea-dcbb-11ef-beef-244bfebc0c45', 1, NULL, NULL, NULL),
+('33cd7624-dcbc-11ef-beef-244bfebc0c45', '14f5cff3-dcbc-11ef-beef-244bfebc0c45', 'b99b69db-dcbb-11ef-beef-244bfebc0c45', 'e7ce0997-dcbb-11ef-beef-244bfebc0c45', 2, NULL, NULL, NULL),
+('33cd85cb-dcbc-11ef-beef-244bfebc0c45', '14f5cff3-dcbc-11ef-beef-244bfebc0c45', 'b99b69db-dcbb-11ef-beef-244bfebc0c45', 'e7ce12f6-dcbb-11ef-beef-244bfebc0c45', 3, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

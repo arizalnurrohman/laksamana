@@ -15,6 +15,7 @@ use App\Http\Controllers\DataWilayahController;
 use App\Http\Controllers\PersyaratanController;
 use App\Http\Controllers\ResidensialController;
 use App\Http\Controllers\KategoriKKPSController;
+use App\Http\Controllers\RehabilitasiController;
 use App\Http\Controllers\StatusUsulanController;
 use App\Http\Controllers\NonResidensialController;
 use App\Http\Controllers\FormAssessementController;
@@ -134,5 +135,6 @@ Route::get('/persetujuan-kepala/edit/{id}', [PersetujuanKepalaController::class,
 
 Route::get('/pengampu', [PengampuController::class, 'index'])->name('pengampu');
 Route::get('/penentuan-layanan', [PenentuanLayananController::class, 'index'])->name('penentuanlayanan');
-Route::get('/rehabilitasi', [RehabilitasiController::class, 'index'])->name('rehabilitasi');
 
+Route::get('/rehabilitasi', [RehabilitasiController::class, 'index'])->name('rehabilitasi');
+Route::get('/rehabilitasi/load-rehabilitasi', [RehabilitasiController::class, 'load_data'])->name('load_rehabilitasi');
