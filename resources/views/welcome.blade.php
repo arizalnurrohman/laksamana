@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title', 'laksamana')
+@section('title', 'SimpelAsik')
 @section('add-css')
 
 @endsection

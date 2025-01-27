@@ -24,7 +24,7 @@
                              </div>
                          </div>
                          <!--logo End-->         
-                         <h4 class="logo-title d-block d-xl-none" data-setting="app_name">Laksamana</h4>
+                         <h4 class="logo-title d-block d-xl-none" data-setting="app_name">SimpelAsik</h4>
                       </a>
                       <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
                          <i class="icon d-flex">
