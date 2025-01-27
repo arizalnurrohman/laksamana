@@ -7,6 +7,7 @@ use App\Http\Controllers\GedungController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\PengampuController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AssessementController;
@@ -89,6 +90,8 @@ Route::delete('/residensial/delete/{id}', [ResidensialController::class, 'destro
 Route::get('/residensial/get-pasien/{id}', [ResidensialController::class, 'residensial_get_pasien']);
 Route::get('/residensial/get-ppks/{id}', [ResidensialController::class, 'getSubKategori']);
 Route::get('/residensial/get-ppks-child/{id}', [ResidensialController::class, 'getSubKategoriChild']);
+Route::post('/residensial/kirim-accessor/', [ResidensialController::class, 'store_kirim_assessor'])->name('residensial.kirim_accessor');
+
 
 Route::get('/non-residensial', [NonResidensialController::class, 'index'])->name('nonresidensial');
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
@@ -119,3 +122,4 @@ Route::post('/gedung-asrama/update', [GedungController::class, 'update'])->name(
 Route::delete('/gedung-asrama/delete/{id}', [GedungController::class, 'destroy'])->name('gedung_asrama.delete');
 
 Route::get('/persetujuan-kepala', [PersetujuanKepalaController::class, 'index'])->name('persetujuankepala');
+Route::get('/pengampu', [PengampuController::class, 'index'])->name('pengampu');

@@ -47,5 +47,28 @@
                 </select>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-label">Masa Layanan: *</label>
+                <input type="text" class="form-control" name="residense_masa_layanan" placeholder="Masa Layanan" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-label">Rencana Terminasi: *</label>
+                <input type="date" class="form-control" name="residense_rencana_terminasi" placeholder="Rencana Terminasi" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-label">Nama Pengampu: *</label>
+                <select class="form-select" data-trigger name="residense_pengampu" id="residense_pengampu">
+                    <option value="">Pilih Pengampu</option>
+                    @foreach($pengampu as $pengampux)
+                        <option value="{{$pengampux->id}}">{{$pengampux->nama_pengampu}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 </div>

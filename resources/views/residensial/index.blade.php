@@ -179,5 +179,48 @@
             }
         });
     }
+
+    function send_form(id){
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan Mengiriimkan ke Assesor data ini ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Kirim!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/residensial/kirim-accessor/${id}`,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon    : 'success',
+                            title   : 'Terhapus',
+                            html    : "Data telah Terkirim.",
+                            showConfirmButton:  true ,
+                            timer   : 1000,
+                            customClass      : {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            load_this_data();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to Send the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
+    }
 </script>
 @endsection
