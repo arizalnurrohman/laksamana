@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2025 at 02:53 AM
+-- Generation Time: Jan 27, 2025 at 05:17 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -142,9 +142,9 @@ CREATE TABLE `laksa_ms_form_assessment` (
 --
 
 INSERT INTO `laksa_ms_form_assessment` (`id`, `assessment`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('3f911a94-79a7-4afd-8e2d-b959feaa31d7', 'Permasalahan, Potensi dan Rencana Intervensi PPKS', 3, '2025-01-25 11:22:07', '2025-01-25 11:22:07', NULL),
 ('5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Kondisi Sosial Ekonomi', 1, '2025-01-25 11:21:09', '2025-01-25 11:21:09', NULL),
-('c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kondisi Tempat Tinggal', 2, '2025-01-25 11:21:23', '2025-01-25 11:21:23', NULL),
-('3f911a94-79a7-4afd-8e2d-b959feaa31d7', 'Permasalahan, Potensi dan Rencana Intervensi PPKS', 3, '2025-01-25 11:22:07', '2025-01-25 11:22:07', NULL);
+('c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kondisi Tempat Tinggal', 2, '2025-01-25 11:21:23', '2025-01-25 11:21:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -156,6 +156,7 @@ CREATE TABLE `laksa_ms_form_assessment_sub` (
   `id` varchar(36) NOT NULL,
   `form_assessment_id` varchar(36) DEFAULT NULL,
   `sub_kategori_assessment` varchar(100) DEFAULT NULL,
+  `variable_form` varchar(100) DEFAULT NULL,
   `parent_id` varchar(36) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -167,68 +168,68 @@ CREATE TABLE `laksa_ms_form_assessment_sub` (
 -- Dumping data for table `laksa_ms_form_assessment_sub`
 --
 
-INSERT INTO `laksa_ms_form_assessment_sub` (`id`, `form_assessment_id`, `sub_kategori_assessment`, `parent_id`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('01bcd2a9-bb91-4706-bc54-0b09db32075c', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Bukan Listrik', '27b8abeb-0a2c-479e-97de-47cef748b821', 1, '2025-01-25 11:56:35', '2025-01-25 11:56:35', NULL),
-('02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Atap Tempat Tinggal', NULL, 12, '2025-01-25 11:53:55', '2025-01-25 11:53:55', NULL),
-('036ad43a-ddf0-4484-9b62-ce46559fbb22', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kayu', 'a96973ca-c11b-426a-a282-09c311a7acd8', 3, '2025-01-25 11:55:01', '2025-01-25 11:55:01', NULL),
-('0955632e-887f-4495-8103-a0135c78cca1', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Keluarga Besar', 'c6d802db-7744-4f47-a77b-e3bbed749573', 3, '2025-01-25 11:52:47', '2025-01-25 11:52:47', NULL),
-('0a1cf00d-73c6-4cfd-9a23-96799118678e', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'PDAM', 'af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 1, '2025-01-25 11:57:29', '2025-01-25 11:57:29', NULL),
-('0cfda96a-81cc-46ef-b890-f12812e48502', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '1f1dddd9-46e2-4835-810b-84edb24a20be', 3, '2025-01-25 11:53:35', '2025-01-25 11:53:35', NULL),
-('0f46a9cb-759a-4da9-b021-7aa75af605ee', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Jika Milik Sendiri; Bukti Kepemilikan Tanah', NULL, 8, '2025-01-25 11:51:40', '2025-01-25 11:51:40', NULL),
-('10833193-067f-4d62-ac23-b4a7847585ce', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Batu Bata', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 5, '2025-01-25 11:55:44', '2025-01-25 11:55:44', NULL),
-('1f1dddd9-46e2-4835-810b-84edb24a20be', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kondisi Bangunan', NULL, 11, '2025-01-25 11:53:15', '2025-01-25 11:53:15', NULL),
-('27b8abeb-0a2c-479e-97de-47cef748b821', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sumber Penerangan', NULL, 16, '2025-01-25 11:56:25', '2025-01-25 11:56:25', NULL),
-('2a180465-ba8b-46eb-afd1-d6be4c006c3d', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Keluarga Inti', 'c6d802db-7744-4f47-a77b-e3bbed749573', 2, '2025-01-25 11:52:40', '2025-01-25 11:52:40', NULL),
-('2acf8af7-f819-47b5-a20f-43c66fa96430', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Luas Tempat Tinggal', NULL, 10, '2025-01-25 11:53:06', '2025-01-25 11:53:06', NULL),
-('2fc0d49d-a3dc-492c-ade0-003be463d7db', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Tidak', '3e77e2ad-8b0a-45db-8fc7-d900754ee4d4', 2, '2025-01-25 11:43:17', '2025-01-25 11:43:17', NULL),
-('3597f24d-d400-4621-965d-0c0b542239f0', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pernah Khawatir Tidak Makan', '9193af48-e2c5-437e-9761-8ae97a1942ac', 2, '2025-01-25 11:50:00', '2025-01-25 11:50:00', NULL),
-('3839e487-9756-4fb6-af41-ccf1e576cfa9', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sewa', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 2, '2025-01-25 11:50:50', '2025-01-25 11:50:50', NULL),
-('3e77e2ad-8b0a-45db-8fc7-d900754ee4d4', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Apakah Kepala Keluarga Bekerja', NULL, 1, '2025-01-25 11:38:15', '2025-01-25 11:38:15', NULL),
-('409c30c1-5519-4e65-8546-ccba4d8721f0', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sendiri', 'c6d802db-7744-4f47-a77b-e3bbed749573', 1, '2025-01-25 11:52:32', '2025-01-25 11:52:32', NULL),
-('426a6b66-6080-4024-9f07-2d391224bad7', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Tidak', '9193af48-e2c5-437e-9761-8ae97a1942ac', 1, '2025-01-25 11:49:50', '2025-01-25 11:49:50', NULL),
-('442d1ff5-c16e-477f-bf24-a18b60b9667f', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Tidak', '6f2b0d95-bcb0-4c17-beee-e342f14831a8', 2, '2025-01-25 11:56:14', '2025-01-25 11:56:14', NULL),
-('4bcf53a2-91f3-40c0-ab2a-501387d59690', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pernah Tidak Makan', '9193af48-e2c5-437e-9761-8ae97a1942ac', 3, '2025-01-25 11:50:06', '2025-01-25 11:50:06', NULL),
-('4f148bc1-172b-432b-8d95-e3ad32a18a0d', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pengeluaran Per Bulan', NULL, 6, '2025-01-25 11:50:20', '2025-01-25 11:50:20', NULL),
-('4f473223-5adc-4020-9ad5-d44572141299', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '27b8abeb-0a2c-479e-97de-47cef748b821', 4, '2025-01-25 11:57:04', '2025-01-25 11:57:04', NULL),
-('53951976-0c3e-4fed-878d-873494ab51a8', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Girik', '0f46a9cb-759a-4da9-b021-7aa75af605ee', 3, '2025-01-25 11:52:07', '2025-01-25 11:52:07', NULL),
-('5819ae17-81f5-4a6d-bdf3-a801625d36f0', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Dinding Tempat Tinggal', NULL, 14, '2025-01-25 11:55:14', '2025-01-25 11:55:14', NULL),
-('5e5113ad-446b-423e-a0c7-5403a72d62e7', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Asbes', '02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 3, '2025-01-25 11:54:11', '2025-01-25 11:54:11', NULL),
-('5fca3050-bf4a-4a96-9b79-5008f3dee976', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', 'af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 4, '2025-01-25 11:57:39', '2025-01-25 11:57:39', NULL),
-('6229b866-d240-4555-9132-055ef485af43', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Telantar/Menggelandang', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 5, '2025-01-25 11:51:15', '2025-01-25 11:51:15', NULL),
-('685027f2-1c29-4849-abf3-f79f975b1e9e', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kawat', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 4, '2025-01-25 11:55:37', '2025-01-25 11:55:37', NULL),
-('6ca4ec67-d562-4080-8e0a-7c40b740c07f', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Permanen', '1f1dddd9-46e2-4835-810b-84edb24a20be', 1, '2025-01-25 11:53:23', '2025-01-25 11:53:23', NULL),
-('6ce471c9-39d1-4e05-af98-224e327c3e7b', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Menumpang', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 3, '2025-01-25 11:50:56', '2025-01-25 11:50:56', NULL),
-('6f2b0d95-bcb0-4c17-beee-e342f14831a8', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Apakah Memiliki Jamban / MCK ?', NULL, 15, '2025-01-25 11:56:04', '2025-01-25 11:56:04', NULL),
-('6fb763e6-8982-4696-85fc-f5678df989cd', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lembaga', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 4, '2025-01-25 11:51:01', '2025-01-25 11:51:01', NULL),
-('76c4e1d6-110e-423d-a8fe-aa887112d9f3', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Jumlah Tanggungan (Orang dalam Rumah)', NULL, 4, '2025-01-25 11:49:23', '2025-01-25 11:49:23', NULL),
-('79dd9f1f-96be-4ace-88b5-19e46950a8e6', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Seng', '02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 1, '2025-01-25 11:54:03', '2025-01-25 11:54:03', NULL),
-('7cddc3d7-5200-430b-9bc1-eca515513f50', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kayu', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 1, '2025-01-25 11:55:22', '2025-01-25 11:55:22', NULL),
-('7eb2f19f-ed89-4c31-b404-d9d1e7eda49d', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Ubin', 'a96973ca-c11b-426a-a282-09c311a7acd8', 2, '2025-01-25 11:54:58', '2025-01-25 11:54:58', NULL),
-('7ec16323-46b2-401a-ab73-7204d161af84', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Listrik 900 VA', '27b8abeb-0a2c-479e-97de-47cef748b821', 3, '2025-01-25 11:57:00', '2025-01-25 11:57:00', NULL),
-('846875c7-8f9b-4b37-a661-3cc0eaa3105f', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Listrik 450 VA', '27b8abeb-0a2c-479e-97de-47cef748b821', 2, '2025-01-25 11:56:48', '2025-01-25 11:56:48', NULL),
-('8dfd17da-ab23-405f-b5c5-9c8361b318bb', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Mata Air', 'af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 2, '2025-01-25 11:57:33', '2025-01-25 11:57:33', NULL),
-('8f4b906b-6b40-406a-bffd-821f5851c1dc', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Milik Sendiri', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 1, '2025-01-25 11:50:45', '2025-01-25 11:50:45', NULL),
-('9193af48-e2c5-437e-9761-8ae97a1942ac', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Apakah Pernah tidak makan dalam sehari ?', NULL, 5, '2025-01-25 11:49:42', '2025-01-25 11:49:42', NULL),
-('9b9ab6e7-520f-4488-9f9d-1dc5f4e5e24b', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Bambu', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 2, '2025-01-25 11:55:30', '2025-01-25 11:55:30', NULL),
-('a1bfa52b-cd11-43cf-81a4-ae91821b42f3', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Seng', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 3, '2025-01-25 11:55:34', '2025-01-25 11:55:34', NULL),
-('a96973ca-c11b-426a-a282-09c311a7acd8', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lantai Tempat Tinggal', NULL, 13, '2025-01-25 11:54:29', '2025-01-25 11:54:29', NULL),
-('af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sumber Air Bersih', NULL, 17, '2025-01-25 11:57:18', '2025-01-25 11:57:18', NULL),
-('b65b1a88-0102-4b91-b735-b4ea0ccc6595', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '0f46a9cb-759a-4da9-b021-7aa75af605ee', 4, '2025-01-25 11:52:14', '2025-01-25 11:52:14', NULL),
-('b8aa3dcd-9532-43ba-80a5-40fe291e635c', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pengeluaran Bulanan', NULL, 3, '2025-01-25 11:49:08', '2025-01-25 11:49:08', NULL),
-('bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Tempat Tinggal Saat Ini', NULL, 7, '2025-01-25 11:50:37', '2025-01-25 11:50:37', NULL),
-('c0a383b1-529a-49a5-93fe-627ffa94c984', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sertifikat Hak Milik', '0f46a9cb-759a-4da9-b021-7aa75af605ee', 1, '2025-01-25 11:51:49', '2025-01-25 11:51:49', NULL),
-('c6d802db-7744-4f47-a77b-e3bbed749573', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Tinggal Bersama', NULL, 9, '2025-01-25 11:52:25', '2025-01-25 11:52:25', NULL),
-('ccb122d6-84ac-499c-bf69-4b64bc0c7465', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Tanah', 'a96973ca-c11b-426a-a282-09c311a7acd8', 1, '2025-01-25 11:54:53', '2025-01-25 11:54:53', NULL),
-('cdc0d3d4-94d3-42a3-b320-4c502e0daf5e', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', 'c6d802db-7744-4f47-a77b-e3bbed749573', 4, '2025-01-25 11:52:53', '2025-01-25 11:52:53', NULL),
-('d57f5aae-6731-4e0e-ba3b-d971d67243df', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Semi Permanen', '1f1dddd9-46e2-4835-810b-84edb24a20be', 2, '2025-01-25 11:53:31', '2025-01-25 11:53:31', NULL),
-('d7fa2ca4-70f6-48c0-a897-6c0b11d2e7d4', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Ya', '6f2b0d95-bcb0-4c17-beee-e342f14831a8', 1, '2025-01-25 11:56:11', '2025-01-25 11:56:11', NULL),
-('e28d1155-2eea-436d-9eb2-0d2f9a266885', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'x', '3e77e2ad-8b0a-45db-8fc7-d900754ee4d4', 3, '2025-01-25 11:44:04', '2025-01-25 11:47:39', '2025-01-25 11:47:39'),
-('e427beee-addc-46ff-b0bc-a4b91df3c1eb', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Hak Guna Bangunan', '0f46a9cb-759a-4da9-b021-7aa75af605ee', 2, '2025-01-25 11:51:58', '2025-01-25 11:51:58', NULL),
-('efbb6799-d5ad-417a-8ac9-25ad595c05bb', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sumur', 'af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 3, '2025-01-25 11:57:36', '2025-01-25 11:57:36', NULL),
-('f5fc6238-7d51-4a26-bdbf-b2829acb3b89', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pekerjaan', NULL, 2, '2025-01-25 11:48:21', '2025-01-25 11:48:21', NULL),
-('f68d74fd-4c92-410c-b612-a8bbb605d3bf', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Ya', '3e77e2ad-8b0a-45db-8fc7-d900754ee4d4', 1, '2025-01-25 11:43:07', '2025-01-25 11:43:07', NULL),
-('f6a02dbc-b0a6-4fbd-a3d6-bef88fa0d4a6', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Genteng', '02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 2, '2025-01-25 11:54:07', '2025-01-25 11:54:07', NULL),
-('fdfb0c25-e991-4328-ae7d-71e7d751708b', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 4, '2025-01-25 11:54:17', '2025-01-25 11:54:17', NULL);
+INSERT INTO `laksa_ms_form_assessment_sub` (`id`, `form_assessment_id`, `sub_kategori_assessment`, `variable_form`, `parent_id`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('01bcd2a9-bb91-4706-bc54-0b09db32075c', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Bukan Listrik', '', '27b8abeb-0a2c-479e-97de-47cef748b821', 1, '2025-01-25 11:56:35', '2025-01-25 11:56:35', NULL),
+('02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Atap Tempat Tinggal', '', NULL, 12, '2025-01-25 11:53:55', '2025-01-25 11:53:55', NULL),
+('036ad43a-ddf0-4484-9b62-ce46559fbb22', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kayu', '', 'a96973ca-c11b-426a-a282-09c311a7acd8', 3, '2025-01-25 11:55:01', '2025-01-25 11:55:01', NULL),
+('0955632e-887f-4495-8103-a0135c78cca1', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Keluarga Besar', '', 'c6d802db-7744-4f47-a77b-e3bbed749573', 3, '2025-01-25 11:52:47', '2025-01-25 11:52:47', NULL),
+('0a1cf00d-73c6-4cfd-9a23-96799118678e', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'PDAM', '', 'af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 1, '2025-01-25 11:57:29', '2025-01-25 11:57:29', NULL),
+('0cfda96a-81cc-46ef-b890-f12812e48502', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '', '1f1dddd9-46e2-4835-810b-84edb24a20be', 3, '2025-01-25 11:53:35', '2025-01-25 11:53:35', NULL),
+('0f46a9cb-759a-4da9-b021-7aa75af605ee', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Jika Milik Sendiri; Bukti Kepemilikan Tanah', '', NULL, 8, '2025-01-25 11:51:40', '2025-01-25 11:51:40', NULL),
+('10833193-067f-4d62-ac23-b4a7847585ce', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Batu Bata', '', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 5, '2025-01-25 11:55:44', '2025-01-25 11:55:44', NULL),
+('1f1dddd9-46e2-4835-810b-84edb24a20be', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kondisi Bangunan', '', NULL, 11, '2025-01-25 11:53:15', '2025-01-25 11:53:15', NULL),
+('27b8abeb-0a2c-479e-97de-47cef748b821', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sumber Penerangan', '', NULL, 16, '2025-01-25 11:56:25', '2025-01-25 11:56:25', NULL),
+('2a180465-ba8b-46eb-afd1-d6be4c006c3d', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Keluarga Inti', '', 'c6d802db-7744-4f47-a77b-e3bbed749573', 2, '2025-01-25 11:52:40', '2025-01-25 11:52:40', NULL),
+('2acf8af7-f819-47b5-a20f-43c66fa96430', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Luas Tempat Tinggal', '', NULL, 10, '2025-01-25 11:53:06', '2025-01-25 11:53:06', NULL),
+('2fc0d49d-a3dc-492c-ade0-003be463d7db', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Tidak', '', '3e77e2ad-8b0a-45db-8fc7-d900754ee4d4', 2, '2025-01-25 11:43:17', '2025-01-25 11:43:17', NULL),
+('3597f24d-d400-4621-965d-0c0b542239f0', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pernah Khawatir Tidak Makan', '', '9193af48-e2c5-437e-9761-8ae97a1942ac', 2, '2025-01-25 11:50:00', '2025-01-25 11:50:00', NULL),
+('3839e487-9756-4fb6-af41-ccf1e576cfa9', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sewa', '', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 2, '2025-01-25 11:50:50', '2025-01-25 11:50:50', NULL),
+('3e77e2ad-8b0a-45db-8fc7-d900754ee4d4', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Apakah Kepala Keluarga Bekerja', '', NULL, 1, '2025-01-25 11:38:15', '2025-01-25 11:38:15', NULL),
+('409c30c1-5519-4e65-8546-ccba4d8721f0', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sendiri', '', 'c6d802db-7744-4f47-a77b-e3bbed749573', 1, '2025-01-25 11:52:32', '2025-01-25 11:52:32', NULL),
+('426a6b66-6080-4024-9f07-2d391224bad7', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Tidak', '', '9193af48-e2c5-437e-9761-8ae97a1942ac', 1, '2025-01-25 11:49:50', '2025-01-25 11:49:50', NULL),
+('442d1ff5-c16e-477f-bf24-a18b60b9667f', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Tidak', '', '6f2b0d95-bcb0-4c17-beee-e342f14831a8', 2, '2025-01-25 11:56:14', '2025-01-25 11:56:14', NULL),
+('4bcf53a2-91f3-40c0-ab2a-501387d59690', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pernah Tidak Makan', '', '9193af48-e2c5-437e-9761-8ae97a1942ac', 3, '2025-01-25 11:50:06', '2025-01-25 11:50:06', NULL),
+('4f148bc1-172b-432b-8d95-e3ad32a18a0d', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pengeluaran Per Bulan', '', NULL, 6, '2025-01-25 11:50:20', '2025-01-25 11:50:20', NULL),
+('4f473223-5adc-4020-9ad5-d44572141299', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '', '27b8abeb-0a2c-479e-97de-47cef748b821', 4, '2025-01-25 11:57:04', '2025-01-25 11:57:04', NULL),
+('53951976-0c3e-4fed-878d-873494ab51a8', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Girik', '', '0f46a9cb-759a-4da9-b021-7aa75af605ee', 3, '2025-01-25 11:52:07', '2025-01-25 11:52:07', NULL),
+('5819ae17-81f5-4a6d-bdf3-a801625d36f0', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Dinding Tempat Tinggal', '', NULL, 14, '2025-01-25 11:55:14', '2025-01-25 11:55:14', NULL),
+('5e5113ad-446b-423e-a0c7-5403a72d62e7', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Asbes', '', '02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 3, '2025-01-25 11:54:11', '2025-01-25 11:54:11', NULL),
+('5fca3050-bf4a-4a96-9b79-5008f3dee976', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '', 'af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 4, '2025-01-25 11:57:39', '2025-01-25 11:57:39', NULL),
+('6229b866-d240-4555-9132-055ef485af43', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Telantar/Menggelandang', '', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 5, '2025-01-25 11:51:15', '2025-01-25 11:51:15', NULL),
+('685027f2-1c29-4849-abf3-f79f975b1e9e', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kawat', '', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 4, '2025-01-25 11:55:37', '2025-01-25 11:55:37', NULL),
+('6ca4ec67-d562-4080-8e0a-7c40b740c07f', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Permanen', '', '1f1dddd9-46e2-4835-810b-84edb24a20be', 1, '2025-01-25 11:53:23', '2025-01-25 11:53:23', NULL),
+('6ce471c9-39d1-4e05-af98-224e327c3e7b', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Menumpang', '', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 3, '2025-01-25 11:50:56', '2025-01-25 11:50:56', NULL),
+('6f2b0d95-bcb0-4c17-beee-e342f14831a8', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Apakah Memiliki Jamban / MCK ?', '', NULL, 15, '2025-01-25 11:56:04', '2025-01-25 11:56:04', NULL),
+('6fb763e6-8982-4696-85fc-f5678df989cd', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lembaga', '', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 4, '2025-01-25 11:51:01', '2025-01-25 11:51:01', NULL),
+('76c4e1d6-110e-423d-a8fe-aa887112d9f3', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Jumlah Tanggungan (Orang dalam Rumah)', '', NULL, 4, '2025-01-25 11:49:23', '2025-01-25 11:49:23', NULL),
+('79dd9f1f-96be-4ace-88b5-19e46950a8e6', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Seng', '', '02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 1, '2025-01-25 11:54:03', '2025-01-25 11:54:03', NULL),
+('7cddc3d7-5200-430b-9bc1-eca515513f50', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Kayu', '', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 1, '2025-01-25 11:55:22', '2025-01-25 11:55:22', NULL),
+('7eb2f19f-ed89-4c31-b404-d9d1e7eda49d', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Ubin', '', 'a96973ca-c11b-426a-a282-09c311a7acd8', 2, '2025-01-25 11:54:58', '2025-01-25 11:54:58', NULL),
+('7ec16323-46b2-401a-ab73-7204d161af84', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Listrik 900 VA', '', '27b8abeb-0a2c-479e-97de-47cef748b821', 3, '2025-01-25 11:57:00', '2025-01-25 11:57:00', NULL),
+('846875c7-8f9b-4b37-a661-3cc0eaa3105f', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Listrik 450 VA', '', '27b8abeb-0a2c-479e-97de-47cef748b821', 2, '2025-01-25 11:56:48', '2025-01-25 11:56:48', NULL),
+('8dfd17da-ab23-405f-b5c5-9c8361b318bb', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Mata Air', '', 'af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 2, '2025-01-25 11:57:33', '2025-01-25 11:57:33', NULL),
+('8f4b906b-6b40-406a-bffd-821f5851c1dc', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Milik Sendiri', '', 'bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 1, '2025-01-25 11:50:45', '2025-01-25 11:50:45', NULL),
+('9193af48-e2c5-437e-9761-8ae97a1942ac', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Apakah Pernah tidak makan dalam sehari ?', '', NULL, 5, '2025-01-25 11:49:42', '2025-01-25 11:49:42', NULL),
+('9b9ab6e7-520f-4488-9f9d-1dc5f4e5e24b', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Bambu', '', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 2, '2025-01-25 11:55:30', '2025-01-25 11:55:30', NULL),
+('a1bfa52b-cd11-43cf-81a4-ae91821b42f3', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Seng', '', '5819ae17-81f5-4a6d-bdf3-a801625d36f0', 3, '2025-01-25 11:55:34', '2025-01-25 11:55:34', NULL),
+('a96973ca-c11b-426a-a282-09c311a7acd8', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lantai Tempat Tinggal', '', NULL, 13, '2025-01-25 11:54:29', '2025-01-25 11:54:29', NULL),
+('af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sumber Air Bersih', '', NULL, 17, '2025-01-25 11:57:18', '2025-01-25 11:57:18', NULL),
+('b65b1a88-0102-4b91-b735-b4ea0ccc6595', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '', '0f46a9cb-759a-4da9-b021-7aa75af605ee', 4, '2025-01-25 11:52:14', '2025-01-25 11:52:14', NULL),
+('b8aa3dcd-9532-43ba-80a5-40fe291e635c', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pengeluaran Bulanan', '', NULL, 3, '2025-01-25 11:49:08', '2025-01-25 11:49:08', NULL),
+('bbdff4e5-7f77-438b-9284-f4f893ee0a6d', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Tempat Tinggal Saat Ini', '', NULL, 7, '2025-01-25 11:50:37', '2025-01-25 11:50:37', NULL),
+('c0a383b1-529a-49a5-93fe-627ffa94c984', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sertifikat Hak Milik', '', '0f46a9cb-759a-4da9-b021-7aa75af605ee', 1, '2025-01-25 11:51:49', '2025-01-25 11:51:49', NULL),
+('c6d802db-7744-4f47-a77b-e3bbed749573', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Tinggal Bersama', '', NULL, 9, '2025-01-25 11:52:25', '2025-01-25 11:52:25', NULL),
+('ccb122d6-84ac-499c-bf69-4b64bc0c7465', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Tanah', '', 'a96973ca-c11b-426a-a282-09c311a7acd8', 1, '2025-01-25 11:54:53', '2025-01-25 11:54:53', NULL),
+('cdc0d3d4-94d3-42a3-b320-4c502e0daf5e', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '', 'c6d802db-7744-4f47-a77b-e3bbed749573', 4, '2025-01-25 11:52:53', '2025-01-25 11:52:53', NULL),
+('d57f5aae-6731-4e0e-ba3b-d971d67243df', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Semi Permanen', '', '1f1dddd9-46e2-4835-810b-84edb24a20be', 2, '2025-01-25 11:53:31', '2025-01-25 11:53:31', NULL),
+('d7fa2ca4-70f6-48c0-a897-6c0b11d2e7d4', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Ya', '', '6f2b0d95-bcb0-4c17-beee-e342f14831a8', 1, '2025-01-25 11:56:11', '2025-01-25 11:56:11', NULL),
+('e28d1155-2eea-436d-9eb2-0d2f9a266885', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'x', '', '3e77e2ad-8b0a-45db-8fc7-d900754ee4d4', 3, '2025-01-25 11:44:04', '2025-01-25 11:47:39', '2025-01-25 11:47:39'),
+('e427beee-addc-46ff-b0bc-a4b91df3c1eb', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Hak Guna Bangunan', '', '0f46a9cb-759a-4da9-b021-7aa75af605ee', 2, '2025-01-25 11:51:58', '2025-01-25 11:51:58', NULL),
+('efbb6799-d5ad-417a-8ac9-25ad595c05bb', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Sumur', '', 'af277a47-fd2d-4df5-a4f3-0a0d7278a7a1', 3, '2025-01-25 11:57:36', '2025-01-25 11:57:36', NULL),
+('f5fc6238-7d51-4a26-bdbf-b2829acb3b89', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Pekerjaan', '', NULL, 2, '2025-01-25 11:48:21', '2025-01-25 11:48:21', NULL),
+('f68d74fd-4c92-410c-b612-a8bbb605d3bf', '5ccf3c56-a2aa-42e6-b4dc-b4147807b32f', 'Ya', '', '3e77e2ad-8b0a-45db-8fc7-d900754ee4d4', 1, '2025-01-25 11:43:07', '2025-01-25 11:43:07', NULL),
+('f6a02dbc-b0a6-4fbd-a3d6-bef88fa0d4a6', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Genteng', '', '02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 2, '2025-01-25 11:54:07', '2025-01-25 11:54:07', NULL),
+('fdfb0c25-e991-4328-ae7d-71e7d751708b', 'c1652da7-be7d-4626-99e3-953d1c4f0441', 'Lainnya..', '', '02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6', 4, '2025-01-25 11:54:17', '2025-01-25 11:54:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -271,10 +272,24 @@ INSERT INTO `laksa_ms_gedung` (`id`, `nama_gedung`, `status_gedung`, `jumlah_kam
 CREATE TABLE `laksa_ms_jenis_bantuan` (
   `id` varchar(36) NOT NULL,
   `jenis_bantuan` varchar(100) NOT NULL,
+  `sort` int(3) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `laksa_ms_jenis_bantuan`
+--
+
+INSERT INTO `laksa_ms_jenis_bantuan` (`id`, `jenis_bantuan`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('9e3ad9c7-dc53-11ef-9f06-244bfebc0c45', 'Belum Menerima Bantuan', 1, NULL, NULL, NULL),
+('a82745de-dc53-11ef-9f06-244bfebc0c45', 'PKH', 2, NULL, NULL, NULL),
+('a82754c1-dc53-11ef-9f06-244bfebc0c45', 'Sembako', 3, NULL, NULL, NULL),
+('af8263a0-dc53-11ef-9f06-244bfebc0c45', 'KIS PBI-JK', 4, NULL, NULL, NULL),
+('af827721-dc53-11ef-9f06-244bfebc0c45', 'KIP', 5, NULL, NULL, NULL),
+('b81a5c20-dc53-11ef-9f06-244bfebc0c45', 'Prokus', 6, NULL, NULL, NULL),
+('b81a629f-dc53-11ef-9f06-244bfebc0c45', 'Lainnya:', 7, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1072,6 +1087,7 @@ CREATE TABLE `laksa_tr_residensial` (
   `sumber_id` varchar(36) DEFAULT NULL,
   `pasien_id` varchar(36) DEFAULT NULL,
   `kategori_ppks_id` varchar(36) DEFAULT NULL,
+  `kategori_ppks_json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `masa_layanan` int(11) DEFAULT NULL,
   `rencana_tgl_terminasi` date DEFAULT NULL,
   `pengampu_id` varchar(36) DEFAULT NULL,
@@ -1100,8 +1116,9 @@ CREATE TABLE `laksa_tr_residensial` (
 -- Dumping data for table `laksa_tr_residensial`
 --
 
-INSERT INTO `laksa_tr_residensial` (`id`, `petugas_id`, `tgl_penerimaan`, `sumber_id`, `pasien_id`, `kategori_ppks_id`, `masa_layanan`, `rencana_tgl_terminasi`, `pengampu_id`, `status_id`, `gedung_id`, `up_dokumen_rujukan`, `ragam_abh`, `informasi_kasus`, `jenis_rujukan`, `no_putusan_pengadilan`, `ragam_anak`, `ragam_kelompok_rentan`, `ragam_penyandang_disabilitas`, `ragam_disabilitas_fisik`, `ragam_disabilitas_intelektual`, `ragam_disabilitas_mental`, `ragam_disabilitas_sensorik`, `disabilitas_ganda_multi`, `penerima_atensi`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('e69b2ca2-b96b-4a6c-b0f6-db4b5ad5be21', '1', '2025-01-22 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', 'b1895989-f137-4421-83bc-59206516da7f', 6, '2025-01-07', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '23ac51ea-db8b-11ef-9f06-244bfebc0c45', '36ec805e-3a34-496b-a9c1-5db36038e3f3', 'uploads/dokumen_rujukan/lkXFHJKpbx9l4DDDpHaBNCMeZtiQJF2gAd9mAfVY.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'f1b0a013-0496-45b6-81a7-74ffdea2586d', NULL, NULL, NULL, NULL, NULL, '2025-01-26 17:29:40', '2025-01-26 17:45:28', NULL);
+INSERT INTO `laksa_tr_residensial` (`id`, `petugas_id`, `tgl_penerimaan`, `sumber_id`, `pasien_id`, `kategori_ppks_id`, `kategori_ppks_json`, `masa_layanan`, `rencana_tgl_terminasi`, `pengampu_id`, `status_id`, `gedung_id`, `up_dokumen_rujukan`, `ragam_abh`, `informasi_kasus`, `jenis_rujukan`, `no_putusan_pengadilan`, `ragam_anak`, `ragam_kelompok_rentan`, `ragam_penyandang_disabilitas`, `ragam_disabilitas_fisik`, `ragam_disabilitas_intelektual`, `ragam_disabilitas_mental`, `ragam_disabilitas_sensorik`, `disabilitas_ganda_multi`, `penerima_atensi`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('544d2eaf-f8f9-4c9f-8f72-a3d1bf3064d8', '2', '2025-01-02 00:00:00', '1', '3ff3d400-7322-4f8f-9df0-e984f8950ea1', 'b1895989-f137-4421-83bc-59206516da7f', '{\"13157c96-d3f6-429f-864e-7edcab14b468\":{\"b3249f25-3495-4f77-9689-9c79a9cff945\":\"770a696b-ec3f-4f08-b939-bd0b3f7c3b14\"}}', 5, '2025-01-22', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '23ac51ea-db8b-11ef-9f06-244bfebc0c45', 'e6aebf41-d336-4729-8419-24531df2fda0', 'uploads/dokumen_rujukan/X13JYvJxTKk0jCwst8NteQpOO1PYPE2fmlEQpZnM.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '770a696b-ec3f-4f08-b939-bd0b3f7c3b14', NULL, NULL, '2025-01-26 20:20:04', '2025-01-26 20:20:08', NULL),
+('a8748c53-e148-4918-9e38-a4a9dab95959', '1', '2025-01-21 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', '{\"bdb5fc88-e430-47f1-9ba4-cea2cac40244\":\"d7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5\",\"ebc5f1dd-4e2b-4fe2-97be-477291a311dd\":\"9fbf8270-808f-4899-9030-cd8e821f5663\",\"5332d470-4c5d-4df2-98d5-45b60805c978\":\"be9a2343-0021-43a7-9c54-46cd1d3832c1\",\"4aebdf03-5293-4724-a3d8-f9f2fca857d9\":\"343242\"}', 5, '2025-01-08', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '23ac51ea-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/cXnWZPHjtjt4wOIcSyZoOEnffBBa24Q4V1MEhfLm.pdf', 'd7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5', '9fbf8270-808f-4899-9030-cd8e821f5663', 'be9a2343-0021-43a7-9c54-46cd1d3832c1', '343242', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-26 20:02:45', '2025-01-26 20:03:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -1362,6 +1379,12 @@ ALTER TABLE `job_batches`
 -- Indexes for table `laksa_ms_agama`
 --
 ALTER TABLE `laksa_ms_agama`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_ms_form_assessment`
+--
+ALTER TABLE `laksa_ms_form_assessment`
   ADD PRIMARY KEY (`id`);
 
 --

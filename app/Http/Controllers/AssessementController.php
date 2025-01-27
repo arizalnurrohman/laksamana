@@ -8,6 +8,7 @@ use App\Models\Agama;
 use App\Models\Gedung;
 use App\Models\Pasien;
 use App\Models\Bantuan;
+use App\Models\FormAssessment;
 use App\Models\Pegawai;
 use App\Models\Petugas;
 use App\Models\Pengampu;
@@ -62,21 +63,50 @@ class AssessementController extends Controller
 
     public function get_assessement($id){
         $residensial = Residensial::findOrFail($id);
-        $pendidikan     = Pendidikan::all();
+        $pendidikan  = Pendidikan::all();
         $bantuan     = Bantuan::orderBy("sort","ASC")->get();
-        $agama          = Agama::all();
+        $agama       = Agama::all();
         $pasien      = Pasien::where("laksa_ms_ppks.id","=",$residensial->pasien_id);
         $pasien      = $pasien->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
                         ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
                         ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id')
                         ->leftJoin('laksa_ms_pendidikan', 'laksa_ms_ppks.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
                         ->leftJoin('laksa_ms_agama', 'laksa_ms_ppks.agama_id', '=', 'laksa_ms_agama.id');
-        $pasien = $pasien->first();
+        $pasien      = $pasien->first();
         // dd($pasien);
         $pengampu    = Pengampu::where("laksa_ms_pengampu.id","=",$residensial->pengampu_id);
         $pengampu      = $pengampu->leftJoin('laksa_ms_pendidikan', 'laksa_ms_pengampu.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
                         ->leftJoin('laksa_ms_agama', 'laksa_ms_pengampu.agama_id', '=', 'laksa_ms_agama.id');
-        $pengampu = $pengampu->first();   
+        $pengampu = $pengampu->first();
+        
+        $detail_ppks_value=[];
+        // dd(json_decode($residensial->kategori_ppks_json));
+        foreach(json_decode($residensial->kategori_ppks_json) as $key=>$detail_ppks){
+            if(is_array($detail_ppks)){
+                dd("objeck");
+            }else{
+                if(is_object($detail_ppks)){
+                    foreach($detail_ppks as $keyx=>$detail_ppksx){
+                        $detail_ppks_value[]=[
+                            "combo_box" =>(KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$keyx)->first())->sub_kategori_ppks,
+                            "key"       =>$keyx,
+                            "value"     =>is_null(KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$detail_ppksx)->first()) ? $detail_ppksx : (KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$detail_ppksx)->first())->sub_kategori_ppks,
+                        ];
+                    }
+                }else{
+                    $detail_ppks_value[]=[
+                        "combo_box" =>(KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$key)->first())->sub_kategori_ppks,
+                        "key"       =>$key,
+                        "value"     =>is_null(KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$detail_ppks)->first()) ? $detail_ppks : (KategoriPPKSSub::select("sub_kategori_ppks")->where("id","=",$detail_ppks)->first())->sub_kategori_ppks,
+                    ];
+                }
+            }
+        }
+        $residensial->kondisi_ppks  =$detail_ppks_value;
+
+        $assessement_form=FormAssessment::get();
+        
+        // dd($detail_ppks_value);
         
         return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan'));
     }
