@@ -46,32 +46,43 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="layananModalLabel">Tentukan Layanan</h5>
+                <h5 class="modal-title" id="layananModalLabel">Tentukan Manajer Kasus</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body d-flex">
-                <!-- Card Kiri -->
-                <div class="card flex-grow-1 me-3" style="width: 75%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Biodata</h5>
-                        <p class="card-text">Nama: John Doe</p>
-                        <p class="card-text">Alamat: Jl. Contoh No. 123</p>
-                        <p class="card-text">No. Telepon: 08123456789</p>
-                        <p class="card-text">Email: john.doe@example.com</p>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Kolom Kiri -->
+                    <div class="col-xl-9">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Nama: John Doe</h5>
+                                <p class="card-text">Alamat: Jl. Contoh No. 123</p>
+                                <p class="card-text">No. Telepon: 08123456789</p>
+                                <p class="card-text">Email: john.doe@example.com</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <!-- Card Kanan -->
-                <div class="card" style="width: 25%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Informasi Layanan</h5>
-                        <p class="card-text">Layanan: Layanan A</p>
-                        <p class="card-text">Status: Aktif</p>
+
+                    <!-- Kolom Kanan -->
+                    <div class="col-xl-3">
+                        <div class="card mb-3">
+                            <div class="card-body text-center">
+                                <img id="fotoPasien" src="https://dummyimage.com/200x200/cccccc/ffffff" class="img-fluid rounded" alt="Foto Pasien">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Informasi Layanan</h5>
+                                <p class="card-text">Layanan: Layanan A</p>
+                                <p class="card-text">Status: Aktif</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
+                <button type="button" class="btn btn-primary">Tentukan Manajer Kasus</button>
             </div>
         </div>
     </div>
