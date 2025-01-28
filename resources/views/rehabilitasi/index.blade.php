@@ -10,14 +10,7 @@
                 <div class="header-title">
                     <h4 class="card-title">Data @if ($activeMenu) {{ $activeMenu->menu }} @endif</h4>
                 </div>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add{{ $activeMenu->access }}Modal">
-                    <span class="btn-inner">
-                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                    </span>
-                    Data @if ($activeMenu) {{ $activeMenu->menu }} @endif
-                </button>
+                
             </div>
             <div class="card-body">
                 <div class="table-responsive">

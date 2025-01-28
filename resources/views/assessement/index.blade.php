@@ -47,7 +47,7 @@
     function send_form(id) {
         Swal.fire({
             title: "Apakah anda yakin?",
-            text: "akan Mengiriimkan ke Koordinator untuk dibuatkan Berita Acara ?!",
+            text: "akan Mengirimkan ke Koordinator untuk dilanjutkan ke Penentuan Layanan ?!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

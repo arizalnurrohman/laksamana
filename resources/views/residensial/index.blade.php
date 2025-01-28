@@ -41,6 +41,41 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="layananModal" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="layananModalLabel">Tentukan Layanan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex">
+                <!-- Card Kiri -->
+                <div class="card flex-grow-1 me-3" style="width: 75%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Biodata</h5>
+                        <p class="card-text">Nama: John Doe</p>
+                        <p class="card-text">Alamat: Jl. Contoh No. 123</p>
+                        <p class="card-text">No. Telepon: 08123456789</p>
+                        <p class="card-text">Email: john.doe@example.com</p>
+                    </div>
+                </div>
+                <!-- Card Kanan -->
+                <div class="card" style="width: 25%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Informasi Layanan</h5>
+                        <p class="card-text">Layanan: Layanan A</p>
+                        <p class="card-text">Status: Aktif</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
  
 @endsection
 @section('add-js')
@@ -222,6 +257,103 @@
                 });
             }
         });
+    }
+
+    function generate_form(id) {
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan Membuat Dokumen Berita Acara  ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Buat!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/residensial/generate-berita-acara/${id}`,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: { id: id }, // Menambahkan id sebagai data yang dikirim
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Terkirim',
+                            html: "Data telah Terkirim.",
+                            showConfirmButton: true,
+                            timer: 1000,
+                            customClass: {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            load_this_data();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to Send the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    function send_accessor(id) {
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan Mengirimkan ke Assessor data ini ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Kirim!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/residensial/kirim-accessor/${id}`,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: { id: id }, // Menambahkan id sebagai data yang dikirim
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Terkirim',
+                            html: "Data telah Terkirim.",
+                            showConfirmButton: true,
+                            timer: 1000,
+                            customClass: {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            load_this_data();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to Send the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    function tentukan_layanan(id){
+        // Logika untuk mengambil data berdasarkan ID jika diperlukan
+        // Contoh: fetch data dari server menggunakan AJAX
+
+        // Tampilkan modal
+        var myModal = new bootstrap.Modal(document.getElementById('layananModal'));
+        myModal.show();
     }
 
 </script>

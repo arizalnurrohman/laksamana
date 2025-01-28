@@ -97,6 +97,8 @@ Route::get('/residensial/get-pasien/{id}', [ResidensialController::class, 'resid
 Route::get('/residensial/get-ppks/{id}', [ResidensialController::class, 'getSubKategori']);
 Route::get('/residensial/get-ppks-child/{id}', [ResidensialController::class, 'getSubKategoriChild']);
 Route::post('/residensial/kirim-kekepala/{id}', [ResidensialController::class, 'store_kirim_kekepala'])->name('residensial.kirim_kekepala');
+Route::post('/residensial/kirim-accessor/{id}', [ResidensialController::class, 'store_kirim_accessor'])->name('residensial.kirim_accessor');
+Route::post('/residensial/generate-berita-acara/{id}', [ResidensialController::class, 'store_generate_ba'])->name('residensial.generate_ba');
 
 
 
