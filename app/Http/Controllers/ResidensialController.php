@@ -51,7 +51,7 @@ class ResidensialController extends Controller
 
     //     $this->error    =array();
     //     $this->success  =false;
-        $this->status_usulan=["b995d70b-db89-11ef-9f06-244bfebc0c45","3cdad447-db8b-11ef-9f06-244bfebc0c45"];
+        $this->status_usulan=['b4a5adb3-db89-11ef-9f06-244bfebc0c45','a961e7f6-db89-11ef-9f06-244bfebc0c45','b995d70b-db89-11ef-9f06-244bfebc0c45','be10c279-db89-11ef-9f06-244bfebc0c45','7078dbc5-db8a-11ef-9f06-244bfebc0c45','7918fc82-db8a-11ef-9f06-244bfebc0c45','1ba4b694-db8b-11ef-9f06-244bfebc0c45','23ac51ea-db8b-11ef-9f06-244bfebc0c45','2ae4ad34-db8b-11ef-9f06-244bfebc0c45','3cdad447-db8b-11ef-9f06-244bfebc0c45','462ce22c-db8b-11ef-9f06-244bfebc0c45','56bd1150-db8b-11ef-9f06-244bfebc0c45','651a521f-db8b-11ef-9f06-244bfebc0c45'];
     }
     public function index()
     {

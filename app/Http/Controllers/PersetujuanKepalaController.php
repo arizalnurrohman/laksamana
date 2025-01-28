@@ -51,7 +51,7 @@ class PersetujuanKepalaController extends Controller
 
     //     $this->error    =array();
     //     $this->success  =false;
-        $this->status_usulan="7078dbc5-db8a-11ef-9f06-244bfebc0c45";
+        $this->status_usulan=["7078dbc5-db8a-11ef-9f06-244bfebc0c45"];
     }
     public function index()
     {
@@ -133,7 +133,7 @@ class PersetujuanKepalaController extends Controller
             }
 
             // Update status residensial
-            $residendsial->status_id = "23ac51ea-db8b-11ef-9f06-244bfebc0c45"; // Menunggu Persetujuan Kepala
+            $residendsial->status_id = "7918fc82-db8a-11ef-9f06-244bfebc0c45"; // Kepala Menyetujui Usulan Residensial
             $residendsial->save();
 
             return response()->json([
@@ -159,7 +159,7 @@ class PersetujuanKepalaController extends Controller
         $residensial = $residensial->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
         $residensial = $residensial->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $residensial = $residensial->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
-        $residensial = $residensial->where("status_id","=",$this->status_usulan);
+        $residensial = $residensial->whereIn("status_id",$this->status_usulan);
         $residensial = $residensial->get();
         $data = array();
         $no=0;
