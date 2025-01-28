@@ -18,6 +18,7 @@ use App\Models\Residensial;
 use Illuminate\Support\Str;
 use App\Models\KategoriPPKS;
 use App\Models\StatusUsulan;
+use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
 use App\Models\KategoriPPKSSub;
@@ -55,8 +56,10 @@ class ResidensialController extends Controller
     }
     public function index()
     {
+        #$sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $residensial = [];
-        return view('residensial.index', compact('residensial'));
+        $petugas    =Petugas::leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id')->get();
+        return view('residensial.index', compact('residensial','petugas'));
     }
     public function create()
     {
@@ -488,7 +491,63 @@ class ResidensialController extends Controller
         // Untuk sementara return true
         return true;
     }
+    public function getResidensial($id){
+        // dd($id);
+        $sub_child = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
+        $sub_child = $sub_child->leftJoin('laksa_ms_petugas', 'laksa_tr_residensial.petugas_id', '=', 'laksa_ms_petugas.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
+        $sub_child = $sub_child->where("laksa_tr_residensial.id","=",$id);
+        $sub_child = $sub_child->first();
 
-    
+        $sub_child->foto_ppks=$sub_child->up_foto ? asset('storage/' . $sub_child->up_foto) : null;
+
+        return $sub_child;
+    }
+
+    public function store_ManajerKasus(Request $request)
+    {
+        // dd($request->all());
+        // Validasi request
+        $validatedData = $request->validate([
+            'residensial_id' => [
+                'required',
+                'exists:laksa_tr_residensial,id' // Memastikan residensial_id ada di tabel rehabilitasi
+            ],
+            'manajer_kasus' => [
+                'required',
+                'exists:laksa_ms_petugas,id' // Memastikan petugas_id (manajer kasus) ada di tabel rehabilitasi
+            ],
+        ]);
+
+        try {
+            // Menyimpan data ke dalam tabel rehabilitasi menggunakan model
+            $payloads=[
+                'id'            =>Str::uuid()->toString(),
+                'residensial_id' => $validatedData['residensial_id'],
+                'petugas_id' => $validatedData['manajer_kasus'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+            if(Rehabilitasi::create($payloads)){
+                return response()->json([
+                    'message' => 'Manajer Kasus berhasil ditambahkan.',
+                ], 200);
+            }else{
+                return response()->json([
+                    'message' => 'Terjadi kesalahan saat menyimpan data',
+                ], 500);
+            }
+
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+  
 
 }
