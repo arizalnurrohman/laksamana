@@ -277,7 +277,7 @@ class ResidensialController extends Controller
 
 
             $data[$no]['No']                =($no+1);
-            $data[$no]['Nama Pasien']       =$val->nama_depan.' '.$val->nama_belakang.'<br><span class="badge rounded-pill bg-warning">'.$val->status.'</span>';
+            $data[$no]['Nama Pasien']       =$val->nama_depan.' '.$val->nama_belakang.'<br><span class="badge rounded-pill bg-'.$val->style.'">'.$val->status.'</span>';
             $data[$no]['Tgl Penerimaan']    =date("d-m-Y",strtotime($val->tgl_penerimaan));
             $data[$no]['Sumber']            =$val->sumber;
             $data[$no]['Petugas']           =$val->nama;
@@ -524,30 +524,42 @@ class ResidensialController extends Controller
 
         try {
             // Menyimpan data ke dalam tabel rehabilitasi menggunakan model
-            $payloads=[
-                'id'            =>Str::uuid()->toString(),
+            $payloads = [
+                'id'            => Str::uuid()->toString(),
                 'residensial_id' => $validatedData['residensial_id'],
                 'petugas_id' => $validatedData['manajer_kasus'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
-            if(Rehabilitasi::create($payloads)){
+
+            // Menyimpan data rehabilitasi dan memperbarui status_id di tabel residensial
+            $rehabilitasi = Rehabilitasi::create($payloads);
+
+            // Jika data berhasil disimpan pada tabel rehabilitasi
+            if ($rehabilitasi) {
+                // Mengupdate field status_id pada tabel residensial
+                $residensial = Residensial::find($validatedData['residensial_id']);
+                if ($residensial) {
+                    $residensial->status_id = '462ce22c-db8b-11ef-9f06-244bfebc0c45'; // Tahap Rehabilitasi
+                    $residensial->save();
+                }
+
                 return response()->json([
                     'message' => 'Manajer Kasus berhasil ditambahkan.',
                 ], 200);
-            }else{
+            } else {
                 return response()->json([
                     'message' => 'Terjadi kesalahan saat menyimpan data',
                 ], 500);
             }
 
-            
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
             ], 500);
         }
     }
+
   
 
 }
