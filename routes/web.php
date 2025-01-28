@@ -9,6 +9,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\PengampuController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\ListAspekController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AssessementController;
 use App\Http\Controllers\DataWilayahController;
@@ -21,7 +22,7 @@ use App\Http\Controllers\NonResidensialController;
 use App\Http\Controllers\FormAssessementController;
 use App\Http\Controllers\PenentuanLayananController;
 use App\Http\Controllers\PersetujuanKepalaController;
-use App\Http\Controllers\KomponenInterrvensiController;
+use App\Http\Controllers\KomponenPerkembanganController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,7 +31,20 @@ Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna');
 Route::get('/data-akses-pengguna', [PenggunaController::class, 'index'])->name('dataaksespengguna');
 
 Route::get('/data-wilayah', [DataWilayahController::class, 'index'])->name('datawilayah');
-Route::get('/komponen-intervensi', [KomponenInterrvensiController::class, 'index'])->name('komponenintervensi');
+
+Route::get('/komponen-perkembangan', [KomponenPerkembanganController::class, 'index'])->name('komponenperkembangan');
+Route::get('/komponen-perkembangan/load-persyaratan', [KomponenPerkembanganController::class, 'load_data'])->name('load_komponen_perkembangan');
+Route::post('/komponen-perkembangan/store', [KomponenPerkembanganController::class, 'store'])->name('komponenperkembangan.store');
+Route::get('/komponen-perkembangan/edit/{id}', [KomponenPerkembanganController::class, 'edit'])->name('komponenperkembangan.edit');
+Route::post('/komponen-perkembangan/update', [KomponenPerkembanganController::class, 'update'])->name('komponenperkembangan.update');
+Route::delete('/komponen-perkembangan/delete/{id}', [KomponenPerkembanganController::class, 'destroy'])->name('komponenperkembangan.delete');
+
+Route::get('/list-aspek', [ListAspekController::class, 'index'])->name('listaspek');
+Route::get('/list-aspek/load-persyaratan', [ListAspekController::class, 'load_data'])->name('load_aspek');
+Route::post('/list-aspek/store', [ListAspekController::class, 'store'])->name('listaspek.store');
+Route::get('/list-aspek/edit/{id}', [ListAspekController::class, 'edit'])->name('listaspek.edit');
+Route::post('/list-aspek/update', [ListAspekController::class, 'update'])->name('listaspek.update');
+Route::delete('/list-aspek/delete/{id}', [ListAspekController::class, 'destroy'])->name('listaspek.delete');
 
 #FORM ASSESSMENT
 Route::get('/form-assessement', [FormAssessementController::class, 'index'])->name('formassessement');
@@ -142,3 +156,5 @@ Route::get('/pengampu', [PengampuController::class, 'index'])->name('pengampu');
 
 Route::get('/rehabilitasi', [RehabilitasiController::class, 'index'])->name('rehabilitasi');
 Route::get('/rehabilitasi/load-rehabilitasi', [RehabilitasiController::class, 'load_data'])->name('load_rehabilitasi');
+Route::get('/rehabilitasi/detail/{id}', [RehabilitasiController::class, 'detail'])->name('rehabilitasi.detail');
+Route::get('/rehabilitasi/load-rehabilitasi-perkembangan/{id}', [RehabilitasiController::class, 'load_data_perkembangan'])->name('load_rehabilitasi_perkembangan');
