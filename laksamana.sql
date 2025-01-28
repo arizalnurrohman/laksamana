@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2025 at 02:41 AM
+-- Generation Time: Jan 28, 2025 at 12:00 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -1063,6 +1063,7 @@ CREATE TABLE `laksa_ms_status` (
   `id` varchar(36) NOT NULL,
   `status` varchar(100) DEFAULT NULL,
   `jenis_layanan` enum('residensial','non-residensial','','') NOT NULL,
+  `style` varchar(100) DEFAULT NULL,
   `sort` tinyint(3) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1073,20 +1074,20 @@ CREATE TABLE `laksa_ms_status` (
 -- Dumping data for table `laksa_ms_status`
 --
 
-INSERT INTO `laksa_ms_status` (`id`, `status`, `jenis_layanan`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('1ba4b694-db8b-11ef-9f06-244bfebc0c45', 'Dokumen Serah Terima Selesai di Generate', 'residensial', 6, NULL, NULL, NULL),
-('23ac51ea-db8b-11ef-9f06-244bfebc0c45', 'Menunggu Proses Assessment', 'residensial', 7, NULL, NULL, NULL),
-('2ae4ad34-db8b-11ef-9f06-244bfebc0c45', 'Proses Assessment Selesai', 'residensial', 8, NULL, NULL, NULL),
-('3cdad447-db8b-11ef-9f06-244bfebc0c45', 'Menunggu Proses Penentuan Layanan', 'residensial', 9, NULL, NULL, NULL),
-('462ce22c-db8b-11ef-9f06-244bfebc0c45', 'Tahap Rehabilitasi', 'residensial', 10, NULL, NULL, NULL),
-('56bd1150-db8b-11ef-9f06-244bfebc0c45', 'Evaluasi Laporan Perkembangan', 'residensial', 11, NULL, NULL, NULL),
-('651a521f-db8b-11ef-9f06-244bfebc0c45', 'Proses Terminasi', 'residensial', 12, NULL, NULL, NULL),
-('7078dbc5-db8a-11ef-9f06-244bfebc0c45', 'Menunggu Persetujuan Kepala', 'residensial', 4, NULL, NULL, NULL),
-('7918fc82-db8a-11ef-9f06-244bfebc0c45', 'Kepala Menyetujui Usulan Residensial', 'residensial', 5, NULL, NULL, NULL),
-('a961e7f6-db89-11ef-9f06-244bfebc0c45', 'Draft - Usulan Residensial', 'residensial', 1, NULL, NULL, NULL),
-('b4a5adb3-db89-11ef-9f06-244bfebc0c45', 'Draft - Usulan Non Residensial', 'non-residensial', 0, NULL, NULL, NULL),
-('b995d70b-db89-11ef-9f06-244bfebc0c45', 'Input - Residensial', 'residensial', 2, NULL, NULL, NULL),
-('be10c279-db89-11ef-9f06-244bfebc0c45', 'Proses - Residensial', 'residensial', 3, NULL, NULL, NULL);
+INSERT INTO `laksa_ms_status` (`id`, `status`, `jenis_layanan`, `style`, `sort`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('1ba4b694-db8b-11ef-9f06-244bfebc0c45', 'Dokumen Serah Terima Selesai di Generate', 'residensial', 'danger', 6, NULL, NULL, NULL),
+('23ac51ea-db8b-11ef-9f06-244bfebc0c45', 'Menunggu Proses Assessment', 'residensial', 'warning', 7, NULL, NULL, NULL),
+('2ae4ad34-db8b-11ef-9f06-244bfebc0c45', 'Proses Assessment Selesai', 'residensial', 'info', 8, NULL, NULL, NULL),
+('3cdad447-db8b-11ef-9f06-244bfebc0c45', 'Menunggu Proses Penentuan Layanan', 'residensial', 'primary', 9, NULL, NULL, NULL),
+('462ce22c-db8b-11ef-9f06-244bfebc0c45', 'Tahap Rehabilitasi', 'residensial', 'gray', 10, NULL, NULL, NULL),
+('56bd1150-db8b-11ef-9f06-244bfebc0c45', 'Evaluasi Laporan Perkembangan', 'residensial', 'primary', 11, NULL, NULL, NULL),
+('651a521f-db8b-11ef-9f06-244bfebc0c45', 'Proses Terminasi', 'residensial', 'warning', 12, NULL, NULL, NULL),
+('7078dbc5-db8a-11ef-9f06-244bfebc0c45', 'Menunggu Persetujuan Kepala', 'residensial', 'secondary', 4, NULL, NULL, NULL),
+('7918fc82-db8a-11ef-9f06-244bfebc0c45', 'Kepala Menyetujui Usulan Residensial', 'residensial', 'success', 5, NULL, NULL, NULL),
+('a961e7f6-db89-11ef-9f06-244bfebc0c45', 'Draft - Usulan Residensial', 'residensial', '', 1, NULL, NULL, NULL),
+('b4a5adb3-db89-11ef-9f06-244bfebc0c45', 'Draft - Usulan Non Residensial', 'non-residensial', '', 0, NULL, NULL, NULL),
+('b995d70b-db89-11ef-9f06-244bfebc0c45', 'Input - Residensial', 'residensial', 'primary', 2, NULL, NULL, NULL),
+('be10c279-db89-11ef-9f06-244bfebc0c45', 'Proses - Residensial', 'residensial', NULL, 3, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1145,7 +1146,9 @@ CREATE TABLE `laksa_tr_assessment` (
 INSERT INTO `laksa_tr_assessment` (`id`, `residensial_id`, `petugas_id`, `tgl_assessment`, `satuan_kerja`, `bantuan_id`, `assessment_json`, `uraian_komponen_layanan`, `intervensi_komponen_yang_diberikan`, `intervensi_uraian_komponen_layanan`, `intervensi_waktu_pemebrian_layanan`, `intervensi_pihak_yang_terlibat`, `rencana_intervensi_lanjutan`, `rekomendasi_catatan`, `created_at`, `updated_at`, `deleted_at`) VALUES
 ('864a32e0-eaae-40f1-877e-4749cab08f72', 'a8deb65a-ca8a-430b-88de-094f6f179d33', NULL, '2025-01-27', '123', '123', '{\"5ccf3c56-a2aa-42e6-b4dc-b4147807b32f\":{\"3e77e2ad-8b0a-45db-8fc7-d900754ee4d4\":\"f68d74fd-4c92-410c-b612-a8bbb605d3bf\",\"f5fc6238-7d51-4a26-bdbf-b2829acb3b89\":\"asd\",\"b8aa3dcd-9532-43ba-80a5-40fe291e635c\":\"12312\",\"76c4e1d6-110e-423d-a8fe-aa887112d9f3\":\"123123\",\"9193af48-e2c5-437e-9761-8ae97a1942ac\":\"426a6b66-6080-4024-9f07-2d391224bad7\",\"4f148bc1-172b-432b-8d95-e3ad32a18a0d\":\"123123\"},\"c1652da7-be7d-4626-99e3-953d1c4f0441\":{\"bbdff4e5-7f77-438b-9284-f4f893ee0a6d\":\"8f4b906b-6b40-406a-bffd-821f5851c1dc\",\"0f46a9cb-759a-4da9-b021-7aa75af605ee\":\"e427beee-addc-46ff-b0bc-a4b91df3c1eb\",\"c6d802db-7744-4f47-a77b-e3bbed749573\":\"2a180465-ba8b-46eb-afd1-d6be4c006c3d\",\"2acf8af7-f819-47b5-a20f-43c66fa96430\":\"1231\",\"1f1dddd9-46e2-4835-810b-84edb24a20be\":\"6ca4ec67-d562-4080-8e0a-7c40b740c07f\",\"02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6\":\"f6a02dbc-b0a6-4fbd-a3d6-bef88fa0d4a6\",\"a96973ca-c11b-426a-a282-09c311a7acd8\":\"ccb122d6-84ac-499c-bf69-4b64bc0c7465\",\"5819ae17-81f5-4a6d-bdf3-a801625d36f0\":\"9b9ab6e7-520f-4488-9f9d-1dc5f4e5e24b\",\"6f2b0d95-bcb0-4c17-beee-e342f14831a8\":\"d7fa2ca4-70f6-48c0-a897-6c0b11d2e7d4\",\"27b8abeb-0a2c-479e-97de-47cef748b821\":\"01bcd2a9-bb91-4706-bc54-0b09db32075c\",\"af277a47-fd2d-4df5-a4f3-0a0d7278a7a1\":\"8dfd17da-ab23-405f-b5c5-9c8361b318bb\"},\"3f911a94-79a7-4afd-8e2d-b959feaa31d7\":{\"1f3d613e-1c7b-4204-9f88-4d6b70e4da8e\":\"533a7f65-df54-4d1b-892d-f17ff86ae355\",\"945fd0fd-3d30-4306-b605-a0f714078aba\":\"qweqweqwe\",\"3e100749-03bf-4fb5-9df3-7c031d584259\":{},\"5a6af5f4-2dc8-432a-b9e3-6ad8e6eb4e5d\":{},\"b80a7047-0bdb-4b86-b1c1-32399523ebb4\":{},\"a01d6da8-a517-4dde-81c4-091e93978a92\":{}}}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 03:06:57', '2025-01-27 03:06:57', NULL),
 ('a1a12817-c929-456a-85e9-084e5f3ac64d', 'fc57c9b2-6628-4aeb-bf49-ffee3164f15b', NULL, '2025-01-27', '123', '123', '{\"5ccf3c56-a2aa-42e6-b4dc-b4147807b32f\":{\"3e77e2ad-8b0a-45db-8fc7-d900754ee4d4\":\"f68d74fd-4c92-410c-b612-a8bbb605d3bf\",\"f5fc6238-7d51-4a26-bdbf-b2829acb3b89\":\"qeqwe\",\"b8aa3dcd-9532-43ba-80a5-40fe291e635c\":\"1231231\",\"76c4e1d6-110e-423d-a8fe-aa887112d9f3\":\"2\",\"9193af48-e2c5-437e-9761-8ae97a1942ac\":\"426a6b66-6080-4024-9f07-2d391224bad7\",\"4f148bc1-172b-432b-8d95-e3ad32a18a0d\":\"232323\"},\"c1652da7-be7d-4626-99e3-953d1c4f0441\":{\"bbdff4e5-7f77-438b-9284-f4f893ee0a6d\":\"8f4b906b-6b40-406a-bffd-821f5851c1dc\",\"0f46a9cb-759a-4da9-b021-7aa75af605ee\":\"c0a383b1-529a-49a5-93fe-627ffa94c984\",\"c6d802db-7744-4f47-a77b-e3bbed749573\":\"409c30c1-5519-4e65-8546-ccba4d8721f0\",\"2acf8af7-f819-47b5-a20f-43c66fa96430\":\"222\",\"1f1dddd9-46e2-4835-810b-84edb24a20be\":\"6ca4ec67-d562-4080-8e0a-7c40b740c07f\",\"02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6\":\"79dd9f1f-96be-4ace-88b5-19e46950a8e6\",\"a96973ca-c11b-426a-a282-09c311a7acd8\":\"ccb122d6-84ac-499c-bf69-4b64bc0c7465\",\"5819ae17-81f5-4a6d-bdf3-a801625d36f0\":\"7cddc3d7-5200-430b-9bc1-eca515513f50\",\"6f2b0d95-bcb0-4c17-beee-e342f14831a8\":\"d7fa2ca4-70f6-48c0-a897-6c0b11d2e7d4\",\"27b8abeb-0a2c-479e-97de-47cef748b821\":\"01bcd2a9-bb91-4706-bc54-0b09db32075c\",\"af277a47-fd2d-4df5-a4f3-0a0d7278a7a1\":\"0a1cf00d-73c6-4cfd-9a23-96799118678e\"},\"3f911a94-79a7-4afd-8e2d-b959feaa31d7\":{\"3e100749-03bf-4fb5-9df3-7c031d584259\":\"qwewqe\",\"5a6af5f4-2dc8-432a-b9e3-6ad8e6eb4e5d\":\"qweqweq\",\"b80a7047-0bdb-4b86-b1c1-32399523ebb4\":\"qweqw\",\"a01d6da8-a517-4dde-81c4-091e93978a92\":\"qweqwe\",\"1f3d613e-1c7b-4204-9f88-4d6b70e4da8e\":\"5272f3bc-40de-44e0-84fd-302c572447be\",\"945fd0fd-3d30-4306-b605-a0f714078aba\":\"qweqwe\"}}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:31:16', '2025-01-27 06:31:16', NULL),
-('e316fa82-1f21-4f38-84e2-5f73a3aa8e0e', '721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', NULL, '2025-01-27', '123', '123', '{\"5ccf3c56-a2aa-42e6-b4dc-b4147807b32f\":{\"3e77e2ad-8b0a-45db-8fc7-d900754ee4d4\":null,\"f5fc6238-7d51-4a26-bdbf-b2829acb3b89\":null,\"b8aa3dcd-9532-43ba-80a5-40fe291e635c\":null,\"76c4e1d6-110e-423d-a8fe-aa887112d9f3\":null,\"9193af48-e2c5-437e-9761-8ae97a1942ac\":null,\"4f148bc1-172b-432b-8d95-e3ad32a18a0d\":null},\"c1652da7-be7d-4626-99e3-953d1c4f0441\":{\"bbdff4e5-7f77-438b-9284-f4f893ee0a6d\":null,\"0f46a9cb-759a-4da9-b021-7aa75af605ee\":null,\"c6d802db-7744-4f47-a77b-e3bbed749573\":null,\"2acf8af7-f819-47b5-a20f-43c66fa96430\":null,\"1f1dddd9-46e2-4835-810b-84edb24a20be\":null,\"02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6\":null,\"a96973ca-c11b-426a-a282-09c311a7acd8\":null,\"5819ae17-81f5-4a6d-bdf3-a801625d36f0\":null,\"6f2b0d95-bcb0-4c17-beee-e342f14831a8\":null,\"27b8abeb-0a2c-479e-97de-47cef748b821\":null,\"af277a47-fd2d-4df5-a4f3-0a0d7278a7a1\":null},\"3f911a94-79a7-4afd-8e2d-b959feaa31d7\":{\"3e100749-03bf-4fb5-9df3-7c031d584259\":null,\"5a6af5f4-2dc8-432a-b9e3-6ad8e6eb4e5d\":null,\"b80a7047-0bdb-4b86-b1c1-32399523ebb4\":null,\"a01d6da8-a517-4dde-81c4-091e93978a92\":null,\"1f3d613e-1c7b-4204-9f88-4d6b70e4da8e\":null,\"945fd0fd-3d30-4306-b605-a0f714078aba\":null}}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 07:03:16', '2025-01-27 07:03:16', NULL);
+('df1b9412-c98f-4485-ab3c-6f09c9019f0a', '721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', NULL, '2025-01-28', '123', '123', '{\"5ccf3c56-a2aa-42e6-b4dc-b4147807b32f\":{\"3e77e2ad-8b0a-45db-8fc7-d900754ee4d4\":null,\"f5fc6238-7d51-4a26-bdbf-b2829acb3b89\":null,\"b8aa3dcd-9532-43ba-80a5-40fe291e635c\":null,\"76c4e1d6-110e-423d-a8fe-aa887112d9f3\":null,\"9193af48-e2c5-437e-9761-8ae97a1942ac\":null,\"4f148bc1-172b-432b-8d95-e3ad32a18a0d\":null},\"c1652da7-be7d-4626-99e3-953d1c4f0441\":{\"bbdff4e5-7f77-438b-9284-f4f893ee0a6d\":null,\"0f46a9cb-759a-4da9-b021-7aa75af605ee\":null,\"c6d802db-7744-4f47-a77b-e3bbed749573\":null,\"2acf8af7-f819-47b5-a20f-43c66fa96430\":null,\"1f1dddd9-46e2-4835-810b-84edb24a20be\":null,\"02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6\":null,\"a96973ca-c11b-426a-a282-09c311a7acd8\":null,\"5819ae17-81f5-4a6d-bdf3-a801625d36f0\":null,\"6f2b0d95-bcb0-4c17-beee-e342f14831a8\":null,\"27b8abeb-0a2c-479e-97de-47cef748b821\":null,\"af277a47-fd2d-4df5-a4f3-0a0d7278a7a1\":null},\"3f911a94-79a7-4afd-8e2d-b959feaa31d7\":{\"3e100749-03bf-4fb5-9df3-7c031d584259\":null,\"5a6af5f4-2dc8-432a-b9e3-6ad8e6eb4e5d\":null,\"b80a7047-0bdb-4b86-b1c1-32399523ebb4\":null,\"a01d6da8-a517-4dde-81c4-091e93978a92\":null,\"1f3d613e-1c7b-4204-9f88-4d6b70e4da8e\":null,\"945fd0fd-3d30-4306-b605-a0f714078aba\":null}}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-28 00:46:44', '2025-01-28 00:46:44', NULL),
+('e316fa82-1f21-4f38-84e2-5f73a3aa8e0e', '721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', NULL, '2025-01-27', '123', '123', '{\"5ccf3c56-a2aa-42e6-b4dc-b4147807b32f\":{\"3e77e2ad-8b0a-45db-8fc7-d900754ee4d4\":null,\"f5fc6238-7d51-4a26-bdbf-b2829acb3b89\":null,\"b8aa3dcd-9532-43ba-80a5-40fe291e635c\":null,\"76c4e1d6-110e-423d-a8fe-aa887112d9f3\":null,\"9193af48-e2c5-437e-9761-8ae97a1942ac\":null,\"4f148bc1-172b-432b-8d95-e3ad32a18a0d\":null},\"c1652da7-be7d-4626-99e3-953d1c4f0441\":{\"bbdff4e5-7f77-438b-9284-f4f893ee0a6d\":null,\"0f46a9cb-759a-4da9-b021-7aa75af605ee\":null,\"c6d802db-7744-4f47-a77b-e3bbed749573\":null,\"2acf8af7-f819-47b5-a20f-43c66fa96430\":null,\"1f1dddd9-46e2-4835-810b-84edb24a20be\":null,\"02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6\":null,\"a96973ca-c11b-426a-a282-09c311a7acd8\":null,\"5819ae17-81f5-4a6d-bdf3-a801625d36f0\":null,\"6f2b0d95-bcb0-4c17-beee-e342f14831a8\":null,\"27b8abeb-0a2c-479e-97de-47cef748b821\":null,\"af277a47-fd2d-4df5-a4f3-0a0d7278a7a1\":null},\"3f911a94-79a7-4afd-8e2d-b959feaa31d7\":{\"3e100749-03bf-4fb5-9df3-7c031d584259\":null,\"5a6af5f4-2dc8-432a-b9e3-6ad8e6eb4e5d\":null,\"b80a7047-0bdb-4b86-b1c1-32399523ebb4\":null,\"a01d6da8-a517-4dde-81c4-091e93978a92\":null,\"1f3d613e-1c7b-4204-9f88-4d6b70e4da8e\":null,\"945fd0fd-3d30-4306-b605-a0f714078aba\":null}}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 07:03:16', '2025-01-27 07:03:16', NULL),
+('f7e65ac2-0e93-4ce5-b156-7a9ed3bbab06', 'fc57c9b2-6628-4aeb-bf49-ffee3164f15b', NULL, '2025-01-28', '123', '123', '{\"5ccf3c56-a2aa-42e6-b4dc-b4147807b32f\":{\"3e77e2ad-8b0a-45db-8fc7-d900754ee4d4\":null,\"f5fc6238-7d51-4a26-bdbf-b2829acb3b89\":null,\"b8aa3dcd-9532-43ba-80a5-40fe291e635c\":null,\"76c4e1d6-110e-423d-a8fe-aa887112d9f3\":null,\"9193af48-e2c5-437e-9761-8ae97a1942ac\":null,\"4f148bc1-172b-432b-8d95-e3ad32a18a0d\":null},\"c1652da7-be7d-4626-99e3-953d1c4f0441\":{\"bbdff4e5-7f77-438b-9284-f4f893ee0a6d\":null,\"0f46a9cb-759a-4da9-b021-7aa75af605ee\":null,\"c6d802db-7744-4f47-a77b-e3bbed749573\":null,\"2acf8af7-f819-47b5-a20f-43c66fa96430\":null,\"1f1dddd9-46e2-4835-810b-84edb24a20be\":null,\"02a41d1b-f707-4ef0-9fac-ddb55e7d9dd6\":null,\"a96973ca-c11b-426a-a282-09c311a7acd8\":null,\"5819ae17-81f5-4a6d-bdf3-a801625d36f0\":null,\"6f2b0d95-bcb0-4c17-beee-e342f14831a8\":null,\"27b8abeb-0a2c-479e-97de-47cef748b821\":null,\"af277a47-fd2d-4df5-a4f3-0a0d7278a7a1\":null},\"3f911a94-79a7-4afd-8e2d-b959feaa31d7\":{\"3e100749-03bf-4fb5-9df3-7c031d584259\":null,\"5a6af5f4-2dc8-432a-b9e3-6ad8e6eb4e5d\":null,\"b80a7047-0bdb-4b86-b1c1-32399523ebb4\":null,\"a01d6da8-a517-4dde-81c4-091e93978a92\":null,\"1f3d613e-1c7b-4204-9f88-4d6b70e4da8e\":null,\"945fd0fd-3d30-4306-b605-a0f714078aba\":null}}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-28 03:33:46', '2025-01-28 03:33:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -1247,7 +1250,7 @@ CREATE TABLE `laksa_tr_rehabilitasi` (
 --
 
 INSERT INTO `laksa_tr_rehabilitasi` (`id`, `residensial_id`, `petugas_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('0cb2708d-dcbc-11ef-beef-244bfebc0c45', '721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', '1', '2025-01-08 15:02:12', NULL, NULL);
+('944aefa0-1140-47a9-ba5e-eeed27b90597', '721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', '1', '2025-01-28 03:53:22', '2025-01-28 03:53:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -1267,14 +1270,6 @@ CREATE TABLE `laksa_tr_rehabilitasi_perkembangan` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `laksa_tr_rehabilitasi_perkembangan`
---
-
-INSERT INTO `laksa_tr_rehabilitasi_perkembangan` (`id`, `rehabilitasi_id`, `tgl_perkembangan`, `foto_perkembangan`, `file_perkembangan`, `catatan_perkembangan`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('14f5cff3-dcbc-11ef-beef-244bfebc0c44', '0cb2708d-dcbc-11ef-beef-244bfebc0c45', '2025-01-27', NULL, NULL, NULL, NULL, NULL, NULL),
-('14f5cff3-dcbc-11ef-beef-244bfebc0c45', '0cb2708d-dcbc-11ef-beef-244bfebc0c45', '2025-01-27', NULL, NULL, NULL, NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -1291,15 +1286,6 @@ CREATE TABLE `laksa_tr_rehabilitasi_perkembangan_nilai` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `laksa_tr_rehabilitasi_perkembangan_nilai`
---
-
-INSERT INTO `laksa_tr_rehabilitasi_perkembangan_nilai` (`id`, `rehabilitasi_perkembangan_id`, `komponen_id`, `aspek_id`, `komponen_aspek_nilai`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('33cd632b-dcbc-11ef-beef-244bfebc0c45', '14f5cff3-dcbc-11ef-beef-244bfebc0c45', 'b99b69db-dcbb-11ef-beef-244bfebc0c45', 'e7ce00ea-dcbb-11ef-beef-244bfebc0c45', 1, NULL, NULL, NULL),
-('33cd7624-dcbc-11ef-beef-244bfebc0c45', '14f5cff3-dcbc-11ef-beef-244bfebc0c45', 'b99b69db-dcbb-11ef-beef-244bfebc0c45', 'e7ce0997-dcbb-11ef-beef-244bfebc0c45', 2, NULL, NULL, NULL),
-('33cd85cb-dcbc-11ef-beef-244bfebc0c45', '14f5cff3-dcbc-11ef-beef-244bfebc0c45', 'b99b69db-dcbb-11ef-beef-244bfebc0c45', 'e7ce12f6-dcbb-11ef-beef-244bfebc0c45', 3, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1345,9 +1331,9 @@ CREATE TABLE `laksa_tr_residensial` (
 --
 
 INSERT INTO `laksa_tr_residensial` (`id`, `petugas_id`, `jenis_layanan`, `tgl_penerimaan`, `sumber_id`, `pasien_id`, `kategori_ppks_id`, `kategori_ppks_json`, `masa_layanan`, `rencana_tgl_terminasi`, `pengampu_id`, `status_id`, `gedung_id`, `up_dokumen_rujukan`, `ragam_abh`, `informasi_kasus`, `jenis_rujukan`, `no_putusan_pengadilan`, `ragam_anak`, `ragam_kelompok_rentan`, `ragam_penyandang_disabilitas`, `ragam_disabilitas_fisik`, `ragam_disabilitas_intelektual`, `ragam_disabilitas_mental`, `ragam_disabilitas_sensorik`, `disabilitas_ganda_multi`, `penerima_atensi`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', '1', 'Residensial', '2025-01-04 00:00:00', '2', '3ff3d400-7322-4f8f-9df0-e984f8950ea1', '1dd96457-c226-4f42-a25b-693c9139823c', '{\"d87128fc-6a4b-4233-a4a0-472c59095c19\":\"2bc64477-9b2b-263a-88b7-e456d8d3707b\"}', 33, '2025-01-03', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', 'b995d70b-db89-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/LSodu3Tbvk6XIF2cuD724IGsvt7QFdetML7ngCgu.pdf', NULL, NULL, NULL, NULL, '2bc64477-9b2b-263a-88b7-e456d8d3707b', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:53:40', '2025-01-27 08:42:51', NULL),
-('a8deb65a-ca8a-430b-88de-094f6f179d33', '1', 'Residensial', '2025-01-15 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', 'b1895989-f137-4421-83bc-59206516da7f', '{\"13157c96-d3f6-429f-864e-7edcab14b468\":{\"90826db6-4e07-4cc2-9626-a3b4d57de472\":\"60c1ca3d-bb8d-40df-8580-e8c66b1934d4\"}}', 44, '2025-01-30', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '3cdad447-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/znHVuLJPvPwlLZRta2oQbw6IxD9a9OJJtq2u63ph.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '60c1ca3d-bb8d-40df-8580-e8c66b1934d4', NULL, NULL, NULL, NULL, '2025-01-27 03:05:32', '2025-01-27 03:31:28', NULL),
-('fc57c9b2-6628-4aeb-bf49-ffee3164f15b', '1', 'Residensial', '2025-01-08 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', '{\"bdb5fc88-e430-47f1-9ba4-cea2cac40244\":\"d7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5\",\"ebc5f1dd-4e2b-4fe2-97be-477291a311dd\":\"e4b07705-7562-4fa5-b77f-3338802a9645\",\"5332d470-4c5d-4df2-98d5-45b60805c978\":\"be9a2343-0021-43a7-9c54-46cd1d3832c1\",\"4aebdf03-5293-4724-a3d8-f9f2fca857d9\":\"1231231\"}', 33, '2025-01-15', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '3cdad447-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/uM8Wzjw9oUTqs0jvFPQszD6NGsJUUv3Dy1fQkCzy.pdf', 'd7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5', 'e4b07705-7562-4fa5-b77f-3338802a9645', 'be9a2343-0021-43a7-9c54-46cd1d3832c1', '1231231', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:25:14', '2025-01-27 06:31:38', NULL);
+('721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', '1', 'Residensial', '2025-01-04 00:00:00', '2', '3ff3d400-7322-4f8f-9df0-e984f8950ea1', '1dd96457-c226-4f42-a25b-693c9139823c', '{\"d87128fc-6a4b-4233-a4a0-472c59095c19\":\"2bc64477-9b2b-263a-88b7-e456d8d3707b\"}', 33, '2025-01-03', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '462ce22c-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/LSodu3Tbvk6XIF2cuD724IGsvt7QFdetML7ngCgu.pdf', NULL, NULL, NULL, NULL, '2bc64477-9b2b-263a-88b7-e456d8d3707b', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:53:40', '2025-01-28 03:53:22', NULL),
+('a8deb65a-ca8a-430b-88de-094f6f179d33', '1', 'Residensial', '2025-01-15 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', 'b1895989-f137-4421-83bc-59206516da7f', '{\"13157c96-d3f6-429f-864e-7edcab14b468\":{\"90826db6-4e07-4cc2-9626-a3b4d57de472\":\"60c1ca3d-bb8d-40df-8580-e8c66b1934d4\"}}', 44, '2025-01-30', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '7078dbc5-db8a-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/znHVuLJPvPwlLZRta2oQbw6IxD9a9OJJtq2u63ph.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '60c1ca3d-bb8d-40df-8580-e8c66b1934d4', NULL, NULL, NULL, NULL, '2025-01-27 03:05:32', '2025-01-28 03:33:11', NULL),
+('fc57c9b2-6628-4aeb-bf49-ffee3164f15b', '1', 'Residensial', '2025-01-08 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', '{\"bdb5fc88-e430-47f1-9ba4-cea2cac40244\":\"d7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5\",\"ebc5f1dd-4e2b-4fe2-97be-477291a311dd\":\"e4b07705-7562-4fa5-b77f-3338802a9645\",\"5332d470-4c5d-4df2-98d5-45b60805c978\":\"be9a2343-0021-43a7-9c54-46cd1d3832c1\",\"4aebdf03-5293-4724-a3d8-f9f2fca857d9\":\"1231231\"}', 33, '2025-01-15', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '3cdad447-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/uM8Wzjw9oUTqs0jvFPQszD6NGsJUUv3Dy1fQkCzy.pdf', 'd7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5', 'e4b07705-7562-4fa5-b77f-3338802a9645', 'be9a2343-0021-43a7-9c54-46cd1d3832c1', '1231231', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:25:14', '2025-01-28 03:33:54', NULL);
 
 -- --------------------------------------------------------
 
