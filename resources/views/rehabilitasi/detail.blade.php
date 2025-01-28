@@ -101,21 +101,52 @@
                         <div class="col-xl-9">
                             <div class="card">
                                 <div class="row">
-                                    <input type="hidden" name="layanan_residensial_id" id="layanan_residensial_id">
-                                    <p><strong>Nama Lengkap:</strong> <span data-field="nama"></span></p>
-                                    <p><strong>NIK:</strong> <span data-field="nik"></span></p>
-                                    <p><strong>NO KK:</strong> <span data-field="nokk"></span></p>
-                                    <p><strong>Tempat Lahir:</strong> <span data-field="tmp_lahir"></span></p>
-                                    <p><strong>Tanggal Lahir:</strong> <span data-field="tgl_lahir"></span></p>
-                                    <p><strong>Usia:</strong> <span data-field="usia"></span></p>
-                                    <p><strong>Provinsi KTP:</strong> <span data-field="provinsi"></span></p>
-                                    <p><strong>Kab/Kota KTP:</strong> <span data-field="kabupaten"></span></p>
-                                    <p><strong>Kecamatan KTP:</strong> <span data-field="kecamatan"></span></p>
-                                    <p><strong>Kelurahan KTP:</strong> <span data-field="kelurahan"></span></p>
-                                    <p><strong>Alamat KTP:</strong> <span data-field="alamat"></span></p>
-                                    <p><strong>Alamat Domisili:</strong> <span data-field="domisili"></span></p>
-                                    <p><strong>Agama:</strong> <span data-field="agama"></span></p>
-                                    <p><strong>Pendidikan:</strong> <span data-field="pendidikan"></span></p>
+                                    <input type="text" name="perkembangan_rehabilitasi_id" id="perkembangan_rehabilitasi_id" value="{{$rehabilitasi->id}}">
+                                    <div class="table-responsive">
+                                        <table id="list-data" class="table table-bordered table-striped">
+                                            <thead style="background-color: #343a40; color: #f8f9fa;">
+                                                <tr>
+                                                    <th width="25" rowspan="2" class="text-center align-middle">No</th>
+                                                    <th rowspan="2" class="text-center align-middle">Komponen</th>
+                                                    @foreach($aspek as $asp)
+                                                        <th width="40" colspan="3" class="text-center">{!! $asp->aspek !!}</th>
+                                                    @endforeach
+                                                </tr>
+                                                <tr>
+                                                    @foreach($aspek as $asp)
+                                                        <th width="20" class="text-center">Kurang</th>
+                                                        <th width="20" class="text-center">Cukup</th>
+                                                        <th width="20" class="text-center">Baik</th>
+                                                    @endforeach
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($komponen as $komponenx)
+                                                    <tr>
+                                                        <td class="text-center">{{ $no++ }}</td>
+                                                        <td>{{ $komponenx->komponen }}</td>
+                                                        @foreach($aspek as $aspekx)
+                                                            <td width="20" class="text-center">
+                                                                <div class="form-check form-check-inline">
+                                                                    <input type="radio" class="form-check-input" value="1" name="bsradio[{{ $komponenx->id }}][{{ $aspekx->id }}]">
+                                                                </div>
+                                                            </td>
+                                                            <td width="20" class="text-center">
+                                                                <div class="form-check form-check-inline">
+                                                                    <input type="radio" class="form-check-input" value="2" name="bsradio[{{ $komponenx->id }}][{{ $aspekx->id }}]">
+                                                                </div>
+                                                            </td>
+                                                            <td width="20" class="text-center">
+                                                                <div class="form-check form-check-inline">
+                                                                    <input type="radio" class="form-check-input" value="3" name="bsradio[{{ $komponenx->id }}][{{ $aspekx->id }}]">
+                                                                </div>
+                                                            </td>
+                                                        @endforeach
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>                                                                        
                                 </div>
                             </div>
                         </div>

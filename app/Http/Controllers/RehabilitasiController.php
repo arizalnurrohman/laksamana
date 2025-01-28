@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aspek;
+use App\Models\KomponenPerkembangan;
 use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
 use App\Models\RehabilitasiPerkembangan;
@@ -48,7 +50,11 @@ class RehabilitasiController extends Controller
         $rehabilitasi = $rehabilitasi->where('laksa_tr_rehabilitasi.id', '=', $id);
         $rehabilitasi = $rehabilitasi->first();
 
-        return view('rehabilitasi.detail', compact('rehabilitasi'))->with('no', 1);
+        $komponen     =KomponenPerkembangan::orderBy("sort","asc")->get();
+        $aspek        =Aspek::orderBy("sort","asc")->get();
+        
+
+        return view('rehabilitasi.detail', compact('rehabilitasi','komponen','aspek'))->with('no', 1);
     }
 
     public function load_data()
