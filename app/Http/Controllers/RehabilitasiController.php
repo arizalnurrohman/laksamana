@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Models\Aspek;
-use App\Models\KomponenPerkembangan;
+use Illuminate\Support\Str;
 use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
+use App\Models\KomponenPerkembangan;
 use App\Models\RehabilitasiPerkembangan;
+use App\Models\RehabilitasiPerkembanganNilai;
 
 class RehabilitasiController extends Controller
 {
+    private $error;
+    private $success;
     // function __construct()
     // {
     //     $fix_roles      =array();
@@ -83,6 +88,107 @@ class RehabilitasiController extends Controller
         }
         return \response()->json($data);
     }
+
+    public function store_PerkembanganRehabilitasi(Request $request){
+        // Validasi data
+        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'], $this->detail_rules()['MESSAGE']);
+
+        if ($validator->fails()) {
+            $this->error[] = ($validator->errors()->all())[0];
+        } else {
+            // dd($request->perkembangan);
+            foreach($request->perkembangan as $key=>$perkembanganx){
+                if(count($perkembanganx)!==3){
+                    $this->error[]="Perkembangan Komponen ".((KomponenPerkembangan::where("id",$key)->first())->komponen)." Belum Lengkap<br>";
+                }
+            }
+        }
+
+        if (!$this->error) {
+            // dd($request->all());
+            // Simpan file unggahan
+            $fotoPath = null;
+            $kkPath = null;
+            $aktePath = null;
+
+            if ($request->hasFile('foto')) {
+                $fotoPath = $request->file('foto')->store('uploads/perkembangan/foto', 'public');
+            }
+
+            if ($request->hasFile('file')) {
+                $filePath = $request->file('file')->store('uploads/perkembangan/file', 'public');
+            }
+
+            // Payload data pasien
+            $count_success=0;
+            $count_errors =0;
+
+            #SAVE FEHABILITASI PERKEMBANGAN------
+
+            $rehabilitasi=[
+                'id'                    =>Str::uuid()->toString(),
+                'rehabilitasi_id'       =>$request->perkembangan_rehabilitasi_id,
+                'tgl_perkembangan'      =>$request->perkembangan_tanggal,
+                'foto_perkembangan'     =>$fotoPath,
+                'file_perkembangan'     =>$filePath,
+                'catatan_perkembangan'  =>$request->perkembangan_catatan,
+            ];
+            if(RehabilitasiPerkembangan::create($rehabilitasi)){
+                foreach($request->perkembangan as $key=>$perkembanganx){
+                    foreach($perkembanganx as $aspek_id=>$value_aspek){
+                        $payload = [
+                            'id'                            => Str::uuid()->toString(),
+                            'rehabilitasi_perkembangan_id'  => $rehabilitasi['id'],
+                            'komponen_id'                   => $request->key,
+                            'aspek_id'                      => $aspek_id,
+                            'komponen_aspek_nilai'          => $value_aspek,
+                        ];
+
+                        if (RehabilitasiPerkembanganNilai::create($payload)) {
+                            $count_success++;
+                        }else{
+                            $count_errors++;
+                        }
+                    }
+                }
+            }
+
+            if($count_errors <=0){
+                $this->success = true;
+            }
+        }
+
+        if ($this->success) {
+            $response = [
+                'status'  => 'success',
+                'message' => "Pemberian Perkembangan Rehabilitasi berhasil",
+            ];
+        }
+
+        if ($this->error) {
+            $response = [
+                'errors'  => 'Error',
+                'message' => $this->error,
+            ];
+        }
+
+        return response()->json($response);
+    }
+
+    function detail_rules(){
+        $rules=[
+            'perkembangan'            =>'required',
+            'perkembangan_tanggal'    =>'required',
+            'perkembangan_catatan'    =>'required',
+        ];
+        $messages=[
+            'perkembangan.required'           => 'Kolom Pilihan perkembangan  wajib diisi.',
+            'perkembangan_tanggal.required'   => 'Kolom Tanggal perkembangan  wajib diisi.',
+            'perkembangan_catatan.required'   => 'Kolom Catatan perkembangan  wajib diisi.',
+        ];
+        return array("RULE"=>$rules,"MESSAGE"=>$messages);
+    }
+
     public function load_data_perkembangan($id)
     {
         // dd("aa");

@@ -93,52 +93,51 @@
                 <h5 class="modal-title" id="layananModalLabel">Perkembangan Rehabilitasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="POST" id="addPerkembangan{{ $activeMenu->access }}ModalForm">
+            <form action="{{ route('rehabilitasi.store_perkembangan') }}" method="POST" id="addPerkembangan{{ $activeMenu->access }}ModalForm">
                 <div class="modal-body">
-                
                     <div class="row">
                         <!-- Kolom Kiri -->
                         <div class="col-xl-9">
                             <div class="card">
                                 <div class="row">
-                                    <input type="text" name="perkembangan_rehabilitasi_id" id="perkembangan_rehabilitasi_id" value="{{$rehabilitasi->id}}">
+                                    <input type="hidden" name="perkembangan_rehabilitasi_id" id="perkembangan_rehabilitasi_id" value="{{$rehabilitasi->id}}">
                                     <div class="table-responsive">
-                                        <table id="list-data" class="table table-bordered table-striped">
+                                        <table id="list-data" class="table table-bordered table-striped table-sm">
                                             <thead style="background-color: #343a40; color: #f8f9fa;">
                                                 <tr>
-                                                    <th width="25" rowspan="2" class="text-center align-middle">No</th>
-                                                    <th rowspan="2" class="text-center align-middle">Komponen</th>
+                                                    <th width="25" rowspan="2" class="text-center align-middle p-1">No</th>
+                                                    <th rowspan="2" class="text-center align-middle p-1">Komponen</th>
                                                     @foreach($aspek as $asp)
-                                                        <th width="40" colspan="3" class="text-center">{!! $asp->aspek !!}</th>
+                                                        <th width="40" colspan="3" class="text-center p-1">{!! $asp->aspek !!}</th>
                                                     @endforeach
                                                 </tr>
                                                 <tr>
                                                     @foreach($aspek as $asp)
-                                                        <th width="20" class="text-center">Kurang</th>
-                                                        <th width="20" class="text-center">Cukup</th>
-                                                        <th width="20" class="text-center">Baik</th>
+                                                        <th width="20" class="text-center p-1">Kurang</th>
+                                                        <th width="20" class="text-center p-1">Cukup</th>
+                                                        <th width="20" class="text-center p-1">Baik</th>
                                                     @endforeach
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($komponen as $komponenx)
                                                     <tr>
-                                                        <td class="text-center">{{ $no++ }}</td>
-                                                        <td>{{ $komponenx->komponen }}</td>
+                                                        <td class="text-center p-1">{{ $no++ }}</td>
+                                                        <td class="p-1">{{ $komponenx->komponen }}</td>
                                                         @foreach($aspek as $aspekx)
-                                                            <td width="20" class="text-center">
+                                                            <td width="20" class="text-center p-1">
                                                                 <div class="form-check form-check-inline">
-                                                                    <input type="radio" class="form-check-input" value="1" name="bsradio[{{ $komponenx->id }}][{{ $aspekx->id }}]">
+                                                                    <input type="radio" class="form-check-input" value="1" name="perkembangan[{{ $komponenx->id }}][{{ $aspekx->id }}]">
                                                                 </div>
                                                             </td>
-                                                            <td width="20" class="text-center">
+                                                            <td width="20" class="text-center p-1">
                                                                 <div class="form-check form-check-inline">
-                                                                    <input type="radio" class="form-check-input" value="2" name="bsradio[{{ $komponenx->id }}][{{ $aspekx->id }}]">
+                                                                    <input type="radio" class="form-check-input" value="2" name="perkembangan[{{ $komponenx->id }}][{{ $aspekx->id }}]">
                                                                 </div>
                                                             </td>
-                                                            <td width="20" class="text-center">
+                                                            <td width="20" class="text-center p-1">
                                                                 <div class="form-check form-check-inline">
-                                                                    <input type="radio" class="form-check-input" value="3" name="bsradio[{{ $komponenx->id }}][{{ $aspekx->id }}]">
+                                                                    <input type="radio" class="form-check-input" value="3" name="perkembangan[{{ $komponenx->id }}][{{ $aspekx->id }}]">
                                                                 </div>
                                                             </td>
                                                         @endforeach
@@ -146,7 +145,14 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                    </div>                                                                        
+                                    </div>
+                                                                                                          
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="form-label">Catatan Perkembangan: *</label>
+                                        <textarea class="form-control" name="perkembangan_catatan" rows="5"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -168,12 +174,12 @@
                                         <div class="file-list" id="fileListFoto"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="kategori_ppks">File Perkembangan</label>
-                                        <div class="custom-dropzone" onclick="document.getElementById('fotoInput').click();">
+                                        <label class="form-label" for="kategori_ppks">Upload File</label>
+                                        <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
                                             <p class="text-secondary">Drag & drop files here or click to select files</p>
-                                            <input type="file" id="fotoInput" name="foto" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'foto')">
+                                            <input type="file" id="fileInput" name="file" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'file')">
                                         </div>
-                                        <div class="file-list" id="fileListFoto"></div>
+                                        <div class="file-list" id="fileListFile"></div>
                                     </div>
                                 </div>
                                 
@@ -183,7 +189,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" form="layananModalForm">Simpan Perkembangan</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perkembangan</button>
                 </div>
             </form>
         </div>
@@ -199,7 +205,114 @@
     }
     $(document).ready(function () {
         load_this_data();
+
+        $("#addPerkembangan{{ $activeMenu->access }}ModalForm").submit(function(e){
+          e.preventDefault(); 
+            var btnx	=$('.btn-submit');
+            $(btnx).attr("disabled", true);
+            $(btnx).attr({type:'submit',value: 'Loading'});
+            $.ajax({
+              url:$(this).closest('form').attr('action'),
+              type:"post",
+              data:new FormData(this), 
+              processData:false,
+              contentType:false,
+              dataType: "json",
+              cache:false,
+              async:false,
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data){
+                  if($.isEmptyObject(data.errors)){
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        window.location = "{{ route('rehabilitasi.detail',$rehabilitasi->rehabilitasi_id) }}";
+                    });
+                  }else{
+                    $(btnx).removeAttr("disabled");
+                    $(btnx).attr({type:'submit',value: 'Simpan'});
+                    Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+                  }
+              },
+              error: function(err, exception) {
+                $(btnx).removeAttr("disabled");
+                $(btnx).attr({type:'submit',value: 'Simpan'});
+
+                Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : "Sistem Gagal Memproses Data",
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+              },
+            });
+        });
     });
+
+    // DROPZONE
+    // Fungsi untuk menangani unggahan file
+    function handleFileUpload(event, inputType) {
+        const files = event.target.files;
+        const fileList = document.getElementById('fileList' + capitalizeFirstLetter(inputType)); // Menentukan file list sesuai dengan input type
+        console.log(fileList);
+        fileList.innerHTML = ''; // Bersihkan daftar file sebelumnya
+
+        Array.from(files).forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-list-item';
+            fileItem.innerHTML = `
+                <span>${file.name}</span>
+                <button onclick="removeFile(event, '${inputType}', ${index})">&times;</button>
+            `;
+            fileList.appendChild(fileItem);
+        });
+    }
+
+    // Fungsi untuk menghapus file
+    function removeFile(event, inputType, index) {
+        const inputElement = document.getElementById(inputType + 'Input');
+        const files = Array.from(inputElement.files);
+        files.splice(index, 1);
+
+        // Membuat DataTransfer untuk mengganti file yang telah dihapus
+        const dataTransfer = new DataTransfer();
+        files.forEach(file => dataTransfer.items.add(file));
+        inputElement.files = dataTransfer.files;
+
+        // Refresh daftar file yang ditampilkan
+        handleFileUpload({ target: { files: dataTransfer.files } }, inputType);
+    }
+
+    // Fungsi untuk kapitalisasi huruf pertama pada string
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 </script>
 
 @endsection
