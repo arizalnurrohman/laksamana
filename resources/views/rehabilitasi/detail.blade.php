@@ -211,7 +211,7 @@
                         <div class="col-xl-9">
                             <div class="card">
                                 <div class="row">
-                                    <input type="hidden" name="perkembangan_rehabilitasi_id" id="edit_perkembangan_rehabilitasi_id" value="{{$rehabilitasi->id}}">
+                                    <input type="hidden" name="perkembangan_rehabilitasi_id" id="edit_perkembangan_rehabilitasi_id">
                                     <div class="table-responsive">
                                         <table id="list-data" class="table table-bordered table-striped table-sm">
                                             <thead style="background-color: #343a40; color: #f8f9fa;">
@@ -240,7 +240,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label class="form-label">Catatan Perkembangan: *</label>
-                                        <textarea class="form-control" name="edit_perkembangan_catatan" id="edit_perkembangan_catatan" rows="5"></textarea>
+                                        <textarea class="form-control" name="perkembangan_catatan" id="edit_perkembangan_catatan" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -252,7 +252,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-label">Tanggal Perkembangan: *</label>
-                                        <input type="date" class="form-control" name="edit_perkembangan_tanggal" placeholder="Tanggal Perkembangan" />
+                                        <input type="date" class="form-control" name="perkembangan_tanggal" placeholder="Tanggal Perkembangan" />
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" for="kategori_ppks">Foto Perkembangan</label>
@@ -637,6 +637,7 @@
                 $("#edit_perkembangan_tanggal").val(data.tgl);
                 $("#edit_perkembangan_foto").attr('src', data.foto);
                 $("#edit_perkembangan_file").attr('src', data.file);
+                $("#edit_perkembangan_rehabilitasi_id").val(data.id);
                 if(data.file){
                     $(".edit_perkembangan_file").removeClass("d-none");
                 }else{
@@ -651,7 +652,46 @@
     }
 
     function delete_form(id){
-        alert(id);
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan menghapus data ini ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/rehabilitasi/perkembangan-delete/${id}`,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon    : 'success',
+                            title   : 'Terhapus',
+                            html    : "Data telah dihapus.",
+                            showConfirmButton:  true ,
+                            timer   : 1000,
+                            customClass      : {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            load_this_data();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
     }
 </script>
 

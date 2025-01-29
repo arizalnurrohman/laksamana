@@ -114,7 +114,8 @@ class RehabilitasiController extends Controller
             "catatan"   =>$perkembangan->catatan_perkembangan,
             "foto"       =>$perkembangan->foto_perkembangan ? asset('storage/' . $perkembangan->foto_perkembangan) : '',
             "file"      =>$perkembangan->file_perkembangan ? asset('storage/' . $perkembangan->file_perkembangan) : '',
-            "tgl"       =>$perkembangan->tgl_perkembangan
+            "tgl"       =>$perkembangan->tgl_perkembangan,
+            "id"        =>$perkembangan->id,
         ];
     }
 
@@ -231,8 +232,9 @@ class RehabilitasiController extends Controller
         return response()->json($response);
     }
 
-    public function update_PerkembanganRehabilitasi(Request $request, $id){
+    public function store_PerkembanganRehabilitasiUpdate(Request $request){
         // Validasi data
+        // dd($request->all());
         $validator = Validator::make($request->all(), $this->detail_rules()['RULE'], $this->detail_rules()['MESSAGE']);
     
         if ($validator->fails()) {
@@ -246,7 +248,7 @@ class RehabilitasiController extends Controller
         }
     
         if (!$this->error) {
-            $rehabilitasi = RehabilitasiPerkembangan::find($id);
+            $rehabilitasi = RehabilitasiPerkembangan::find($request->perkembangan_rehabilitasi_id);
             if (!$rehabilitasi) {
                 return response()->json(['errors' => 'Error', 'message' => 'Data tidak ditemukan'], 404);
             }
@@ -336,7 +338,33 @@ class RehabilitasiController extends Controller
         return response()->json($response);
     }
     
-
+    public function destroy($id)
+    {
+        dd($id);
+        try {
+            // Cari dan hapus data
+            $perkembangan   = RehabilitasiPerkembangan::findOrFail($id);
+            $file_foto      =$perkembangan->foto_perkembangan;
+            $file_file      =$perkembangan->file_perkembangan;
+            
+            if ($perkembangan->delete()) {
+                // Hapus semua data terkait di RehabilitasiPerkembanganNilai
+                RehabilitasiPerkembanganNilai::where('rehabilitasi_perkembangan_id', $id)->delete();
+                if ($file_foto && \Storage::disk('public')->exists($file_foto)) {
+                    Storage::disk('public')->delete($file_foto);
+                }
+                if ($file_file && \Storage::disk('public')->exists($file_file)) {
+                    Storage::disk('public')->delete($file_file);
+                }
+                
+                return response()->json(['message' => 'Data deleted successfully!'], 200);
+            } else {
+                return response()->json(['message' => 'Failed to delete data.'], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete data.'], 500);
+        }
+    }
     
 
     function detail_rules(){
