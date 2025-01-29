@@ -204,7 +204,7 @@
                 <h5 class="modal-title" id="layananModalLabel">Perkembangan Rehabilitasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('rehabilitasi.store_perkembangan_update') }}" method="POST" id="addPerkembangan{{ $activeMenu->access }}ModalForm">
+            <form action="{{ route('rehabilitasi.store_perkembangan_update') }}" method="POST" id="editPerkembangan{{ $activeMenu->access }}ModalForm">
                 <div class="modal-body">
                     <div class="row">
                         <!-- Kolom Kiri -->
@@ -420,6 +420,74 @@
         load_this_data();
 
         $("#addPerkembangan{{ $activeMenu->access }}ModalForm").submit(function(e){
+          e.preventDefault(); 
+            var btnx	=$('.btn-submit');
+            $(btnx).attr("disabled", true);
+            $(btnx).attr({type:'submit',value: 'Loading'});
+            $.ajax({
+              url:$(this).closest('form').attr('action'),
+              type:"post",
+              data:new FormData(this), 
+              processData:false,
+              contentType:false,
+              dataType: "json",
+              cache:false,
+              async:false,
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data){
+                  if($.isEmptyObject(data.errors)){
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        window.location = "{{ route('rehabilitasi.detail',$rehabilitasi->rehabilitasi_id) }}";
+                    });
+                  }else{
+                    $(btnx).removeAttr("disabled");
+                    $(btnx).attr({type:'submit',value: 'Simpan'});
+                    Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+                  }
+              },
+              error: function(err, exception) {
+                $(btnx).removeAttr("disabled");
+                $(btnx).attr({type:'submit',value: 'Simpan'});
+
+                Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : "Sistem Gagal Memproses Data",
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+              },
+            });
+        });
+
+        $("#editPerkembangan{{ $activeMenu->access }}ModalForm").submit(function(e){
           e.preventDefault(); 
             var btnx	=$('.btn-submit');
             $(btnx).attr("disabled", true);

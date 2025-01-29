@@ -231,7 +231,7 @@ class RehabilitasiController extends Controller
     }
 
     public function store_PerkembanganRehabilitasiUpdate(Request $request){
-        dd($request->all());
+        // dd($request->all());
         // Validasi data
         $validator = Validator::make($request->all(), $this->detail_rules()['RULE'], $this->detail_rules()['MESSAGE']);
 
