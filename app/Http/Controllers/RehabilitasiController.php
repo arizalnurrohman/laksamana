@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
 use Validator;
 use App\Models\Aspek;
 use Illuminate\Support\Str;
@@ -230,92 +231,111 @@ class RehabilitasiController extends Controller
         return response()->json($response);
     }
 
-    public function store_PerkembanganRehabilitasiUpdate(Request $request){
-        // dd($request->all());
+    public function update_PerkembanganRehabilitasi(Request $request, $id){
         // Validasi data
         $validator = Validator::make($request->all(), $this->detail_rules()['RULE'], $this->detail_rules()['MESSAGE']);
-
+    
         if ($validator->fails()) {
             $this->error[] = ($validator->errors()->all())[0];
         } else {
-            // dd($request->perkembangan);
             foreach($request->perkembangan as $key=>$perkembanganx){
-                if(count($perkembanganx)!==3){
-                    $this->error[]="Perkembangan Komponen ".((KomponenPerkembangan::where("id",$key)->first())->komponen)." Belum Lengkap<br>";
+                if(count($perkembanganx) !== 3){
+                    $this->error[] = "Perkembangan Komponen ".((KomponenPerkembangan::where("id",$key)->first())->komponen)." Belum Lengkap<br>";
                 }
             }
         }
-
+    
         if (!$this->error) {
-            // dd($request->all());
-            // Simpan file unggahan
-            $fotoPath = null;
-            $kkPath = null;
-            $aktePath = null;
+            $rehabilitasi = RehabilitasiPerkembangan::find($id);
+            if (!$rehabilitasi) {
+                return response()->json(['errors' => 'Error', 'message' => 'Data tidak ditemukan'], 404);
+            }
 
+            // Simpan file unggahan
+            $fotoPath = $rehabilitasi->foto_perkembangan;
+            $filePath = $rehabilitasi->file_perkembangan;
+    
             if ($request->hasFile('foto')) {
+                if ($fotoPath && \Storage::disk('public')->exists($fotoPath)) {
+                    Storage::disk('public')->delete($fotoPath);
+                }
                 $fotoPath = $request->file('foto')->store('uploads/perkembangan/foto', 'public');
             }
-
+    
             if ($request->hasFile('file')) {
+                if ($filePath && \Storage::disk('public')->exists($filePath)) {
+                    Storage::disk('public')->delete($fotoPath);
+                }
                 $filePath = $request->file('file')->store('uploads/perkembangan/file', 'public');
             }
-
-            // Payload data pasien
-            $count_success=0;
-            $count_errors =0;
-
-            #SAVE FEHABILITASI PERKEMBANGAN------
-
-            $rehabilitasi=[
-                'id'                    =>Str::uuid()->toString(),
-                'rehabilitasi_id'       =>$request->perkembangan_rehabilitasi_id,
-                'tgl_perkembangan'      =>$request->perkembangan_tanggal,
-                'foto_perkembangan'     =>$fotoPath,
-                'file_perkembangan'     =>$filePath,
-                'catatan_perkembangan'  =>$request->perkembangan_catatan,
-            ];
-            if(RehabilitasiPerkembangan::create($rehabilitasi)){
-                foreach($request->perkembangan as $key=>$perkembanganx){
-                    foreach($perkembanganx as $aspek_id=>$value_aspek){
-                        $payload = [
-                            'id'                            => Str::uuid()->toString(),
-                            'rehabilitasi_perkembangan_id'  => $rehabilitasi['id'],
-                            'komponen_id'                   => $key,
-                            'aspek_id'                      => $aspek_id,
-                            'komponen_aspek_nilai'          => $value_aspek,
-                        ];
-
+    
+            // Perbarui data rehabilitasi
+            $rehabilitasi->update([
+                'tgl_perkembangan'      => $request->perkembangan_tanggal,
+                'foto_perkembangan'     => $fotoPath,
+                'file_perkembangan'     => $filePath,
+                'catatan_perkembangan'  => $request->perkembangan_catatan,
+            ]);
+    
+            $count_success = 0;
+            $count_errors = 0;
+    
+            // Perbarui atau buat ulang nilai perkembangan
+            foreach ($request->perkembangan as $key => $perkembanganx) {
+                foreach ($perkembanganx as $aspek_id => $value_aspek) {
+                    $payload = [
+                        'komponen_aspek_nilai' => $value_aspek,
+                    ];
+                    
+                    $nilai = RehabilitasiPerkembanganNilai::where([
+                        ['rehabilitasi_perkembangan_id', '=', $rehabilitasi->id],
+                        ['komponen_id', '=', $key],
+                        ['aspek_id', '=', $aspek_id]
+                    ])->first();
+    
+                    if ($nilai) {
+                        if ($nilai->update($payload)) {
+                            $count_success++;
+                        } else {
+                            $count_errors++;
+                        }
+                    } else {
+                        $payload['id'] = Str::uuid()->toString();
+                        $payload['rehabilitasi_perkembangan_id'] = $rehabilitasi->id;
+                        $payload['komponen_id'] = $key;
+                        $payload['aspek_id'] = $aspek_id;
+                        
                         if (RehabilitasiPerkembanganNilai::create($payload)) {
                             $count_success++;
-                        }else{
+                        } else {
                             $count_errors++;
                         }
                     }
                 }
             }
-
-            if($count_errors <=0){
+    
+            if ($count_errors <= 0) {
                 $this->success = true;
             }
         }
-
+    
         if ($this->success) {
             $response = [
                 'status'  => 'success',
-                'message' => "Pemberian Perkembangan Rehabilitasi berhasil",
+                'message' => "Perkembangan Rehabilitasi berhasil diperbarui",
             ];
         }
-
+    
         if ($this->error) {
             $response = [
                 'errors'  => 'Error',
                 'message' => $this->error,
             ];
         }
-
+    
         return response()->json($response);
     }
+    
 
     
 
