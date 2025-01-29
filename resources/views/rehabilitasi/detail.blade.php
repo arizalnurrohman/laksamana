@@ -73,7 +73,7 @@
                             <tr>
                                 <th width="25">No</th>
                                 <th>Tanggal Perkembangan</th>
-                                <th width="40">IMG</th>
+                                {{-- <th width="40">IMG</th> --}}
                                 <th width="40">Aksi</th>
                             </tr>
                         </thead>
@@ -195,13 +195,226 @@
         </div>
     </div>
 </div>
+
+{{-- Modal edit --}}
+<div class="modal fade" id="editPerkembangan{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="layananModalLabel">Perkembangan Rehabilitasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('rehabilitasi.store_perkembangan_update') }}" method="POST" id="addPerkembangan{{ $activeMenu->access }}ModalForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Kolom Kiri -->
+                        <div class="col-xl-9">
+                            <div class="card">
+                                <div class="row">
+                                    <input type="hidden" name="perkembangan_rehabilitasi_id" id="edit_perkembangan_rehabilitasi_id" value="{{$rehabilitasi->id}}">
+                                    <div class="table-responsive">
+                                        <table id="list-data" class="table table-bordered table-striped table-sm">
+                                            <thead style="background-color: #343a40; color: #f8f9fa;">
+                                                <tr>
+                                                    <th width="25" rowspan="2" class="text-center align-middle p-1">No</th>
+                                                    <th rowspan="2" class="text-center align-middle p-1">Komponen</th>
+                                                    @foreach($aspek as $asp)
+                                                        <th width="40" colspan="3" class="text-center p-1">{!! $asp->aspek !!}</th>
+                                                    @endforeach
+                                                </tr>
+                                                <tr>
+                                                    @foreach($aspek as $asp)
+                                                        <th width="20" class="text-center p-1">Kurang</th>
+                                                        <th width="20" class="text-center p-1">Cukup</th>
+                                                        <th width="20" class="text-center p-1">Baik</th>
+                                                    @endforeach
+                                                </tr>
+                                            </thead>
+                                            <tbody id="html_append_edit">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                                                                                          
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="form-label">Catatan Perkembangan: *</label>
+                                        <textarea class="form-control" name="edit_perkembangan_catatan" id="edit_perkembangan_catatan" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kolom Kanan -->
+                        <div class="col-xl-3">
+                            <div class="card mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Tanggal Perkembangan: *</label>
+                                        <input type="date" class="form-control" name="edit_perkembangan_tanggal" placeholder="Tanggal Perkembangan" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="kategori_ppks">Foto Perkembangan</label>
+                                        <img src="" id="edit_perkembangan_foto" width="100%">
+                                        <div class="custom-dropzone" onclick="document.getElementById('fotoInput').click();">
+                                            <p class="text-secondary">Drag & drop files here or click to select files</p>
+                                            <input type="file" id="edit_fotoInput" name="foto" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'foto')">
+                                        </div>
+                                        <div class="file-list" id="edit_fileListFoto"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="kategori_ppks">Upload File</label>
+                                        <div class="row edit_perkembangan_file d-none">
+                                            <div class="form-group col-md-12">
+                                                <label class="form-label" for="kategori_ppks">File Perkembangan</label>
+                                                <iframe 
+                                                    id="edit_perkembangan_file" 
+                                                    src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" 
+                                                    class="w-100 border rounded" 
+                                                    style="height: 100px;" 
+                                                    allowfullscreen 
+                                                    title="PDF Viewer">
+                                                </iframe>
+                                            </div>
+                                        </div>
+                                        <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
+                                            <p class="text-secondary">Drag & drop files here or click to select files</p>
+                                            <input type="file" id="edit_fileInput" name="file" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'file')">
+                                        </div>
+                                        <div class="file-list" id="edit_fileListFile"></div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update Perkembangan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Detail --}}
+<div class="modal fade" id="detailPerkembangan{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="layananModalLabel">Perkembangan Rehabilitasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Kolom Kiri -->
+                    <div class="col-xl-9">
+                        <div class="card">
+                            <div class="row">
+                                <input type="hidden" name="perkembangan_rehabilitasi_id" id="perkembangan_rehabilitasi_id" value="{{$rehabilitasi->id}}">
+                                <div class="table-responsive">
+                                    <table id="list-data" class="table table-bordered table-striped table-sm">
+                                        <thead style="background-color: #343a40; color: #f8f9fa;">
+                                            <tr>
+                                                <th width="25" rowspan="2" class="text-center align-middle p-1">No</th>
+                                                <th rowspan="2" class="text-center align-middle p-1">Komponen</th>
+                                                @foreach($aspek as $asp)
+                                                    <th width="40" colspan="3" class="text-center p-1">{!! $asp->aspek !!}</th>
+                                                @endforeach
+                                            </tr>
+                                            <tr>
+                                                @foreach($aspek as $asp)
+                                                    <th width="20" class="text-center p-1">Kurang</th>
+                                                    <th width="20" class="text-center p-1">Cukup</th>
+                                                    <th width="20" class="text-center p-1">Baik</th>
+                                                @endforeach
+                                            </tr>
+                                        </thead>
+                                        <tbody id="html_append">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                                                                                        
+                            </div>
+                            <div class="row">
+                                
+                            </div>
+                            <div class="row detail_perkembangan_file d-none">
+                                <div class="form-group col-md-12">
+                                    <label class="form-label" for="kategori_ppks">File Perkembangan</label>
+                                    <iframe 
+                                        id="detail_perkembangan_file" 
+                                        src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" 
+                                        class="w-100 border rounded" 
+                                        style="height: 400px;" 
+                                        allowfullscreen 
+                                        title="PDF Viewer">
+                                    </iframe>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Kolom Kanan -->
+                    <div class="col-xl-3">
+                        <div class="card mb-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Tanggal Perkembangan: *</label>
+                                    <input type="date" class="form-control" name="perkembangan_tanggal" placeholder="Tanggal Perkembangan" id="detail_perkembangan_tanggal" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="kategori_ppks">Foto Perkembangan</label>
+                                    <img src="" id="detail_perkembangan_foto" width="100%">
+                                    {{-- <div class="custom-dropzone" onclick="document.getElementById('fotoInput').click();">
+                                        <p class="text-secondary">Drag & drop files here or click to select files</p>
+                                        <input type="file" id="fotoInput" name="foto" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'foto')">
+                                    </div>
+                                    <div class="file-list" id="fileListFoto"></div> --}}
+                                </div>
+                                <div class="form-group">
+                                        <label class="form-label">Catatan Perkembangan: *</label>
+                                        <textarea class="form-control" name="perkembangan_catatan" id="detail_perkembangan_catatan" rows="5"></textarea>
+                                    {{-- <label class="form-label" for="kategori_ppks">Upload File</label> --}}
+                                    {{-- <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
+                                        <p class="text-secondary">Drag & drop files here or click to select files</p>
+                                        <input type="file" id="fileInput" name="file" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event, 'file')">
+                                    </div>
+                                    <div class="file-list" id="fileListFile"></div> --}}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Simpan Perkembangan</button>
+            </div> --}}
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="zoomModal" tabindex="-1" aria-labelledby="zoomModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center foto_perkembangan">
+                
+            </div>
+        </div>
+    </div>
+</div>
  
 @endsection
 @section('add-js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function load_this_data(){
-        loadTabelData("list-data", "{{route('load_rehabilitasi_perkembangan',$rehabilitasi->rehabilitasi_id)}}", ['No', 'Tanggal Perkembangan','IMG','Aksi']);
+        loadTabelData("list-data", "{{route('load_rehabilitasi_perkembangan',$rehabilitasi->rehabilitasi_id)}}", ['No', 'Tanggal Perkembangan','Aksi']);
     }
     $(document).ready(function () {
         load_this_data();
@@ -312,6 +525,65 @@
     // Fungsi untuk kapitalisasi huruf pertama pada string
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function detail_form(id){
+        $("#html_append").html("");
+        $.ajax({
+            url: `/rehabilitasi/rehabilitasi-perkembangan/${id}`,
+            type: 'GET',
+            success: function (data) {
+                // $('#updateId').val(data.id);
+                // $('#updateKomponenPerkembangan').val(data.komponen);
+                // $('#updateUrutan').val(data.sort);
+                $('#detailPerkembangan{{ $activeMenu->access }}Modal').modal('show');
+                $("#html_append").append(data.html);
+                $("#detail_perkembangan_catatan").html(data.catatan);
+                $("#detail_perkembangan_tanggal").val(data.tgl);
+                $("#detail_perkembangan_foto").attr('src', data.foto);
+                $("#detail_perkembangan_file").attr('src', data.file);
+                if(data.file){
+                    $(".detail_perkembangan_file").removeClass("d-none");
+                }else{
+                    $(".detail_perkembangan_file").addClass("d-none");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(`Error: ${error}`);
+                alert('Failed to fetch data. Please try again.');
+            }
+        });
+    }
+    function edit_form(id){
+        $("#html_append").html("");
+        $.ajax({
+            url: `/rehabilitasi/rehabilitasi-perkembangan/${id}`,
+            type: 'GET',
+            success: function (data) {
+                // $('#updateId').val(data.id);
+                // $('#updateKomponenPerkembangan').val(data.komponen);
+                // $('#updateUrutan').val(data.sort);
+                $('#editPerkembangan{{ $activeMenu->access }}Modal').modal('show');
+                $("#html_append_edit").append(data.html);
+                $("#edit_perkembangan_catatan").html(data.catatan);
+                $("#edit_perkembangan_tanggal").val(data.tgl);
+                $("#edit_perkembangan_foto").attr('src', data.foto);
+                $("#edit_perkembangan_file").attr('src', data.file);
+                if(data.file){
+                    $(".edit_perkembangan_file").removeClass("d-none");
+                }else{
+                    $(".edit_perkembangan_file").addClass("d-none");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(`Error: ${error}`);
+                alert('Failed to fetch data. Please try again.');
+            }
+        });
+    }
+
+    function delete_form(id){
+        alert(id);
     }
 </script>
 

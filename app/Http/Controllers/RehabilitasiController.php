@@ -62,6 +62,61 @@ class RehabilitasiController extends Controller
         return view('rehabilitasi.detail', compact('rehabilitasi','komponen','aspek'))->with('no', 1);
     }
 
+    public function get_rehabilitasiPerkembangan($id){
+        $perkembangan=RehabilitasiPerkembangan::where("id",$id)->first();
+        // dd($perkembangan);
+        $perkembangan_nilai=RehabilitasiPerkembanganNilai::where("rehabilitasi_perkembangan_id","=",$perkembangan->id);
+        // $perkembangan_nilai=$perkembangan_nilai->leftJoin('laksa_ms_komponen_perkembangan', 'laksa_tr_rehabilitasi_perkembangan_nilai.komponen_id', '=', 'laksa_ms_komponen_perkembangan.id');
+        // $perkembangan_nilai=$perkembangan_nilai->leftJoin('laksa_ms_aspek', 'laksa_tr_rehabilitasi_perkembangan_nilai.aspek_id', '=', 'laksa_ms_aspek.id');
+        // $perkembangan_nilai=$perkembangan_nilai->orderBy("laksa_ms_komponen_perkembangan.sort","ASC");
+        // $perkembangan_nilai=$perkembangan_nilai->orderBy("laksa_ms_aspek.sort","ASC");
+        $perkembangan_nilai=$perkembangan_nilai->get();
+        // dd($perkembangan_nilai);
+        $perkembangan_nilai_array=[];
+        foreach($perkembangan_nilai as $perkembangan_nilaix){
+            $perkembangan_nilai_array[$perkembangan_nilaix->komponen_id][$perkembangan_nilaix->aspek_id]=$perkembangan_nilaix->komponen_aspek_nilai;
+            // dd($perkembangan_nilaix->komponen_id);
+        }
+        // dd($perkembangan_nilai_array);
+
+        $komponen   =KomponenPerkembangan::orderBy("sort","asc")->get();
+        $aspek      =Aspek::orderBy("sort","asc")->get();
+        $html="";
+        $no=1;
+        foreach($komponen as $komponenx){
+            $html.='<tr>';
+                $html.='<td class="text-center p-1">'.$no.'</td>';
+                $html.='<td class="p-1">'.$komponenx->komponen.'</td>';
+                foreach($aspek as $aspekx){
+                    $html.='<td width="20" class="text-center p-1">';
+                        $html.='<div class="form-check form-check-inline">';
+                            $html.='<input type="radio" class="form-check-input" value="1" name="perkembangan['.$komponenx->id.']['.$aspekx->id.']" '.(isset($perkembangan_nilai_array[$komponenx->id][$aspekx->id]) ? ($perkembangan_nilai_array[$komponenx->id][$aspekx->id]==1 ? 'checked="Checked"' : '') : '').'>';
+                        $html.='</div>';
+                    $html.='</td>';
+                    $html.='<td width="20" class="text-center p-1">';
+                        $html.='<div class="form-check form-check-inline">';
+                            $html.='<input type="radio" class="form-check-input" value="2" name="perkembangan['.$komponenx->id.']['.$aspekx->id.']" '.(isset($perkembangan_nilai_array[$komponenx->id][$aspekx->id]) ? ($perkembangan_nilai_array[$komponenx->id][$aspekx->id]==2 ? 'checked="Checked"' : '') : '').'>';
+                        $html.='</div>';
+                    $html.='</td>';
+                    $html.='<td width="20" class="text-center p-1">';
+                        $html.='<div class="form-check form-check-inline">';
+                            $html.='<input type="radio" class="form-check-input" value="3" name="perkembangan['.$komponenx->id.']['.$aspekx->id.']" '.(isset($perkembangan_nilai_array[$komponenx->id][$aspekx->id]) ? ($perkembangan_nilai_array[$komponenx->id][$aspekx->id]==3 ? 'checked="Checked"' : '') : '').'>';
+                        $html.='</div>';
+                    $html.='</td>';
+                }
+            $html.='</tr>';
+            $no++;
+        }
+        
+        return [
+            "html"      =>$html,
+            "catatan"   =>$perkembangan->catatan_perkembangan,
+            "foto"       =>$perkembangan->foto_perkembangan ? asset('storage/' . $perkembangan->foto_perkembangan) : '',
+            "file"      =>$perkembangan->file_perkembangan ? asset('storage/' . $perkembangan->file_perkembangan) : '',
+            "tgl"       =>$perkembangan->tgl_perkembangan
+        ];
+    }
+
     public function load_data()
     {
         $rehabilitasi = Rehabilitasi::orderby("laksa_tr_residensial.created_at","asc");
@@ -139,7 +194,7 @@ class RehabilitasiController extends Controller
                         $payload = [
                             'id'                            => Str::uuid()->toString(),
                             'rehabilitasi_perkembangan_id'  => $rehabilitasi['id'],
-                            'komponen_id'                   => $request->key,
+                            'komponen_id'                   => $key,
                             'aspek_id'                      => $aspek_id,
                             'komponen_aspek_nilai'          => $value_aspek,
                         ];
@@ -175,6 +230,95 @@ class RehabilitasiController extends Controller
         return response()->json($response);
     }
 
+    public function store_PerkembanganRehabilitasiUpdate(Request $request){
+        dd($request->all());
+        // Validasi data
+        $validator = Validator::make($request->all(), $this->detail_rules()['RULE'], $this->detail_rules()['MESSAGE']);
+
+        if ($validator->fails()) {
+            $this->error[] = ($validator->errors()->all())[0];
+        } else {
+            // dd($request->perkembangan);
+            foreach($request->perkembangan as $key=>$perkembanganx){
+                if(count($perkembanganx)!==3){
+                    $this->error[]="Perkembangan Komponen ".((KomponenPerkembangan::where("id",$key)->first())->komponen)." Belum Lengkap<br>";
+                }
+            }
+        }
+
+        if (!$this->error) {
+            // dd($request->all());
+            // Simpan file unggahan
+            $fotoPath = null;
+            $kkPath = null;
+            $aktePath = null;
+
+            if ($request->hasFile('foto')) {
+                $fotoPath = $request->file('foto')->store('uploads/perkembangan/foto', 'public');
+            }
+
+            if ($request->hasFile('file')) {
+                $filePath = $request->file('file')->store('uploads/perkembangan/file', 'public');
+            }
+
+            // Payload data pasien
+            $count_success=0;
+            $count_errors =0;
+
+            #SAVE FEHABILITASI PERKEMBANGAN------
+
+            $rehabilitasi=[
+                'id'                    =>Str::uuid()->toString(),
+                'rehabilitasi_id'       =>$request->perkembangan_rehabilitasi_id,
+                'tgl_perkembangan'      =>$request->perkembangan_tanggal,
+                'foto_perkembangan'     =>$fotoPath,
+                'file_perkembangan'     =>$filePath,
+                'catatan_perkembangan'  =>$request->perkembangan_catatan,
+            ];
+            if(RehabilitasiPerkembangan::create($rehabilitasi)){
+                foreach($request->perkembangan as $key=>$perkembanganx){
+                    foreach($perkembanganx as $aspek_id=>$value_aspek){
+                        $payload = [
+                            'id'                            => Str::uuid()->toString(),
+                            'rehabilitasi_perkembangan_id'  => $rehabilitasi['id'],
+                            'komponen_id'                   => $key,
+                            'aspek_id'                      => $aspek_id,
+                            'komponen_aspek_nilai'          => $value_aspek,
+                        ];
+
+                        if (RehabilitasiPerkembanganNilai::create($payload)) {
+                            $count_success++;
+                        }else{
+                            $count_errors++;
+                        }
+                    }
+                }
+            }
+
+            if($count_errors <=0){
+                $this->success = true;
+            }
+        }
+
+        if ($this->success) {
+            $response = [
+                'status'  => 'success',
+                'message' => "Pemberian Perkembangan Rehabilitasi berhasil",
+            ];
+        }
+
+        if ($this->error) {
+            $response = [
+                'errors'  => 'Error',
+                'message' => $this->error,
+            ];
+        }
+
+        return response()->json($response);
+    }
+
+    
+
     function detail_rules(){
         $rules=[
             'perkembangan'            =>'required',
@@ -200,28 +344,26 @@ class RehabilitasiController extends Controller
         foreach ($rehabilitasi as $val) {
             $data[$no]['No']                    =($no+1);
             $data[$no]['Tanggal Perkembangan']  =date("d-m-Y",strtotime($val->tgl_perkembangan));
-            $data[$no]['IMG']          =0;
+            // $data[$no]['IMG']          ='<img src="'.asset('storage/' . $val->foto_perkembangan).'" alt="Foto Perkembangan" class="rounded avatar-100" style="max-width: 30px;  cursor: pointer;" data-bs-toggle="modal" data-bs-target="#zoomModal">';
 
             $data[$no]['Aksi']          ='<div class="btn-group" role="group" aria-label="Group Aksi">
-                                            <a href="'.route("rehabilitasi.detail",$val->rehabilitasi_id).'">
-                                            <button class="btn btn-sm btn-icon btn-info">
+                                            <button class="btn btn-sm btn-icon btn-info" Onclick="detail_form(\''.$val->id.'\')">
                                                 <span class="btn-inner">
                                                     <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.334 2.75H7.665C4.644 2.75 2.75 4.889 2.75 7.916V16.084C2.75 19.111 4.634 21.25 7.665 21.25H16.333C19.364 21.25 21.25 19.111 21.25 16.084V7.916C21.25 4.889 19.364 2.75 16.334 2.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M15.9393 12.0129H15.9483" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M11.9301 12.0129H11.9391" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M7.92128 12.0129H7.93028" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                            
                                                 </span>
                                             </button>
-                                            </a>
-                                                <button class="btn btn-sm btn-icon btn-warning">
-                                                    <span class="btn-inner">
-                                                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-20" width="20" height="20" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.3764 20.0279L18.1628 8.66544C18.6403 8.0527 18.8101 7.3443 18.6509 6.62299C18.513 5.96726 18.1097 5.34377 17.5049 4.87078L16.0299 3.69906C14.7459 2.67784 13.1541 2.78534 12.2415 3.95706L11.2546 5.23735C11.1273 5.39752 11.1591 5.63401 11.3183 5.76301C11.3183 5.76301 13.812 7.76246 13.8651 7.80546C14.0349 7.96671 14.1622 8.1817 14.1941 8.43969C14.2471 8.94493 13.8969 9.41792 13.377 9.48242C13.1329 9.51467 12.8994 9.43942 12.7297 9.29967L10.1086 7.21422C9.98126 7.11855 9.79025 7.13898 9.68413 7.26797L3.45514 15.3303C3.0519 15.8355 2.91395 16.4912 3.0519 17.1255L3.84777 20.5761C3.89021 20.7589 4.04939 20.8879 4.24039 20.8879L7.74222 20.8449C8.37891 20.8341 8.97316 20.5439 9.3764 20.0279ZM14.2797 18.9533H19.9898C20.5469 18.9533 21 19.4123 21 19.9766C21 20.5421 20.5469 21 19.9898 21H14.2797C13.7226 21 13.2695 20.5421 13.2695 19.9766C13.2695 19.4123 13.7226 18.9533 14.2797 18.9533Z" fill="currentColor"></path></svg>
-                                                    </span>
-                                                </button>
-                                                <button class="btn btn-sm btn-icon btn-danger" Onclick="delete_form(\''.$val->residensial_id.'\')">
-                                                    <span class="btn-inner">
-                                                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.2871 5.24297C20.6761 5.24297 21 5.56596 21 5.97696V6.35696C21 6.75795 20.6761 7.09095 20.2871 7.09095H3.71385C3.32386 7.09095 3 6.75795 3 6.35696V5.97696C3 5.56596 3.32386 5.24297 3.71385 5.24297H6.62957C7.22185 5.24297 7.7373 4.82197 7.87054 4.22798L8.02323 3.54598C8.26054 2.61699 9.0415 2 9.93527 2H14.0647C14.9488 2 15.7385 2.61699 15.967 3.49699L16.1304 4.22698C16.2627 4.82197 16.7781 5.24297 17.3714 5.24297H20.2871ZM18.8058 19.134C19.1102 16.2971 19.6432 9.55712 19.6432 9.48913C19.6626 9.28313 19.5955 9.08813 19.4623 8.93113C19.3193 8.78413 19.1384 8.69713 18.9391 8.69713H5.06852C4.86818 8.69713 4.67756 8.78413 4.54529 8.93113C4.41108 9.08813 4.34494 9.28313 4.35467 9.48913C4.35646 9.50162 4.37558 9.73903 4.40755 10.1359C4.54958 11.8992 4.94517 16.8102 5.20079 19.134C5.38168 20.846 6.50498 21.922 8.13206 21.961C9.38763 21.99 10.6811 22 12.0038 22C13.2496 22 14.5149 21.99 15.8094 21.961C17.4929 21.932 18.6152 20.875 18.8058 19.134Z" fill="currentColor" />
-                                                        </svg>
-                                                    </span>
-                                                </button>
+                                            <button class="btn btn-sm btn-icon btn-warning" Onclick="edit_form(\''.$val->id.'\')">
+                                                <span class="btn-inner">
+                                                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-20" width="20" height="20" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.3764 20.0279L18.1628 8.66544C18.6403 8.0527 18.8101 7.3443 18.6509 6.62299C18.513 5.96726 18.1097 5.34377 17.5049 4.87078L16.0299 3.69906C14.7459 2.67784 13.1541 2.78534 12.2415 3.95706L11.2546 5.23735C11.1273 5.39752 11.1591 5.63401 11.3183 5.76301C11.3183 5.76301 13.812 7.76246 13.8651 7.80546C14.0349 7.96671 14.1622 8.1817 14.1941 8.43969C14.2471 8.94493 13.8969 9.41792 13.377 9.48242C13.1329 9.51467 12.8994 9.43942 12.7297 9.29967L10.1086 7.21422C9.98126 7.11855 9.79025 7.13898 9.68413 7.26797L3.45514 15.3303C3.0519 15.8355 2.91395 16.4912 3.0519 17.1255L3.84777 20.5761C3.89021 20.7589 4.04939 20.8879 4.24039 20.8879L7.74222 20.8449C8.37891 20.8341 8.97316 20.5439 9.3764 20.0279ZM14.2797 18.9533H19.9898C20.5469 18.9533 21 19.4123 21 19.9766C21 20.5421 20.5469 21 19.9898 21H14.2797C13.7226 21 13.2695 20.5421 13.2695 19.9766C13.2695 19.4123 13.7226 18.9533 14.2797 18.9533Z" fill="currentColor"></path></svg>
+                                                </span>
+                                            </button>
+                                            <button class="btn btn-sm btn-icon btn-danger" Onclick="delete_form(\''.$val->residensial_id.'\')">
+                                                <span class="btn-inner">
+                                                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M20.2871 5.24297C20.6761 5.24297 21 5.56596 21 5.97696V6.35696C21 6.75795 20.6761 7.09095 20.2871 7.09095H3.71385C3.32386 7.09095 3 6.75795 3 6.35696V5.97696C3 5.56596 3.32386 5.24297 3.71385 5.24297H6.62957C7.22185 5.24297 7.7373 4.82197 7.87054 4.22798L8.02323 3.54598C8.26054 2.61699 9.0415 2 9.93527 2H14.0647C14.9488 2 15.7385 2.61699 15.967 3.49699L16.1304 4.22698C16.2627 4.82197 16.7781 5.24297 17.3714 5.24297H20.2871ZM18.8058 19.134C19.1102 16.2971 19.6432 9.55712 19.6432 9.48913C19.6626 9.28313 19.5955 9.08813 19.4623 8.93113C19.3193 8.78413 19.1384 8.69713 18.9391 8.69713H5.06852C4.86818 8.69713 4.67756 8.78413 4.54529 8.93113C4.41108 9.08813 4.34494 9.28313 4.35467 9.48913C4.35646 9.50162 4.37558 9.73903 4.40755 10.1359C4.54958 11.8992 4.94517 16.8102 5.20079 19.134C5.38168 20.846 6.50498 21.922 8.13206 21.961C9.38763 21.99 10.6811 22 12.0038 22C13.2496 22 14.5149 21.99 15.8094 21.961C17.4929 21.932 18.6152 20.875 18.8058 19.134Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </button>
                                         </div>';
             $no++;
         }

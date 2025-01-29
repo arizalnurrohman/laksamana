@@ -159,3 +159,5 @@ Route::get('/rehabilitasi/load-rehabilitasi', [RehabilitasiController::class, 'l
 Route::get('/rehabilitasi/detail/{id}', [RehabilitasiController::class, 'detail'])->name('rehabilitasi.detail');
 Route::get('/rehabilitasi/load-rehabilitasi-perkembangan/{id}', [RehabilitasiController::class, 'load_data_perkembangan'])->name('load_rehabilitasi_perkembangan');
 Route::post('/rehabilitasi/store-perkembangan', [RehabilitasiController::class, 'store_PerkembanganRehabilitasi'])->name('rehabilitasi.store_perkembangan');
+Route::post('/rehabilitasi/store-perkembangan-update', [RehabilitasiController::class, 'store_PerkembanganRehabilitasiUpdate'])->name('rehabilitasi.store_perkembangan_update');
+Route::get('/rehabilitasi/rehabilitasi-perkembangan/{id}', [RehabilitasiController::class, 'get_rehabilitasiPerkembangan'])->name('rehabilitasi.rehabilitasi_perkembangan');
