@@ -197,20 +197,63 @@
                 $(btnx).attr({type:'submit',value: 'Simpan'});
 
                 Swal.fire({
-                        icon    : 'error',
-                        title   : 'Gagal',
-                        html    : "Sistem Gagal Memproses Data",
-                        showConfirmButton:  true ,
-                        timer   : 1000,
-                        customClass      : {
-                            container: 'swal-container'
-                        }
-                    }).then(function() {
-                       
-                    });
+                    icon    : 'error',
+                    title   : 'Gagal',
+                    html    : "Sistem Gagal Memproses Data",
+                    showConfirmButton:  true ,
+                    timer   : 1000,
+                    customClass      : {
+                        container: 'swal-container'
+                    }
+                }).then(function() {
+                    
+                });
               },
             });
-        });		
+        });
+        
+        $('#residense_rencana_terminasi').on('change', function() {
+            let startDateVal = $('#residense_tgl_penerimaan').val();
+            
+            if (!startDateVal) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Silakan isi tanggal penerimaan terlebih dahulu.'
+                });
+                return;
+            }
+            
+            let startDate = new Date(startDateVal);
+            let selectedDate = new Date($(this).val());
+            
+            if (!isNaN(startDate.getTime()) && !isNaN(selectedDate.getTime())) {
+                let yearDiff = selectedDate.getFullYear() - startDate.getFullYear();
+                let monthDiff = selectedDate.getMonth() - startDate.getMonth();
+                let dayDiff = selectedDate.getDate() - startDate.getDate();
+                
+                if (dayDiff < 0) {
+                    monthDiff -= 1;
+                    dayDiff += new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate();
+                }
+                
+                let totalMonths = (yearDiff * 12) + monthDiff + (dayDiff / 30);
+                let years = Math.floor(totalMonths / 12);
+                let months = Math.floor(totalMonths % 12);
+                let fractionMonth = totalMonths % 1;
+                
+                let formattedMonths = years > 0 ? months : (months + fractionMonth).toFixed(1);
+                let result = years > 0 ? `${years} tahun ${formattedMonths} bulan` : `${formattedMonths} bulan`;
+                
+                $('#residense_masa_layanan').val(result);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Silakan pilih tanggal yang valid.'
+                });
+            }
+        });
     });
 
     

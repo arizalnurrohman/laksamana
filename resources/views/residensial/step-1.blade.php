@@ -22,7 +22,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Tanggal Masuk/Penerimaan: *</label>
-                <input type="date" class="form-control" name="residense_tgl_penerimaan" placeholder="UserName" />
+                <input type="date" class="form-control" name="residense_tgl_penerimaan" placeholder="UserName" id="residense_tgl_penerimaan" />
             </div>
         </div>
         <div class="col-md-12">
@@ -50,13 +50,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Masa Layanan: *</label>
-                <input type="text" class="form-control" name="residense_masa_layanan" placeholder="Masa Layanan" />
+                <input type="text" class="form-control" name="residense_masa_layanan" placeholder="Masa Layanan" readonly id="residense_masa_layanan" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Rencana Terminasi: *</label>
-                <input type="date" class="form-control" name="residense_rencana_terminasi" placeholder="Rencana Terminasi" />
+                <input type="date" class="form-control" name="residense_rencana_terminasi" placeholder="Rencana Terminasi" id="residense_rencana_terminasi"/>
             </div>
         </div>
         <div class="col-md-12">
