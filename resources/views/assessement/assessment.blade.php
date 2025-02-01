@@ -1,6 +1,10 @@
 @extends('layout.master')
 @section('add-css')
-
+    <style type="text/css">
+        label.form-label{
+            font-weight: bold;
+        }
+    </style>
 @endsection
 @section('content')
 <div class="row">                

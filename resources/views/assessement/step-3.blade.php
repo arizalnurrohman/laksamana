@@ -11,7 +11,7 @@
         @foreach($residensial->kondisi_ppks as $kondisi)
         <div class="col-md-12">
             <div class="form-group">
-                <label class="form-label">{{$kondisi['combo_box']}} *</label>
+                <label class="form-label"><strong>{{$kondisi['combo_box']}}</strong> *</label>
                 {{-- <input type="text" class="form-control" name="fname" placeholder="Nama Lengkap" /> --}}
                 <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" value="{{$kondisi['value']}}"/>
             </div>
@@ -29,16 +29,26 @@
                 @endphp
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="form-label">{{$childx->sub_kategori_assessment}} *</label>
+                        <label class="form-label"><strong>{{$childx->sub_kategori_assessment}}</strong> *</label>
                         {{-- <input type="text" class="form-control" name="fname" placeholder="Nama Lengkap" /> --}}
                         
                         @if(count($childx->option)>0)
-                            <select class="form-select" name="assessment[{{$assessement->id}}][{{$childx->id}}]" id="{{$variable}}">
-                                <option value="">Pilih {{$childx->sub_kategori_assessment}}</option>
+                            @if($childx->type_form =="checkbox")
                                 @foreach($childx->option as $optionx)
-                                    <option value="{{$optionx->id}}">{{$optionx->sub_kategori_assessment}}</option>
-                                @endforeach
-                            </select>
+                                <br>
+                                <div class="form-check form-switch form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="assessment[{{$assessement->id}}][{{$childx->id}}][]" value="Lainnya" checked="">
+                                    <label class="pl-2 form-check-label" for="switch2">{{$optionx->sub_kategori_assessment}}</label>
+                                </div>
+                            @endforeach
+                            @else
+                                <select class="form-select" name="assessment[{{$assessement->id}}][{{$childx->id}}]" id="{{$variable}}">
+                                    <option value="">Pilih {{$childx->sub_kategori_assessment}}</option>
+                                    @foreach($childx->option as $optionx)
+                                        <option value="{{$optionx->id}}">{{$optionx->sub_kategori_assessment}}</option>
+                                    @endforeach
+                                </select>
+                            @endif
                         @else
                             @if($childx->type_form=="file")
                             <input type="file" class="form-control" name="assessment[{{$assessement->id}}][{{$childx->id}}]"/>

@@ -67,6 +67,41 @@
                 </button>
             </div>
             <div class="card-body">
+                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPerkembangan{{ $activeMenu->access }}Modal">
+                    <span class="btn-inner">
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </span>
+                    Generate Laporan @if ($activeMenu) {{ $activeMenu->menu }} @endif
+                </button>
+                @if($rehabilitasi->laporan_rehabilitasi)
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPerkembangan{{ $activeMenu->access }}Modal">
+                    <span class="btn-inner">
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </span>
+                    Lihat Laporan
+                </button>
+                
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addPerkembangan{{ $activeMenu->access }}Modal">
+                    <span class="btn-inner">
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </span>
+                    Kirim @if ($activeMenu) {{ $activeMenu->menu }} @endif
+                </button>
+                @endif
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addPerkembangan{{ $activeMenu->access }}Modal">
+                    <span class="btn-inner">
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </span>
+                    Intervensi @if ($activeMenu) {{ $activeMenu->menu }} @endif
+                </button>
                 <div class="table-responsive">
                     <table id="list-data" class="table"><?php /*<table id="datatable" class="table table-striped" data-toggle="data-table">*/ ?>
                         <thead>

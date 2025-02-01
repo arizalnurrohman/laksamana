@@ -152,6 +152,8 @@ Route::get('/persetujuan-kepala/load-persetujuan-kepala', [PersetujuanKepalaCont
 Route::get('/persetujuan-kepala/edit/{id}', [PersetujuanKepalaController::class, 'edit'])->name('persetujuankepala.detail');
 
 Route::get('/pengampu', [PengampuController::class, 'index'])->name('pengampu');
+
+Route::get('/data-intervensi', [PengampuController::class, 'index'])->name('dataintervensi');
 // Route::get('/penentuan-layanan', [PenentuanLayananController::class, 'index'])->name('penentuanlayanan');
 
 Route::get('/rehabilitasi', [RehabilitasiController::class, 'index'])->name('rehabilitasi');
