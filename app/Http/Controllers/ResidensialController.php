@@ -277,7 +277,7 @@ class ResidensialController extends Controller
 
 
             $data[$no]['No']                =($no+1);
-            $data[$no]['Nama Pasien']       =$val->nama_depan.' '.$val->nama_belakang.'<br><span class="badge rounded-pill bg-'.$val->style.'">'.$val->status.'</span>';
+            $data[$no]['Nama PPKS']       =$val->nama_depan.' '.$val->nama_belakang.'<br><span class="badge rounded-pill bg-'.$val->style.'">'.$val->status.'</span>';
             $data[$no]['Tgl Penerimaan']    =date("d-m-Y",strtotime($val->tgl_penerimaan));
             $data[$no]['Sumber']            =$val->sumber;
             $data[$no]['Petugas']           =$val->nama;

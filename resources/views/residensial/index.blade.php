@@ -26,7 +26,7 @@
                         <thead>
                             <tr>
                                 <th width="35px">No</th>
-                                <th>Nama Pasien</th>
+                                <th>Nama PPKS</th>
                                 <th width="50">Tgl Penerimaan</th>
                                 <th width="50">Sumber</th>
                                 <th width="50">Petugas</th>
@@ -79,7 +79,7 @@
                         <div class="col-xl-3">
                             <div class="card mb-3">
                                 <div class="card-body text-center">
-                                    <img id="fotoPasien" src="https://dummyimage.com/200x200/cccccc/ffffff" class="img-fluid rounded" alt="Foto Pasien">
+                                    <img id="fotoPasien" src="https://dummyimage.com/200x200/cccccc/ffffff" class="img-fluid rounded" alt="Foto PPKS">
                                 </div>
                             </div>
                             <div class="card">
@@ -112,7 +112,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function load_this_data(){
-        loadTabelData("list-data", "{{route('load_residensial')}}", ['No', 'Nama Pasien','Tgl Penerimaan','Sumber','Petugas','Aksi']);
+        loadTabelData("list-data", "{{route('load_residensial')}}", ['No', 'Nama PPKS','Tgl Penerimaan','Sumber','Petugas','Aksi']);
     }
     $(document).ready(function () {
         load_this_data();
