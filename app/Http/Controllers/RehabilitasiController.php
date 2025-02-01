@@ -49,10 +49,10 @@ class RehabilitasiController extends Controller
 
     public function detail($id){
         
-        $rehabilitasi = Rehabilitasi::orderby("laksa_tr_residensial.created_at","asc");
-        $rehabilitasi = $rehabilitasi->select('laksa_tr_residensial.*', 'laksa_ms_ppks.*','laksa_tr_rehabilitasi.*','laksa_tr_rehabilitasi.id as rehabilitasi_id');
-        $rehabilitasi = $rehabilitasi->leftJoin('laksa_tr_residensial', 'laksa_tr_rehabilitasi.residensial_id', '=', 'laksa_tr_residensial.id');
-        $rehabilitasi = $rehabilitasi->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
+        $rehabilitasi = Rehabilitasi::orderby("laksa_tr_layanan.created_at","asc");
+        $rehabilitasi = $rehabilitasi->select('laksa_tr_layanan.*', 'laksa_ms_ppks.*','laksa_tr_rehabilitasi.*','laksa_tr_rehabilitasi.id as rehabilitasi_id');
+        $rehabilitasi = $rehabilitasi->leftJoin('laksa_tr_layanan', 'laksa_tr_rehabilitasi.residensial_id', '=', 'laksa_tr_layanan.id');
+        $rehabilitasi = $rehabilitasi->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $rehabilitasi = $rehabilitasi->where('laksa_tr_rehabilitasi.id', '=', $id);
         $rehabilitasi = $rehabilitasi->first();
 
@@ -121,10 +121,10 @@ class RehabilitasiController extends Controller
 
     public function load_data()
     {
-        $rehabilitasi = Rehabilitasi::orderby("laksa_tr_residensial.created_at","asc");
-        $rehabilitasi = $rehabilitasi->select('laksa_tr_residensial.*', 'laksa_ms_ppks.*','laksa_tr_rehabilitasi.*','laksa_tr_rehabilitasi.id as rehabilitasi_id');
-        $rehabilitasi = $rehabilitasi->leftJoin('laksa_tr_residensial', 'laksa_tr_rehabilitasi.residensial_id', '=', 'laksa_tr_residensial.id');
-        $rehabilitasi = $rehabilitasi->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
+        $rehabilitasi = Rehabilitasi::orderby("laksa_tr_layanan.created_at","asc");
+        $rehabilitasi = $rehabilitasi->select('laksa_tr_layanan.*', 'laksa_ms_ppks.*','laksa_tr_rehabilitasi.*','laksa_tr_rehabilitasi.id as rehabilitasi_id');
+        $rehabilitasi = $rehabilitasi->leftJoin('laksa_tr_layanan', 'laksa_tr_rehabilitasi.residensial_id', '=', 'laksa_tr_layanan.id');
+        $rehabilitasi = $rehabilitasi->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $rehabilitasi = $rehabilitasi->get();
         $no=0;
         foreach ($rehabilitasi as $val) {

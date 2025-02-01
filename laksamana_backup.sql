@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2025 at 06:02 AM
+-- Generation Time: Feb 01, 2025 at 05:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -1256,50 +1256,12 @@ INSERT INTO `laksa_tr_assessment_value` (`id`, `form_assessment_id`, `form_asses
 -- --------------------------------------------------------
 
 --
--- Table structure for table `laksa_tr_layanan`
+-- Table structure for table `laksa_tr_non_residensial`
 --
 
-CREATE TABLE `laksa_tr_layanan` (
-  `id` varchar(36) NOT NULL,
-  `petugas_id` varchar(36) DEFAULT NULL,
-  `jenis_layanan` enum('Residensial','Non Residensial') DEFAULT NULL,
-  `tgl_penerimaan` datetime DEFAULT NULL,
-  `sumber_id` varchar(36) DEFAULT NULL,
-  `pasien_id` varchar(36) DEFAULT NULL,
-  `kategori_ppks_id` varchar(36) DEFAULT NULL,
-  `kategori_ppks_json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `masa_layanan` int(11) DEFAULT NULL,
-  `rencana_tgl_terminasi` date DEFAULT NULL,
-  `pengampu_id` varchar(36) DEFAULT NULL,
-  `status_id` varchar(36) DEFAULT 'draft',
-  `gedung_id` varchar(36) DEFAULT NULL,
-  `up_dokumen_rujukan` varchar(100) DEFAULT NULL,
-  `ragam_abh` varchar(36) DEFAULT NULL,
-  `informasi_kasus` varchar(36) DEFAULT NULL,
-  `jenis_rujukan` varchar(36) DEFAULT NULL,
-  `no_putusan_pengadilan` varchar(100) DEFAULT NULL,
-  `ragam_anak` varchar(36) DEFAULT NULL,
-  `ragam_kelompok_rentan` varchar(36) DEFAULT NULL,
-  `ragam_penyandang_disabilitas` varchar(36) DEFAULT NULL,
-  `ragam_disabilitas_fisik` varchar(36) DEFAULT NULL,
-  `ragam_disabilitas_intelektual` varchar(36) DEFAULT NULL,
-  `ragam_disabilitas_mental` varchar(36) DEFAULT NULL,
-  `ragam_disabilitas_sensorik` varchar(36) DEFAULT NULL,
-  `disabilitas_ganda_multi` varchar(36) DEFAULT NULL,
-  `penerima_atensi` varchar(36) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `laksa_tr_layanan`
---
-
-INSERT INTO `laksa_tr_layanan` (`id`, `petugas_id`, `jenis_layanan`, `tgl_penerimaan`, `sumber_id`, `pasien_id`, `kategori_ppks_id`, `kategori_ppks_json`, `masa_layanan`, `rencana_tgl_terminasi`, `pengampu_id`, `status_id`, `gedung_id`, `up_dokumen_rujukan`, `ragam_abh`, `informasi_kasus`, `jenis_rujukan`, `no_putusan_pengadilan`, `ragam_anak`, `ragam_kelompok_rentan`, `ragam_penyandang_disabilitas`, `ragam_disabilitas_fisik`, `ragam_disabilitas_intelektual`, `ragam_disabilitas_mental`, `ragam_disabilitas_sensorik`, `disabilitas_ganda_multi`, `penerima_atensi`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', '1', 'Residensial', '2025-01-04 00:00:00', '2', '3ff3d400-7322-4f8f-9df0-e984f8950ea1', '1dd96457-c226-4f42-a25b-693c9139823c', '{\"d87128fc-6a4b-4233-a4a0-472c59095c19\":\"2bc64477-9b2b-263a-88b7-e456d8d3707b\"}', 33, '2025-01-03', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '2ae4ad34-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/LSodu3Tbvk6XIF2cuD724IGsvt7QFdetML7ngCgu.pdf', NULL, NULL, NULL, NULL, '2bc64477-9b2b-263a-88b7-e456d8d3707b', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:53:40', '2025-01-31 21:33:03', NULL),
-('a8deb65a-ca8a-430b-88de-094f6f179d33', '1', 'Residensial', '2025-01-15 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', 'b1895989-f137-4421-83bc-59206516da7f', '{\"13157c96-d3f6-429f-864e-7edcab14b468\":{\"90826db6-4e07-4cc2-9626-a3b4d57de472\":\"60c1ca3d-bb8d-40df-8580-e8c66b1934d4\"}}', 44, '2025-01-30', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '7078dbc5-db8a-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/znHVuLJPvPwlLZRta2oQbw6IxD9a9OJJtq2u63ph.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '60c1ca3d-bb8d-40df-8580-e8c66b1934d4', NULL, NULL, NULL, NULL, '2025-01-27 03:05:32', '2025-01-28 03:33:11', NULL),
-('fc57c9b2-6628-4aeb-bf49-ffee3164f15b', '1', 'Residensial', '2025-01-08 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', '{\"bdb5fc88-e430-47f1-9ba4-cea2cac40244\":\"d7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5\",\"ebc5f1dd-4e2b-4fe2-97be-477291a311dd\":\"e4b07705-7562-4fa5-b77f-3338802a9645\",\"5332d470-4c5d-4df2-98d5-45b60805c978\":\"be9a2343-0021-43a7-9c54-46cd1d3832c1\",\"4aebdf03-5293-4724-a3d8-f9f2fca857d9\":\"1231231\"}', 33, '2025-01-15', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '3cdad447-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/uM8Wzjw9oUTqs0jvFPQszD6NGsJUUv3Dy1fQkCzy.pdf', 'd7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5', 'e4b07705-7562-4fa5-b77f-3338802a9645', 'be9a2343-0021-43a7-9c54-46cd1d3832c1', '1231231', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:25:14', '2025-01-28 03:33:54', NULL);
+CREATE TABLE `laksa_tr_non_residensial` (
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1421,6 +1383,54 @@ INSERT INTO `laksa_tr_rehabilitasi_perkembangan_nilai` (`id`, `rehabilitasi_perk
 ('e4d68ea9-0499-4299-9c8e-19726a559b39', 'da077980-439c-424d-8dbb-0114415962e6', '329ae179-db73-42e4-9970-20ec88f7842d', 'e7ce00ea-dcbb-11ef-beef-244bfebc0c45', 1, '2025-01-29 02:31:48', '2025-01-29 02:31:48', NULL),
 ('f8849a05-4fa6-4367-8d52-6a0119c9f8e5', 'db62a4a5-ffe1-443d-82d0-785a03b90a71', 'c576f9ea-dcbb-11ef-beef-244bfebc0c45', 'e7ce00ea-dcbb-11ef-beef-244bfebc0c45', 1, '2025-01-28 19:15:32', '2025-01-28 19:15:32', NULL),
 ('fefcdc3c-39d9-46bf-9367-6f4f234fc142', 'da077980-439c-424d-8dbb-0114415962e6', '23594239-cc19-47de-ab63-fc2ee0288c5b', 'e7ce00ea-dcbb-11ef-beef-244bfebc0c45', 1, '2025-01-29 02:31:48', '2025-01-29 02:31:48', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laksa_tr_residensial`
+--
+
+CREATE TABLE `laksa_tr_residensial` (
+  `id` varchar(36) NOT NULL,
+  `petugas_id` varchar(36) DEFAULT NULL,
+  `jenis_layanan` enum('Residensial','Non Residensial') DEFAULT NULL,
+  `tgl_penerimaan` datetime DEFAULT NULL,
+  `sumber_id` varchar(36) DEFAULT NULL,
+  `pasien_id` varchar(36) DEFAULT NULL,
+  `kategori_ppks_id` varchar(36) DEFAULT NULL,
+  `kategori_ppks_json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `masa_layanan` int(11) DEFAULT NULL,
+  `rencana_tgl_terminasi` date DEFAULT NULL,
+  `pengampu_id` varchar(36) DEFAULT NULL,
+  `status_id` varchar(36) DEFAULT 'draft',
+  `gedung_id` varchar(36) DEFAULT NULL,
+  `up_dokumen_rujukan` varchar(100) DEFAULT NULL,
+  `ragam_abh` varchar(36) DEFAULT NULL,
+  `informasi_kasus` varchar(36) DEFAULT NULL,
+  `jenis_rujukan` varchar(36) DEFAULT NULL,
+  `no_putusan_pengadilan` varchar(100) DEFAULT NULL,
+  `ragam_anak` varchar(36) DEFAULT NULL,
+  `ragam_kelompok_rentan` varchar(36) DEFAULT NULL,
+  `ragam_penyandang_disabilitas` varchar(36) DEFAULT NULL,
+  `ragam_disabilitas_fisik` varchar(36) DEFAULT NULL,
+  `ragam_disabilitas_intelektual` varchar(36) DEFAULT NULL,
+  `ragam_disabilitas_mental` varchar(36) DEFAULT NULL,
+  `ragam_disabilitas_sensorik` varchar(36) DEFAULT NULL,
+  `disabilitas_ganda_multi` varchar(36) DEFAULT NULL,
+  `penerima_atensi` varchar(36) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `laksa_tr_residensial`
+--
+
+INSERT INTO `laksa_tr_residensial` (`id`, `petugas_id`, `jenis_layanan`, `tgl_penerimaan`, `sumber_id`, `pasien_id`, `kategori_ppks_id`, `kategori_ppks_json`, `masa_layanan`, `rencana_tgl_terminasi`, `pengampu_id`, `status_id`, `gedung_id`, `up_dokumen_rujukan`, `ragam_abh`, `informasi_kasus`, `jenis_rujukan`, `no_putusan_pengadilan`, `ragam_anak`, `ragam_kelompok_rentan`, `ragam_penyandang_disabilitas`, `ragam_disabilitas_fisik`, `ragam_disabilitas_intelektual`, `ragam_disabilitas_mental`, `ragam_disabilitas_sensorik`, `disabilitas_ganda_multi`, `penerima_atensi`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('721f2ce9-5fa1-4d6b-b67d-5fe00eaf345b', '1', 'Residensial', '2025-01-04 00:00:00', '2', '3ff3d400-7322-4f8f-9df0-e984f8950ea1', '1dd96457-c226-4f42-a25b-693c9139823c', '{\"d87128fc-6a4b-4233-a4a0-472c59095c19\":\"2bc64477-9b2b-263a-88b7-e456d8d3707b\"}', 33, '2025-01-03', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '2ae4ad34-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/LSodu3Tbvk6XIF2cuD724IGsvt7QFdetML7ngCgu.pdf', NULL, NULL, NULL, NULL, '2bc64477-9b2b-263a-88b7-e456d8d3707b', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:53:40', '2025-01-31 21:33:03', NULL),
+('a8deb65a-ca8a-430b-88de-094f6f179d33', '1', 'Residensial', '2025-01-15 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', 'b1895989-f137-4421-83bc-59206516da7f', '{\"13157c96-d3f6-429f-864e-7edcab14b468\":{\"90826db6-4e07-4cc2-9626-a3b4d57de472\":\"60c1ca3d-bb8d-40df-8580-e8c66b1934d4\"}}', 44, '2025-01-30', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '7078dbc5-db8a-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/znHVuLJPvPwlLZRta2oQbw6IxD9a9OJJtq2u63ph.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '60c1ca3d-bb8d-40df-8580-e8c66b1934d4', NULL, NULL, NULL, NULL, '2025-01-27 03:05:32', '2025-01-28 03:33:11', NULL),
+('fc57c9b2-6628-4aeb-bf49-ffee3164f15b', '1', 'Residensial', '2025-01-08 00:00:00', '1', '2f068203-d88f-11ef-8650-244bfebc0c45', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', '{\"bdb5fc88-e430-47f1-9ba4-cea2cac40244\":\"d7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5\",\"ebc5f1dd-4e2b-4fe2-97be-477291a311dd\":\"e4b07705-7562-4fa5-b77f-3338802a9645\",\"5332d470-4c5d-4df2-98d5-45b60805c978\":\"be9a2343-0021-43a7-9c54-46cd1d3832c1\",\"4aebdf03-5293-4724-a3d8-f9f2fca857d9\":\"1231231\"}', 33, '2025-01-15', '84f6aac5-2dbd-4fe4-bec0-71ef78879c03', '3cdad447-db8b-11ef-9f06-244bfebc0c45', '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/uM8Wzjw9oUTqs0jvFPQszD6NGsJUUv3Dy1fQkCzy.pdf', 'd7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5', 'e4b07705-7562-4fa5-b77f-3338802a9645', 'be9a2343-0021-43a7-9c54-46cd1d3832c1', '1231231', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-01-27 06:25:14', '2025-01-28 03:33:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -1809,9 +1819,9 @@ ALTER TABLE `laksa_tr_assessment_value`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `laksa_tr_layanan`
+-- Indexes for table `laksa_tr_non_residensial`
 --
-ALTER TABLE `laksa_tr_layanan`
+ALTER TABLE `laksa_tr_non_residensial`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1830,6 +1840,12 @@ ALTER TABLE `laksa_tr_rehabilitasi_perkembangan`
 -- Indexes for table `laksa_tr_rehabilitasi_perkembangan_nilai`
 --
 ALTER TABLE `laksa_tr_rehabilitasi_perkembangan_nilai`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_tr_residensial`
+--
+ALTER TABLE `laksa_tr_residensial`
   ADD PRIMARY KEY (`id`);
 
 --

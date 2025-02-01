@@ -62,16 +62,16 @@ class PersetujuanKepalaController extends Controller
     public function edit($id){
         // dd($id);
         // $residensial    = Residensial::findOrFail($id);
-        $residensial = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*","laksa_ms_gedung.*","laksa_ms_pengampu.*");
-        $residensial = $residensial->orderby("laksa_tr_residensial.created_at","DESC");
-        $residensial = $residensial->leftJoin('laksa_ms_petugas', 'laksa_tr_residensial.petugas_id', '=', 'laksa_ms_petugas.id');
+        $residensial = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*","laksa_ms_gedung.*","laksa_ms_pengampu.*");
+        $residensial = $residensial->orderby("laksa_tr_layanan.created_at","DESC");
+        $residensial = $residensial->leftJoin('laksa_ms_petugas', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_petugas.id');
         $residensial = $residensial->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
-        $residensial = $residensial->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
-        $residensial = $residensial->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
-        $residensial = $residensial->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
-        $residensial = $residensial->leftJoin('laksa_ms_gedung', 'laksa_tr_residensial.gedung_id', '=', 'laksa_ms_gedung.id');
-        $residensial = $residensial->leftJoin('laksa_ms_pengampu', 'laksa_tr_residensial.pengampu_id', '=', 'laksa_ms_pengampu.id');
-        $residensial = $residensial->where("laksa_tr_residensial.id","=",$id);
+        $residensial = $residensial->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
+        $residensial = $residensial->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
+        $residensial = $residensial->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
+        $residensial = $residensial->leftJoin('laksa_ms_gedung', 'laksa_tr_layanan.gedung_id', '=', 'laksa_ms_gedung.id');
+        $residensial = $residensial->leftJoin('laksa_ms_pengampu', 'laksa_tr_layanan.pengampu_id', '=', 'laksa_ms_pengampu.id');
+        $residensial = $residensial->where("laksa_tr_layanan.id","=",$id);
         $residensial = $residensial->first();
 
         $detail_ppks_value=[];
@@ -152,13 +152,13 @@ class PersetujuanKepalaController extends Controller
     }
 
     public function load_persetujuan_kepala(){
-        $residensial = Residensial::select("laksa_tr_residensial.id as residensial_id","laksa_tr_residensial.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
-        $residensial = $residensial->orderby("laksa_tr_residensial.created_at","DESC");
-        $residensial = $residensial->leftJoin('laksa_ms_petugas', 'laksa_tr_residensial.petugas_id', '=', 'laksa_ms_petugas.id');
+        $residensial = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
+        $residensial = $residensial->orderby("laksa_tr_layanan.created_at","DESC");
+        $residensial = $residensial->leftJoin('laksa_ms_petugas', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_petugas.id');
         $residensial = $residensial->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
-        $residensial = $residensial->leftJoin('laksa_ms_ppks', 'laksa_tr_residensial.pasien_id', '=', 'laksa_ms_ppks.id');
-        $residensial = $residensial->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_residensial.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
-        $residensial = $residensial->leftJoin('laksa_ms_status', 'laksa_tr_residensial.status_id', '=', 'laksa_ms_status.id');
+        $residensial = $residensial->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
+        $residensial = $residensial->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
+        $residensial = $residensial->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
         $residensial = $residensial->whereIn("status_id",$this->status_usulan);
         $residensial = $residensial->get();
         $data = array();
