@@ -18,7 +18,7 @@
                         <thead>
                             <tr>
                                 <th width="35px">No</th>
-                                <th>Nama Pasien</th>
+                                <th>Nama PPKS</th>
                                 <th width="50">Tgl Penerimaan</th>
                                 <th width="50">Sumber</th>
                                 <th width="50">Petugas</th>
@@ -38,7 +38,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function load_this_data(){
-        loadTabelData("list-data", "{{route('load_assessement')}}", ['No', 'Nama Pasien','Tgl Penerimaan','Sumber','Petugas','Aksi']);
+        loadTabelData("list-data", "{{route('load_assessement')}}", ['No', 'Nama PPKS','Tgl Penerimaan','Sumber','Petugas','Aksi']);
     }
     $(document).ready(function () {
         load_this_data();
