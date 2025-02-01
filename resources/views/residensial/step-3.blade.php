@@ -4,7 +4,7 @@
             <h3 class="mb-4">PPKS:</h3>
         </div>
         <div class="col-5">
-            <h2 class="steps">Step 3 - 4</h2>
+            <h2 class="steps">Langkah  3 dari 4</h2>
         </div>
     </div>
     <div class="row" id="step-3-lanjutan">

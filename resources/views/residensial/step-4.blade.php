@@ -4,7 +4,7 @@
             <h3 class="mb-4 text-left">Dokumen:</h3>
         </div>
         <div class="col-5">
-            <h2 class="steps">Step 4 - 4</h2>
+            <h2 class="steps">Langkah  4 dari 4</h2>
         </div>
     </div>
     <br><br>
