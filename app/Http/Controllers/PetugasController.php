@@ -103,7 +103,12 @@ class PetugasController extends Controller
         try {
             // Cari dan hapus data
             $petugas = Petugas::findOrFail($id);
-            $petugas->delete();
+            if($petugas->delete()){
+                $pegawai=Pegawai::where("nip","=",$petugas->nip)->first();
+                if ($pegawai) {
+                    $pegawai->delete();
+                }
+            }
 
             return response()->json(['message' => 'Data deleted successfully!'], 200);
         } catch (\Exception $e) {
