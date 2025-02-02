@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Petugas;
+use App\Models\Pegawai;
 use App\Models\Kabupaten;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -46,13 +47,20 @@ class PetugasController extends Controller
             'nama_petugas' => 'required|string|max:255',
             'nip_petugas'     =>'required'
         ]);
-
-        Petugas::create([
+        $petugas=[
             'id'                => Str::uuid()->toString(),
             'nip'               => $request->nip_petugas,
             'nama_petugas'      => $request->nama_petugas,
             'kabupaten_kota_id' => $request->kabupaten_kota,
-        ]);
+        ];
+        if(Petugas::create($petugas)){
+            Pegawai::create([
+                'id'            => Str::uuid()->toString(),
+                'nip'           => $request->nip_petugas,
+                'nama'          => $request->nama_petugas,
+                'jk'            => 'JK',
+            ]);
+        }
 
         return response()->json(['message' => 'Data berhasil ditambahkan.']);
     }
@@ -72,11 +80,20 @@ class PetugasController extends Controller
         ]);
 
         $petugas = Petugas::findOrFail($request->id);
-        $petugas->update([
+        $payload=[
             'nip'               => $request->nip_petugas,
             'nama_petugas'      => $request->nama_petugas,
             'kabupaten_kota_id' => $request->kabupaten_kota,
-        ]);
+        ];
+        if($petugas->update($payload)){
+            $pegawai=Pegawai::where("nip","=",$petugas->nip)->first();
+            if ($pegawai) {
+                $pegawai->update([
+                    'nip' => $request->nip_petugas, 
+                    'nama' => $request->nama_petugas
+                ]);
+            }
+        }
 
         return response()->json(['message' => 'Data berhasil diperbarui.']);
     }
