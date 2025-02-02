@@ -114,7 +114,7 @@ class ResidensialController extends Controller
                 'masa_layanan'          => $request->residense_masa_layanan,
                 'rencana_tgl_terminasi' => $request->residense_rencana_terminasi,
                 'gedung_id'             => $request->residense_gedung_asrama,
-                'pengampu_id'           => $request->residense_pengampu,
+                // 'pengampu_id'           => $request->residense_pengampu,
                 'up_dokumen_rujukan'    => $dokRujukan,
                 'jenis_layanan'         => "Residensial",
                 

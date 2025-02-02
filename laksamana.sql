@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2025 at 06:02 AM
+-- Generation Time: Feb 01, 2025 at 06:29 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -1035,6 +1035,7 @@ CREATE TABLE `laksa_ms_ppks` (
 
 INSERT INTO `laksa_ms_ppks` (`id`, `nama_depan`, `nama_belakang`, `nik`, `nokk`, `tmp_lahir`, `tgl_lahir`, `provinsi_id`, `kota_id`, `kecamatan_id`, `kelurahan_desa_id`, `alamat`, `domisili_alamat`, `domisili`, `agama_id`, `pendidikan_id`, `up_foto`, `up_kk`, `up_akte_lahir`, `created_at`, `updated_at`, `deleted_at`) VALUES
 ('079bef48-704c-4526-9fa0-9669a2f4bc04', 'ariew', 'zal', '123123', '2312312', 'qweqweq', '2025-01-23', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '08ea4954-3895-50d1-673e-7e10be1b4e12', 'qweqwe', 'qwe', '1', 'qwe', '41875d16-08f2-24cc-a568-a17c69655427', '56c193ce-5057-a6d6-a447-3c08a35d00cc', NULL, NULL, NULL, '2025-01-23 08:29:44', '2025-01-23 15:06:21', '2025-01-23 15:06:21'),
+('07f6b8ce-de43-442b-b818-ea2ae7b7fffa', 'Hssb', 'Hsnsn', '322', '2222', 'Jee', '2025-02-12', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '9bacc4bf-443e-8e47-373e-26a042069ecc', '083f0e2a-87f1-114c-88ce-3ba9f5367c6f', 'Jejssn', 'Jalan', NULL, 'Hakaab', 'c4091389-34eb-7f56-1b6d-b1934f0115c9', '7ff7a10d-265b-790c-9454-ca35b1cd0195', 'uploads/foto/eikbchwDCt4ewaYpV2kWk4Vx1meP3Vc1FH8zhqZk.jpg', NULL, NULL, '2025-01-31 22:27:39', '2025-01-31 22:27:39', NULL),
 ('2f068203-d88f-11ef-8650-244bfebc0c45', 'Arizal', 'Nur Rohman', '1471031302900022', '1471031302900111', 'Wonogiri', '1990-02-13', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', 'b7d47f01-15ac-8493-a774-6bb16a347a42', '93e3aa88-90b0-5cb0-8905-334d97d116ae', 'xxxx', 'jalan brotoseno perum widya perdana lestari blok A.10', NULL, NULL, 'c4091389-34eb-7f56-1b6d-b1934f0115c9', 'fca3a7f1-918f-16b2-64a0-7eb35ac84735', 'uploads/foto/5TaYmNUYLOFwfbyEbpuQ28yvmTvPNlBDCISl90VP.jpg', 'uploads/kk/uXnTBZLe2NpVuVR0t9v55QuRqHgUVyyRljw8BzEa.pdf', 'uploads/akte/7c1IF7ETbQG2lIhxwQynVLENq3t0FVMHr6dfVyLh.pdf', '2025-01-22 07:02:28', '2025-01-25 19:39:59', NULL),
 ('3ff3d400-7322-4f8f-9df0-e984f8950ea1', 'Tono', 'bin Tini', '123', '123', 'qweqweq', '2025-01-24', '75955ed2-4e91-8bfd-47f3-ad69be7212a6', '9f7a51c4-9b97-03cd-7e8a-dcb574c33731', '1574a648-89df-9c8a-a10f-5c6b5d9b3548', 'asda', 'asd', '1', 'asd', '41875d16-08f2-24cc-a568-a17c69655427', 'c31d1245-26cd-6681-8455-3aa4dc2f95e7', 'uploads/foto/dR8eQkZ8wHPyB4Yk5VOEFtT4dhCMmDrr0kdPPfpr.png', 'uploads/kk/nBZyAHZBUmKRRqaTkcAQLDTqqqWeivwP9uezNq1h.jpg', 'uploads/akte/MSewrIHdrPuNZlUoH4FStBn8zqivdBkdJTu0TjmW.jpg', '2025-01-23 20:58:56', '2025-01-27 08:22:05', NULL);
 

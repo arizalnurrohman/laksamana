@@ -13,7 +13,7 @@
                             </svg> --}}
                         </div>
                         <div class="logo-mini">
-                            <img src="{{ url('logo.png') }}" width="30px">
+                            <img src="{{ url('logo.png') }}"z>
                             {{-- <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
                                 <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
@@ -67,7 +67,7 @@
                         @foreach ($menu as $item)
                             @if ($item->children->isEmpty())
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is($item->url) ? 'active' : '' }} {{ Request::is($item->url.'/*') ? 'active' : '' }}" aria-current="page" href="{{ route($item->access) }}">
+                                <a class="nav-link {{ Request::is($item->url) ? 'active' : '' }} {{ Request::is($item->url.'/*') ? 'active' : '' }}" aria-current="page" href="{{ url($item->url) }}" <?php /* href="{{ route($item->access) }}" */ ?>>
                                     <i class="icon" data-bs-toggle="tooltip" title="Dashboard" data-bs-placement="right">{!! $item->icon !!}</i>
                                     <span class="item-name">{{$item->menu}}</span>
                                 </a>
@@ -88,7 +88,7 @@
                                 <ul class="sub-nav collapse" id="{{$item->id}}" data-bs-parent="#sidebar-menu">
                                     @foreach ($item->children as $child)
                                     <li class="nav-item">
-                                        <a class="nav-link {{ Request::is($child->url) ? 'active' : '' }} {{ Request::is($child->url.'/*') ? 'active' : '' }}" href="{{ route($child->access) }}">
+                                        <a class="nav-link {{ Request::is($child->url) ? 'active' : '' }} {{ Request::is($child->url.'/*') ? 'active' : '' }}" href="{{ url($child->url) }}" <?php /* href="{{ route($child->access) }}" */ ?>>
                                             <i class="icon">{!! $child->icon !!}</i>
                                             <i class="sidenav-mini-icon" data-bs-toggle="tooltip" title="Admin Dashboard"
                                                 data-bs-placement="right"> AD </i>

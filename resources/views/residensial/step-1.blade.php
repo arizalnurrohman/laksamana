@@ -59,7 +59,7 @@
                 <input type="date" class="form-control" name="residense_rencana_terminasi" placeholder="Rencana Terminasi" id="residense_rencana_terminasi"/>
             </div>
         </div>
-        <div class="col-md-12">
+        {{-- <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">Nama Pengampu: *</label>
                 <select class="form-select" data-trigger name="residense_pengampu" id="residense_pengampu">
@@ -69,6 +69,6 @@
                     @endforeach
                 </select>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
