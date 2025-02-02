@@ -6,6 +6,7 @@ use App\Http\Controllers\AsramaController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\PengampuController;
 use App\Http\Controllers\PenggunaController;
@@ -164,3 +165,11 @@ Route::post('/rehabilitasi/store-perkembangan', [RehabilitasiController::class, 
 Route::post('/rehabilitasi/store-perkembangan-update', [RehabilitasiController::class, 'store_PerkembanganRehabilitasiUpdate'])->name('rehabilitasi.store_perkembangan_update');
 Route::get('/rehabilitasi/rehabilitasi-perkembangan/{id}', [RehabilitasiController::class, 'get_rehabilitasiPerkembangan'])->name('rehabilitasi.rehabilitasi_perkembangan');
 Route::delete('/rehabilitasi/perkembangan-delete/{id}', [RehabilitasiController::class, 'destroy'])->name('rehabilitasi.delete_perkembangan');
+
+
+Route::get('/petugas', [PetugasController::class, 'index'])->name('petugas');
+Route::get('/petugas/load-petugas', [PetugasController::class, 'load_data'])->name('load_petugas');
+Route::post('/gpetugas/store', [PetugasController::class, 'store'])->name('petugas.store');
+Route::get('/petugas/edit/{id}', [PetugasController::class, 'edit'])->name('petugas.edit');
+Route::post('/petugas/update', [PetugasController::class, 'update'])->name('petugas.update');
+Route::delete('/petugas/delete/{id}', [PetugasController::class, 'destroy'])->name('petugas.delete');
