@@ -63,7 +63,7 @@ class ResidensialController extends Controller
     }
     public function create()
     {
-        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_petugas.*","laksa_ms_petugas.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.id","=","laksa_ms_petugas.pegawai_id")->get();
+        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_petugas.*","laksa_ms_petugas.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_petugas.nip")->get();
         $sumber_rujukan=SumberRujukan::all();
         $agama = Agama::all();
         $provinsi = Provinsi::all();
