@@ -24,10 +24,9 @@ use App\Http\Controllers\FormAssessementController;
 use App\Http\Controllers\PenentuanLayananController;
 use App\Http\Controllers\PersetujuanKepalaController;
 use App\Http\Controllers\KomponenPerkembanganController;
+use App\Http\Controllers\DashboardController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna');
 Route::get('/data-akses-pengguna', [PenggunaController::class, 'index'])->name('dataaksespengguna');
 
@@ -92,6 +91,7 @@ Route::get('/assessement/load-assessement', [AssessementController::class, 'load
 Route::get('/assessement/assessement/{id}', [AssessementController::class, 'get_assessement'])->name('check_assessement');
 Route::post('/assessement', [AssessementController::class, 'store'])->name('assessement.store');
 Route::post('/assessement/kirim-koordinator/{id}', [AssessementController::class, 'store_kirim_koordinator'])->name('assessement.kirim_koordinator');
+Route::get('/assessement/edit/{id}', [AssessementController::class, 'edit_Assessment'])->name('edit_assessement');
 
 Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
 Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');

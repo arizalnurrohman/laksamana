@@ -80,7 +80,7 @@ class AssessementController extends Controller
         $pengampu    = Pengampu::where("laksa_ms_pengampu.id","=",$residensial->pengampu_id);
         $pengampu      = $pengampu->leftJoin('laksa_ms_pendidikan', 'laksa_ms_pengampu.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
                         ->leftJoin('laksa_ms_agama', 'laksa_ms_pengampu.agama_id', '=', 'laksa_ms_agama.id');
-        $pengampu = $pengampu->first();
+        $pengampu    = $pengampu->first();
         
         $detail_ppks_value=[];
         // dd(json_decode($residensial->kategori_ppks_json));
@@ -123,6 +123,10 @@ class AssessementController extends Controller
         return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan','assessement_form','komponen_layanan_yang_diberikan'));
     }
 
+    public function edit_Assessment($id){
+
+    }
+
     public function store(Request $request)
     {
         // Validasi data
@@ -137,7 +141,7 @@ class AssessementController extends Controller
         }
 
         if (!$this->error) {
-            dd($request->all());
+            // dd($request->all());
             #id 	residensial_id 	tgl_assessment 	satuan_kerja 	bantuan_id 	assessment_json 	created_at 	updated_at 	deleted_at 	
             $payload = [
                 'id'               => Str::uuid()->toString(),
@@ -216,7 +220,32 @@ class AssessementController extends Controller
                 // print_r($dataToInsert);
                 // Masukkan data ke database menggunakan batch insert
                 if (!empty($dataToInsert)) {
-                    FormAssessmentFormValue::insert($dataToInsert);
+                    if(FormAssessmentFormValue::insert($dataToInsert)){
+                        $payload_pengampu=[
+                            'id'                    =>Str::uuid()->toString(),
+                            'nama_pengampu'         =>$request->pengampu_nama,
+                            'hubungan_dengan_ppks'  =>$request->pengampu_hubungan_dengan_ppks,
+                            'tmp_lahir'             =>$request->pengampu_tmp_lahir,
+                            'tgl_lahir'             =>$request->pengampu_tgl_lahir,
+                            'nohp'                  =>$request->pengampu_nohp,
+                            'agama_id'              =>$request->pengampu_agama,
+                            'nik'                   =>$request->pengampu_nik,
+                            'nokk'                  =>$request->pengampu_nokk,
+                            'sudah_ada_dtks'        =>$request->pengampu_apakah_sudah_masuk_dtks,
+                            'bantuan_saat_ini'      =>$request->pengampu_bantuan_yang_sudah_diterima,
+                            'pendidikan_id'         =>$request->pengampu_pendidikan_terakhir,
+                            'status_kawin'          =>$request->pengampu_status_kawin,
+                            'pekerjaan'             =>$request->pengampu_pekerjaan,
+                            'pengeluaran_perbulan'  =>$request->pengampu_pengeluaran_per_bulan,
+                            'created_at'            => $now,
+                            'updated_at'            => $now,
+                        ];
+                        if(Pengampu::create($payload_pengampu)){
+                            $pengampux = Residensial::where('id', $request->residensial_id)->update(["pengampu_id"=>$payload_pengampu['id']]);
+                        }
+                    }
+
+
                 }
             }
         
@@ -293,6 +322,22 @@ class AssessementController extends Controller
         $no=0;
         $tombol_send_data   ="";
         foreach ($sub_child as $val) {
+            $isAssement=Assessment::where("residensial_id",$val->residensial_id)->count();
+            if($isAssement>0){
+                $tombol_edit='<a href="'.route("edit_assessement",$val->residensial_id).'">
+                                                <button class="btn btn-sm btn-icon btn-info">
+                                                    <span class="btn-inner">
+                                                        <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                                                        <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <g id="SVGRepo_iconCarrier"> <path d="M1468.214 0v551.145L840.27 1179.089c-31.623 31.623-49.693 74.54-49.693 119.715v395.289h395.288c45.176 0 88.093-18.07 119.716-49.694l162.633-162.633v438.206H0V0h1468.214Zm129.428 581.3c22.137-22.136 57.825-22.136 79.962 0l225.879 225.879c22.023 22.023 22.023 57.712 0 79.848l-677.638 677.637c-10.616 10.503-24.96 16.49-39.98 16.49H903.516v-282.35c0-15.02 5.986-29.364 16.49-39.867Zm-920.005 548.095H338.82v112.94h338.818v-112.94Zm225.88-225.879H338.818v112.94h564.697v-112.94Zm734.106-202.5-89.561 89.56 146.03 146.031 89.562-89.56-146.031-146.031Zm-508.228-362.197H338.82v338.818h790.576V338.82Z" fill-rule="evenodd"/> </g>
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                                </a>';
+            }else{
+                $tombol_edit='';
+            }
             if($val->status_id=="2ae4ad34-db8b-11ef-9f06-244bfebc0c45"){
                 $tombol_send_data   ='<button class="btn btn-sm btn-icon btn-info" Onclick="send_form(\''.$val->residensial_id.'\')">
                                                     <span class="btn-inner">
@@ -324,6 +369,7 @@ class AssessementController extends Controller
                                                     </span>
                                                 </button>
                                                 </a>
+                                                '.$tombol_edit.'
                                             </div>';
             $no++;
         }
