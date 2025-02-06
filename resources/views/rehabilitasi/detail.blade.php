@@ -129,17 +129,18 @@
                 <h5 class="modal-title" id="layananModalLabel">Intervensi Rehabilitasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('rehabilitasi.store_perkembangan') }}" method="POST" id="addPerkembangan{{ $activeMenu->access }}ModalForm">
+            <form action="{{ route('rehabilitasi.store_intervensi') }}" method="POST" id="addPerkembangan{{ $activeMenu->access }}ModalForm">
                 <div class="modal-body">
                     <div class="row">
                         <div class="row">
+                            <input type="hidden" name="assessment_id" value="{{$assessment->id}}">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Komponen yang diberikan: *</label>
                                     <select class="form-select" name="intervensi_komponen" id="hubungan_dengan_ppks">
                                         <option value="">Pilih Komponen yang diberikan</option>
                                         @foreach($komponen_layanan_yang_diberikan as $klybd)
-                                            <option value="{{$klybd->id}}">{{$klybd->sub_kategori_assessment}}</option>
+                                            <option value="{{$klybd->id}}" @if($assessment->intervensi_komponen_yang_diberikan==$klybd->id) selected="Selected" @endif>{{$klybd->sub_kategori_assessment}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -147,19 +148,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Uraian Komponen Layanan: *</label>
-                                    <textarea class="form-control" name="intervensi_uraian_komponen" rows="5"></textarea>
+                                    <textarea class="form-control" name="intervensi_uraian_komponen" rows="5">{{$assessment->intervensi_uraian_komponen_layanan}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Waktu Pemberian Layanan: *</label>
-                                    <input type="date" class="form-control" name="intervensi_waktu_pemberian" placeholder="Waktu Pemberian Layanan." />
+                                    <input type="date" class="form-control" name="intervensi_waktu_pemberian" placeholder="Waktu Pemberian Layanan." value="{{$assessment->intervensi_waktu_pemebrian_layanan}}" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Pihak yang terlibat Intervensi: *</label>
-                                    <input type="text" class="form-control" name="intervensi_pihak_yang_terlibat" placeholder="Pihak yang terlibat Intervensi." />
+                                    <input type="text" class="form-control" name="intervensi_pihak_yang_terlibat" placeholder="Pihak yang terlibat Intervensi." value="{{$assessment->intervensi_pihak_yang_terlibat}}" />
                                 </div>
                             </div>
                             
@@ -167,39 +168,53 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Bentuk Layanan: *</label><br>
+                            
                                     <div class="form-check form-switch form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Bentuk Kewirausahaan" checked="">
-                                        <label class="pl-2 form-check-label" for="switch2">Bentuk Kewirausahaan</label>
+                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Bentuk Kewirausahaan" 
+                                            {{ in_array("Bentuk Kewirausahaan", json_decode($assessment->rencana_intervensi_lanjutan)) ? 'checked' : '' }}>
+                                        <label class="pl-2 form-check-label">Bentuk Kewirausahaan</label>
                                     </div>
                                     <br>
+                            
                                     <div class="form-check form-switch form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Program Perbaikan Rumah melalui Rumah Usaha Sederhana" checked="">
-                                        <label class="pl-2 form-check-label" for="switch2">Program Perbaikan Rumah melalui Rumah Usaha Sederhana</label>
+                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Program Perbaikan Rumah melalui Rumah Usaha Sederhana" 
+                                            {{ in_array("Program Perbaikan Rumah melalui Rumah Usaha Sederhana", json_decode($assessment->rencana_intervensi_lanjutan)) ? 'checked' : '' }}>
+                                        <label class="pl-2 form-check-label">Program Perbaikan Rumah melalui Rumah Usaha Sederhana</label>
                                     </div>
                                     <br>
+                            
                                     <div class="form-check form-switch form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Program Keluarga Harapan" checked="">
-                                        <label class="pl-2 form-check-label" for="switch2">Program Keluarga Harapan</label>
+                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Program Keluarga Harapan" 
+                                            {{ in_array("Program Keluarga Harapan", json_decode($assessment->rencana_intervensi_lanjutan)) ? 'checked' : '' }}>
+                                        <label class="pl-2 form-check-label">Program Keluarga Harapan</label>
                                     </div>
                                     <br>
+                            
                                     <div class="form-check form-switch form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Bantuan dari Dana Hibah" checked="">
-                                        <label class="pl-2 form-check-label" for="switch2">Bantuan dari Dana Hibah</label>
+                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Bantuan dari Dana Hibah" 
+                                            {{ in_array("Bantuan dari Dana Hibah", json_decode($assessment->rencana_intervensi_lanjutan)) ? 'checked' : '' }}>
+                                        <label class="pl-2 form-check-label">Bantuan dari Dana Hibah</label>
                                     </div>
                                     <br>
+                            
                                     <div class="form-check form-switch form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Pemberian Alat Bantu" checked="">
-                                        <label class="pl-2 form-check-label" for="switch2">Pemberian Alat Bantu</label>
+                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Pemberian Alat Bantu" 
+                                            {{ in_array("Pemberian Alat Bantu", json_decode($assessment->rencana_intervensi_lanjutan)) ? 'checked' : '' }}>
+                                        <label class="pl-2 form-check-label">Pemberian Alat Bantu</label>
                                     </div>
                                     <br>
+                            
                                     <div class="form-check form-switch form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Pelatihan Keterampilan Kerja" checked="">
-                                        <label class="pl-2 form-check-label" for="switch2">Pelatihan Keterampilan Kerja</label>
+                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Pelatihan Keterampilan Kerja" 
+                                            {{ in_array("Pelatihan Keterampilan Kerja", json_decode($assessment->rencana_intervensi_lanjutan)) ? 'checked' : '' }}>
+                                        <label class="pl-2 form-check-label">Pelatihan Keterampilan Kerja</label>
                                     </div>
                                     <br>
+                            
                                     <div class="form-check form-switch form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Lainnya" checked="">
-                                        <label class="pl-2 form-check-label" for="switch2">Lainnya</label>
+                                        <input class="form-check-input" type="checkbox" name="bentuk_layanan[]" value="Lainnya" 
+                                            {{ in_array("Lainnya", json_decode($assessment->rencana_intervensi_lanjutan)) ? 'checked' : '' }}>
+                                        <label class="pl-2 form-check-label">Lainnya</label>
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +222,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Rekomendasi catatan Petugas: *</label>
-                                    <textarea class="form-control" name="rekomendasi_catatan" rows="5"></textarea>
+                                    <textarea class="form-control" name="rekomendasi_catatan" rows="5">{{$assessment->rekomendasi_catatan}}</textarea>
                                 </div>
                             </div>
                     
@@ -217,7 +232,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Simpan Perkembangan</button>
+                    <button type="submit" class="btn btn-primary">Simpan Intervensi</button>
                 </div>
             </form>
         </div>

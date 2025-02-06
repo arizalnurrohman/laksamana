@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Storage;
 use Validator;
 use App\Models\Aspek;
+use App\Models\Assessment;
 use Illuminate\Support\Str;
 use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
@@ -62,7 +63,9 @@ class RehabilitasiController extends Controller
         
         $komponen_layanan_yang_diberikan=FormAssessmentSub::where("parent_id","=","1f3d613e-1c7b-4204-9f88-4d6b70e4da8e")->get();
 
-        return view('rehabilitasi.detail', compact('rehabilitasi','komponen','aspek','komponen_layanan_yang_diberikan'))->with('no', 1);
+        $assessment =Assessment::where("residensial_id",$rehabilitasi->residensial_id)->first();
+
+        return view('rehabilitasi.detail', compact('rehabilitasi','komponen','aspek','komponen_layanan_yang_diberikan',"assessment"))->with('no', 1);
     }
 
     public function get_rehabilitasiPerkembangan($id){
@@ -232,6 +235,59 @@ class RehabilitasiController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function store_Intervensi(Request $request){
+        // Validasi data
+        // dd($request->all());
+        $validator = Validator::make($request->all(), $this->intervensi_rules()['RULE'], $this->intervensi_rules()['MESSAGE']);
+
+        if ($validator->fails()) {
+            $this->error[] = ($validator->errors()->all())[0];
+        } else {
+            // dd($request->perkembangan);
+            
+        }
+
+        if (!$this->error) {
+            $payload=[
+                'intervensi_komponen_yang_diberikan'=>$request->intervensi_komponen,
+                'intervensi_uraian_komponen_layanan'=>$request->intervensi_uraian_komponen,
+                'intervensi_waktu_pemebrian_layanan'=>$request->intervensi_waktu_pemberian,
+                'intervensi_pihak_yang_terlibat'    =>$request->intervensi_pihak_yang_terlibat,
+                'rencana_intervensi_lanjutan'       =>json_encode($request->bentuk_layanan),
+                'rekomendasi_catatan'               =>$request->rekomendasi_catatan,
+            ];
+            if(Assessment::where('id', $request->assessment_id)->update($payload)){
+                $this->success = true;
+            }
+        }
+
+        if ($this->success) {
+            $response = [
+                'status'  => 'success',
+                'message' => "Pemberian Intervensi berhasil",
+            ];
+        }
+
+        if ($this->error) {
+            $response = [
+                'errors'  => 'Error',
+                'message' => $this->error,
+            ];
+        }
+
+        return response()->json($response);
+    }
+
+    function intervensi_rules(){
+        $rules=[
+            'assessment_id'            =>'required',
+        ];
+        $messages=[
+            'assessment_id.required'   => 'Kolom Id Layanan wajib diisi.',
+        ];
+        return array("RULE"=>$rules,"MESSAGE"=>$messages);
     }
 
     public function store_PerkembanganRehabilitasiUpdate(Request $request){
