@@ -137,7 +137,7 @@ class AssessementController extends Controller
         }
 
         if (!$this->error) {
-            // dd($request->all());
+            dd($request->all());
             #id 	residensial_id 	tgl_assessment 	satuan_kerja 	bantuan_id 	assessment_json 	created_at 	updated_at 	deleted_at 	
             $payload = [
                 'id'               => Str::uuid()->toString(),
@@ -152,7 +152,7 @@ class AssessementController extends Controller
                 'intervensi_uraian_komponen_layanan'    =>$request->intervensi_uraian_komponen,
                 'intervensi_waktu_pemebrian_layanan'    =>$request->intervensi_waktu_pemberian,
                 'intervensi_pihak_yang_terlibat'        =>$request->intervensi_pihak_yang_terlibat,
-                'rencana_intervensi_lanjutan'           =>json_encode($request->bentuk_layanan),
+                'rencana_intervensi_lanjutan'           =>is_array($request->bentuk_layanan) ? json_encode($request->bentuk_layanan) : '[]',
                 'rekomendasi_catatan'                   =>$request->rekomendasi_catatan,
             ];
 
@@ -171,41 +171,49 @@ class AssessementController extends Controller
                 // Data yang akan disimpan
                 $dataToInsert = [];
                 foreach ($assessments as $formAssessmentId => $subAssessment) {
-                    
                     foreach ($subAssessment as $formAssessmentSubId => $value) {
-                        // Jika value adalah file, simpan ke storage
-                        if ($value instanceof \Illuminate\Http\UploadedFile) {
-                            // Simpan file ke folder 'uploads/assessment' di storage
-                            $filePath = $value->store('uploads/assessment', 'public');
+                        if($value != null){
+                            // Jika value adalah file, simpan ke storage
+                            if ($value instanceof \Illuminate\Http\UploadedFile) {
+                                // Simpan file ke folder 'uploads/assessment' di storage
+                                $filePath = $value->store('uploads/assessment', 'public');
 
-                            // Masukkan data file ke array untuk dimasukkan ke database
-                            $dataToInsert[] = [
-                                'id'                        => Str::uuid()->toString(),
-                                'form_assessment_id'        => $formAssessmentId,
-                                'form_assessment_sub_id'    => $formAssessmentSubId,
-                                'assessment_id'             => $assessmentId,
-                                'assessment_value'          => $filePath, // Path file yang disimpan
-                                'assessment_type'           =>'file',
-                                'created_at'                => $now,
-                                'updated_at'                => $now,
-                                
-                            ];
-                        } elseif (!is_null($value) && $value !== '') {
-                            // Masukkan data teks ke array untuk dimasukkan ke database
-                            $dataToInsert[] = [
-                                'id'                        => Str::uuid()->toString(),
-                                'form_assessment_id'        => $formAssessmentId,
-                                'form_assessment_sub_id'    => $formAssessmentSubId,
-                                'assessment_id'             => $assessmentId,
-                                'assessment_value'          => $value,
-                                'assessment_type'           =>'text',
-                                'created_at'                => $now,
-                                'updated_at'                => $now,
-                            ];
+                                // Masukkan data file ke array untuk dimasukkan ke database
+                                $dataToInsert[] = [
+                                    'id'                        => Str::uuid()->toString(),
+                                    'form_assessment_id'        => $formAssessmentId,
+                                    'form_assessment_sub_id'    => $formAssessmentSubId,
+                                    'assessment_id'             => $assessmentId,
+                                    'assessment_value'          => $filePath, // Path file yang disimpan
+                                    'assessment_type'           =>'file',
+                                    'created_at'                => $now,
+                                    'updated_at'                => $now,
+                                    
+                                ];
+                            } elseif (!is_null($value) && $value !== '') {
+                                // Masukkan data teks ke array untuk dimasukkan ke database
+                                if(is_array($value)){
+                                    $value=json_encode($value);
+                                }else{
+                                    $value=$value;
+                                }
+                                $dataToInsert[] = [
+                                    'id'                        => Str::uuid()->toString(),
+                                    'form_assessment_id'        => $formAssessmentId,
+                                    'form_assessment_sub_id'    => $formAssessmentSubId,
+                                    'assessment_id'             => $assessmentId,
+                                    'assessment_value'          => $value,
+                                    'assessment_type'           =>'text',
+                                    'created_at'                => $now,
+                                    'updated_at'                => $now,
+                                ];
+                            }
+                        }else{
+                            $this->error[]="Kolom <strong>".(FormAssessmentSub::select("sub_kategori_assessment")->where("id",$formAssessmentSubId)->first())->sub_kategori_assessment."</strong> Wajib Di Isi<br>";
                         }
                     }
                 }
-
+                // print_r($dataToInsert);
                 // Masukkan data ke database menggunakan batch insert
                 if (!empty($dataToInsert)) {
                     FormAssessmentFormValue::insert($dataToInsert);
@@ -234,9 +242,38 @@ class AssessementController extends Controller
     function detail_rules(){
         $rules=[
             'residensial_id'            =>'required',
+            "pengampu_nama" => 'required',
+            "pengampu_nik" => 'required',
+            "pengampu_nokk" => 'required',
+            "pengampu_tmp_lahir" => 'required',
+            "pengampu_tgl_lahir" => 'required',
+            "pengampu_nohp" => 'required',
+            "pengampu_agama" => 'required',
+            "pengampu_pendidikan_terakhir" => 'required',
+            "pengampu_hubungan_dengan_ppks" => 'required',
+            "pengampu_apakah_sudah_masuk_dtks" => 'required',
+            "pengampu_bantuan_yang_sudah_diterima" => 'required',
+            "pengampu_status_kawin" => 'required',
+            "pengampu_pekerjaan" => 'required',
+            "pengampu_pengeluaran_per_bulan" => 'required',
+            
         ];
         $messages=[
-            'residensial_id.required'  => 'Pilahkan Pilih Residensial yang akan di assessment.',
+            'residensial_id.required'       => 'Pilahkan Pilih Residensial yang akan di assessment.',
+            "pengampu_nama"                 => 'Kolom Nama Pengampu Wajib Di isi',
+            "pengampu_nik"                  => 'Kolom NIK Pengampu Wajib Di isi',
+            "pengampu_nokk"                 => 'Kolom NO KK Pengampu Wajib Di isi',
+            "pengampu_tmp_lahir"            => 'Kolom Tempat Lahir Pengampu Wajib Di isi',
+            "pengampu_tgl_lahir"            => 'Kolom Tanggak Lahir Pengampu Wajib Di isi',
+            "pengampu_nohp"                 => 'Kolom NO HP Pengampu Wajib Di isi',
+            "pengampu_agama"                => 'Kolom Agama Pengampu Wajib Di isi',
+            "pengampu_pendidikan_terakhir"  => 'Kolom Pendidikan Terakhir Pengampu Wajib Di isi',
+            "pengampu_hubungan_dengan_ppks" => 'Kolom Hubungan dengan PPKS Pengampu Wajib Di isi',
+            "pengampu_apakah_sudah_masuk_dtks"      => 'Kolom Apakah sudah masuk DTKS Wajib Di isi',
+            "pengampu_bantuan_yang_sudah_diterima"  => 'KolomBantuan yang sudah diterima saat ini Wajib Di isi',
+            "pengampu_status_kawin"                 => 'Kolom Status Kawin Pengampu Wajib Di isi',
+            "pengampu_pekerjaan"                    => 'Kolom Pekerjaan Pengampu Wajib Di isi',
+            "pengampu_pengeluaran_per_bulan"        => 'Kolom Pengeluaran per Bulan Pengampu Wajib Di isi',
         ];
         return array("RULE"=>$rules,"MESSAGE"=>$messages);
     }

@@ -123,7 +123,7 @@
                         title   : 'Berhasil',
                         html    : data.message,
                         showConfirmButton:  true ,
-                        timer   : 1000,
+                        timer   : 5000,
                         customClass      : {
                             container: 'swal-container'
                         }
@@ -138,7 +138,7 @@
                         title   : 'Gagal',
                         html    : data.message,
                         showConfirmButton:  true ,
-                        timer   : 1000,
+                        timer   : 5000,
                         customClass      : {
                             container: 'swal-container'
                         }
@@ -156,7 +156,7 @@
                         title   : 'Gagal',
                         html    : "Sistem Gagal Memproses Data",
                         showConfirmButton:  true ,
-                        timer   : 1000,
+                        timer   : 5000,
                         customClass      : {
                             container: 'swal-container'
                         }

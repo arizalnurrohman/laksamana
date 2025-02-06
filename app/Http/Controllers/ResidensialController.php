@@ -114,7 +114,7 @@ class ResidensialController extends Controller
                 'masa_layanan'          => $request->residense_masa_layanan,
                 'rencana_tgl_terminasi' => $request->residense_rencana_terminasi,
                 'gedung_id'             => $request->residense_gedung_asrama,
-                // 'pengampu_id'           => $request->residense_pengampu,
+                // 'pengampu_id'           => '11',#;$request->residense_pengampu,
                 'up_dokumen_rujukan'    => $dokRujukan,
                 'jenis_layanan'         => "Residensial",
                 
@@ -280,7 +280,7 @@ class ResidensialController extends Controller
             $data[$no]['Nama PPKS']       =$val->nama_depan.' '.$val->nama_belakang.'<br><span class="badge rounded-pill bg-'.$val->style.'">'.$val->status.'</span>';
             $data[$no]['Tgl Penerimaan']    =date("d-m-Y",strtotime($val->tgl_penerimaan));
             $data[$no]['Sumber']            =$val->sumber;
-            $data[$no]['Petugas']           =$val->nama;
+            $data[$no]['Petugas']           =$val->nama_petugas;
             $data[$no]['Aksi']              ='<div class="btn-group" role="group" aria-label="Group Aksi">
                                                 '.$btn_generate.'
                                                 '.$btn_send_approval_kepala.'

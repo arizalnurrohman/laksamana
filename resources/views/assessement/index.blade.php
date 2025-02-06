@@ -68,7 +68,7 @@
                             title: 'Terkirim',
                             html: "Data telah Terkirim.",
                             showConfirmButton: true,
-                            timer: 1000,
+                            timer: 5000,
                             customClass: {
                                 container: 'swal-container'
                             }

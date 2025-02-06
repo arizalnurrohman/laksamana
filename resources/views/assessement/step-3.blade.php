@@ -37,7 +37,7 @@
                                 @foreach($childx->option as $optionx)
                                 <br>
                                 <div class="form-check form-switch form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="assessment[{{$assessement->id}}][{{$childx->id}}][]" value="Lainnya" checked="">
+                                    <input class="form-check-input" type="checkbox" name="assessment[{{$assessement->id}}][{{$childx->id}}][]" value="{{$optionx->id}}" checked="">
                                     <label class="pl-2 form-check-label" for="switch2">{{$optionx->sub_kategori_assessment}}</label>
                                 </div>
                             @endforeach

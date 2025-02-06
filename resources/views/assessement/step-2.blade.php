@@ -12,43 +12,43 @@
             <div class="form-group">
                 <label class="form-label">Nama Lengkap: *</label>
                 {{-- <input type="text" class="form-control" name="fname" placeholder="Nama Lengkap" /> --}}
-                <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" />
+                <input type="text" class="form-control" name="pengampu_nama" placeholder="Nama Lengkap" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">NIK: *</label>
-                <input type="text" class="form-control" name="nik" placeholder="NIK" />
+                <input type="text" class="form-control" name="pengampu_nik" placeholder="NIK" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">NO KK: *</label>
-                <input type="text" class="form-control" name="nokk" placeholder="NO KK." />
+                <input type="text" class="form-control" name="pengampu_nokk" placeholder="NO KK." />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Tempat Lahir: *</label>
-                <input type="text" class="form-control" name="tmp_lahir" placeholder="Tempat Lahir." />
+                <input type="text" class="form-control" name="pengampu_tmp_lahir" placeholder="Tempat Lahir." />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Tanggal Lahir: *</label>
-                <input type="text" class="form-control" name="tgl_lahir" placeholder="Tanggal Lahir." />
+                <input type="text" class="form-control" name="pengampu_tgl_lahir" placeholder="Tanggal Lahir." />
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">No HP: *</label>
-                <input type="text" class="form-control" name="nohp" placeholder="No HP." />
+                <input type="text" class="form-control" name="pengampu_nohp" placeholder="No HP." />
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label" for="agama">Agama:</label>
-                <select class="form-select" name="agama" id="agama">
+                <select class="form-select" name="pengampu_agama" id="agama">
                     <option value="">Pilih Agama</option>
                     @foreach($agama as $agamax)
                         <option value="{{$agamax->id}}">{{$agamax->agama}}</option>
@@ -59,7 +59,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label" for="pendidikan_terakhir">Pendidikan Terakhir:</label>
-                <select class="form-select" name="pendidikan_terakhir" id="pendidikan_terakhir">
+                <select class="form-select" name="pengampu_pendidikan_terakhir" id="pendidikan_terakhir">
                     <option value="">Pilih Pendidikan</option>
                     @foreach($pendidikan as $pendidikanx)
                         <option value="{{$pendidikanx->id}}">{{$pendidikanx->pendidikan}}</option>
@@ -70,7 +70,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Hubungan dengan PPKS: *</label>
-                <select class="form-select" name="hubungan_dengan_ppks" id="hubungan_dengan_ppks">
+                <select class="form-select" name="pengampu_hubungan_dengan_ppks" id="pengampu_hubungan_dengan_ppks">
                     <option value="">Pilih Hubungan dengan PPKS</option>
                     <option value="Ayah">Ayah</option>
                     <option value="Ibu">Ibu</option>
@@ -84,7 +84,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Apakah sudah masuk DTKS: *</label>
-                <select class="form-select" name="apakah_sudah_masuk_dtks" id="hubungan_dengan_ppks">
+                <select class="form-select" name="pengampu_apakah_sudah_masuk_dtks" id="pengampu_apakah_sudah_masuk_dtks">
                     <option value="">Pilih Apakah sudah masuk DTKS</option>
                     <option value="Belum">Belum</option>
                     <option value="Sudah">Sudah</option>
@@ -94,7 +94,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Bantuan yang sudah diterima saat ini: *</label>
-                <select class="form-select" name="bantuan_yang_sudah_diterima" id="hubungan_dengan_ppks">
+                <select class="form-select" name="pengampu_bantuan_yang_sudah_diterima" id="pengampu_bantuan_yang_sudah_diterima">
                     <option value="">Pilih Bantuan yang sudah diterima</option>
                     @foreach($bantuan as $bantuanx)
                         <option value="{{$bantuanx->id}}">{{$bantuanx->jenis_bantuan}}</option>
@@ -105,7 +105,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Status Kawin: *</label>
-                <select class="form-select" name="hubungan_dengan_ppks" id="hubungan_dengan_ppks">
+                <select class="form-select" name="pengampu_status_kawin" id="pengampu_status_kawin">
                     <option value="">Pilih Status Kawin</option>
                     <option value="Belum Kawin">Belum Kawin</option>
                     <option value="Kawin">Kawin</option>
@@ -117,13 +117,13 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">Pekerjaan: *</label>
-                <input type="text" class="form-control" name="pekerjaan" placeholder="Pekerjaan." />
+                <input type="text" class="form-control" name="pengampu_pekerjaan" placeholder="Pekerjaan." />
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">Pengeluaran per Bulan: *</label>
-                <input type="text" class="form-control" name="pengeluaran_per_bulan" placeholder="Pengeluaran per Bulan." />
+                <input type="text" class="form-control" name="pengampu_pengeluaran_per_bulan" placeholder="Pengeluaran per Bulan." />
             </div>
         </div>
         
