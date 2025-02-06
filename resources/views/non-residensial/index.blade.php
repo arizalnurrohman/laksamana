@@ -88,7 +88,7 @@
                                     <select class="form-select" name="layanan_manajer_kasus" id="layanan_manajer_kasus">
                                         <option value="">Pilih Manajer Kasus</option>
                                         @foreach($petugas as $petugasx)
-                                            <option value="{{$petugasx->id}}">{{$petugasx->nama}}</option>
+                                            <option value="{{$petugasx->petugas_id}}">{{$petugasx->nama_petugas}}</option>
                                         @endforeach
                                     </select>
                                 </div>

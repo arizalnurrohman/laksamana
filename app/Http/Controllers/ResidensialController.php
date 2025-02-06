@@ -58,7 +58,7 @@ class ResidensialController extends Controller
     {
         #$sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $residensial = [];
-        $petugas    =Petugas::leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id')->get();
+        $petugas    =Petugas::leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_petugas.nip")->get();
         return view('residensial.index', compact('residensial','petugas'));
     }
     public function create()
@@ -518,7 +518,7 @@ class ResidensialController extends Controller
             ],
             'manajer_kasus' => [
                 'required',
-                'exists:laksa_ms_petugas,id' // Memastikan petugas_id (manajer kasus) ada di tabel rehabilitasi
+                // 'exists:laksa_ms_petugas,id' // Memastikan petugas_id (manajer kasus) ada di tabel rehabilitasi
             ],
         ]);
 

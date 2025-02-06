@@ -8,6 +8,7 @@ use App\Models\Aspek;
 use Illuminate\Support\Str;
 use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
+use App\Models\FormAssessmentSub;
 use App\Models\KomponenPerkembangan;
 use App\Models\RehabilitasiPerkembangan;
 use App\Models\RehabilitasiPerkembanganNilai;
@@ -59,8 +60,9 @@ class RehabilitasiController extends Controller
         $komponen     =KomponenPerkembangan::orderBy("sort","asc")->get();
         $aspek        =Aspek::orderBy("sort","asc")->get();
         
+        $komponen_layanan_yang_diberikan=FormAssessmentSub::where("parent_id","=","1f3d613e-1c7b-4204-9f88-4d6b70e4da8e")->get();
 
-        return view('rehabilitasi.detail', compact('rehabilitasi','komponen','aspek'))->with('no', 1);
+        return view('rehabilitasi.detail', compact('rehabilitasi','komponen','aspek','komponen_layanan_yang_diberikan'))->with('no', 1);
     }
 
     public function get_rehabilitasiPerkembangan($id){
@@ -127,6 +129,7 @@ class RehabilitasiController extends Controller
         $rehabilitasi = $rehabilitasi->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $rehabilitasi = $rehabilitasi->get();
         $no=0;
+        $data=[];
         foreach ($rehabilitasi as $val) {
             $data[$no]['No']            =($no+1);
             $data[$no]['Nama PPKS']     =$val->nama_depan." ".$val->nama_belakang."<br>".date("d-m-Y",strtotime($val->tgl_penerimaan));
@@ -165,8 +168,7 @@ class RehabilitasiController extends Controller
             // dd($request->all());
             // Simpan file unggahan
             $fotoPath = null;
-            $kkPath = null;
-            $aktePath = null;
+            $filePath = null;
 
             if ($request->hasFile('foto')) {
                 $fotoPath = $request->file('foto')->store('uploads/perkembangan/foto', 'public');
