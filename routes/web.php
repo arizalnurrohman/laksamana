@@ -166,6 +166,8 @@ Route::post('/rehabilitasi/store-intervensi', [RehabilitasiController::class, 's
 Route::post('/rehabilitasi/store-perkembangan-update', [RehabilitasiController::class, 'store_PerkembanganRehabilitasiUpdate'])->name('rehabilitasi.store_perkembangan_update');
 Route::get('/rehabilitasi/rehabilitasi-perkembangan/{id}', [RehabilitasiController::class, 'get_rehabilitasiPerkembangan'])->name('rehabilitasi.rehabilitasi_perkembangan');
 Route::delete('/rehabilitasi/perkembangan-delete/{id}', [RehabilitasiController::class, 'destroy'])->name('rehabilitasi.delete_perkembangan');
+Route::get('/rehabilitasi/generate-rehabilitasi/{id}', [RehabilitasiController::class, 'generate_rehabilitasi'])->name('rehabilitasi.generate_rehabilitasi');
+
 
 
 Route::get('/petugas', [PetugasController::class, 'index'])->name('petugas');

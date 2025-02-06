@@ -67,7 +67,7 @@
                 </button>
             </div>
             <div class="card-body">
-                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPerkembangan{{ $activeMenu->access }}Modal">
+                <button class="btn btn-info" onclick="generateLaporan('{{$rehabilitasi->rehabilitasi_id}}')">
                     <span class="btn-inner">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -129,7 +129,7 @@
                 <h5 class="modal-title" id="layananModalLabel">Intervensi Rehabilitasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('rehabilitasi.store_intervensi') }}" method="POST" id="addPerkembangan{{ $activeMenu->access }}ModalForm">
+            <form action="{{ route('rehabilitasi.store_intervensi') }}" method="POST" id="intervensi{{ $activeMenu->access }}ModalForm">
                 <div class="modal-body">
                     <div class="row">
                         <div class="row">
@@ -225,8 +225,6 @@
                                     <textarea class="form-control" name="rekomendasi_catatan" rows="5">{{$assessment->rekomendasi_catatan}}</textarea>
                                 </div>
                             </div>
-                    
-                            
                         </div>
                     </div>
                 </div>
@@ -640,6 +638,74 @@
             });
         });
 
+        $("#intervensi{{ $activeMenu->access }}ModalForm").submit(function(e){
+          e.preventDefault(); 
+            var btnx	=$('.btn-submit');
+            $(btnx).attr("disabled", true);
+            $(btnx).attr({type:'submit',value: 'Loading'});
+            $.ajax({
+              url:$(this).closest('form').attr('action'),
+              type:"post",
+              data:new FormData(this), 
+              processData:false,
+              contentType:false,
+              dataType: "json",
+              cache:false,
+              async:false,
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data){
+                  if($.isEmptyObject(data.errors)){
+                    Swal.fire({
+                        icon    : 'success',
+                        title   : 'Berhasil',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                        window.location = "{{ route('rehabilitasi.detail',$rehabilitasi->rehabilitasi_id) }}";
+                    });
+                  }else{
+                    $(btnx).removeAttr("disabled");
+                    $(btnx).attr({type:'submit',value: 'Simpan'});
+                    Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+                  }
+              },
+              error: function(err, exception) {
+                $(btnx).removeAttr("disabled");
+                $(btnx).attr({type:'submit',value: 'Simpan'});
+
+                Swal.fire({
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : "Sistem Gagal Memproses Data",
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
+                    });
+              },
+            });
+        });
+
         $("#editPerkembangan{{ $activeMenu->access }}ModalForm").submit(function(e){
           e.preventDefault(); 
             var btnx	=$('.btn-submit');
@@ -841,6 +907,32 @@
                             text: "Failed to delete the file. Please try again.",
                             icon: "error"
                         });
+                    }
+                });
+            }
+        });
+    }
+
+    function generateLaporan(id){
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan Mengenerate Laporan rehabilitasi ini  ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Generate!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/rehabilitasi/generate-rehabilitasi/${id}`,
+                    type: 'GET',
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(`Error: ${error}`);
+                        alert('Failed to fetch data. Please try again.');
                     }
                 });
             }

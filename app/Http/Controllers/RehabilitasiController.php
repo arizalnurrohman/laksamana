@@ -395,6 +395,79 @@ class RehabilitasiController extends Controller
     
         return response()->json($response);
     }
+
+    public function generate_rehabilitasi($id){
+        $perkembangan = [
+            [
+                "ibadah" => [
+                    "disiplin" => 5,
+                    "ketekunan" => 5,
+                    "kreatifitas" => 5,
+                ],
+                "piket" => [
+                    "disiplin" => 1,
+                    "ketekunan" => 1,
+                    "kreatifitas" => 1,
+                ],
+            ],
+            [
+                "ibadah" => [
+                    "disiplin" => 1,
+                    "ketekunan" => 1,
+                    "kreatifitas" => 1,
+                ],
+                "piket" => [
+                    "disiplin" => 1,
+                    "ketekunan" => 1,
+                    "kreatifitas" => 1,
+                ],
+            ]
+        ];
+
+        $bobot = ["disiplin" => 0.3, "ketekunan" => 0.4, "kreatifitas" => 0.3];
+
+        // Mencari nilai maksimum dari setiap kriteria
+        $maxValues = ["disiplin" => 0, "ketekunan" => 0, "kreatifitas" => 0];
+        foreach ($perkembangan as $data) {
+            foreach ($data as $kategori) {
+                foreach ($kategori as $kriteria => $nilai) {
+                    if ($nilai > $maxValues[$kriteria]) {
+                        $maxValues[$kriteria] = $nilai;
+                    }
+                }
+            }
+        }
+
+        // Normalisasi dan perhitungan skor preferensi
+        $hasil = ["ibadah" => 0, "piket" => 0];
+        $count = ["ibadah" => 0, "piket" => 0];
+        foreach ($perkembangan as $data) {
+            foreach ($data as $kategori => $nilai_kategori) {
+                foreach ($nilai_kategori as $kriteria => $nilai) {
+                    $r = $nilai / $maxValues[$kriteria];
+                    $hasil[$kategori] += $r * $bobot[$kriteria];
+                }
+                $count[$kategori]++;
+            }
+        }
+
+        // Rata-rata hasil
+        foreach ($hasil as $kategori => &$skor) {
+            $skor /= $count[$kategori];
+        }
+
+        // Menentukan kategori hasil
+        function kategori($nilai) {
+            if ($nilai <= 0.33) return "Kurang";
+            if ($nilai <= 0.66) return "Cukup";
+            return "Baik";
+        }
+
+        // Menampilkan hasil
+        foreach ($hasil as $kategori => $skor) {
+            echo "Perkembangan " . ucfirst($kategori) . " = " . kategori($skor) . " (" . number_format($skor, 3) . ")\n";
+        }
+    }
     
     public function destroy($id)
     {
