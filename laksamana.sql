@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2025 at 04:33 PM
+-- Generation Time: Feb 08, 2025 at 05:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -1216,8 +1216,8 @@ INSERT INTO `laksa_ms_status` (`id`, `status`, `jenis_layanan`, `style`, `sort`,
 ('b4a5adb3-db89-11ef-9f06-244bfebc0c45', 'Draft - Usulan Non Residensial', 'non-residensial', '', 0, 'petugas_layanan', NULL, NULL, '2025-02-04 09:37:12'),
 ('b995d70b-db89-11ef-9f06-244bfebc0c45', 'Input - Residensial', 'residensial', 'primary', 2, 'petugas_layanan', NULL, NULL, NULL),
 ('be10c279-db89-11ef-9f06-244bfebc0c45', 'Proses - Residensial', 'residensial', NULL, 3, 'petugas_layanan', NULL, NULL, NULL),
-('be583c52-e600-11ef-bfa8-244bfebc0c45', 'Menunggu Persetujuan Kepala Reviu Laporan Perkembangan', 'residensial', 'info', 13, 'kepala', NULL, NULL, NULL),
-('f164abdc-e600-11ef-bfa8-244bfebc0c45', 'Kepala Menyetujui Reviu Laporan Perkembangan', 'residensial', 'warning', 14, 'petugas_layanan', NULL, NULL, NULL);
+('be583c52-e600-11ef-bfa8-244bfebc0c45', 'Menunggu Persetujuan Terminasi Kepala', 'residensial', 'info', 13, 'kepala', NULL, NULL, NULL),
+('f164abdc-e600-11ef-bfa8-244bfebc0c45', 'Kepala Menyetujui Usulan Proses Terminasi', 'residensial', 'warning', 14, 'petugas_layanan', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1467,6 +1467,23 @@ CREATE TABLE `laksa_tr_laporan` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `laksa_tr_laporan_terminasi`
+--
+
+CREATE TABLE `laksa_tr_laporan_terminasi` (
+  `id` varchar(36) NOT NULL,
+  `layanan_id` varchar(36) DEFAULT NULL,
+  `dokumen_terminasi` varchar(100) DEFAULT NULL,
+  `tgl_terminasi` datetime DEFAULT NULL,
+  `nomor_terminasi` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `laksa_tr_layanan`
 --
 
@@ -1515,7 +1532,7 @@ CREATE TABLE `laksa_tr_layanan` (
 INSERT INTO `laksa_tr_layanan` (`id`, `petugas_id`, `perujuk_id`, `jenis_layanan`, `tgl_penerimaan`, `sumber_id`, `pasien_id`, `kategori_ppks_id`, `kategori_ppks_json`, `masa_layanan`, `rencana_tgl_terminasi`, `pengampu_id`, `status_id`, `dokumen_ba`, `dokumen_ba_tgl`, `dokumen_ba_tempat`, `dokumen_ba_nomor`, `gedung_id`, `up_dokumen_rujukan`, `ragam_abh`, `informasi_kasus`, `jenis_rujukan`, `no_putusan_pengadilan`, `ragam_anak`, `ragam_kelompok_rentan`, `ragam_penyandang_disabilitas`, `ragam_disabilitas_fisik`, `ragam_disabilitas_intelektual`, `ragam_disabilitas_mental`, `ragam_disabilitas_sensorik`, `disabilitas_ganda_multi`, `penerima_atensi`, `created_at`, `updated_at`, `deleted_at`) VALUES
 ('26531cee-d2bf-4487-ab8b-53919d5cf351', '3b5bb262-08a6-49ab-9708-5649141316fa', NULL, 'Residensial', '2025-02-08 00:00:00', '2', 'eab8406a-2c15-437a-9bd8-8e1cd8ca1809', '1dd96457-c226-4f42-a25b-693c9139823c', '{\"d87128fc-6a4b-4233-a4a0-472c59095c19\":\"1a482f35-6bf4-18da-0a2d-fe5ba1dc757b\"}', '4.7 bulan', '2025-06-28', 'af2eaf1c-34a7-400d-9f94-5af45b7970f7', '2ae4ad34-db8b-11ef-9f06-244bfebc0c45', NULL, NULL, NULL, NULL, '45e6a6f2-fd88-4bed-9fe6-8e2f07f8e74b', NULL, NULL, NULL, NULL, NULL, '1a482f35-6bf4-18da-0a2d-fe5ba1dc757b', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-07 22:43:36', '2025-02-08 02:05:19', NULL),
 ('4adccd38-7b86-4f37-9a40-b0a5b5144da4', '3b5bb262-08a6-49ab-9708-5649141316fa', NULL, 'Residensial', '2025-02-06 00:00:00', '2', 'c382f7e7-7635-40bd-af7a-43e8bf7513a8', 'b0dfec43-ccc7-4ef6-99ff-391fc2a1c494', '{\"5516efcf-1571-40bc-9f9e-f39c3148ee81\":\"ae4d6a4c-9e14-4003-a7e7-81cb1ae2cf0b\"}', '2.0 bulan', '2025-05-09', NULL, '7918fc82-db8a-11ef-9f06-244bfebc0c45', NULL, NULL, NULL, NULL, '36ec805e-3a34-496b-a9c1-5db36038e3f3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ae4d6a4c-9e14-4003-a7e7-81cb1ae2cf0b', '2025-02-06 18:57:08', '2025-02-08 00:51:13', NULL),
-('645845e6-79c6-4aaf-8280-0971d414a176', '3b5bb262-08a6-49ab-9708-5649141316fa', NULL, 'Residensial', '2025-02-07 00:00:00', '2', 'a61bd353-575a-4e4b-8d55-380e64051e33', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', '{\"bdb5fc88-e430-47f1-9ba4-cea2cac40244\":\"8caad3d7-f8b7-4c01-8c95-4f2f973a4539\",\"ebc5f1dd-4e2b-4fe2-97be-477291a311dd\":\"e4b07705-7562-4fa5-b77f-3338802a9645\",\"5332d470-4c5d-4df2-98d5-45b60805c978\":\"be9a2343-0021-43a7-9c54-46cd1d3832c1\",\"4aebdf03-5293-4724-a3d8-f9f2fca857d9\":\"002\"}', '10.0 bulan', '2025-12-07', '17d7ed8d-2133-4e05-bd43-d40123df3bdf', 'be583c52-e600-11ef-bfa8-244bfebc0c45', NULL, NULL, NULL, NULL, '36ec805e-3a34-496b-a9c1-5db36038e3f3', NULL, '8caad3d7-f8b7-4c01-8c95-4f2f973a4539', 'e4b07705-7562-4fa5-b77f-3338802a9645', 'be9a2343-0021-43a7-9c54-46cd1d3832c1', '002', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-06 18:48:02', '2025-02-08 08:30:53', NULL),
+('645845e6-79c6-4aaf-8280-0971d414a176', '3b5bb262-08a6-49ab-9708-5649141316fa', NULL, 'Residensial', '2025-02-07 00:00:00', '2', 'a61bd353-575a-4e4b-8d55-380e64051e33', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', '{\"bdb5fc88-e430-47f1-9ba4-cea2cac40244\":\"8caad3d7-f8b7-4c01-8c95-4f2f973a4539\",\"ebc5f1dd-4e2b-4fe2-97be-477291a311dd\":\"e4b07705-7562-4fa5-b77f-3338802a9645\",\"5332d470-4c5d-4df2-98d5-45b60805c978\":\"be9a2343-0021-43a7-9c54-46cd1d3832c1\",\"4aebdf03-5293-4724-a3d8-f9f2fca857d9\":\"002\"}', '10.0 bulan', '2025-12-07', '17d7ed8d-2133-4e05-bd43-d40123df3bdf', 'f164abdc-e600-11ef-bfa8-244bfebc0c45', NULL, NULL, NULL, NULL, '36ec805e-3a34-496b-a9c1-5db36038e3f3', NULL, '8caad3d7-f8b7-4c01-8c95-4f2f973a4539', 'e4b07705-7562-4fa5-b77f-3338802a9645', 'be9a2343-0021-43a7-9c54-46cd1d3832c1', '002', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-06 18:48:02', '2025-02-08 08:49:42', NULL),
 ('674c52b2-9bf7-4501-b462-c390b6b99238', '5262ea73-8971-4724-8b72-91e7a4a17ead', NULL, 'Residensial', '2025-02-07 00:00:00', '1', '25668b75-3416-4a52-950a-db397c19e069', '1dd96457-c226-4f42-a25b-693c9139823c', '{\"d87128fc-6a4b-4233-a4a0-472c59095c19\":\"3c77ed14-604b-7313-5afe-914a4274632c\"}', '3.0 bulan', '2025-05-07', NULL, '7078dbc5-db8a-11ef-9f06-244bfebc0c45', NULL, NULL, NULL, NULL, '36ec805e-3a34-496b-a9c1-5db36038e3f3', NULL, NULL, NULL, NULL, NULL, '3c77ed14-604b-7313-5afe-914a4274632c', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-06 17:58:00', '2025-02-08 00:51:03', NULL),
 ('90da3fd9-6c21-4556-b284-14f5a6161e6c', '5262ea73-8971-4724-8b72-91e7a4a17ead', NULL, 'Residensial', '2025-02-05 00:00:00', '1', '0e759a3e-83b4-4373-a51b-8384d49adf1c', '0ab3ef47-e2b3-45e5-896b-7bd037eb0916', '{\"bdb5fc88-e430-47f1-9ba4-cea2cac40244\":\"d7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5\",\"ebc5f1dd-4e2b-4fe2-97be-477291a311dd\":\"e4b07705-7562-4fa5-b77f-3338802a9645\",\"5332d470-4c5d-4df2-98d5-45b60805c978\":\"be9a2343-0021-43a7-9c54-46cd1d3832c1\",\"4aebdf03-5293-4724-a3d8-f9f2fca857d9\":\"1231231\"}', '0.2 bulan', '2025-02-12', NULL, '23ac51ea-db8b-11ef-9f06-244bfebc0c45', 'uploads/dokumen_rujukan/ZUhi1k3LGmcb6gH1xmggc3erLJhgGI2S3bqjAgll.pdf', NULL, NULL, NULL, '2abcfad0-d43f-4166-9675-0fbc2b5d7c4a', 'uploads/dokumen_rujukan/ZUhi1k3LGmcb6gH1xmggc3erLJhgGI2S3bqjAgll.pdf', 'd7c8f643-5ec6-42fb-a3ea-8c5c787ad1b5', 'e4b07705-7562-4fa5-b77f-3338802a9645', 'be9a2343-0021-43a7-9c54-46cd1d3832c1', '1231231', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-08 04:26:57', '2025-02-08 04:34:47', NULL),
 ('aa9b16cd-2d7d-4e39-8dbc-81fda3fb5374', '5262ea73-8971-4724-8b72-91e7a4a17ead', NULL, 'Residensial', '2025-02-07 00:00:00', '1', '34807ef5-1c08-42d2-b45e-94e9101c2dc1', '1dd96457-c226-4f42-a25b-693c9139823c', '{\"d87128fc-6a4b-4233-a4a0-472c59095c19\":\"044ff0e9-439e-124e-8ef8-202485b34bd5\"}', '7.0 bulan', '2025-09-07', 'e112f352-2773-44f5-a47d-ecf6de3f0b29', '3cdad447-db8b-11ef-9f06-244bfebc0c45', NULL, NULL, NULL, NULL, '36ec805e-3a34-496b-a9c1-5db36038e3f3', NULL, NULL, NULL, NULL, NULL, '044ff0e9-439e-124e-8ef8-202485b34bd5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-06 17:55:20', '2025-02-08 01:36:20', NULL),
@@ -2081,6 +2098,12 @@ ALTER TABLE `laksa_tr_assessment_value`
 -- Indexes for table `laksa_tr_laporan`
 --
 ALTER TABLE `laksa_tr_laporan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laksa_tr_laporan_terminasi`
+--
+ALTER TABLE `laksa_tr_laporan_terminasi`
   ADD PRIMARY KEY (`id`);
 
 --
