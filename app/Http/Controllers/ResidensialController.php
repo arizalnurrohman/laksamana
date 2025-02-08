@@ -23,6 +23,10 @@ use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
 use App\Models\KategoriPPKSSub;
 use App\Models\Perujuk;
+use App\Models\StatusLog;
+
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ResidensialController extends Controller
 {
@@ -471,7 +475,7 @@ class ResidensialController extends Controller
 
             // Panggil function generate_ba
             $baGenerated = $this->generate_ba($id);
-
+            dd($baGenerated);
             // Jika generate_ba gagal, kembalikan respons gagal
             if (!$baGenerated) {
                 return response()->json([
@@ -483,6 +487,14 @@ class ResidensialController extends Controller
             // Update status residensial
             $residendsial->status_id = "1ba4b694-db8b-11ef-9f06-244bfebc0c45"; // Dokumen Serah Terima Selesai di Generate
             $residendsial->save();
+
+            $logs=new StatusLog();
+            $logs->id               =Str::uuid()->toString();
+            $logs->jenis_layanan    ="Residensial";
+            $logs->layanan_id       =$id;
+            $logs->status_id        ="1ba4b694-db8b-11ef-9f06-244bfebc0c45";
+            $logs->user_id          ="1";
+            $logs->save();
 
             return response()->json([
                 'success' => true,
@@ -502,9 +514,36 @@ class ResidensialController extends Controller
     // Function generate_ba
     public function generate_ba($id)
     {
-        // Logic untuk generate BA
-        // Untuk sementara return true
+        // // Logic untuk generate BA
+        // // Untuk sementara return true
         return true;
+
+        // Lokasi file Python di dalam folder public/storage/python/
+        // Lokasi file Python di dalam folder public/storage/python/
+        $scriptPath = public_path('storage/python/convert.py');
+
+        // Menjalankan script Python tanpa argumen
+        // $process = new Process(["python", $scriptPath]);
+        $process = new Process(["py", $scriptPath]);
+        // $process = new Process(["venv\\Scripts\\python", $scriptPath]);
+
+        // $process = new Process(["cmd", "/c", "python", $scriptPath]);
+
+
+        $process->run();
+
+        // Cek apakah terjadi error
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        // Ambil output dari script Python
+        $output = $process->getOutput();
+
+        return response()->json([
+            'message' => 'Berita Acara berhasil dibuat',
+            'output' => trim($output),
+        ]);
     }
     public function getResidensial($id){
         // dd($id);

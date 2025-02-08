@@ -40,7 +40,14 @@ class PermissionController extends Controller
         // Role::create(['name' => 'koordinator']);
         // Role::create(['name' => 'anggota']);
         // Role::create(['name' => 'kepala']);
-        // Role::create(['name' => 'assessment']);
+        // Role::create(['name' => 'petugas']);
+        // exit;
+
+        // $role = Role::findByName('admin'); // Ganti 'role_name' dengan nama role yang ingin dihapus
+        // $role->delete();
+        // exit;
+        
+
         $role = Role::all();
         // dd($role);
         return view('permission.index', compact('role'));

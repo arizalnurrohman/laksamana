@@ -28,6 +28,7 @@ use App\Http\Controllers\PenentuanLayananController;
 
 
 use App\Http\Controllers\PersetujuanKepalaController;
+use App\Http\Controllers\LaporanBeritaAcaraController;
 use App\Http\Controllers\KomponenPerkembanganController;
 
 Route::get('/dashboards', function () {
@@ -182,7 +183,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/rehabilitasi/generate-rehabilitasi/{id}', [RehabilitasiController::class, 'generate_rehabilitasi'])->name('rehabilitasi.generate_rehabilitasi');
 
 
-
     Route::get('/petugas', [PetugasController::class, 'index'])->name('petugas');
     Route::get('/petugas/load-petugas', [PetugasController::class, 'load_data'])->name('load_petugas');
     Route::post('/petugas/store', [PetugasController::class, 'store'])->name('petugas.store');
@@ -196,6 +196,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/perujuk/edit/{id}', [PerujukController::class, 'edit'])->name('perujuk.edit');
     Route::post('/perujuk/update', [PerujukController::class, 'update'])->name('perujuk.update');
     Route::delete('/perujuk/delete/{id}', [PerujukController::class, 'destroy'])->name('perujuk.delete');
+
+    Route::get('/laporan-berita-acara', [LaporanBeritaAcaraController::class, 'index'])->name('laporanberitaacara');
+    Route::get('/laporan-berita-acara/load-berita-acara', [LaporanBeritaAcaraController::class, 'load_laporan'])->name('load_beritaacara');
+    Route::get('/laporan-berita-acara/edit/{id}', [LaporanBeritaAcaraController::class, 'get_ba'])->name('laporanberitaacara.getba');
 
 });
 
