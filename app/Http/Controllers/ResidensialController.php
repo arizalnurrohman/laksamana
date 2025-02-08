@@ -56,14 +56,14 @@ class ResidensialController extends Controller
     }
     public function index()
     {
-        #$sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        #$sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $residensial = [];
-        $petugas    =Petugas::leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_petugas.nip")->get();
+        $petugas    =Petugas::leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip")->get();
         return view('residensial.index', compact('residensial','petugas'));
     }
     public function create()
     {
-        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_petugas.*","laksa_ms_petugas.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_petugas.nip")->get();
+        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_pendamping_sosial.*","laksa_ms_pendamping_sosial.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip")->get();
         $sumber_rujukan=SumberRujukan::all();
         $agama = Agama::all();
         $provinsi = Provinsi::all();
@@ -184,10 +184,10 @@ class ResidensialController extends Controller
     }
 
     public function load_residensial(){
-        $sub_child = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
+        $sub_child = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_pendamping_sosial.*","laksa_ms_pegawai.*","laksa_ms_status.*");
         $sub_child = $sub_child->orderby("laksa_tr_layanan.created_at","DESC");
-        $sub_child = $sub_child->leftJoin('laksa_ms_petugas', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_petugas.id');
-        $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_pendamping_sosial', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_pendamping_sosial.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
@@ -493,9 +493,9 @@ class ResidensialController extends Controller
     }
     public function getResidensial($id){
         // dd($id);
-        $sub_child = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas.*","laksa_ms_pegawai.*","laksa_ms_status.*");
-        $sub_child = $sub_child->leftJoin('laksa_ms_petugas', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_petugas.id');
-        $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_petugas.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        $sub_child = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_pendamping_sosial.*","laksa_ms_pegawai.*","laksa_ms_status.*");
+        $sub_child = $sub_child->leftJoin('laksa_ms_pendamping_sosial', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_pendamping_sosial.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
@@ -518,7 +518,7 @@ class ResidensialController extends Controller
             ],
             'manajer_kasus' => [
                 'required',
-                // 'exists:laksa_ms_petugas,id' // Memastikan petugas_id (manajer kasus) ada di tabel rehabilitasi
+                // 'exists:laksa_ms_pendamping_sosial,id' // Memastikan petugas_id (manajer kasus) ada di tabel rehabilitasi
             ],
         ]);
 

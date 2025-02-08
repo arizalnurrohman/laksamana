@@ -48,7 +48,7 @@ class PasienController extends Controller
     }
     public function create()
     {
-        // $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_petugas.*","laksa_ms_petugas.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.id","=","laksa_ms_petugas.pegawai_id")->get();
+        // $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_pendamping_sosial.*","laksa_ms_pendamping_sosial.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.id","=","laksa_ms_pendamping_sosial.pegawai_id")->get();
         $agama          = Agama::all();
         $provinsi       = Provinsi::all();
         $kabupaten      = Kabupaten::all();

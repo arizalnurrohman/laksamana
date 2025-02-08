@@ -9,7 +9,7 @@ class Petugas extends Model
 {
     use SoftDeletes;
     
-    protected $table    = 'laksa_ms_petugas';
+    protected $table    = 'laksa_ms_pendamping_sosial';
     protected $fillable = ['id','nip','nama_petugas','pegawai_id','kabupaten_kota_id','created_at','updated_at','deleted_at'];
     protected $dates    = ['deleted_at'];
     protected $keyType  = 'string';

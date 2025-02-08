@@ -74,7 +74,7 @@ class PetugasController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'id'           => 'required|exists:laksa_ms_petugas,id',
+            'id'           => 'required|exists:laksa_ms_pendamping_sosial,id',
             'nama_petugas' => 'required|string|max:255',
             'nip_petugas'  =>'required'
         ]);
