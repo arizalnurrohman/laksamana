@@ -6,6 +6,7 @@ use Storage;
 use Validator;
 use App\Models\Aspek;
 use App\Models\Assessment;
+use App\Models\Residensial;
 use Illuminate\Support\Str;
 use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
@@ -66,6 +67,41 @@ class RehabilitasiController extends Controller
         $assessment =Assessment::where("residensial_id",$rehabilitasi->residensial_id)->first();
 
         return view('rehabilitasi.detail', compact('rehabilitasi','komponen','aspek','komponen_layanan_yang_diberikan',"assessment"))->with('no', 1);
+    }
+
+    public function rehabilitasiLaporan($id){
+        $rehabilitasi = Rehabilitasi::findOrFail($id);
+        // dd($dokumen_ba);
+        $return['dokumen_rehabilitasi']=asset('storage/' . $rehabilitasi->laporan_rehabilitasi);
+        return $return;
+    }
+
+    public function ajukanTerminasi(Request $request,$id){
+        // dd($request->all());
+        // dd($id);
+        try {
+            $residensial = Residensial::leftJoin('laksa_tr_rehabilitasi', 'laksa_tr_layanan.id', '=', 'laksa_tr_rehabilitasi.residensial_id')->where("laksa_tr_rehabilitasi.id", "=", $id)->first();
+            if ($residensial) {
+                // Gunakan update dengan kondisi yang lebih spesifik
+
+                $updated = Residensial::where('id', $residensial->residensial_id)->update(["status_id"=>"56bd1150-db8b-11ef-9f06-244bfebc0c45"]);
+                
+
+                return response()->json([
+                    'message' => 'Proses terminasi berhasil diajukan.',
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Terjadi kesalahan saat menyimpan data',
+                ], 500);
+            }
+
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function get_rehabilitasiPerkembangan($id){

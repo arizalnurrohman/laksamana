@@ -107,6 +107,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/assessement/kirim-koordinator/{id}', [AssessementController::class, 'store_kirim_koordinator'])->name('assessement.kirim_koordinator');
     Route::get('/assessement/edit/{id}', [AssessementController::class, 'edit_Assessment'])->name('edit_assessement');
 
+    Route::get('/assessement/reviu-perkembangan-dokumen/{id}', [AssessementController::class, 'reviuDokumenPerkembangan'])->name('assessement.reviu_dokumen_perkembangan');
+    Route::post('/assessement/reviu-perkembangan-dokumen/', [AssessementController::class, 'reviuKirimPerkembangan'])->name('assessement.reviu_send_perkembangan');
+
+
     Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
     Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
     Route::post('/pasien', [PasienController::class, 'store'])->name('pasien.store');
@@ -181,6 +185,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/rehabilitasi/rehabilitasi-perkembangan/{id}', [RehabilitasiController::class, 'get_rehabilitasiPerkembangan'])->name('rehabilitasi.rehabilitasi_perkembangan');
     Route::delete('/rehabilitasi/perkembangan-delete/{id}', [RehabilitasiController::class, 'destroy'])->name('rehabilitasi.delete_perkembangan');
     Route::get('/rehabilitasi/generate-rehabilitasi/{id}', [RehabilitasiController::class, 'generate_rehabilitasi'])->name('rehabilitasi.generate_rehabilitasi');
+    Route::get('/rehabilitasi/laporan-rehabilitasi/{id}', [RehabilitasiController::class, 'rehabilitasiLaporan'])->name('rehabilitasi.laporan_rehabilitasi');
+    Route::get('/rehabilitasi/ajukan-terminasi/{id}', [RehabilitasiController::class, 'ajukanTerminasi'])->name('rehabilitasi.ajukan_terminasi');
+
 
 
     Route::get('/petugas', [PetugasController::class, 'index'])->name('petugas');

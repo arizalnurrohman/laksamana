@@ -51,7 +51,7 @@ class PersetujuanKepalaController extends Controller
 
     //     $this->error    =array();
     //     $this->success  =false;
-        $this->status_usulan=["7078dbc5-db8a-11ef-9f06-244bfebc0c45"];
+        $this->status_usulan=["7078dbc5-db8a-11ef-9f06-244bfebc0c45","be583c52-e600-11ef-bfa8-244bfebc0c45"];
     }
     public function index()
     {

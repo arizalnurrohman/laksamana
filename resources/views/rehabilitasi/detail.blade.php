@@ -76,7 +76,7 @@
                     Generate Laporan @if ($activeMenu) {{ $activeMenu->menu }} @endif
                 </button>
                 @if($rehabilitasi->laporan_rehabilitasi)
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#laporan{{ $activeMenu->access }}Modal">
+                <button class="btn btn-primary" onclick="laporan_rehabilitasi('{{$rehabilitasi->rehabilitasi_id}}')">
                     <span class="btn-inner">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -131,7 +131,18 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    laporan belum ada
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <iframe 
+                                id="iframeBA" 
+                                src="" 
+                                class="w-100 border rounded" 
+                                style="height: 700px;" 
+                                allowfullscreen 
+                                title="PDF Viewer">
+                            </iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -967,16 +978,42 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/rehabilitasi/generate-rehabilitasi/${id}`,//ganti url terminasi
+                    url: `/rehabilitasi/ajukan-terminasi/${id}`,//ganti url terminasi
                     type: 'GET',
                     success: function (data) {
-                        alert(data);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Terkirim',
+                            html: "Data telah Terkirim.",
+                            showConfirmButton: true,
+                            timer: 5000,
+                            customClass: {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            window.location.href = "{{ route('rehabilitasi') }}";
+                        });
                     },
                     error: function (xhr, status, error) {
                         console.error(`Error: ${error}`);
                         alert('Failed to fetch data. Please try again.');
                     }
                 });
+            }
+        });
+    }
+
+    function laporan_rehabilitasi(id){
+        $.ajax({
+            url: `/rehabilitasi/laporan-rehabilitasi/${id}`,
+            type: 'GET',
+            success: function (data) {
+                $('#iframeBA').attr('src', data.dokumen_rehabilitasi);
+                $('#laporan{{ $activeMenu->access }}Modal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error(`Error: ${error}`);
+                alert('Failed to fetch data. Please try again.');
             }
         });
     }

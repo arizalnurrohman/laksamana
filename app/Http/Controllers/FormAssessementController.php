@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
+use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
 use App\Models\FormAssessment;
 use App\Models\FormAssessmentSub;
@@ -45,6 +46,7 @@ class FormAssessementController extends Controller
         $kategori = FormAssessment::findOrFail($request->id);
         return response()->json($kategori);
     }
+
     public function update(Request $request)
     {
         $request->validate([
