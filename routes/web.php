@@ -107,7 +107,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/assessement/kirim-koordinator/{id}', [AssessementController::class, 'store_kirim_koordinator'])->name('assessement.kirim_koordinator');
     Route::get('/assessement/edit/{id}', [AssessementController::class, 'edit_Assessment'])->name('edit_assessement');
 
-    Route::get('/assessement/reviu-perkembangan-dokumen/{id}', [AssessementController::class, 'reviuDokumenPerkembangan'])->name('assessement.reviu_dokumen_perkembangan');
+    Route::get('/assessement/reviu-perkembangan-dokumen/{id}', [AssessementController::class, 'reviuDokumenPerkembangan'])->name('assessement.reviu_perkembangan');
     Route::post('/assessement/reviu-perkembangan-dokumen/', [AssessementController::class, 'reviuKirimPerkembangan'])->name('assessement.reviu_send_perkembangan');
 
 
@@ -169,6 +169,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/persetujuan-kepala', [PersetujuanKepalaController::class, 'store'])->name('persetujuankepala.store');
     Route::get('/persetujuan-kepala/load-persetujuan-kepala', [PersetujuanKepalaController::class, 'load_persetujuan_kepala'])->name('load_persetujuan_kepala');
     Route::get('/persetujuan-kepala/edit/{id}', [PersetujuanKepalaController::class, 'edit'])->name('persetujuankepala.detail');
+    Route::get('/persetujuan-kepala/reviu-perkembangan-dokumen/{id}', [PersetujuanKepalaController::class, 'reviuDokumenPerkembangan'])->name('persetujuankepala.reviu_perkembangan');
+    Route::post('/persetujuan-kepala/reviu-perkembangan-dokumen/', [PersetujuanKepalaController::class, 'reviuKirimPerkembangan'])->name('persetujuankepala.reviu_send_perkembangan');
 
     Route::get('/pengampu', [PengampuController::class, 'index'])->name('pengampu');
 

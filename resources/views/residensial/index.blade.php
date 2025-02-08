@@ -495,6 +495,50 @@
         $('#ba{{ $activeMenu->access }}Modal').modal('show');
     }
 
+    function proses_trminasi(id){
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan Membuat Proses terminasi pada usulan ini ? ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Kirim!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/residensial/terminasi-layanan/${id}`,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: { id: id }, // Menambahkan id sebagai data yang dikirim
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            html: "Proses terminasi Layanan berhasil.",
+                            showConfirmButton: true,
+                            timer: 1000,
+                            customClass: {
+                                container: 'swal-container'
+                            }
+                        }).then(function() {
+                            load_this_data();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to Send the file. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        });
+    }
+
 
 
 </script>

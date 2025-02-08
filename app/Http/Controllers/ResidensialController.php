@@ -57,7 +57,7 @@ class ResidensialController extends Controller
 
     //     $this->error    =array();
     //     $this->success  =false;
-        $this->status_usulan=['b4a5adb3-db89-11ef-9f06-244bfebc0c45','a961e7f6-db89-11ef-9f06-244bfebc0c45','b995d70b-db89-11ef-9f06-244bfebc0c45','be10c279-db89-11ef-9f06-244bfebc0c45','7078dbc5-db8a-11ef-9f06-244bfebc0c45','7918fc82-db8a-11ef-9f06-244bfebc0c45','1ba4b694-db8b-11ef-9f06-244bfebc0c45','23ac51ea-db8b-11ef-9f06-244bfebc0c45','2ae4ad34-db8b-11ef-9f06-244bfebc0c45','3cdad447-db8b-11ef-9f06-244bfebc0c45','462ce22c-db8b-11ef-9f06-244bfebc0c45','56bd1150-db8b-11ef-9f06-244bfebc0c45','651a521f-db8b-11ef-9f06-244bfebc0c45'];
+        $this->status_usulan=['1ba4b694-db8b-11ef-9f06-244bfebc0c45','23ac51ea-db8b-11ef-9f06-244bfebc0c45','2518e902-e601-11ef-bfa8-244bfebc0c45','2ae4ad34-db8b-11ef-9f06-244bfebc0c45','3cdad447-db8b-11ef-9f06-244bfebc0c45','462ce22c-db8b-11ef-9f06-244bfebc0c45','56bd1150-db8b-11ef-9f06-244bfebc0c45','651a521f-db8b-11ef-9f06-244bfebc0c45','7078dbc5-db8a-11ef-9f06-244bfebc0c45','7918fc82-db8a-11ef-9f06-244bfebc0c45','8da47964-e600-11ef-bfa8-244bfebc0c45','a961e7f6-db89-11ef-9f06-244bfebc0c45','b4a5adb3-db89-11ef-9f06-244bfebc0c45','b995d70b-db89-11ef-9f06-244bfebc0c45','be10c279-db89-11ef-9f06-244bfebc0c45','be583c52-e600-11ef-bfa8-244bfebc0c45','f164abdc-e600-11ef-bfa8-244bfebc0c45'];
     }
     public function index()
     {
@@ -292,6 +292,16 @@ class ResidensialController extends Controller
                 $btn_tentukan_layanan="";
             }
 
+            if($val->status_id=="f164abdc-e600-11ef-bfa8-244bfebc0c45"){
+                $tombol_terminasi='<button class="btn btn-sm btn-icon btn-warning" Onclick="proses_trminasi(\''.$val->residensial_id.'\')">
+                                        <span class="btn-inner">
+                                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path d="M15.016 7.38948V6.45648C15.016 4.42148 13.366 2.77148 11.331 2.77148H6.45597C4.42197 2.77148 2.77197 4.42148 2.77197 6.45648V17.5865C2.77197 19.6215 4.42197 21.2715 6.45597 21.2715H11.341C13.37 21.2715 15.016 19.6265 15.016 17.5975V16.6545" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M21.8096 12.0215H9.76855" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M18.8813 9.1062L21.8093 12.0212L18.8813 14.9372" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                            
+                                        </span>
+                                    </button>';
+            }else{
+                $tombol_terminasi='';
+            }
+
 
 
             $data[$no]['No']                =($no+1);
@@ -306,6 +316,7 @@ class ResidensialController extends Controller
                                                 '.$btn_send_assessor.'
                                                 '.$btn_tentukan_layanan.'
                                                 '.$btn_edit_delete.'
+                                                '.$tombol_terminasi.'
                                             </div>';
             $no++;
         }

@@ -224,7 +224,6 @@
                 alert('Failed to fetch data. Please try again.');
             }
         });
-        
     }
 
 </script>
