@@ -22,6 +22,7 @@ use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
 use App\Models\KategoriPPKSSub;
+use App\Models\Perujuk;
 
 class ResidensialController extends Controller
 {
@@ -58,12 +59,12 @@ class ResidensialController extends Controller
     {
         #$sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $residensial = [];
-        $petugas    =Petugas::leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip")->get();
+        $petugas    =Petugas::leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip_nik")->get();
         return view('residensial.index', compact('residensial','petugas'));
     }
     public function create()
     {
-        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_pendamping_sosial.*","laksa_ms_pendamping_sosial.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip")->get();
+        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_pendamping_sosial.*","laksa_ms_pendamping_sosial.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip_nik")->get();
         $sumber_rujukan=SumberRujukan::all();
         $agama = Agama::all();
         $provinsi = Provinsi::all();
@@ -74,7 +75,9 @@ class ResidensialController extends Controller
         $gedung=Gedung::all();
         $pasien = Pasien::all();
         $pengampu=Pengampu::all();
-        return view('residensial.create', compact('petugas','sumber_rujukan','agama','provinsi','kabupaten','kecamatan','pendidikan','kategori','pasien','gedung','pengampu'));
+        $perujuk=Perujuk::all();
+
+        return view('residensial.create', compact('petugas','sumber_rujukan','agama','provinsi','kabupaten','kecamatan','pendidikan','kategori','pasien','gedung','pengampu','perujuk'));
     }
     public function store(Request $request)
     {

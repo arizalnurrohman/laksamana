@@ -65,7 +65,7 @@
                 <ul id="top-tab-list" class="p-0 row list-inline">
                     
                     
-                    <li class="mb-2 col-lg-3 col-md-6 text-start" id="account">
+                    <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
                                 <svg class="icon-20 svg-icon" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +76,7 @@
                             <span class="dark-wizard">Data PPKS</span>
                         </a>
                     </li>
-                    <li id="personal" class="mb-2 col-lg-3 col-md-6 text-start active">
+                    <li id="personal" class="mb-2 col-lg-3 col-md-6 text-start ">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -147,7 +147,7 @@
             allowClear: true
         });
         $("#form-wizard1").submit(function(e){
-          e.preventDefault(); 
+            e.preventDefault(); 
             var btnx	=$('.btn-submit');
             $(btnx).attr("disabled", true);
             $(btnx).attr({type:'submit',value: 'Loading'});

@@ -8,6 +8,27 @@
         </div>
     </div>
     <div class="row">
+        <h4>Data Perujuk</h4>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-label">Nama Perujuk: *</label>
+                <div class="input-group">
+                    <select class="form-select" data-trigger name="perujuk_id" id="petugas_penerimaan">
+                        <option value="">Pilih Perujuk</option>
+                        @foreach($perujuk as $perujukx)
+                            <option value="{{$perujukx->id}}">{{$perujukx->nama}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-label">Nama Perujuk: *</label>
+                <input type="text" class="form-control" name="perujuk_nipp" placeholder="NIP/ NRP Perujuk" id="perujuk_nipp" />
+            </div>
+        </div>
+        <h4>Data Informasi Residensial</h4>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label" for="petugas_penerimaan">Petugas Layanan (otomatis dari login)</label>

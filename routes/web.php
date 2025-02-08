@@ -6,10 +6,13 @@ use App\Http\Controllers\AsramaController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PerujukController;
 use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\PengampuController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ListAspekController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AssessementController;
@@ -22,12 +25,10 @@ use App\Http\Controllers\StatusUsulanController;
 use App\Http\Controllers\NonResidensialController;
 use App\Http\Controllers\FormAssessementController;
 use App\Http\Controllers\PenentuanLayananController;
+
+
 use App\Http\Controllers\PersetujuanKepalaController;
 use App\Http\Controllers\KomponenPerkembanganController;
-use App\Http\Controllers\DashboardController;
-
-
-use App\Http\Controllers\ProfileController;
 
 Route::get('/dashboards', function () {
     return view('dashboard');
@@ -188,6 +189,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/petugas/edit/{id}', [PetugasController::class, 'edit'])->name('petugas.edit');
     Route::post('/petugas/update', [PetugasController::class, 'update'])->name('petugas.update');
     Route::delete('/petugas/delete/{id}', [PetugasController::class, 'destroy'])->name('petugas.delete');
+
+    Route::get('/perujuk', [PerujukController::class, 'index'])->name('perujuk');
+    Route::get('/perujuk/load-perujuk', [PerujukController::class, 'load_data'])->name('load_perujuk');
+    Route::post('/perujuk/store', [PerujukController::class, 'store'])->name('perujuk.store');
+    Route::get('/perujuk/edit/{id}', [PerujukController::class, 'edit'])->name('perujuk.edit');
+    Route::post('/perujuk/update', [PerujukController::class, 'update'])->name('perujuk.update');
+    Route::delete('/perujuk/delete/{id}', [PerujukController::class, 'destroy'])->name('perujuk.delete');
 
 });
 

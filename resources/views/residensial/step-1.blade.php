@@ -13,13 +13,13 @@
                 <label class="form-label">Nama Lengkap: *</label>
                 {{-- <input type="text" class="form-control" name="fname" placeholder="Nama Lengkap" /> --}}
                 <div class="input-group">
-                    <select data-placeholder="Pilih Pasien" class="select2-basic-single js-states form-select form-control" tabindex="1" id="pilih-pasien" name="pasien" style="width: 80%;">
-                        <option value="">Pilih Pasien</option>
+                    <select data-placeholder="Pilih PPKS" class="select2-basic-single js-states form-select form-control" tabindex="1" id="pilih-pasien" name="pasien" style="width: 80%;">
+                        <option value="">Pilih PPKS</option>
                         @foreach($pasien as $id => $pasienx)
                             <option value="{{ $pasienx->id }}">{{ $pasienx->nama_depan." ".$pasienx->nama_belakang }}</option>
                         @endforeach
                     </select>
-                    <div class="input-group-btn"><button type="button" class="btn btn-primary pilih_pasien">Pilih Pasien</button></div>
+                    <div class="input-group-btn"><button type="button" class="btn btn-primary pilih_pasien">Pilih PPKS</button></div>
                 </div>
             </div>
         </div>
