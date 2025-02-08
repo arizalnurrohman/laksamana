@@ -18,7 +18,7 @@
                         </div>
                         <div class="text-end">
                             Resindensial<br>&nbsp;
-                                <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['peserta'])}}</h2>
+                                <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['residensial'])}}</h2>
                         </div>
                     </div>
                     </div>
@@ -35,7 +35,7 @@
                             </div>
                             <div class="text-end">
                                 Non Resindensial
-                                    <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['hadir'])}}</h2>
+                                    <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['nonresidensial'])}}</h2>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                             </div>
                             <div class="text-end">
                                 PPKS<br>&nbsp;
-                                    <h2 class="counter" style="visibility: visible;">{{number_format(($nilai_total['xhadir']))}}</h2>
+                                    <h2 class="counter" style="visibility: visible;">{{number_format(($nilai_total['ppks']))}}</h2>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                          </div>
                          <div class="text-end">
                             Rehabilitasi<br>&nbsp;
-                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['disabilitas'])}}</h2>
+                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['rehabilitasi'])}}</h2>
                          </div>
                       </div>
                    </div>
@@ -82,7 +82,7 @@
                          </div>
                          <div class="text-end">
                             Gedung Asrama &nbsp;
-                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['pppk_minimal'])}}</h2>
+                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['gedungasrama'])}}</h2>
                          </div>
                       </div>
                    </div>
@@ -97,7 +97,7 @@
                           </div>
                           <div class="text-end">
                              Data intervensi<br>&nbsp;
-                                <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['pppk_maksimal'])}}</h2>
+                                <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['intervensi'])}}</h2>
                           </div>
                        </div>
                     </div>

@@ -30,7 +30,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">Tempat Lahir: *</label>
-                <input type="text" class="form-control" name="pengampu_tmp_lahir" placeholder="Tempat Lahir."  value="{{isset($pengampu->tmp_lahir) ? $pengampu->tmp_lahir : ''}}"/>"/>
+                <input type="text" class="form-control" name="pengampu_tmp_lahir" placeholder="Tempat Lahir."  value="{{isset($pengampu->tmp_lahir) ? $pengampu->tmp_lahir : ''}}"/>
             </div>
         </div>
         <div class="col-md-6">
@@ -117,7 +117,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">Pekerjaan: *</label>
-                <input type="text" class="form-control" name="pengampu_pekerjaan" placeholder="Pekerjaan."  value="{{isset($pengampu->pekerjaan) ? $pengampu->pekerjaan : ''}}"/>>
+                <input type="text" class="form-control" name="pengampu_pekerjaan" placeholder="Pekerjaan."  value="{{isset($pengampu->pekerjaan) ? $pengampu->pekerjaan : ''}}"/>
             </div>
         </div>
         <div class="col-md-12">

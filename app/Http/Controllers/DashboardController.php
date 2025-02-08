@@ -2,7 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use Carbon\Carbon;
+use App\Models\Agama;
+use App\Models\Assessment;
+use App\Models\Gedung;
+use App\Models\Pasien;
+use App\Models\Pegawai;
+use App\Models\Petugas;
+use App\Models\Pengampu;
+use App\Models\Provinsi;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
+use App\Models\Pendidikan;
+use App\Models\Residensial;
+use Illuminate\Support\Str;
+use App\Models\KategoriPPKS;
+use App\Models\StatusUsulan;
+use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
+use App\Models\SumberRujukan;
+use App\Models\KategoriPPKSSub;
 
 class DashboardController extends Controller
 {
@@ -38,14 +58,12 @@ class DashboardController extends Controller
     public function index()
     {
         $nilai_total = [
-            "peserta"   =>0,
-            "hadir"   =>0,
-            "xhadir"   =>0,
-            "disabilitas"   =>0,
-            "nilai_minimal"   =>0,
-            "nilai_maksimal"   =>0,
-            "pppk_minimal"   =>0,
-            "pppk_maksimal"   =>0,
+            "residensial"       =>Residensial::where("jenis_layanan","Residensial")->count(),#residensial
+            "nonresidensial"    =>Residensial::where("jenis_layanan","Non Residensial'")->count(),#nonresidensial
+            "ppks"              =>Pasien::count(),#ppks
+            "rehabilitasi"      =>Rehabilitasi::count(),#rehabilitasi
+            "gedungasrama"      =>Gedung::count(),#gedungasrama
+            "intervensi"        =>Assessment::where("intervensi_komponen_yang_diberikan","!=",null)->count(),#intervensi
             
         ];
         return view('dashboard.index', compact('nilai_total'));

@@ -52,6 +52,8 @@
                         @else
                             @if($childx->type_form=="file")
                             <input type="file" class="form-control" name="assessment[{{$assessement->id}}][{{$childx->id}}]"/>
+                            @elseif($childx->type_form=="textarea")
+                                <textarea class="form-control" name="assessment[{{$assessement->id}}][{{$childx->id}}]" rows="5"></textarea>
                             @else
                                 <input type="text" class="form-control" name="assessment[{{$assessement->id}}][{{$childx->id}}]" placeholder="{{$childx->sub_kategori_assessment}}"/>
                             @endif
@@ -60,13 +62,32 @@
                 </div>
             @endforeach
         @endforeach
-        
+
+
         <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-label"><strong>Komponen Layanan yang dibutuhkan</strong> *</label>
+                @foreach($komponen_intervensi as $komponen_intervensix)
+                    <br>    
+                    <div class="form-check form-switch">
+                        <input class="form-check-input checkbox-layanan" type="checkbox" name="komponen_intervensi[pilihan][value]" value="{{$komponen_intervensix->id}}">
+                        <label class="pl-2 form-check-label" for="switch2">{{$komponen_intervensix->nama_komponen}}</label>
+                        <textarea class="textarea-{{$komponen_intervensix->id}}" rows="5" name="komponen_intervensi[pilihan][rincian]" style="display: none; width: 100%; margin-top: 5px;" placeholder="Tambahkan keterangan {{$komponen_intervensix->nama_komponen}}..."></textarea>
+                    </div>
+                    
+                @endforeach
+            </div>
+        </div>
+        
+
+
+        
+        {{-- <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">Uraian Komponen Layanan: *</label>
                 <textarea class="form-control" name="uraian_komponen_layanan" rows="5"></textarea>
             </div>
-        </div>
+        </div> --}}
 
     </div>
 </div>

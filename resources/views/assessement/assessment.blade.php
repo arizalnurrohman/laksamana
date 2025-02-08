@@ -20,7 +20,7 @@
                 @csrf
                 <ul id="top-tab-list" class="p-0 row list-inline">
                     <input type="hidden" name="residensial_id" value="{{$residensial->id}}" id="residensial_id">
-                    <li class="mb-2 col-lg-4 col-md-6 text-start active" id="account">
+                    <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +31,7 @@
                             <span class="dark-wizard">Data PPKS</span>
                         </a>
                     </li>
-                    <li id="personal" class="mb-2 col-lg-4 col-md-6 text-start">
+                    <li id="personal" class="mb-2 col-lg-3 col-md-6 text-start">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
                                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +46,7 @@
                             <span class="dark-wizard">Data Pengampu</span>
                         </a>
                     </li>
-                    <li id="payment" class="mb-2 col-lg-4 col-md-6 text-start">
+                    <li id="payment" class="mb-2 col-lg-3 col-md-6 text-start">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon-20" width="20" viewBox="0 0 24 24" fill="none">
@@ -57,16 +57,16 @@
                             <span class="dark-wizard">Assessement</span>
                         </a>
                     </li>
-                    {{-- <li id="confirm" class="mb-2 col-lg-3 col-md-6 text-start">
+                    <li id="confirm" class="mb-2 col-lg-3 col-md-6 text-start">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <span class="dark-wizard">Intervensi</span>
+                            <span class="dark-wizard">Petugas Layanan</span>
                         </a>
-                    </li> --}}
+                    </li>
                 </ul>
                 <!-- fieldsets -->
                 <fieldset>
@@ -80,15 +80,15 @@
                 </fieldset>
                 <fieldset>
                     @include('assessement.step-3')
-                    {{-- <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button> --}}
-                    <button type="submit" name="next" class="btn btn-primary action-button float-end" value="Submit" >Submit</button>
+                    <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
+                    {{-- <button type="submit" name="next" class="btn btn-primary action-button float-end" value="Submit" >Submit</button> --}}
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
-                {{-- <fieldset>
+                <fieldset>
                     @include('assessement.step-4')
                     <button type="submit" name="next" class="btn btn-primary action-button float-end" value="Submit" >Submit</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
-                </fieldset> --}}
+                </fieldset>
             </form>
             </div>
         </div>
@@ -100,6 +100,15 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
+        $('.form-check-input.checkbox-layanan').change(function() {
+            var textarea = $('.textarea-' + $(this).val());
+            if ($(this).is(':checked')) {
+                textarea.show();
+            } else {
+                textarea.hide();
+            }
+        });
+
         $("#form-wizard1").submit(function(e){
           e.preventDefault(); 
             var btnx	=$('.btn-submit');

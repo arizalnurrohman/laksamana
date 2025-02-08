@@ -47,7 +47,7 @@
     function send_form(id) {
         Swal.fire({
             title: "Apakah anda yakin?",
-            text: "akan Mengirimkan ke Koordinator untuk dilanjutkan ke Penentuan Layanan ?!",
+            text: "akan Mengirimkan ke Pendamping Sosial untuk dilanjutkan Proses Layanan ?!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -56,7 +56,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/assessement/kirim-koordinator/${id}`,
+                    url: `/assessement/kirim-pendamping-sosial/${id}`,
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

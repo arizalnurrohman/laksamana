@@ -130,6 +130,7 @@ class RehabilitasiController extends Controller
         $rehabilitasi = $rehabilitasi->select('laksa_tr_layanan.*', 'laksa_ms_ppks.*','laksa_tr_rehabilitasi.*','laksa_tr_rehabilitasi.id as rehabilitasi_id');
         $rehabilitasi = $rehabilitasi->leftJoin('laksa_tr_layanan', 'laksa_tr_rehabilitasi.residensial_id', '=', 'laksa_tr_layanan.id');
         $rehabilitasi = $rehabilitasi->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
+        $rehabilitasi = $rehabilitasi->where("laksa_tr_layanan.status_id","=",'462ce22c-db8b-11ef-9f06-244bfebc0c45');
         $rehabilitasi = $rehabilitasi->get();
         $no=0;
         $data=[];

@@ -19,12 +19,14 @@ use App\Models\Pendidikan;
 use App\Models\Residensial;
 use Illuminate\Support\Str;
 use App\Models\KategoriPPKS;
+use App\Models\Rehabilitasi;
 use App\Models\StatusUsulan;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
 use App\Models\FormAssessment;
 use App\Models\KategoriPPKSSub;
 use App\Models\FormAssessmentSub;
+use App\Models\KomponenIntervensi;
 use App\Models\FormAssessmentFormValue;
 
 class AssessementController extends Controller
@@ -70,6 +72,7 @@ class AssessementController extends Controller
         $bantuan     = Bantuan::orderBy("sort","ASC")->get();
         $agama       = Agama::all();
         $pasien      = Pasien::where("laksa_ms_ppks.id","=",$residensial->pasien_id);
+        $komponen_intervensi=KomponenIntervensi::orderBy("sort","ASC")->get();
         $pasien      = $pasien->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
                         ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
                         ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id')
@@ -81,6 +84,7 @@ class AssessementController extends Controller
         $pengampu      = $pengampu->leftJoin('laksa_ms_pendidikan', 'laksa_ms_pengampu.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
                         ->leftJoin('laksa_ms_agama', 'laksa_ms_pengampu.agama_id', '=', 'laksa_ms_agama.id');
         $pengampu    = $pengampu->first();
+        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_petugas.*","laksa_ms_petugas.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_petugas.nip")->get();
         
         $detail_ppks_value=[];
         // dd(json_decode($residensial->kategori_ppks_json));
@@ -120,7 +124,7 @@ class AssessementController extends Controller
 
         // dd($assessement_form);
         
-        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan','assessement_form','komponen_layanan_yang_diberikan'));
+        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan','assessement_form','komponen_layanan_yang_diberikan','komponen_intervensi','petugas'));
     }
 
     public function edit_Assessment($id){
@@ -244,9 +248,18 @@ class AssessementController extends Controller
                             $pengampux = Residensial::where('id', $request->residensial_id)->update(["pengampu_id"=>$payload_pengampu['id']]);
                         }
                     }
-
-
                 }
+
+                $payloads = [
+                    'id'            => Str::uuid()->toString(),
+                    'residensial_id' => $request->residensial_id,
+                    'petugas_id' => $request->layanan_manajer_kasus,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+    
+                // Menyimpan data rehabilitasi dan memperbarui status_id di tabel residensial
+                $rehabilitasi = Rehabilitasi::create($payloads);
             }
         
         }

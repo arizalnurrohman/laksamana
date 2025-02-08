@@ -143,8 +143,14 @@
                                      <hr class="dropdown-divider">
                                   </li>
                                   <li>
-                                     <a class="dropdown-item" href="auth/sign-in.html">Logout</a>
-                                  </li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item bg-transparent border-0 w-100 text-start">
+                                            Logout
+                                        </button>
+                                    </form>
+                                 </li>
+                                
                                </ul>
                             </li>
                             <li class="nav-item iq-full-screen d-none d-xl-block" id="fullscreen-item">
