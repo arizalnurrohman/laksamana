@@ -1,13 +1,28 @@
 <div class="form-card text-start">
     <div class="row">
         <div class="col-7">
-            <h3 class="mb-4">Petugas Layanan:</h3>
+            <h3 class="mb-4 d-none">Petugas Layanan:</h3>
         </div>
         <div class="col-5">
             <h2 class="steps">Step 1 - 4</h2>
         </div>
     </div>
     <div class="row">
+        <h4>Dokumen Berita Acara</h4>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="form-label" for="kategori_ppks">Dokumen Berita Acara</label>
+                <iframe 
+                    id="iframeAkte" 
+                    src="{{$residensial->path_dokumen_ba}}" 
+                    class="w-100 border rounded" 
+                    style="height: 400px;" 
+                    allowfullscreen 
+                    title="PDF Viewer">
+                </iframe>
+            </div>
+        </div>
+        <h4>Pendamping Sosial</h4>
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label">Tentukan Pendamping Sosial: *</label>

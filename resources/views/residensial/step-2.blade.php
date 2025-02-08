@@ -16,16 +16,10 @@
                     <select class="form-select" data-trigger name="perujuk_id" id="petugas_penerimaan">
                         <option value="">Pilih Perujuk</option>
                         @foreach($perujuk as $perujukx)
-                            <option value="{{$perujukx->id}}">{{$perujukx->nama}}</option>
+                            <option value="{{$perujukx->id}}">{{$perujukx->nama_perujuk}}</option>
                         @endforeach
                     </select>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="form-label">Nama Perujuk: *</label>
-                <input type="text" class="form-control" name="perujuk_nipp" placeholder="NIP/ NRP Perujuk" id="perujuk_nipp" />
             </div>
         </div>
         <h4>Data Informasi Residensial</h4>

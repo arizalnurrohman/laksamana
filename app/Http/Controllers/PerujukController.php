@@ -116,21 +116,64 @@ class PerujukController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:laksa_ms_gedung,id',
-            'nama_perujuk' => 'required|string|max:255',
-            // 'status_gedung' =>'required',
-            // 'jumlah_kamar'  =>'required'
-        ]);
+        $validator = \Validator::make($request->all(), $this->detail_rules()['RULE'],$this->detail_rules()['MESSAGE']);
+        if ($validator->fails()){
+            $this->error[]=($validator->errors()->all())[0];
+        }else{
+            $perujuk = new Perujuk;
+            if ($perujuk->where('id', $request->perujuk_id)->exists()) {
+                
+            }else{
+                $this->error[]="Data Perujuk tidak ada";
+            }
+        }
+        if(!($this->error)){
+            $perujuk = Perujuk::where('id', $request->perujuk_id)->firstOrFail();
+            $payload=[
+                'nama_perujuk'      => $request->nama_perujuk,
+                'nip_nrp'           => $request->nip_nrp,
+                'pangkat_jabatan'   => $request->pangkat_jabatan,
+                'instansi_perujuk'  => $request->instansi,
+                'alamat_kantor'     => $request->alamat_kantor,
+                'telp_kantor'       => $request->telp_kantor,
+                'no_hp'             => $request->no_hp,
+            ];
+            
+            $update_model=Perujuk::where('id', $request->perujuk_id)->update($payload);
+            if ($update_model) {
+                $this->success=true;
+            }
+        }
+        if($this->success){
+            $response=[
+                'status'=>'success',
+                'message'=>"Update Data Perujuk Berhasil",
+                'redirect'=>route('perujuk')
+            ];
+        }
+        if($this->error){
+            $response=[
+                'errors'=>'Error',
+                'message'=>$this->error,
+            ];
+        }
+        return response()->json($response);
+        exit;
+        // $request->validate([
+        //     'id' => 'required|exists:laksa_ms_gedung,id',
+        //     'nama_perujuk' => 'required|string|max:255',
+        //     // 'status_gedung' =>'required',
+        //     // 'jumlah_kamar'  =>'required'
+        // ]);
 
-        $perujuk = Perujuk::findOrFail($request->id);
-        $perujuk->update([
-            'nama_perujuk' => $request->nama_perujuk,
-            // 'status_gedung' =>$request->status_gedung,
-            // 'jumlah_kamar'  =>$request->jumlah_kamar,
-        ]);
+        // $perujuk = Perujuk::findOrFail($request->id);
+        // $perujuk->update([
+        //     'nama_perujuk' => $request->nama_perujuk,
+        //     // 'status_gedung' =>$request->status_gedung,
+        //     // 'jumlah_kamar'  =>$request->jumlah_kamar,
+        // ]);
 
-        return response()->json(['message' => 'Data berhasil diperbarui.']);
+        // return response()->json(['message' => 'Data berhasil diperbarui.']);
     }
 
     public function destroy($id)

@@ -105,6 +105,23 @@
     </div>
 </div>
 
+{{-- laporan lihat --}}
+<div class="modal fade" id="ba{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="layananModalLabel">Berita Acara</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    laporan belum ada
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
  
 @endsection
@@ -472,6 +489,10 @@
                 alert('Failed to fetch data. Please try again.');
             }
         });
+    }
+
+    function dokumen_ba(id){
+        $('#ba{{ $activeMenu->access }}Modal').modal('show');
     }
 
 

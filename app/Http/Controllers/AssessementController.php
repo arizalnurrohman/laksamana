@@ -110,6 +110,10 @@ class AssessementController extends Controller
             }
         }
         $residensial->kondisi_ppks  =$detail_ppks_value;
+        if($residensial->dokumen_ba){
+            $residensial->path_dokumen_ba=asset('storage/' . $residensial->dokumen_ba);
+        }
+        // dd($residensial);
 
         $assessement_form=FormAssessment::orderBy("sort","ASC")->get();
 

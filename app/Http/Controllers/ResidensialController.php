@@ -105,6 +105,7 @@ class ResidensialController extends Controller
             $payload = [
                 'id'                    => Str::uuid()->toString(),
                 'petugas_id'            => $request->residense_petugas,
+                'perujuk_id'            => $request->perujuk_id,
                 'tgl_penerimaan'        => $request->residense_tgl_penerimaan,
                 'sumber_id'             => $request->residense_sumber_rujukan,
                 'pasien_id'             => $request->pasien,
@@ -200,6 +201,16 @@ class ResidensialController extends Controller
         $no=0;
         
         foreach ($sub_child as $val) {
+            if($val->dokumen_ba){
+                $tombol_ba  ='<button class="btn btn-sm btn-icon btn-info" Onclick="dokumen_ba(\''.$val->residensial_id.'\')" title="Lihat Dokumen Berita Acara">
+                                                    <span class="btn-inner">
+                                                        <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7379 2.76175H8.08493C6.00493 2.75375 4.29993 4.41175 4.25093 6.49075V17.2037C4.20493 19.3167 5.87993 21.0677 7.99293 21.1147C8.02393 21.1147 8.05393 21.1157 8.08493 21.1147H16.0739C18.1679 21.0297 19.8179 19.2997 19.8029 17.2037V8.03775L14.7379 2.76175Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M14.4751 2.75V5.659C14.4751 7.079 15.6231 8.23 17.0431 8.234H19.7981" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M14.2882 15.3584H8.88818" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M12.2432 11.606H8.88721" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                            
+                                                    </span>
+                                                </button>';
+            }else{
+                $tombol_ba  ='';
+            }
+
             if($val->status_id=="7918fc82-db8a-11ef-9f06-244bfebc0c45"){
                 #Kepala Menyetujui Usulan Residensial
                 $btn_generate='<button class="btn btn-sm btn-icon btn-primary" Onclick="generate_form(\''.$val->residensial_id.'\')">
@@ -285,6 +296,7 @@ class ResidensialController extends Controller
             $data[$no]['Sumber']            =$val->sumber;
             $data[$no]['Petugas']           =$val->nama_petugas;
             $data[$no]['Aksi']              ='<div class="btn-group" role="group" aria-label="Group Aksi">
+                                                '.$tombol_ba.'
                                                 '.$btn_generate.'
                                                 '.$btn_send_approval_kepala.'
                                                 '.$btn_send_assessor.'

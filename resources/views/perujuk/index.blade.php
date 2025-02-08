@@ -95,6 +95,7 @@
             </div>
             <div class="modal-body">
                 <form id="update{{ $activeMenu->access }}Form" action="{{ route("perujuk.update") }}" method="POST">
+                    <input type="hidden" name="perujuk_id">
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">NIP/NRP</label>
                         <input type="text" class="form-control" id="nip_nrp" name="nip_nrp" required>
@@ -244,40 +245,71 @@
         });
 
         // Submit update form via AJAX
-        $('#updateForm').on('submit', function (e) {
-            e.preventDefault();
-
+        $("#update{{ $activeMenu->access }}Form").submit(function(e){
+            e.preventDefault(); 
+            var btnx	=$('.btn-submit');
+            $(btnx).attr("disabled", true);
+            $(btnx).attr({type:'submit',value: 'Loading'});
             $.ajax({
-                url: '{{ route("perujuk.update") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: $('#updateId').val(),
-                    nama_gedung: $('#updateGedung').val(),
-                    jumlah_kamar: $('#updateJumlahKamar').val(),
-                    status_gedung: $('#updateStatus').val(),
-                },
-                success: function (response) {
+              url:$(this).closest('form').attr('action'),
+              type:"post",
+              data:new FormData(this), 
+              processData:false,
+              contentType:false,
+              dataType: "json",
+              cache:false,
+              async:false,
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function(data){
+                  if($.isEmptyObject(data.errors)){
                     Swal.fire({
                         icon    : 'success',
                         title   : 'Berhasil',
-                        html    : response.message,
+                        html    : data.message,
                         showConfirmButton:  true ,
                         timer   : 1000,
                         customClass      : {
                             container: 'swal-container'
                         }
                     }).then(function() {
-                        $('#update{{ $activeMenu->access }}Modal').modal('hide');
-                        load_this_data();
+                        window.location = "{{ route('perujuk') }}";
                     });
-                },error: function (xhr) {
+                  }else{
+                    $(btnx).removeAttr("disabled");
+                    $(btnx).attr({type:'submit',value: 'Simpan'});
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Terjadi kesalahan saat mengupdate data.',
+                        icon    : 'error',
+                        title   : 'Gagal',
+                        html    : data.message,
+                        showConfirmButton:  true ,
+                        timer   : 1000,
+                        customClass      : {
+                            container: 'swal-container'
+                        }
+                    }).then(function() {
+                       
                     });
-                }
+                  }
+              },
+              error: function(err, exception) {
+                $(btnx).removeAttr("disabled");
+                $(btnx).attr({type:'submit',value: 'Simpan'});
+
+                Swal.fire({
+                    icon    : 'error',
+                    title   : 'Gagal',
+                    html    : "Sistem Gagal Memproses Data",
+                    showConfirmButton:  true ,
+                    timer   : 1000,
+                    customClass      : {
+                        container: 'swal-container'
+                    }
+                }).then(function() {
+                    
+                });
+              },
             });
         });
     });
@@ -288,8 +320,16 @@
             type: 'GET',
             success: function (data) {
                 if($.isEmptyObject(data.errors)){
-                    var mlink=data.data.static_link;
-                    $("#update{{ $activeMenu->access }}Form").val(data.data.static_title);
+                    // var mlink=data.data.static_link;
+                    $("#update{{ $activeMenu->access }}Form [name=\"nip_nrp\"]").val(data.data.nip_nrp);
+                    $("#update{{ $activeMenu->access }}Form [name=\"no_hp\"]").val(data.data.no_hp);
+                    $("#update{{ $activeMenu->access }}Form [name=\"telp_kantor\"]").val(data.data.telp_kantor);
+                    $("#update{{ $activeMenu->access }}Form [name=\"alamat_kantor\"]").val(data.data.alamat_kantor);
+                    $("#update{{ $activeMenu->access }}Form [name=\"instansi\"]").val(data.data.instansi_perujuk);
+                    $("#update{{ $activeMenu->access }}Form [name=\"pangkat_jabatan\"]").val(data.data.pangkat_jabatan);
+                    $("#update{{ $activeMenu->access }}Form [name=\"nama_perujuk\"]").val(data.data.nama_perujuk);
+                    $("#update{{ $activeMenu->access }}Form [name=\"perujuk_id\"]").val(data.data.id);
+                    
                 }else{
                     Swal.fire({
                         icon: 'error',

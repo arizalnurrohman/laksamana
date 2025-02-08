@@ -147,69 +147,82 @@
         });
         $("#form-wizard1").submit(function(e){
           e.preventDefault(); 
-            var btnx	=$('.btn-submit');
-            $(btnx).attr("disabled", true);
-            $(btnx).attr({type:'submit',value: 'Loading'});
-            $.ajax({
-              url:$(this).closest('form').attr('action'),
-              type:"post",
-              data:new FormData(this), 
-              processData:false,
-              contentType:false,
-              dataType: "json",
-              cache:false,
-              async:false,
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              success: function(data){
-                  if($.isEmptyObject(data.errors)){
-                    Swal.fire({
-                        icon    : 'success',
-                        title   : 'Berhasil',
-                        html    : data.message,
-                        showConfirmButton:  true ,
-                        timer   : 1000,
-                        customClass      : {
-                            container: 'swal-container'
+          Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "akan Menyetujui Usulan Layanan Ini ?!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "ya, Setujui!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var btnx	=$('.btn-submit');
+                    $(btnx).attr("disabled", true);
+                    $(btnx).attr({type:'submit',value: 'Loading'});
+                    $.ajax({
+                    url:$(this).closest('form').attr('action'),
+                    type:"post",
+                    data:new FormData(this), 
+                    processData:false,
+                    contentType:false,
+                    dataType: "json",
+                    cache:false,
+                    async:false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data){
+                        if($.isEmptyObject(data.errors)){
+                            Swal.fire({
+                                icon    : 'success',
+                                title   : 'Berhasil',
+                                html    : data.message,
+                                showConfirmButton:  true ,
+                                timer   : 1000,
+                                customClass      : {
+                                    container: 'swal-container'
+                                }
+                            }).then(function() {
+                                window.location = "{{ route('persetujuankepala') }}";
+                            });
+                        }else{
+                            $(btnx).removeAttr("disabled");
+                            $(btnx).attr({type:'submit',value: 'Simpan'});
+                            Swal.fire({
+                                icon    : 'error',
+                                title   : 'Gagal',
+                                html    : data.message,
+                                showConfirmButton:  true ,
+                                timer   : 1000,
+                                customClass      : {
+                                    container: 'swal-container'
+                                }
+                            }).then(function() {
+                            
+                            });
                         }
-                    }).then(function() {
-                        window.location = "{{ route('persetujuankepala') }}";
-                    });
-                  }else{
-                    $(btnx).removeAttr("disabled");
-                    $(btnx).attr({type:'submit',value: 'Simpan'});
-                    Swal.fire({
-                        icon    : 'error',
-                        title   : 'Gagal',
-                        html    : data.message,
-                        showConfirmButton:  true ,
-                        timer   : 1000,
-                        customClass      : {
-                            container: 'swal-container'
-                        }
-                    }).then(function() {
-                       
-                    });
-                  }
-              },
-              error: function(err, exception) {
-                $(btnx).removeAttr("disabled");
-                $(btnx).attr({type:'submit',value: 'Simpan'});
+                    },
+                    error: function(err, exception) {
+                        $(btnx).removeAttr("disabled");
+                        $(btnx).attr({type:'submit',value: 'Simpan'});
 
-                Swal.fire({
-                        icon    : 'error',
-                        title   : 'Gagal',
-                        html    : "Sistem Gagal Memproses Data",
-                        showConfirmButton:  true ,
-                        timer   : 1000,
-                        customClass      : {
-                            container: 'swal-container'
-                        }
-                    }).then(function() {
-                       
+                        Swal.fire({
+                                icon    : 'error',
+                                title   : 'Gagal',
+                                html    : "Sistem Gagal Memproses Data",
+                                showConfirmButton:  true ,
+                                timer   : 1000,
+                                customClass      : {
+                                    container: 'swal-container'
+                                }
+                            }).then(function() {
+                            
+                            });
+                    },
                     });
-              },
+                    //aaaa
+                }
             });
         });		
     });
