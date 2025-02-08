@@ -102,7 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/assessement/load-assessement', [AssessementController::class, 'load_assessement'])->name('load_assessement');
     Route::get('/assessement/assessement/{id}', [AssessementController::class, 'get_assessement'])->name('check_assessement');
     Route::post('/assessement', [AssessementController::class, 'store'])->name('assessement.store');
-    Route::post('/assessement/kirim-pendamping-sosial/{id}', [AssessementController::class, 'store_kirim_pendamping_sosial'])->name('assessement.kirim_pendamping_sosial');
+    Route::post('/assessement/kirim-koordinator/{id}', [AssessementController::class, 'store_kirim_koordinator'])->name('assessement.kirim_koordinator');
     Route::get('/assessement/edit/{id}', [AssessementController::class, 'edit_Assessment'])->name('edit_assessement');
 
     Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');

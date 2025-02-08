@@ -63,7 +63,9 @@
             <form id="form-wizard1" class="mt-3 text-center" action="{{route('residensial.store')}}"  method="POST" enctype="multipart/form-data">
                 @csrf
                 <ul id="top-tab-list" class="p-0 row list-inline">
-                    <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">
+                    
+                    
+                    <li class="mb-2 col-lg-3 col-md-6 text-start" id="account">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
                                 <svg class="icon-20 svg-icon" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,10 +73,10 @@
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.7688 8.71118H16.2312C18.5886 8.71118 20.5 10.5808 20.5 12.8867V17.8246C20.5 20.1305 18.5886 22.0001 16.2312 22.0001H7.7688C5.41136 22.0001 3.5 20.1305 3.5 17.8246V12.8867C3.5 10.5808 5.41136 8.71118 7.7688 8.71118ZM11.9949 17.3286C12.4928 17.3286 12.8891 16.941 12.8891 16.454V14.2474C12.8891 13.7703 12.4928 13.3827 11.9949 13.3827C11.5072 13.3827 11.1109 13.7703 11.1109 14.2474V16.454C11.1109 16.941 11.5072 17.3286 11.9949 17.3286Z" fill="currentColor"></path>
                                 </svg>
                             </div>
-                            <span class="dark-wizard">Residensial</span>
+                            <span class="dark-wizard">Data PPKS</span>
                         </a>
                     </li>
-                    <li id="personal" class="mb-2 col-lg-3 col-md-6 text-start">
+                    <li id="personal" class="mb-2 col-lg-3 col-md-6 text-start active">
                         <a href="javascript:void(0);">
                             <div class="iq-icon me-3">
                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +84,7 @@
                                     <path opacity="0.4" d="M11.9971 12.5838C14.9351 12.5838 17.2891 10.2288 17.2891 7.29176C17.2891 4.35476 14.9351 1.99976 11.9971 1.99976C9.06008 1.99976 6.70508 4.35476 6.70508 7.29176C6.70508 10.2288 9.06008 12.5838 11.9971 12.5838Z" fill="currentColor"></path>
                                 </svg>
                             </div>
-                            <span class="dark-wizard">Data PPKS</span>
+                            <span class="dark-wizard">Residensial</span>
                         </a>
                     </li>
                     <li id="payment" class="mb-2 col-lg-3 col-md-6 text-start">

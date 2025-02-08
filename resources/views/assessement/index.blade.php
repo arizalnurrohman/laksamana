@@ -56,7 +56,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/assessement/kirim-pendamping-sosial/${id}`,
+                    url: `/assessement/kirim-koordinator/${id}`,
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

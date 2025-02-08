@@ -404,7 +404,7 @@ class AssessementController extends Controller
             }
 
             // Update status residensial
-            $residendsial->status_id = "3cdad447-db8b-11ef-9f06-244bfebc0c45"; // Menunggu Proses Penentuan Layanan
+            $residendsial->status_id = "462ce22c-db8b-11ef-9f06-244bfebc0c45"; // Tahap Rehabilitasi
             $residendsial->save();
 
             return response()->json([

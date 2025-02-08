@@ -76,7 +76,7 @@
                     Generate Laporan @if ($activeMenu) {{ $activeMenu->menu }} @endif
                 </button>
                 @if($rehabilitasi->laporan_rehabilitasi)
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPerkembangan{{ $activeMenu->access }}Modal">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#laporan{{ $activeMenu->access }}Modal">
                     <span class="btn-inner">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -85,23 +85,23 @@
                     Lihat Laporan
                 </button>
                 
-                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addPerkembangan{{ $activeMenu->access }}Modal">
+                <button class="btn btn-warning" onclick="ajukanterminasi('{{$rehabilitasi->rehabilitasi_id}}')">
                     <span class="btn-inner">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
                     </span>
-                    Kirim @if ($activeMenu) {{ $activeMenu->menu }} @endif
+                    Ajukan Terminasi @if ($activeMenu) {{ $activeMenu->menu }} @endif
                 </button>
                 @endif
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#intervensi{{ $activeMenu->access }}Modal">
+                {{-- <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#intervensi{{ $activeMenu->access }}Modal">
                     <span class="btn-inner">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
                     </span>
                     Intervensi @if ($activeMenu) {{ $activeMenu->menu }} @endif
-                </button>
+                </button> --}}
                 <div class="table-responsive">
                     <table id="list-data" class="table"><?php /*<table id="datatable" class="table table-striped" data-toggle="data-table">*/ ?>
                         <thead>
@@ -121,8 +121,25 @@
     </div>
 </div>
 
+{{-- laporan lihat --}}
+<div class="modal fade" id="laporan{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="layananModalLabel">Laporan Rehabilitasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    laporan belum ada
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- intervensi --}}
-<div class="modal fade" id="intervensi{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
+{{-- <div class="modal fade" id="intervensi{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -235,7 +252,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="modal fade" id="addPerkembangan{{ $activeMenu->access }}Modal" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -938,6 +955,32 @@
             }
         });
     }
+    function ajukanterminasi(id){
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "akan mengajukan Data Layanan ke Terminasi  ?!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ya, Generate!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/rehabilitasi/generate-rehabilitasi/${id}`,//ganti url terminasi
+                    type: 'GET',
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(`Error: ${error}`);
+                        alert('Failed to fetch data. Please try again.');
+                    }
+                });
+            }
+        });
+    }
+    
 </script>
 
 @endsection
