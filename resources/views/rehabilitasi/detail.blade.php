@@ -957,6 +957,7 @@
                     type: 'GET',
                     success: function (data) {
                         alert(data);
+                        window.location.href = "{{ route('rehabilitasi.detail',$rehabilitasi->rehabilitasi_id) }}";
                     },
                     error: function (xhr, status, error) {
                         console.error(`Error: ${error}`);

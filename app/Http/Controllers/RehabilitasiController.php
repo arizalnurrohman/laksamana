@@ -504,11 +504,16 @@ class RehabilitasiController extends Controller
         foreach ($hasil as $kategori => $skor) {
             echo "Perkembangan " . ucfirst($kategori) . " = " . kategori($skor) . " (" . number_format($skor, 3) . ")\n";
         }
+
+        $rehabilitasi = Rehabilitasi::find($id);
+        $rehabilitasi->laporan_rehabilitasi = "rehabilitasi/".$id.".pdf";
+        $rehabilitasi->laporan_tanggal      = date("Y-m-d H:i:s");
+        $rehabilitasi->save();
     }
     
     public function destroy($id)
     {
-        dd($id);
+        // dd($id);
         try {
             // Cari dan hapus data
             $perkembangan   = RehabilitasiPerkembangan::findOrFail($id);
