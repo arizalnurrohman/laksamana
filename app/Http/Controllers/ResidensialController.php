@@ -881,6 +881,7 @@ class ResidensialController extends Controller
             'surat_tanggal'          =>date("d"),
             'surat_bulan'            =>Carbon::parse(date("Y-m-d"))->translatedFormat('F'),
             'surat_tahun'            =>date("Y"),
+            'surat_tanggal_surat'    =>Carbon::parse(date("Y-m-d"))->translatedFormat('d F Y'),
 
             'perujuk_nama'           =>$perujuk->nama_perujuk,
             'perujuk_nik'            =>$perujuk->nip_nrp,
