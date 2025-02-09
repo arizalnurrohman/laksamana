@@ -151,6 +151,7 @@ class AssessementController extends Controller
         if (!$this->error) {
             // dd($request->all());
             #id 	residensial_id 	tgl_assessment 	satuan_kerja 	bantuan_id 	assessment_json 	created_at 	updated_at 	deleted_at 	
+            #GENERATE FORM ASSESSMENT...
             $payload = [
                 'id'               => Str::uuid()->toString(),
                 'residensial_id'   => $request->residensial_id,
@@ -166,6 +167,8 @@ class AssessementController extends Controller
                 'intervensi_pihak_yang_terlibat'        =>$request->intervensi_pihak_yang_terlibat,
                 'rencana_intervensi_lanjutan'           =>is_array($request->bentuk_layanan) ? json_encode($request->bentuk_layanan) : '[]',
                 'rekomendasi_catatan'                   =>$request->rekomendasi_catatan,
+
+                'laporan_assessment'                    =>"assessment/".$request->residensial_id.".pdf",
             ];
 
             if (Assessment::create($payload)) {

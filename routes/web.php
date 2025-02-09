@@ -28,8 +28,10 @@ use App\Http\Controllers\LaporanTerminasiController;
 
 
 use App\Http\Controllers\PenentuanLayananController;
+use App\Http\Controllers\LaporanAssessmentController;
 use App\Http\Controllers\PersetujuanKepalaController;
 use App\Http\Controllers\LaporanBeritaAcaraController;
+use App\Http\Controllers\LaporanPerkembanganController;
 use App\Http\Controllers\KomponenPerkembanganController;
 
 Route::get('/dashboards', function () {
@@ -214,6 +216,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan-termininasi', [LaporanTerminasiController::class, 'index'])->name('laporantermininasi');
     Route::get('/laporan-termininasi/load-laporan-terminasi', [LaporanTerminasiController::class, 'load_laporan'])->name('load_laporantermininasi');
     Route::get('/laporan-termininasi/edit/{id}', [LaporanTerminasiController::class, 'get_laporanterminasi'])->name('laporantermininasi.getlaporan');
+
+    Route::get('/laporan-dokumen-assessment', [LaporanAssessmentController::class, 'index'])->name('laporanassessment');
+    Route::get('/laporan-dokumen-assessment/load-laporan-assessment', [LaporanAssessmentController::class, 'load_laporan'])->name('load_laporanassessment');
+    Route::get('/laporan-dokumen-assessment/edit/{id}', [LaporanAssessmentController::class, 'get_laporanassessment'])->name('laporanassessment.getlaporan');
+
+    Route::get('/laporan-perkembangan', [LaporanPerkembanganController::class, 'index'])->name('laporanperkembangan');
+    Route::get('/laporan-perkembangan/load-laporan-perkembangan', [LaporanPerkembanganController::class, 'load_laporan'])->name('load_laporanperkembangan');
+    Route::get('/laporan-perkembangan/edit/{id}', [LaporanPerkembanganController::class, 'get_laporanperkembangan'])->name('laporanperkembangan.getlaporan');
 
 });
 

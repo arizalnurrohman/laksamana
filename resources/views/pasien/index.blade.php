@@ -30,7 +30,7 @@
                                 <th>Tmp Lahir</th>
                                 <th>Tgl lahir</th>
                                 <th>Provinsi/Kab/Kota/Kecamatan</th>
-                                <th>Aksi</th>
+                                <th width="30">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
