@@ -6,6 +6,15 @@ use App\Models\Persyaratan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
+use PhpOffice\PhpWord\IOFactory;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+use Mpdf\Mpdf;
+
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
 class PersyaratanController extends Controller
 {
     // function __construct()
@@ -35,8 +44,112 @@ class PersyaratanController extends Controller
     // }
     public function index()
     {
-        $persyaratan = Persyaratan::all();
-        return view('persyaratan.index', compact('persyaratan'))->with('no', 1);
+        //dompdf word->html->pdf 
+        /*
+        // Lokasi file Word statis
+        $filePath = public_path('storage/template/template_ba.docx');
+
+        // Cek apakah file ada
+        if (!file_exists($filePath)) {
+            return response()->json(['error' => 'File Word tidak ditemukan!'], 404);
+        }
+
+        // Load Word file menggunakan PHPWord
+        $phpWord = IOFactory::load($filePath);
+
+        // Konversi ke HTML
+        $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
+        ob_start();
+        $htmlWriter->save('php://output');
+        $html = ob_get_clean();
+
+        // Konversi HTML ke PDF dengan Dompdf
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Simpan atau download file PDF
+        return response($dompdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="template_ba.pdf"');
+
+            
+        *///end dompdf
+
+        // new mpdf
+        // Lokasi file Word sumber
+        /*
+        $wordFilePath = public_path('storage/template/template_ba.docx');
+        // Lokasi file PDF output
+        $pdfFilePath = public_path('storage/template/output.pdf');
+
+        // Cek apakah file Word ada
+        if (!file_exists($wordFilePath)) {
+            return response()->json(['error' => 'File Word tidak ditemukan!'], 404);
+        }
+
+        // Load Word file
+        $phpWord = IOFactory::load($wordFilePath);
+        $pdfWriter = IOFactory::createWriter($phpWord, 'PDF');
+
+        // Simpan PDF langsung dari Word ke lokasi yang ditentukan
+        $pdfWriter->save($pdfFilePath);
+
+        return response()->json([
+            'message' => 'Konversi berhasil!',
+            'pdf_url' => asset('storage/template/output.pdf')
+        ]);
+        */
+        // end mpdf
+
+
+        // new again
+        // Lokasi file Word sumber
+        // Lokasi LibreOffice
+        // Lokasi LibreOffice (tanpa tanda kutip)
+        $libreOfficePath = 'C:\\Program Files\\LibreOffice\\program\\soffice.exe';
+
+        // Lokasi file Word sumber
+        $wordFilePath = public_path('storage\\template\\template_ba.docx');
+        // Lokasi folder output
+        $outputDirectory = public_path('storage\\template');
+        // Lokasi file PDF output
+        $pdfFilePath = $outputDirectory . '\\output.pdf';
+
+        // Cek apakah file Word ada
+        if (!file_exists($wordFilePath)) {
+            return response()->json(['error' => 'File Word tidak ditemukan!'], 404);
+        }
+
+        // Pastikan folder output ada
+        if (!is_dir($outputDirectory)) {
+            mkdir($outputDirectory, 0777, true);
+        }
+
+        // Perbaiki format perintah dengan double quotes
+        $command = '"'.$libreOfficePath.'" --headless --convert-to pdf --outdir "'.$outputDirectory.'" "'.$wordFilePath.'"';
+        // $command ='"C:\Program Files\LibreOffice\program\soffice.exe" --headless --convert-to pdf --outdir "E:\xampp\htdocs\projects\laksamana\public\storage\template" "E:\xampp\htdocs\projects\laksamana\public\storage\template\template_ba.docx"';
+
+        // Jalankan proses dengan Process::fromShellCommandline()
+        $process = Process::fromShellCommandline($command);
+        $process->run();
+
+        // Cek apakah proses berhasil
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        return response()->json([
+            'message' => 'Konversi berhasil!',
+            'pdf_url' => asset('storage/template/output.pdf')
+        ]);
+        // end new again
+
+        // $persyaratan = Persyaratan::all();
+        // return view('persyaratan.index', compact('persyaratan'))->with('no', 1);
     }
     public function store(Request $request)
     {
