@@ -115,7 +115,18 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    laporan belum ada
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <iframe 
+                                id="iframeBA" 
+                                src="" 
+                                class="w-100 border rounded" 
+                                style="height: 700px;" 
+                                allowfullscreen 
+                                title="PDF Viewer">
+                            </iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -491,10 +502,6 @@
         });
     }
 
-    function dokumen_ba(id){
-        $('#ba{{ $activeMenu->access }}Modal').modal('show');
-    }
-
     function proses_trminasix(id){
         Swal.fire({
             title: "Apakah anda yakin?",
@@ -581,6 +588,22 @@
                 });
             }
         });
+    }
+
+    function dokumen_ba(id){
+        $.ajax({
+            url: `/laporan-berita-acara/edit/${id}`,
+            type: 'GET',
+            success: function (data) {
+                $('#iframeBA').attr('src', data.dokumen_ba);
+                $('#ba{{ $activeMenu->access }}Modal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error(`Error: ${error}`);
+                alert('Failed to fetch data. Please try again.');
+            }
+        });
+        
     }
 
 

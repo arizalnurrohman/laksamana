@@ -24,9 +24,10 @@ use App\Http\Controllers\RehabilitasiController;
 use App\Http\Controllers\StatusUsulanController;
 use App\Http\Controllers\NonResidensialController;
 use App\Http\Controllers\FormAssessementController;
+use App\Http\Controllers\LaporanTerminasiController;
+
+
 use App\Http\Controllers\PenentuanLayananController;
-
-
 use App\Http\Controllers\PersetujuanKepalaController;
 use App\Http\Controllers\LaporanBeritaAcaraController;
 use App\Http\Controllers\KomponenPerkembanganController;
@@ -192,8 +193,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/rehabilitasi/laporan-rehabilitasi/{id}', [RehabilitasiController::class, 'rehabilitasiLaporan'])->name('rehabilitasi.laporan_rehabilitasi');
     Route::get('/rehabilitasi/ajukan-terminasi/{id}', [RehabilitasiController::class, 'ajukanTerminasi'])->name('rehabilitasi.ajukan_terminasi');
 
-
-
     Route::get('/petugas', [PetugasController::class, 'index'])->name('petugas');
     Route::get('/petugas/load-petugas', [PetugasController::class, 'load_data'])->name('load_petugas');
     Route::post('/petugas/store', [PetugasController::class, 'store'])->name('petugas.store');
@@ -211,6 +210,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan-berita-acara', [LaporanBeritaAcaraController::class, 'index'])->name('laporanberitaacara');
     Route::get('/laporan-berita-acara/load-berita-acara', [LaporanBeritaAcaraController::class, 'load_laporan'])->name('load_beritaacara');
     Route::get('/laporan-berita-acara/edit/{id}', [LaporanBeritaAcaraController::class, 'get_ba'])->name('laporanberitaacara.getba');
+
+    Route::get('/laporan-termininasi', [LaporanTerminasiController::class, 'index'])->name('laporantermininasi');
+    Route::get('/laporan-termininasi/load-laporan-terminasi', [LaporanTerminasiController::class, 'load_laporan'])->name('load_laporantermininasi');
+    Route::get('/laporan-termininasi/edit/{id}', [LaporanTerminasiController::class, 'get_laporanterminasi'])->name('laporantermininasi.getlaporan');
 
 });
 

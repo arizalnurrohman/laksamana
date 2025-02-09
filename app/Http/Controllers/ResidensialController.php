@@ -478,7 +478,7 @@ class ResidensialController extends Controller
         try {
             // Cari data residensial berdasarkan ID
             $residendsial = Residensial::find($id);
-
+            // dd($residendsial);
             // Jika data tidak ditemukan, kembalikan respons 404
             if (!$residendsial) {
                 return response()->json([
@@ -486,10 +486,9 @@ class ResidensialController extends Controller
                     'message' => 'Data residensial tidak ditemukan.',
                 ], 404);
             }
-
             // Panggil function generate_ba
             $baGenerated = $this->generate_ba($id);
-            dd($baGenerated);
+
             // Jika generate_ba gagal, kembalikan respons gagal
             if (!$baGenerated) {
                 return response()->json([
@@ -499,7 +498,8 @@ class ResidensialController extends Controller
             }
 
             // Update status residensial
-            $residendsial->status_id = "1ba4b694-db8b-11ef-9f06-244bfebc0c45"; // Dokumen Serah Terima Selesai di Generate
+            $residendsial->status_id = "1ba4b694-db8b-11ef-9f06-244bfebc0c45";#"1ba4b694-db8b-11ef-9f06-244bfebc0c45"; // Dokumen Serah Terima Selesai di Generate
+            $residendsial->dokumen_ba = "berita_acara/".$id.".pdf";
             $residendsial->save();
 
             $logs=new StatusLog();
@@ -519,7 +519,7 @@ class ResidensialController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Terjadi kesalahan saat memperbarui status.',
+                'message' => 'Terjadi kesalahan saat memperbarui status [Generate BA].',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -528,36 +528,34 @@ class ResidensialController extends Controller
     // Function generate_ba
     public function generate_ba($id)
     {
-        // // Logic untuk generate BA
-        // // Untuk sementara return true
-        return true;
+        if(Residensial::where('id', $id)->exists()){
+            $residensial = Residensial::where('id', $id)->first();
+            if($residensial->dokumen_ba_nomor){
+                $no_ba       =$residensial->dokumen_ba_nomor_urut;
+                $nomor_surat =$residensial->dokumen_ba_nomor;
+            }else{
+                $no_ba       =Residensial::where('dokumen_ba_tahun', '=', date("Y"))->max('dokumen_ba_nomor_urut') +1;
+                $nomor_surat =$no_ba."/4.19/BS.00.01/1/".date("Y");
+            }
 
-        // Lokasi file Python di dalam folder public/storage/python/
-        // Lokasi file Python di dalam folder public/storage/python/
-        $scriptPath = public_path('storage/python/convert.py');
-
-        // Menjalankan script Python tanpa argumen
-        // $process = new Process(["python", $scriptPath]);
-        $process = new Process(["py", $scriptPath]);
-        // $process = new Process(["venv\\Scripts\\python", $scriptPath]);
-
-        // $process = new Process(["cmd", "/c", "python", $scriptPath]);
-
-
-        $process->run();
-
-        // Cek apakah terjadi error
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+            $residensial->dokumen_ba_nomor_urut = $no_ba;
+            $residensial->dokumen_ba_tahun      = date("Y");
+            $residensial->save();
         }
-
-        // Ambil output dari script Python
-        $output = $process->getOutput();
-
-        return response()->json([
-            'message' => 'Berita Acara berhasil dibuat',
-            'output' => trim($output),
-        ]);
+        // dd($nomor_surat);
+        $generate_word=$this->generate_word_ba($id,$nomor_surat);
+        if($generate_word){
+            $generate_pdf =$this->generate_pdf_ba($id);
+            // dd($generate_pdf);
+            if($generate_pdf){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+        #geenrate pdf
     }
     public function getResidensial($id){
         // dd($id);
@@ -851,6 +849,110 @@ class ResidensialController extends Controller
         return "Laki-laki";
     }
 
-  
+    public function generate_word_ba($id,$nomor_surat){
+        Carbon::setLocale('id');
+        
+        #get data residensial
+        $residensial=Residensial::where("id",$id)->first();
+        $petugas    =Petugas::where("id",$residensial->petugas_id)->first();
+        $ppks       =Pasien::where("id",$residensial->pasien_id)->first();
+        $perujuk    =Perujuk::where("id",$residensial->perujuk_id)->first();
+        $kategori   =KategoriPPKS::where("id",$residensial->kategori_ppks_id)->first();
+        $pendidikan =Pendidikan::where("id",$ppks->pendidikan_id)->first();
+
+        $templatePath = public_path('storage/berita_acara/template_ba.docx');
+       
+        // Cek apakah template ada
+        if (!file_exists($templatePath)) {
+            return response()->json(['error' => 'Template tidak ditemukan!'], 404);
+        }
+        
+        // Membuat TemplateProcessor dari template yang ada
+        $templateProcessor = new TemplateProcessor($templatePath);
+        
+        // Data untuk menggantikan placeholder
+        // Carbon::setLocale('id');
+        // dd($nomor_surat);
+
+        // dd($kategori);
+        $data = [
+            'surat_no'               =>$nomor_surat,
+            'surat_hari'             =>Carbon::now()->isoFormat('dddd'),
+            'surat_tanggal'          =>date("d"),
+            'surat_bulan'            =>Carbon::parse(date("Y-m-d"))->translatedFormat('F'),
+            'surat_tahun'            =>date("Y"),
+
+            'perujuk_nama'           =>$perujuk->nama_perujuk,
+            'perujuk_nik'            =>$perujuk->nip_nrp,
+            'perujuk_jabatan'        =>$perujuk->pangkat_jabatan,
+            'perujuk_instansi'       =>$perujuk->instansi_perujuk,
+            'perujuk_kantor'         =>$perujuk->alamat_kantor,
+            'perujuk_telp_kantor'    =>$perujuk->telp_kantor,
+            'perujuk_nohp'           =>$perujuk->no_hp,
+
+            'petugas_nama'           =>$petugas->nama_petugas,
+            'petugas_nik'            =>$petugas->nip_nik,
+            'petugas_jabatan'        =>$petugas->pangkat_jabatan,
+            'petugas_alamat_kantor'  =>$petugas->alamat_kantor,
+            'petugas_telp_kantor'    =>$petugas->telp_kantor,
+
+            'ppks_nama'              =>$ppks->nama_depan." ".$ppks->nama_belakang,
+            'ppks_ttl'               =>$ppks->tmp_lahir.", ".date("d",strtotime($ppks->tgl_lahir))." Bulan ".date("Y"),
+            // 'ppks_jk'                =>$this->getGenderFromNIK($ppks->nik),
+            'ppks_nik'               =>$ppks->nik,
+            'ppks_alamat'            =>$ppks->alamat,
+            'ppks_kategori'          =>$kategori->kategori,
+            'ppks_pendidikan'        =>$pendidikan->pendidikan,
+
+            'layanan_mulai'          =>Carbon::parse($residensial->tgl_penerimaan)->translatedFormat('d F Y'),
+            'layanan_selesai'        =>Carbon::parse($residensial->rencana_tgl_terminasi)->translatedFormat('d F Y'),
+        ];
+        // dd($data);
+        
+        
+        // Mengganti placeholder di template dengan data
+        $templateProcessor->setValues($data);
+        
+        // Lokasi file output yang akan disimpan
+        $outputPath = public_path('storage/berita_acara/'.$id.'.docx');
+
+        // Simpan file di folder yang sama dengan nama output.docx
+        $templateProcessor->saveAs($outputPath);
+        // Cek apakah file berhasil disimpan
+        if (!file_exists($outputPath)) {
+            return "gagal buat file word";
+        }else{
+            return true;
+        }
+    }
+
+    public function generate_pdf_ba($id){
+        $libreOfficePath = '"C:\Program Files\LibreOffice\program\soffice.exe"';
+        // Lokasi file Word
+        $wordFilePath = public_path("storage\\berita_acara\\" . $id . ".docx");
+        // Lokasi folder output
+        $outputDirectory = public_path('storage\berita_acara');
+        // Lokasi file PDF output
+        $pdfFilePath = $outputDirectory . '\\'.$id.'.pdf';
+        // Cek apakah file Word ada
+        if (!file_exists($wordFilePath)) {
+            return response()->json(['error' => 'File Word tidak ditemukan!'], 404);
+        }
+
+        // Pastikan folder output ada
+        if (!is_dir($outputDirectory)) {
+            mkdir($outputDirectory, 0777, true);
+        }
+
+        $command = "{$libreOfficePath} --headless --convert-to pdf --outdir \"{$outputDirectory}\" \"{$wordFilePath}\"";
+        // dd($command);
+        $process=exec($command);
+        // Cek apakah proses berhasil
+        if (!file_exists($pdfFilePath)) {
+           return "gagal buat pdf";
+        }else{
+            return true;
+        }
+    }
 
 }
