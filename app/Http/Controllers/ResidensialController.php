@@ -8,24 +8,26 @@ use App\Models\Agama;
 use App\Models\Gedung;
 use App\Models\Pasien;
 use App\Models\Pegawai;
+use App\Models\Perujuk;
 use App\Models\Petugas;
 use App\Models\Pengampu;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
+use App\Models\StatusLog;
 use App\Models\Pendidikan;
 use App\Models\Residensial;
 use Illuminate\Support\Str;
 use App\Models\KategoriPPKS;
-use App\Models\StatusUsulan;
 use App\Models\Rehabilitasi;
+use App\Models\StatusUsulan;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
 use App\Models\KategoriPPKSSub;
-use App\Models\Perujuk;
-use App\Models\StatusLog;
 
+use App\Models\LaporanTerminasi;
 use Symfony\Component\Process\Process;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ResidensialController extends Controller
@@ -193,13 +195,14 @@ class ResidensialController extends Controller
 
     public function load_residensial(){
         $sub_child = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_pendamping_sosial.*","laksa_ms_pegawai.*","laksa_ms_status.*");
-        $sub_child = $sub_child->orderby("laksa_tr_layanan.created_at","DESC");
+        // $sub_child = $sub_child->orderby("laksa_tr_layanan.created_at","DESC");
         $sub_child = $sub_child->leftJoin('laksa_ms_pendamping_sosial', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_pendamping_sosial.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
         $sub_child = $sub_child->whereIn("status_id",$this->status_usulan);
+        $sub_child = $sub_child->orderBy("laksa_ms_status.sort","ASC");
         $sub_child = $sub_child->get();
         $data = array();
         $no=0;
@@ -293,7 +296,7 @@ class ResidensialController extends Controller
             }
 
             if($val->status_id=="f164abdc-e600-11ef-bfa8-244bfebc0c45"){
-                $tombol_terminasi='<button class="btn btn-sm btn-icon btn-warning" Onclick="proses_trminasi(\''.$val->residensial_id.'\')">
+                $tombol_terminasi='<button class="btn btn-sm btn-icon btn-warning" Onclick="proses_terminasi(\''.$val->residensial_id.'\')">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path d="M15.016 7.38948V6.45648C15.016 4.42148 13.366 2.77148 11.331 2.77148H6.45597C4.42197 2.77148 2.77197 4.42148 2.77197 6.45648V17.5865C2.77197 19.6215 4.42197 21.2715 6.45597 21.2715H11.341C13.37 21.2715 15.016 19.6265 15.016 17.5975V16.6545" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M21.8096 12.0215H9.76855" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M18.8813 9.1062L21.8093 12.0212L18.8813 14.9372" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                            
                                         </span>
@@ -623,6 +626,229 @@ class ResidensialController extends Controller
                 'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
             ], 500);
         }
+    }
+
+
+    public function store_TerminasiLayanan(Request $request,$id){
+        // try {
+        //     // Cari data residensial berdasarkan ID
+        //     $residendsial = Residensial::find($id);
+
+        //     // Jika data tidak ditemukan, kembalikan respons 404
+        //     if (!$residendsial) {
+        //         return response()->json([
+        //             'success' => false,
+        //             'message' => 'Data residensial tidak ditemukan.',
+        //         ], 404);
+        //     }
+
+        //     // Update status residensial
+        //     $residendsial->status_id = "23ac51ea-db8b-11ef-9f06-244bfebc0c45"; // Menunggu Proses Assessment
+        //     $residendsial->save();
+
+        //     return response()->json([
+        //         'success' => true,
+        //         'message' => 'Status residensial berhasil diperbarui.',
+        //         'data' => $residendsial,
+        //     ], 200);
+
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Terjadi kesalahan saat memperbarui status.',
+        //         'error' => $e->getMessage(),
+        //     ], 500);
+        // }
+        // dd($id);
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'id' => [
+                'required',
+                'exists:laksa_tr_layanan,id' // Memastikan residensial_id ada di tabel rehabilitasi
+            ]
+        ]);
+
+        try {
+            $nomor_surat         =$this->generate_nomor($id);
+            // Menyimpan data rehabilitasi dan memperbarui status_id di tabel residensial
+            $residensial        = Residensial::find($validatedData['id']);
+            $generate_laporan   =$this->generete_terminasi($residensial->id,$nomor_surat['surat']);
+            // dd($generate_laporan);
+            if ($residensial && $generate_laporan) {
+                $residensial->status_id = '2518e902-e601-11ef-bfa8-244bfebc0c45';'f164abdc-e600-11ef-bfa8-244bfebc0c45';#'2518e902-e601-11ef-bfa8-244bfebc0c45'; // Proses Layanan Selesai
+                
+                if(LaporanTerminasi::where('layanan_id', $id)->exists()){
+                    #SAVE GEENERATE LAPORAN ------------------------
+                    $laporanu = LaporanTerminasi::where('layanan_id', $id)->first();
+                    $laporanu->tgl_terminasi    =date("Y-m-d H:i:s");
+                    $laporanu->save();
+                }else{
+                    $laporan= new LaporanTerminasi();
+                    $laporan->id                =Str::uuid()->toString();
+                    $laporan->layanan_id        =$id;
+                    $laporan->tgl_terminasi     =date("Y-m-d H:i:s");
+                    $laporan->no_surat          =$nomor_surat['urut'];
+                    $laporan->tahun             =date("Y");
+                    $laporan->nomor_terminasi   =$nomor_surat['surat'];
+                    $laporan->dokumen_terminasi ="terminasi/".$id.".pdf";
+                    $laporan->save();
+                }
+                #END SAVE..-------------------------------------
+                // Jika data berhasil disimpan pada tabel rehabilitasi
+                if ($residensial->save()) {
+                    // Mengupdate field status_id pada tabel residensial
+                    
+
+                    return response()->json([
+                        'message' => 'Layanan berhasil diterminasi.',
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'message' => 'Terjadi kesalahan saat menyimpan data',
+                    ], 500);
+                }
+            }else {
+                return response()->json([
+                    'message' => 'Terjadi kesalahan saat generate data',
+                ], 500);
+            }
+            
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function generate_nomor($id){ 
+        if(LaporanTerminasi::where('layanan_id', $id)->exists()){
+            $laporan = LaporanTerminasi::where('layanan_id', $id)->first();
+            $no_terminasi   =$laporan->no_surat;
+            $nomor_surat    =$laporan->nomor_terminasi;
+        }else{
+            $no_terminasi=LaporanTerminasi::where('tahun', '=', date("Y"))->max('no_surat') +1;
+            $nomor_surat =$no_terminasi."/4.19/RH.00.00/11/".date("Y");
+        }
+        return ["urut"=>$no_terminasi,"surat"=>$nomor_surat];
+    }
+
+    public function generete_terminasi($id,$nomor_surat){
+        // return true;
+        $generate_word=$this->generate_word($id,$nomor_surat);
+        if($generate_word){
+            $generate_pdf =$this->generate_pdf($id);
+            // dd($generate_pdf);
+            if($generate_pdf){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public function generate_word($id,$nomor_surat){
+        Carbon::setLocale('id');
+        #get data residensial
+        $residensial=Residensial::where("id",$id)->first();
+        $petugas    =Petugas::where("id",$residensial->petugas_id)->first();
+        $pengampu   =Pengampu::where("id",$residensial->pengampu_id)->first();
+        $ppks       =Pasien::where("id",$residensial->pasien_id)->first();
+
+        $templatePath = public_path('storage/terminasi/template_terminasi.docx');
+            
+        // Cek apakah template ada
+        if (!file_exists($templatePath)) {
+            return response()->json(['error' => 'Template tidak ditemukan!'], 404);
+        }
+
+        // Membuat TemplateProcessor dari template yang ada
+        $templateProcessor = new TemplateProcessor($templatePath);
+
+        // Data untuk menggantikan placeholder
+        $data = [
+            'no_surat'               =>$nomor_surat,
+            'tgl_terminasi'          =>date("d"),
+            'bln_terminasi'          =>Carbon::now()->translatedFormat('F'),
+            'thn_terminasi'          =>date("Y"),
+
+            'petugas_layanan_nama'   =>$petugas->nama_petugas,
+            'petugas_layanan_nip'    =>$petugas->nip_nik,
+            'petugas_layanan_jabatan'=>$petugas->pangkat_jabatan,
+            'petugas_layanan_alamat' =>$petugas->alamat_kantor,
+
+            'pengampu_nama'          =>$pengampu->nama_pengampu,
+            'pengampu_nik'           =>$pengampu->nik,
+            'pengampu_alamat'        =>$pengampu->alamat,
+            'pengampu_nohp'          =>$pengampu->nohp,
+
+            'ppks_nama'              =>$ppks->nama_depan." ".$ppks->nama_belakang,
+            'ppks_ttl'               =>$ppks->tmp_lahir.", ".date("d",strtotime($ppks->tgl_lahir))." ".Carbon::parse($ppks->tgl_lahir)->translatedFormat('F')." ".date("Y"),
+            'ppks_jk'                =>$this->getGenderFromNIK($ppks->nik),
+            'ppks_nik'               =>$ppks->nik,
+            'ppks_alamat'            =>$ppks->alamat,
+        ];
+
+        // Mengganti placeholder di template dengan data
+        $templateProcessor->setValues($data);
+
+        // Lokasi file output yang akan disimpan
+        $outputPath = public_path('storage/terminasi/'.$id.'.docx');
+
+        // Simpan file di folder yang sama dengan nama output.docx
+        $templateProcessor->saveAs($outputPath);
+        // Cek apakah file berhasil disimpan
+        if (!file_exists($outputPath)) {
+            return "gagal buat file word";
+        }else{
+            return true;
+        }
+    }
+
+    public function generate_pdf($id){
+        $libreOfficePath = '"C:\Program Files\LibreOffice\program\soffice.exe"';
+        // Lokasi file Word
+        $wordFilePath = public_path("storage\\terminasi\\" . $id . ".docx");
+        // Lokasi folder output
+        $outputDirectory = public_path('storage\terminasi');
+        // Lokasi file PDF output
+        $pdfFilePath = $outputDirectory . '\\'.$id.'.pdf';
+        // Cek apakah file Word ada
+        if (!file_exists($wordFilePath)) {
+            return response()->json(['error' => 'File Word tidak ditemukan!'], 404);
+        }
+
+        // Pastikan folder output ada
+        if (!is_dir($outputDirectory)) {
+            mkdir($outputDirectory, 0777, true);
+        }
+
+        $command = "{$libreOfficePath} --headless --convert-to pdf --outdir \"{$outputDirectory}\" \"{$wordFilePath}\"";
+        // dd($command);
+        $process=exec($command);
+        // Cek apakah proses berhasil
+        if (!file_exists($pdfFilePath)) {
+           return "gagal buat pdf";
+        }else{
+            return true;
+        }
+    }
+
+    function getGenderFromNIK($nik) {
+        if (strlen($nik) < 16) {
+            return "NIK tidak valid";
+        }
+    
+        // Ambil angka ke-7 dan ke-8
+        $tanggalLahir = (int) substr($nik, 6, 2);
+    
+        // Perempuan jika tanggal lahir lebih dari 40
+        if ($tanggalLahir > 40) {
+            return "Perempuan";
+        }
+        return "Laki-laki";
     }
 
   

@@ -134,6 +134,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/residensial/generate-berita-acara/{id}', [ResidensialController::class, 'store_generate_ba'])->name('residensial.generate_ba');
     Route::get('/residensial/get-residensial/{id}', [ResidensialController::class, 'getResidensial'])->name('residensial_getresidensial');
     Route::post('/residensial/store-manajer-kasus/', [ResidensialController::class, 'store_ManajerKasus'])->name('residensial.store_manajer_kasus');
+    Route::post('/residensial/terminasi-layanan/{id}', [ResidensialController::class, 'store_TerminasiLayanan'])->name('residensial.store_terminasi_layanan');
+    
 
 
 
