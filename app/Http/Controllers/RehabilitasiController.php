@@ -434,6 +434,7 @@ class RehabilitasiController extends Controller
     }
 
     public function generate_rehabilitasi($id){
+        dd($id);
         $perkembangan = [
             [
                 "ibadah" => [
