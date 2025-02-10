@@ -4,15 +4,26 @@ namespace App\Http\Controllers;
 
 use Storage;
 use Validator;
+use Carbon\Carbon;
+use App\Models\Agama;
 use App\Models\Aspek;
+use App\Models\Pasien;
+use App\Models\Bantuan;
+use App\Models\Perujuk;
+use App\Models\Petugas;
+use App\Models\Pengampu;
 use App\Models\Assessment;
+use App\Models\Pendidikan;
 use App\Models\Residensial;
 use Illuminate\Support\Str;
+use App\Models\KategoriPPKS;
 use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
 use App\Models\FormAssessmentSub;
 use App\Models\KomponenPerkembangan;
+use App\Models\FormAssessmentFormValue;
 use App\Models\RehabilitasiPerkembangan;
+use PhpOffice\PhpWord\TemplateProcessor;
 use App\Models\RehabilitasiPerkembanganNilai;
 
 class RehabilitasiController extends Controller
@@ -433,84 +444,7 @@ class RehabilitasiController extends Controller
         return response()->json($response);
     }
 
-    public function generate_rehabilitasi($id){
-        dd($id);
-        $perkembangan = [
-            [
-                "ibadah" => [
-                    "disiplin" => 5,
-                    "ketekunan" => 5,
-                    "kreatifitas" => 5,
-                ],
-                "piket" => [
-                    "disiplin" => 1,
-                    "ketekunan" => 1,
-                    "kreatifitas" => 1,
-                ],
-            ],
-            [
-                "ibadah" => [
-                    "disiplin" => 1,
-                    "ketekunan" => 1,
-                    "kreatifitas" => 1,
-                ],
-                "piket" => [
-                    "disiplin" => 1,
-                    "ketekunan" => 1,
-                    "kreatifitas" => 1,
-                ],
-            ]
-        ];
-
-        $bobot = ["disiplin" => 0.3, "ketekunan" => 0.4, "kreatifitas" => 0.3];
-
-        // Mencari nilai maksimum dari setiap kriteria
-        $maxValues = ["disiplin" => 0, "ketekunan" => 0, "kreatifitas" => 0];
-        foreach ($perkembangan as $data) {
-            foreach ($data as $kategori) {
-                foreach ($kategori as $kriteria => $nilai) {
-                    if ($nilai > $maxValues[$kriteria]) {
-                        $maxValues[$kriteria] = $nilai;
-                    }
-                }
-            }
-        }
-
-        // Normalisasi dan perhitungan skor preferensi
-        $hasil = ["ibadah" => 0, "piket" => 0];
-        $count = ["ibadah" => 0, "piket" => 0];
-        foreach ($perkembangan as $data) {
-            foreach ($data as $kategori => $nilai_kategori) {
-                foreach ($nilai_kategori as $kriteria => $nilai) {
-                    $r = $nilai / $maxValues[$kriteria];
-                    $hasil[$kategori] += $r * $bobot[$kriteria];
-                }
-                $count[$kategori]++;
-            }
-        }
-
-        // Rata-rata hasil
-        foreach ($hasil as $kategori => &$skor) {
-            $skor /= $count[$kategori];
-        }
-
-        // Menentukan kategori hasil
-        function kategori($nilai) {
-            if ($nilai <= 0.33) return "Kurang";
-            if ($nilai <= 0.66) return "Cukup";
-            return "Baik";
-        }
-
-        // Menampilkan hasil
-        foreach ($hasil as $kategori => $skor) {
-            echo "Perkembangan " . ucfirst($kategori) . " = " . kategori($skor) . " (" . number_format($skor, 3) . ")\n";
-        }
-
-        $rehabilitasi = Rehabilitasi::find($id);
-        $rehabilitasi->laporan_rehabilitasi = "rehabilitasi/".$id.".pdf";
-        $rehabilitasi->laporan_tanggal      = date("Y-m-d H:i:s");
-        $rehabilitasi->save();
-    }
+    
     
     public function destroy($id)
     {
@@ -590,6 +524,220 @@ class RehabilitasiController extends Controller
             $no++;
         }
         return \response()->json($data);
+    }
+
+    public function generate_rehabilitasi($id){
+        $rehabilitasi_perkembangan=RehabilitasiPerkembangan::select("rehabilitasi_id","id")->where("rehabilitasi_id","=",$id)->get();
+        
+        foreach($rehabilitasi_perkembangan as $perkembangan){
+            #select("laksa_tr_rehabilitasi_perkembangan_nilai.komponen_aspek_nilai","laksa_tr_rehabilitasi_perkembangan_nilai.aspek_id","laksa_tr_rehabilitasi_perkembangan_nilai.komponen_id","laksa_ms_komponen_perkembangan.komponen","laksa_ms_aspek.aspek")->
+            $perkembangan_nilai =RehabilitasiPerkembanganNilai::leftJoin('laksa_ms_aspek', 'laksa_tr_rehabilitasi_perkembangan_nilai.aspek_id', '=', 'laksa_ms_aspek.id')
+                                                                ->leftJoin('laksa_ms_komponen_perkembangan', 'laksa_tr_rehabilitasi_perkembangan_nilai.komponen_id', '=', 'laksa_ms_komponen_perkembangan.id')
+                                                                ->where("rehabilitasi_perkembangan_id","=",$perkembangan->id)
+                                                                ->get();
+            // dd($perkembangan_nilai);
+            $perkembangan_nilai_array[$perkembangan->id]   =[];
+            foreach($perkembangan_nilai as $perkembangan_nilaix){
+                $perkembangan_nilai_array[$perkembangan->id][$perkembangan_nilaix->komponen_id][$perkembangan_nilaix->aspek_id]=$perkembangan_nilaix->komponen_aspek_nilai;
+            }
+            $perkembangan->nilai=$perkembangan_nilai_array;
+        }
+        $perkembangan_array=$perkembangan->toArray();
+        foreach($perkembangan_array['nilai'] as $id_perkembangan=>$komponen){
+            // dd($komponen);
+            foreach($komponen as $id_komponen=>$nilai_komponen){
+                $total                  = array_sum($nilai_komponen);
+                $jumlah_aspek           = count($nilai_komponen);
+                $perkembangan_nilai_rata[$id_perkembangan][$id_komponen]              = $total / $jumlah_aspek;
+            }
+        }
+
+        // Loop untuk menggabungkan dan menghitung rata-rata
+        foreach ($perkembangan_nilai_rata as $subArray) {
+            foreach ($subArray as $key => $value) {
+                if (!isset($rata_rata[$key])) {
+                    $rata_rata[$key] = ['total' => 0, 'count' => 0];
+                }
+                $rata_rata[$key]['total'] += $value;
+                $rata_rata[$key]['count'] += 1;
+            }
+        }
+
+        // Hitung rata-rata
+        foreach ($rata_rata as $key => $val) {
+            $rata_rata[$key] = round($val['total'] / $val['count'], 2);
+        }
+
+        foreach ($rata_rata as $key => $value) {
+            if ($value >= 1 && $value < 2) {
+                $kategori[$key] = "Kurang";
+            } elseif ($value >= 2 && $value < 3) {
+                $kategori[$key] = "Cukup";
+            } elseif ($value == 3) {
+                $kategori[$key] = "Baik";
+            } else {
+                $kategori[$key] = "Tidak Diketahui";
+            }
+        }
+
+        $laporan_akumulasi = [
+            "nilai" => $rata_rata,
+            "conversi" => $kategori
+        ];
+
+        // Tampilkan hasil
+        // print_r($rata_rata);
+        if($laporan_akumulasi){
+            $generate_word=$this->generate_word_rehabilitasi($id,$laporan_akumulasi);
+            if($generate_word){
+                $generate_pdf =$this->generate_pdf_rehabilitasi($id);
+                // dd($generate_pdf);
+                if($generate_pdf){
+                    $rehabilitasi = Rehabilitasi::find($id);
+                    $rehabilitasi->laporan_rehabilitasi = "rehabilitasi/".$id.".pdf";
+                    $rehabilitasi->laporan_tanggal      = date("Y-m-d H:i:s");
+                    $rehabilitasi->laporan_akumulasi    = json_encode($laporan_akumulasi);
+                    if($rehabilitasi->save()){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        
+    }
+
+    public function generate_word_rehabilitasi($id,$data_nilai){
+        $rehabilitasi=Rehabilitasi::where("id",$id)->first();
+        Carbon::setLocale('id');
+        
+        #get data residensial
+        $residensial=Residensial::where("id",$rehabilitasi->residensial_id)->first();
+        $petugas    =Petugas::where("id",$residensial->petugas_id)->first();#pendamping sosial
+
+        $ppks       =Pasien::where("laksa_ms_ppks.id",$residensial->pasien_id);
+        $ppks       =$ppks->select('laksa_ms_ppks.*','laksa_ms_provinsi.*','laksa_ms_kabupaten_kota.*','laksa_ms_kecamatan.*',"laksa_ms_ppks.id as pasien_id")
+        ->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
+        ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
+        ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id');
+        $ppks       =$ppks->first();
+
+        // dd($datax);
+        $templatePath = public_path('storage/rehabilitasi/template_rehabilitasi.docx');
+       
+        // Cek apakah template ada
+        if (!file_exists($templatePath)) {
+            return response()->json(['error' => 'Template tidak ditemukan!'], 404);
+        }
+        $kategori   =KategoriPPKS::where("id",$residensial->kategori_ppks_id)->first();
+        // Membuat TemplateProcessor dari template yang ada
+        $templateProcessor = new TemplateProcessor($templatePath);
+        $data_nilaix=[];
+        foreach($data_nilai['conversi'] as $key=>$value){
+            $data_nilaix[$key] = $value;
+        }
+        $data_ppks = [
+            'ppks_provinsi'          =>$ppks->provinsi,
+            'ppks_kabupaten'         =>$ppks->kabupaten_kota,
+            'ppks_kecamatan'         =>$ppks->kecamatan,
+            'ppks_kelurahan'         =>$ppks->kelurahan_desa_id,
+            'ppks_desa'              =>"Nama Desa",
+            'ppks_domisili'          =>$ppks->domisili,
+            'ppks_nama'              =>$ppks->nama_depan." ".$ppks->nama_belakang,
+            'ppks_ttl'               =>$ppks->tmp_lahir.", ".date("d",strtotime($ppks->tgl_lahir))." Bulan ".date("Y"),
+            'ppks_tmp_lahir'         =>$ppks->tmp_lahir,
+            'ppks_tgl_lahir'         =>date("d",strtotime($ppks->tgl_lahir))." Bulan ".date("Y"),
+            'ppks_jk'                =>$this->getGenderFromNIK($ppks->nik),
+            'ppks_agama'             =>$ppks->agama,
+            'ppks_nik'               =>$ppks->nik,
+            'ppks_kk'                =>$ppks->nokk,
+            'ppks_alamat'            =>$ppks->alamat,
+            'ppks_kategori'          =>$kategori->kategori,
+            'ppks_status_kawin'      =>"Belum Kawin",
+
+
+            'kategori_ppks'         =>$kategori->kategori,
+
+            'assessor_nama'         =>isset($assesor->nama_petugas) ? $assesor->nama_petugas : 'Nama Petugas',
+            
+
+            'layanan_mulai'          =>Carbon::parse($residensial->tgl_penerimaan)->translatedFormat('d F Y'),
+            'layanan_selesai'        =>Carbon::parse($residensial->rencana_tgl_terminasi)->translatedFormat('d F Y'),
+            'layanan_masa_rehab'     =>$residensial->masa_layanan,
+            'layanan_kategori'       =>$kategori->kategori,
+            'layanan_kasus'          =>$kategori->kategori,
+            'layanan_pendamping'     =>isset($petugas->nama_petugas) ? $petugas->nama_petugas : 'Nama Petugas',
+        ];
+        $data=array_merge($data_ppks,$data_nilaix);
+        
+       
+        // dd($data);
+        
+        
+        // Mengganti placeholder di template dengan data
+        $templateProcessor->setValues($data);
+        
+        // Lokasi file output yang akan disimpan
+        $outputPath = public_path('storage/rehabilitasi/'.$id.'.docx');
+
+        // Simpan file di folder yang sama dengan nama output.docx
+        $templateProcessor->saveAs($outputPath);
+        // Cek apakah file berhasil disimpan
+        // dd($templateProcessor);
+        if (!file_exists($outputPath)) {
+            return "gagal buat file word";
+        }else{
+            return true;
+        }
+    }
+
+    public function generate_pdf_rehabilitasi($id){
+        $libreOfficePath = '"C:\Program Files\LibreOffice\program\soffice.exe"';
+        // Lokasi file Word
+        $wordFilePath = public_path("storage\\rehabilitasi\\" . $id . ".docx");
+        // Lokasi folder output
+        $outputDirectory = public_path('storage\rehabilitasi');
+        // Lokasi file PDF output
+        $pdfFilePath = $outputDirectory . '\\'.$id.'.pdf';
+        // Cek apakah file Word ada
+        if (!file_exists($wordFilePath)) {
+            return response()->json(['error' => 'File Word tidak ditemukan!'], 404);
+        }
+
+        // Pastikan folder output ada
+        if (!is_dir($outputDirectory)) {
+            mkdir($outputDirectory, 0777, true);
+        }
+
+        $command = "{$libreOfficePath} --headless --convert-to pdf --outdir \"{$outputDirectory}\" \"{$wordFilePath}\"";
+        // dd($command);
+        $process=exec($command);
+        // Cek apakah proses berhasil
+        if (!file_exists($pdfFilePath)) {
+           return "gagal buat pdf";
+        }else{
+            return true;
+        }
+    }
+
+    function getGenderFromNIK($nik) {
+        if (strlen($nik) < 16) {
+            return "NIK tidak valid";
+        }
+    
+        // Ambil angka ke-7 dan ke-8
+        $tanggalLahir = (int) substr($nik, 6, 2);
+    
+        // Perempuan jika tanggal lahir lebih dari 40
+        if ($tanggalLahir > 40) {
+            return "Perempuan";
+        }
+        return "Laki-laki";
     }
     
 }
