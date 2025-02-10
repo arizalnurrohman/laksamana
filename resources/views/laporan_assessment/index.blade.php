@@ -64,15 +64,15 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function load_this_data(){
-        loadTabelData("list-data", "{{route('load_beritaacara')}}", ['No', 'Nama PPKS','Tanggal','Aksi']);
+        loadTabelData("list-data", "{{route('load_laporanassessment')}}", ['No', 'Nama PPKS','Tanggal','Aksi']);
     }
     $(document).ready(function () {
         load_this_data();
     });
 
-    function dokumen_ba(id){
+    function dokumen_assesment(id){
         $.ajax({
-            url: `/laporan-berita-acara/edit/${id}`,
+            url: `/laporan-dokumen-assessment/edit/${id}`,
             type: 'GET',
             success: function (data) {
                 $('#iframeBA').attr('src', data.dokumen_ba);

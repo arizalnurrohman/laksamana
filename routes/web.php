@@ -23,10 +23,11 @@ use App\Http\Controllers\KategoriKKPSController;
 use App\Http\Controllers\RehabilitasiController;
 use App\Http\Controllers\StatusUsulanController;
 use App\Http\Controllers\NonResidensialController;
+use App\Http\Controllers\PetugasLayananController;
 use App\Http\Controllers\FormAssessementController;
+
+
 use App\Http\Controllers\LaporanTerminasiController;
-
-
 use App\Http\Controllers\PenentuanLayananController;
 use App\Http\Controllers\LaporanAssessmentController;
 use App\Http\Controllers\PersetujuanKepalaController;
@@ -224,6 +225,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan-perkembangan', [LaporanPerkembanganController::class, 'index'])->name('laporanperkembangan');
     Route::get('/laporan-perkembangan/load-laporan-perkembangan', [LaporanPerkembanganController::class, 'load_laporan'])->name('load_laporanperkembangan');
     Route::get('/laporan-perkembangan/edit/{id}', [LaporanPerkembanganController::class, 'get_laporanperkembangan'])->name('laporanperkembangan.getlaporan');
+
+    Route::get('/petugas-layanan', [PetugasLayananController::class, 'index'])->name('petugaslayanan');
+    Route::get('/petugas-layanan/load-perujuk', [PetugasLayananController::class, 'load_data'])->name('load_petugaslayanan');
+    Route::post('/petugas-layanan/store', [PetugasLayananController::class, 'store'])->name('petugaslayanan.store');
+    Route::get('/petugas-layanan/edit/{id}', [PetugasLayananController::class, 'edit'])->name('petugaslayanan.edit');
+    Route::post('/ppetugas-layanan/update', [PetugasLayananController::class, 'update'])->name('petugaslayanan.update');
+    Route::delete('/petugas-layanan/delete/{id}', [PetugasLayananController::class, 'destroy'])->name('petugaslayanan.delete');
 
 });
 

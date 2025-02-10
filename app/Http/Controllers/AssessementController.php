@@ -9,6 +9,7 @@ use App\Models\Gedung;
 use App\Models\Pasien;
 use App\Models\Bantuan;
 use App\Models\Pegawai;
+use App\Models\Perujuk;
 use App\Models\Petugas;
 use App\Models\Pengampu;
 use App\Models\Provinsi;
@@ -28,6 +29,7 @@ use App\Models\KategoriPPKSSub;
 use App\Models\FormAssessmentSub;
 use App\Models\KomponenIntervensi;
 use App\Models\FormAssessmentFormValue;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 class AssessementController extends Controller
 {
@@ -172,6 +174,8 @@ class AssessementController extends Controller
             ];
 
             if (Assessment::create($payload)) {
+                // $generate_dokumen=$this->generate_assessment($payload['id']);
+                // dd($generate_dokumen);
                 $this->success = true;
                 // Update data pada tabel Residensial
                 $updated = Residensial::where('id', $request->residensial_id)->update(["status_id"=>"2ae4ad34-db8b-11ef-9f06-244bfebc0c45"]);
@@ -267,6 +271,9 @@ class AssessementController extends Controller
     
                 // Menyimpan data rehabilitasi dan memperbarui status_id di tabel residensial
                 $rehabilitasi = Rehabilitasi::create($payloads);
+
+                #GENERATE DOKUKEN ASSESSMENT
+                $generate_dokumen=$this->generate_assessment($payload['id']);
             }
         
         }
@@ -291,20 +298,20 @@ class AssessementController extends Controller
     function detail_rules(){
         $rules=[
             'residensial_id'            =>'required',
-            "pengampu_nama" => 'required',
-            "pengampu_nik" => 'required',
-            "pengampu_nokk" => 'required',
-            "pengampu_tmp_lahir" => 'required',
-            "pengampu_tgl_lahir" => 'required',
-            "pengampu_nohp" => 'required',
-            "pengampu_agama" => 'required',
-            "pengampu_pendidikan_terakhir" => 'required',
-            "pengampu_hubungan_dengan_ppks" => 'required',
-            "pengampu_apakah_sudah_masuk_dtks" => 'required',
-            "pengampu_bantuan_yang_sudah_diterima" => 'required',
-            "pengampu_status_kawin" => 'required',
-            "pengampu_pekerjaan" => 'required',
-            "pengampu_pengeluaran_per_bulan" => 'required',
+            // "pengampu_nama" => 'required',
+            // "pengampu_nik" => 'required',
+            // "pengampu_nokk" => 'required',
+            // "pengampu_tmp_lahir" => 'required',
+            // "pengampu_tgl_lahir" => 'required',
+            // "pengampu_nohp" => 'required',
+            // "pengampu_agama" => 'required',
+            // "pengampu_pendidikan_terakhir" => 'required',
+            // "pengampu_hubungan_dengan_ppks" => 'required',
+            // "pengampu_apakah_sudah_masuk_dtks" => 'required',
+            // "pengampu_bantuan_yang_sudah_diterima" => 'required',
+            // "pengampu_status_kawin" => 'required',
+            // "pengampu_pekerjaan" => 'required',
+            // "pengampu_pengeluaran_per_bulan" => 'required',
             
         ];
         $messages=[
@@ -517,4 +524,251 @@ class AssessementController extends Controller
         return response()->json($response);
         exit;
     }
+
+    public function generate_assessment($id){
+        if(Assessment::where('id', $id)->exists()){
+            $assessment = Assessment::where('id', $id)->first();
+            if($assessment->laporan_assessment_nomor_surat){
+                $no_assessment  =$assessment->laporan_assessment_no_urut;
+                $nomor_surat    =$assessment->laporan_assessment_nomor_surat;
+            }else{
+                $no_assessment  =Assessment::where('laporan_assessment_tahun', '=', date("Y"))->max('laporan_assessment_no_urut') +1;
+                $nomor_surat    =$no_assessment."/4.19/BS.00.01/1/".date("Y");
+            }
+            
+            $assessment->laporan_assessment_no_urut     = $no_assessment;
+            $assessment->laporan_assessment_tahun       = date("Y");
+            $assessment->laporan_assessment_tanggal     =date("Y-m-d");
+            $assessment->laporan_assessment_nomor_surat =$nomor_surat;
+            $assessment->save();
+        }else{
+            dd($id);
+        }
+        // dd($nomor_surat);
+        $generate_word=$this->generate_word_assessment($assessment->residensial_id,$nomor_surat);
+        if($generate_word){
+            $generate_pdf =$this->generate_pdf_assessment($assessment->residensial_id);
+            // dd($generate_pdf);
+            if($generate_pdf){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+        #geenrate pdf
+    }
+
+    public function generate_word_assessment($id,$nomor_surat){
+        Carbon::setLocale('id');
+        
+        #get data residensial
+        $residensial=Residensial::where("id",$id)->first();
+        $petugas    =Petugas::where("id",$residensial->petugas_id)->first();
+
+        $ppks       =Pasien::where("laksa_ms_ppks.id",$residensial->pasien_id);
+        $ppks       =$ppks->select('laksa_ms_ppks.*','laksa_ms_provinsi.*','laksa_ms_kabupaten_kota.*','laksa_ms_kecamatan.*',"laksa_ms_ppks.id as pasien_id")
+        ->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
+        ->leftJoin('laksa_ms_kecamatan', 'laksa_ms_ppks.kecamatan_id', '=', 'laksa_ms_kecamatan.id')
+        ->leftJoin('laksa_ms_provinsi', 'laksa_ms_ppks.provinsi_id', '=', 'laksa_ms_provinsi.id');
+        $ppks       =$ppks->first();
+
+        $perujuk    =Perujuk::where("id",$residensial->perujuk_id)->first();
+        $kategori   =KategoriPPKS::where("id",$residensial->kategori_ppks_id)->first();
+        $pendidikan =Pendidikan::where("id",$ppks->pendidikan_id)->first();
+        $assessment =Assessment::where("residensial_id",$id)->first();
+        $pengampu   =Pengampu::where("id",$residensial->pengampu_id)->first();
+        $bantuan    =Bantuan::where("id",$pengampu->bantuan_saat_ini)->first();
+        $assesor    =Petugas::where("id",$assessment->petugas_id)->first();
+        $assessment_value=FormAssessmentFormValue::select("laksa_ms_form_assessment.assessment","laksa_ms_form_assessment_sub.sub_kategori_assessment","laksa_tr_assessment_value.assessment_value","laksa_ms_form_assessment_sub.variable_laporan")
+                                                 ->leftJoin('laksa_ms_form_assessment_sub', 'laksa_tr_assessment_value.form_assessment_sub_id', '=', 'laksa_ms_form_assessment_sub.id')
+                                                 ->leftJoin('laksa_ms_form_assessment', 'laksa_tr_assessment_value.form_assessment_id', '=', 'laksa_ms_form_assessment.id')
+                                                 ->where("assessment_id",$assessment->id)#"43f14f15-2fd6-48d4-8929-db0174e9110b")#$assessment->id)->get();
+                                                 ->orderBy("laksa_ms_form_assessment.sort","ASC")
+                                                 ->orderBy("laksa_ms_form_assessment_sub.sort","ASC")
+                                                 ->get();
+        $data_acc=[];                                         
+        foreach($assessment_value as $av){
+            $av->value_id=(FormAssessmentSub::where("id",$av->assessment_value)->first()) ? (FormAssessmentSub::where("id",$av->assessment_value)->first())->sub_kategori_assessment : '';
+            $data_acc[$av->variable_laporan]=$av->value_id ? $av->value_id : $av->assessment_value;
+        }
+        
+        // dd($datax);
+        $templatePath = public_path('storage/assessment/template_assessment.docx');
+       
+        // Cek apakah template ada
+        if (!file_exists($templatePath)) {
+            return response()->json(['error' => 'Template tidak ditemukan!'], 404);
+        }
+        
+        // Membuat TemplateProcessor dari template yang ada
+        $templateProcessor = new TemplateProcessor($templatePath);
+        
+        // Data untuk menggantikan placeholder
+        // Carbon::setLocale('id');
+        // dd($nomor_surat);
+
+        // dd($kategori);
+        $ex_nomor_surat=explode("/",$nomor_surat);
+        $data_bsc = [
+            'assessment_no'          => $ex_nomor_surat[0],
+            'assessment_tgl'         =>Carbon::now()->translatedFormat('d F Y'), 
+            'assessment_nama'        =>"Nama Assessor",
+            'assessment_jabatan'     =>"Jabatan Assessor",
+
+            'ppks_provinsi'          =>$ppks->provinsi,
+            'ppks_kabupaten'         =>$ppks->kabupaten_kota,
+            'ppks_kecamatan'         =>$ppks->kecamatan,
+            'ppks_kelurahan'         =>$ppks->kelurahan_desa_id,
+            'ppks_desa'              =>"Nama Desa",
+            'ppks_domisili'          =>$ppks->domisili,
+            'ppks_nama'              =>$ppks->nama_depan." ".$ppks->nama_belakang,
+            'ppks_ttl'               =>$ppks->tmp_lahir.", ".date("d",strtotime($ppks->tgl_lahir))." Bulan ".date("Y"),
+            'ppks_tmp_lahir'         =>$ppks->tmp_lahir,
+            'ppks_tgl_lahir'         =>date("d",strtotime($ppks->tgl_lahir))." Bulan ".date("Y"),
+            'ppks_jk'                =>$this->getGenderFromNIK($ppks->nik),
+            'ppks_agama'             =>$ppks->agama,
+            'ppks_nik'               =>$ppks->nik,
+            'ppks_kk'                =>$ppks->nokk,
+            'ppks_apakah_dtks'       =>$pengampu->sudah_ada_dtks,
+            'ppks_bantuan'           =>$bantuan->jenis_bantuan,
+            'ppks_alamat'            =>$ppks->alamat,
+            'ppks_kategori'          =>$kategori->kategori,
+            'ppks_status_kawin'      =>"Belum Kawin",
+            'ppks_pendidikan'        =>$pendidikan->pendidikan,
+
+            'pengampu_nama'         =>$pengampu->nama_pengampu,
+            'pengampu_hp'           =>$pengampu->nohp,
+            'pengampu_hubungan'     =>$pengampu->hubungan_dengan_ppks,
+            'pengampu_tmp_lahir'    =>$pengampu->tmp_lahir,
+            'pengampu_tgl_lahir'    =>date("d",strtotime($pengampu->tgl_lahir))." Bulan ".date("Y"),
+            'pengampu_jk'           =>$this->getGenderFromNIK($pengampu->nik),
+            'pengampu_agama'        =>(Agama::where("id",$pengampu->agama_id)->first())->agama,
+            'pengampu_nik'          =>$pengampu->nik,
+            'pengampu_kk'           =>$pengampu->nokk,
+            'pengampu_masuk_dtks'   =>$pengampu->sudah_ada_dtks,
+            'pengampu_bantuan'      =>$bantuan->jenis_bantuan,
+            'pengampu_pendidikan'   =>(Pendidikan::where("id",$pengampu->pendidikan_id)->first())->pendidikan,
+            'pengampu_status_kawin' =>$pengampu->status_kawin,
+            'pengampu_pekerjaan'    =>$pengampu->pekerjaan,
+            'pengampu_pengeluaran_perbulan'  =>$pengampu->pengeluaran_per_bulan,
+
+            'kategori_ppks'         =>$kategori->kategori,
+            'tmp_catatan'           =>$assessment->tmp_catatan,
+
+            'assessor_nama'         =>isset($assesor->nama_petugas) ? $assesor->nama_petugas : 'Nama Petugas',
+            'rekomendasi_catatan'   =>$assessment->rekomendasi_catatan,
+
+            #KONDISI_PPKS
+
+            #KONDISI_EKONOMI
+
+            #KONDISI_TMP_TINGGAL
+
+            #PERMASALAHAN
+
+            #INTERVENSI PPKS
+
+            #CATATAN
+
+            #ASSESSOR
+
+            #FOTO
+
+            #assessment---------------------------------------------
+
+            // 'surat_no'               =>$nomor_surat,
+            // 'surat_hari'             =>Carbon::now()->isoFormat('dddd'),
+            // 'surat_tanggal'          =>date("d"),
+            // 'surat_bulan'            =>Carbon::parse(date("Y-m-d"))->translatedFormat('F'),
+            // 'surat_tahun'            =>date("Y"),
+            // 'surat_tanggal_surat'    =>Carbon::parse(date("Y-m-d"))->translatedFormat('d F Y'),
+
+            // 'perujuk_nama'           =>$perujuk->nama_perujuk,
+            // 'perujuk_nik'            =>$perujuk->nip_nrp,
+            // 'perujuk_jabatan'        =>$perujuk->pangkat_jabatan,
+            // 'perujuk_instansi'       =>$perujuk->instansi_perujuk,
+            // 'perujuk_kantor'         =>$perujuk->alamat_kantor,
+            // 'perujuk_telp_kantor'    =>$perujuk->telp_kantor,
+            // 'perujuk_nohp'           =>$perujuk->no_hp,
+
+            // 'petugas_nama'           =>$petugas->nama_petugas,
+            // 'petugas_nik'            =>$petugas->nip_nik,
+            // 'petugas_jabatan'        =>$petugas->pangkat_jabatan,
+            // 'petugas_alamat_kantor'  =>$petugas->alamat_kantor,
+            // 'petugas_telp_kantor'    =>$petugas->telp_kantor,
+
+            
+
+            'layanan_mulai'          =>Carbon::parse($residensial->tgl_penerimaan)->translatedFormat('d F Y'),
+            'layanan_selesai'        =>Carbon::parse($residensial->rencana_tgl_terminasi)->translatedFormat('d F Y'),
+            'layanan_kategori'       =>$kategori->kategori,
+        ];
+        
+        $data=array_merge($data_bsc,$data_acc);
+       
+        // dd($data);
+        
+        
+        // Mengganti placeholder di template dengan data
+        $templateProcessor->setValues($data);
+        
+        // Lokasi file output yang akan disimpan
+        $outputPath = public_path('storage/assessment/'.$id.'.docx');
+
+        // Simpan file di folder yang sama dengan nama output.docx
+        $templateProcessor->saveAs($outputPath);
+        // Cek apakah file berhasil disimpan
+        if (!file_exists($outputPath)) {
+            return "gagal buat file word";
+        }else{
+            return true;
+        }
+    }
+
+    public function generate_pdf_assessment($id){
+        $libreOfficePath = '"C:\Program Files\LibreOffice\program\soffice.exe"';
+        // Lokasi file Word
+        $wordFilePath = public_path("storage\\assessment\\" . $id . ".docx");
+        // Lokasi folder output
+        $outputDirectory = public_path('storage\assessment');
+        // Lokasi file PDF output
+        $pdfFilePath = $outputDirectory . '\\'.$id.'.pdf';
+        // Cek apakah file Word ada
+        if (!file_exists($wordFilePath)) {
+            return response()->json(['error' => 'File Word tidak ditemukan!'], 404);
+        }
+
+        // Pastikan folder output ada
+        if (!is_dir($outputDirectory)) {
+            mkdir($outputDirectory, 0777, true);
+        }
+
+        $command = "{$libreOfficePath} --headless --convert-to pdf --outdir \"{$outputDirectory}\" \"{$wordFilePath}\"";
+        // dd($command);
+        $process=exec($command);
+        // Cek apakah proses berhasil
+        if (!file_exists($pdfFilePath)) {
+           return "gagal buat pdf";
+        }else{
+            return true;
+        }
+    }
+
+    function getGenderFromNIK($nik) {
+        if (strlen($nik) < 16) {
+            return "NIK tidak valid";
+        }
+    
+        // Ambil angka ke-7 dan ke-8
+        $tanggalLahir = (int) substr($nik, 6, 2);
+    
+        // Perempuan jika tanggal lahir lebih dari 40
+        if ($tanggalLahir > 40) {
+            return "Perempuan";
+        }
+        return "Laki-laki";
+    }
+
 }

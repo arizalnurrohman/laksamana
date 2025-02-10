@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use Carbon\Carbon;
 use App\Models\Agama;
+use App\Models\Assessment;
 use App\Models\Gedung;
 use App\Models\Pasien;
 use App\Models\Pegawai;
@@ -67,7 +68,8 @@ class LaporanAssessmentController extends Controller
         $sub_child = $sub_child->leftJoin('laksa_tr_status', 'laksa_tr_layanan.id', '=', 'laksa_tr_status.layanan_id');
         $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
-        $sub_child = $sub_child->whereIn("laksa_tr_status.status_id",$this->status_usulan);
+        $sub_child = $sub_child->leftJoin('laksa_tr_assessment', 'laksa_tr_layanan.id', '=', 'laksa_tr_assessment.residensial_id');
+        $sub_child = $sub_child->where("laksa_tr_assessment.laporan_assessment","!=",null);
         $sub_child = $sub_child->get();
         $data = array();
         $no=0;
@@ -77,7 +79,7 @@ class LaporanAssessmentController extends Controller
             $data[$no]['Nama PPKS']       =$val->nama_depan.' '.$val->nama_belakang.'<br><span class="badge rounded-pill bg-'.$val->style.'">'.$val->status.'</span>';
             $data[$no]['Tanggal']           =date("d-m-Y H:i:s",strtotime($val->tgl_status));
             $data[$no]['Aksi']              ='<div class="btn-group" role="group" aria-label="Group Aksi">
-                                                <button class="btn btn-sm btn-icon btn-info" Onclick="dokumen_ba(\''.$val->residensial_id.'\')" title="Lihat Dokumen Berita Acara">
+                                                <button class="btn btn-sm btn-icon btn-info" Onclick="dokumen_assesment(\''.$val->residensial_id.'\')" title="Lihat Dokumen Assesment">
                                                     <span class="btn-inner">
                                                         <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7379 2.76175H8.08493C6.00493 2.75375 4.29993 4.41175 4.25093 6.49075V17.2037C4.20493 19.3167 5.87993 21.0677 7.99293 21.1147C8.02393 21.1147 8.05393 21.1157 8.08493 21.1147H16.0739C18.1679 21.0297 19.8179 19.2997 19.8029 17.2037V8.03775L14.7379 2.76175Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M14.4751 2.75V5.659C14.4751 7.079 15.6231 8.23 17.0431 8.234H19.7981" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M14.2882 15.3584H8.88818" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M12.2432 11.606H8.88721" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                            
                                                     </span>
@@ -88,10 +90,10 @@ class LaporanAssessmentController extends Controller
         return \response()->json($data);
     }
 
-    public function get_ba($id){
-        $dokumen_ba = Residensial::findOrFail($id);
+    public function get_laporanassessment($id){
+        $dokumen_ass = Assessment::where("residensial_id",$id)->first();
         // dd($dokumen_ba);
-        $return['dokumen_ba']=asset('storage/' . $dokumen_ba->dokumen_ba);
+        $return['dokumen_ba']=asset('storage/' . $dokumen_ass->laporan_assessment);
         return $return;
     }
 }
