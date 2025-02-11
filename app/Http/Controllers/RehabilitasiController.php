@@ -673,14 +673,36 @@ class RehabilitasiController extends Controller
             'layanan_kasus'          =>$kategori->kategori,
             'layanan_pendamping'     =>isset($petugas->nama_petugas) ? $petugas->nama_petugas : 'Nama Petugas',
         ];
-        $data=array_merge($data_ppks,$data_nilaix);
-        
+        $data_rehabilitasi['rehabilitasi']           =[
+            "2024"=>[
+                "jenis_nama"     =>"ibadah",
+                "nilai_disiplin" =>1,
+                "nilai_tekun"    =>2,
+                "nilai_kreatif"  =>3,
+            ],
+            "2025"=>[
+                "jenis_nama"     =>"ibadah",
+                "nilai_disiplin" =>2,
+                "nilai_tekun"    =>2,
+                "nilai_kreatif"  =>2,
+            ],
+        ];
+        $data=array_merge(array_merge($data_ppks,$data_nilaix));
        
         // dd($data);
         
         
         // Mengganti placeholder di template dengan data
         $templateProcessor->setValues($data);
+        $rowIndex = 1;
+        foreach ($data_rehabilitasi['rehabilitasi'] as $tahun => $rehab) {
+            $templateProcessor->setValue("tahun#{$rowIndex}", $tahun);
+            $templateProcessor->setValue("jenis_nama#{$rowIndex}", $rehab['jenis_nama']);
+            $templateProcessor->setValue("nilai_disiplin#{$rowIndex}", $rehab['nilai_disiplin']);
+            $templateProcessor->setValue("nilai_tekun#{$rowIndex}", $rehab['nilai_tekun']);
+            $templateProcessor->setValue("nilai_kreatif#{$rowIndex}", $rehab['nilai_kreatif']);
+            $rowIndex++;
+        }
         
         // Lokasi file output yang akan disimpan
         $outputPath = public_path('storage/rehabilitasi/'.$id.'.docx');
