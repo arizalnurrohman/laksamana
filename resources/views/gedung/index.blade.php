@@ -26,7 +26,8 @@
                             <tr>
                                 <th width="25">No</th>
                                 <th>Gedung</th>
-                                <th width="40">Jumlah Kamar</th>
+                                <th width="40">Kamar</th>
+                                <th width="40">Terpakai</th>
                                 <th width="40">Status</th>
                                 <th width="40">Aksi</th>
                             </tr>
@@ -104,7 +105,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function load_this_data(){
-        loadTabelData("list-data", "{{route('load_gedung_asrama')}}", ['No', 'Gedung','Jumlah Kamar','Status','Aksi']);
+        loadTabelData("list-data", "{{route('load_gedung_asrama')}}", ['No', 'Gedung','Kamar','Terpakai','Status','Aksi']);
     }
     $(document).ready(function () {
         load_this_data();

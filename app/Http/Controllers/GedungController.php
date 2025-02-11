@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gedung;
+use App\Models\Residensial;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -100,7 +101,8 @@ class GedungController extends Controller
         foreach ($gedung as $val) {
             $data[$no]['No']            =($no+1);
             $data[$no]['Gedung']        =$val->nama_gedung;
-            $data[$no]['Jumlah Kamar']  =$val->jumlah_kamar;
+            $data[$no]['Kamar']         =$val->jumlah_kamar;
+            $data[$no]['Terpakai']      =Residensial::where("gedung_id",$val->id)->count();
             $data[$no]['Status']        =$val->status_gedung;
             $data[$no]['Aksi']          ='<div class="btn-group" role="group" aria-label="Group Aksi">
                                             <button class="btn btn-sm btn-icon btn-warning" Onclick="update_form(\''.$val->id.'\')">
