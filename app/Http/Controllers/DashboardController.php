@@ -23,6 +23,7 @@ use App\Models\Rehabilitasi;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
 use App\Models\KategoriPPKSSub;
+use App\Models\LaporanTerminasi;
 
 class DashboardController extends Controller
 {
@@ -64,6 +65,9 @@ class DashboardController extends Controller
             "rehabilitasi"      =>Rehabilitasi::count(),#rehabilitasi
             "gedungasrama"      =>Gedung::count(),#gedungasrama
             "intervensi"        =>Assessment::where("intervensi_komponen_yang_diberikan","!=",null)->count(),#intervensi
+            "persetujuan_kepala"=>Residensial::where("status_id","7918fc82-db8a-11ef-9f06-244bfebc0c45")->count(),#persetujuan_kepala
+            "assessment"        =>Residensial::where("status_id","23ac51ea-db8b-11ef-9f06-244bfebc0c45")->count(),#assessment
+            "terminasi"         =>LaporanTerminasi::count(),#assessment
             
         ];
         return view('dashboard.index', compact('nilai_total'));

@@ -28,12 +28,26 @@
                 <div class="card">
                    <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
-                         <div class="bg-success text-white rounded p-3">
-                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path d="M12.2744 19.75V4.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M18.299 13.7002L12.275 19.7502L6.25 13.7002" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                                                   
+                         <div class="bg-primary text-white rounded p-3">
+                           <svg height="32px" width="32px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                              viewBox="0 0 211.931 211.931" xml:space="preserve">
+                           <path d="M145.49,199.781H4c-2.209,0-4-1.791-4-4V16.149c0-2.209,1.791-4,4-4h141.49c2.209,0,4,1.791,4,4v43.488l39.477-39.477
+                              c1.563-1.562,4.095-1.562,5.657,0l16.136,16.136c1.562,1.563,1.562,4.095,0,5.657l-61.27,61.269v92.559
+                              C149.49,197.99,147.699,199.781,145.49,199.781z M8,191.781h133.49v-80.547l-19.313,19.314c-0.514,0.514-1.159,0.878-1.865,1.054
+                              l-21.464,5.329c-0.319,0.079-0.643,0.118-0.964,0.118c-0.004,0-0.007,0-0.011,0c-1.048,0-2.069-0.412-2.829-1.171
+                              c-0.992-0.992-1.392-2.431-1.054-3.792l5.329-21.464c0.175-0.706,0.54-1.35,1.054-1.865l41.118-41.117V20.149H8V191.781z
+                              M106.826,113.626l-3.459,13.937l13.927-3.458l84.98-84.98l-10.479-10.479L148.491,71.95c-0.055,0.063-0.113,0.125-0.172,0.184
+                              L106.826,113.626z M120.084,178.152H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h94.978c2.209,0,4,1.791,4,4
+                              S122.293,178.152,120.084,178.152z M120.084,155.434H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h94.978c2.209,0,4,1.791,4,4
+                              S122.293,155.434,120.084,155.434z M83.888,109.997H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h58.782c2.209,0,4,1.791,4,4
+                              S86.097,109.997,83.888,109.997z M104.555,87.278H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h79.449c2.209,0,4,1.791,4,4
+                              S106.764,87.278,104.555,87.278z M120.084,41.842H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h94.978c2.209,0,4,1.791,4,4
+                              S122.293,41.842,120.084,41.842z"/>
+                           </svg>                                                                               
                          </div>
                          <div class="text-end">
                             Perstujuan<br>Kepala
-                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['gedungasrama'])}}</h2>
+                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['persetujuan_kepala'])}}</h2>
                          </div>
                       </div>
                    </div>
@@ -44,11 +58,11 @@
                    <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
                          <div class="bg-success text-white rounded p-3">
-                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path d="M12.2744 19.75V4.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M18.299 13.7002L12.275 19.7502L6.25 13.7002" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                                                   
+                           <svg fill="#000000" width="32px" height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.997 1.771h-.001c-5.647 0-10.226 4.578-10.226 10.226s4.578 10.226 10.226 10.226c5.647 0 10.226-4.578 10.226-10.226 0-5.647-4.578-10.225-10.225-10.226zm.198 2.252c.801 0 1.45.649 1.45 1.45s-.649 1.45-1.45 1.45-1.45-.649-1.45-1.45c0-.801.649-1.45 1.45-1.45zm5.307 3.668c-.087.117-.216.199-.364.223h-.003l-3.445.53c-.03.002-.056.017-.074.038-.018.022.343 4.274.343 4.274l1.958 5.337c.055.104.087.226.087.357 0 .295-.165.551-.407.681l-.004.002c-.074.033-.161.053-.253.053-.001 0-.001 0-.002 0-.33-.016-.608-.224-.728-.513l-.002-.006s-2.508-5.691-2.522-5.734c-.016-.047-.06-.081-.112-.081-.048 0-.088.031-.103.074v.001c-.014.041-2.522 5.734-2.522 5.734-.121.294-.399.501-.727.518h-.002c-.001 0-.001 0-.002 0-.091 0-.178-.019-.256-.054l.004.002c-.176-.08-.308-.229-.364-.411l-.001-.005c-.025-.078-.04-.168-.04-.261 0-.133.029-.258.082-.371l-.002.005s1.91-5.165 1.911-5.174l.355-4.363c0-.003 0-.006 0-.01 0-.054-.04-.099-.092-.107h-.001l-3.36-.52c-.271-.043-.475-.275-.475-.554 0-.31.251-.561.561-.561.03 0 .06.002.089.007h-.003l3.223.498h3.421c.007.002.015.003.024.003s.016-.001.024-.003h-.001l3.244-.497c.024-.004.052-.006.08-.006.28 0 .513.203.56.47v.003c.004.026.007.057.007.088 0 .124-.04.238-.109.33l.001-.002z"/><path d="m12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12c0-6.627-5.373-12-12-12zm0 22.975c-.001 0-.003 0-.004 0-6.064 0-10.979-4.916-10.979-10.979s4.916-10.979 10.979-10.979c6.064 0 10.979 4.916 10.979 10.979v.004c-.002 6.061-4.915 10.973-10.975 10.975z"/></svg>                                                  
                          </div>
                          <div class="text-end">
                             Assessment<br>&nbsp;
-                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['gedungasrama'])}}</h2>
+                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['assessment'])}}</h2>
                          </div>
                       </div>
                    </div>
@@ -58,10 +72,12 @@
                 <div class="card">
                    <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
-                         <div class="bg-success text-white rounded p-3">
-                            <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 20 20" fill="currentColor">
-                               <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                            </svg>
+                         <div class="bg-warning text-white rounded p-3">
+                           <svg fill="#666" height="32px" width="32px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 461.724 461.724" xml:space="preserve" stroke="#666">
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                              <g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="M93.746,60.483c-1.26,3.609-1.953,7.484-1.953,11.523c0,19.304,15.649,34.953,34.953,34.953s34.953-15.649,34.953-34.953 c0-4.039-0.693-7.914-1.953-11.523c-6.765-2.557-17.188-7.03-33-7.03C110.962,53.453,100.51,57.927,93.746,60.483z"/> <path d="M95.351,49.187c10.116-3.823,20.756-5.734,31.395-5.734c10.64,0,21.279,1.911,31.395,5.734 c4.664-12.343,9.328-24.687,13.993-37.03c0.364-0.964,0.321-2.035-0.117-2.967s-1.235-1.648-2.209-1.983 C155.857,2.402,141.302,0,126.746,0C112.19,0,97.635,2.402,83.684,7.206c-0.974,0.335-1.772,1.05-2.21,1.983 c-0.438,0.933-0.48,2.003-0.116,2.967C86.022,24.5,90.687,36.843,95.351,49.187z M115.996,17.425h5.75v-5.75h10v5.75h5.75v10 h-5.75v5.75h-10v-5.75h-5.75V17.425z"/> <path d="M412.888,327.555h-8.75V302.16c0-2.451-1.987-4.439-4.439-4.439h-0.657c1.669-1.176,2.762-3.115,2.762-5.312 c0-3.59-2.91-6.5-6.5-6.5h-17c-3.59,0-6.5,2.91-6.5,6.5c0,2.197,1.093,4.135,2.762,5.312h-0.656 c-2.451,0-4.439,1.987-4.439,4.439v25.395h-9.375V292.16c0-2.451-1.987-4.439-4.439-4.439h-5.395v-37.873 c0-2.451-1.987-4.439-4.439-4.439h-6.121c-2.452,0-4.439,1.987-4.439,4.439v37.873h-5.395c-2.451,0-4.439,1.987-4.439,4.439 v35.395h-9.292V282.16c0-2.451-1.987-4.439-4.439-4.439h-0.657c1.669-1.176,2.762-3.115,2.762-5.312c0-3.59-2.91-6.5-6.5-6.5h-17 c-3.59,0-6.5,2.91-6.5,6.5c0,2.197,1.093,4.135,2.762,5.312h-0.656c-2.451,0-4.439,1.987-4.439,4.439v45.395h-13.583v-45 c0-5.523-4.478-10-10-10h-17.55c-0.017-0.045-0.028-0.091-0.046-0.137c-0.331-0.845-33.271-84.897-45.335-120.005 c-7.825-22.769-20.945-34.313-38.995-34.313c-25.363,0-33.117,0-58.434,0c-18.052,0-31.171,11.545-38.994,34.314 c-5.278,15.357-13.215,37.545-18.691,52.771c-3.881,10.795,3.94,22.264,15.426,22.566c0.332,0.009,57.628,1.522,57.961,1.522 c9.107-0.001,16.608-7.262,16.851-16.421c0.245-9.311-7.103-17.058-16.415-17.303l-34.222-0.902 c1.456-4.086,2.82-7.93,4.093-11.531l0.164,0.004l16.396,0.432l3.477-24.351c0.347-2.427,2.595-4.113,5.022-3.767l50.609,7.226 c2.427,0.347,4.113,2.595,3.767,5.022l-8.93,62.544c-0.346,2.427-2.595,4.113-5.022,3.767l-14.965-2.137 c-5.57,5.962-13.381,9.261-21.583,9.042l-39.441-1.04l-13.195,68.129c-0.532,2.746,0.192,5.585,1.971,7.743 s4.43,3.418,7.227,3.418c3.628,0,7.998,0,12.869,0v122.335c0,11.177,9.062,20.238,20.238,20.238 c11.177,0,20.238-9.061,20.238-20.238V319.15c2.909,0,5.828,0,8.737,0v122.335c0,11.177,9.061,20.238,20.238,20.238 s20.238-9.061,20.238-20.238V319.15c4.872,0,9.242,0,12.868,0c2.799,0,5.451-1.251,7.231-3.411c1.78-2.16,2.5-5.002,1.967-7.75 c-26.145-134.99-23.053-118.223-24.024-126.162c14.541,39.835,38.094,99.941,39.257,102.906c3.4,8.67,13.184,12.945,21.857,9.544 c1.174-0.46,2.258-1.046,3.263-1.721h13.878v45v114.168c0,5.523,4.478,10,10,10c5.522,0,10-4.477,10-10v-30.647h135v30.647 c0,5.523,4.478,10,10,10c5.522,0,10-4.477,10-10V337.555C422.888,332.032,418.411,327.555,412.888,327.555z"/> </g> </g> </g> </g>
+                              </svg>
                          </div>
                          <div class="text-end">
                             Rehabilitasi<br>&nbsp;
@@ -76,7 +92,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="bg-warning text-white rounded p-3">
-                                <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.87651 15.2063C6.03251 15.2063 2.74951 15.7873 2.74951 18.1153C2.74951 20.4433 6.01251 21.0453 9.87651 21.0453C13.7215 21.0453 17.0035 20.4633 17.0035 18.1363C17.0035 15.8093 13.7415 15.2063 9.87651 15.2063Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.8766 11.886C12.3996 11.886 14.4446 9.841 14.4446 7.318C14.4446 4.795 12.3996 2.75 9.8766 2.75C7.3546 2.75 5.3096 4.795 5.3096 7.318C5.3006 9.832 7.3306 11.877 9.8456 11.886H9.8766Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M19.2036 8.66919V12.6792" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M21.2497 10.6741H17.1597" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                            
+                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.8 21C15.8 21.3866 16.1134 21.7 16.5 21.7C16.8866 21.7 17.2 21.3866 17.2 21H15.8ZM4.8 21C4.8 21.3866 5.1134 21.7 5.5 21.7C5.8866 21.7 6.2 21.3866 6.2 21H4.8ZM6.2 18C6.2 17.6134 5.8866 17.3 5.5 17.3C5.1134 17.3 4.8 17.6134 4.8 18H6.2ZM12.3 21C12.3 21.3866 12.6134 21.7 13 21.7C13.3866 21.7 13.7 21.3866 13.7 21H12.3ZM13.7 18C13.7 17.6134 13.3866 17.3 13 17.3C12.6134 17.3 12.3 17.6134 12.3 18H13.7ZM11.7429 11.3125L11.3499 10.7333L11.3499 10.7333L11.7429 11.3125ZM16.2429 11.3125L15.8499 10.7333L15.8499 10.7333L16.2429 11.3125ZM3.2 21V19.5H1.8V21H3.2ZM8 14.7H11V13.3H8V14.7ZM15.8 19.5V21H17.2V19.5H15.8ZM11 14.7C13.651 14.7 15.8 16.849 15.8 19.5H17.2C17.2 16.0758 14.4242 13.3 11 13.3V14.7ZM3.2 19.5C3.2 16.849 5.34903 14.7 8 14.7V13.3C4.57583 13.3 1.8 16.0758 1.8 19.5H3.2ZM11 14.7H15.5V13.3H11V14.7ZM20.3 19.5V21H21.7V19.5H20.3ZM15.5 14.7C18.151 14.7 20.3 16.849 20.3 19.5H21.7C21.7 16.0758 18.9242 13.3 15.5 13.3V14.7ZM6.2 21V18H4.8V21H6.2ZM13.7 21V18H12.3V21H13.7ZM9.5 11.3C7.67746 11.3 6.2 9.82255 6.2 8.00001H4.8C4.8 10.5958 6.90426 12.7 9.5 12.7V11.3ZM6.2 8.00001C6.2 6.17746 7.67746 4.7 9.5 4.7V3.3C6.90426 3.3 4.8 5.40427 4.8 8.00001H6.2ZM9.5 4.7C11.3225 4.7 12.8 6.17746 12.8 8.00001H14.2C14.2 5.40427 12.0957 3.3 9.5 3.3V4.7ZM12.8 8.00001C12.8 9.13616 12.2264 10.1386 11.3499 10.7333L12.1358 11.8918C13.3801 11.0477 14.2 9.61973 14.2 8.00001H12.8ZM11.3499 10.7333C10.8225 11.091 10.1867 11.3 9.5 11.3V12.7C10.4757 12.7 11.3839 12.4019 12.1358 11.8918L11.3499 10.7333ZM14 4.7C15.8225 4.7 17.3 6.17746 17.3 8.00001H18.7C18.7 5.40427 16.5957 3.3 14 3.3V4.7ZM17.3 8.00001C17.3 9.13616 16.7264 10.1386 15.8499 10.7333L16.6358 11.8918C17.8801 11.0477 18.7 9.61973 18.7 8.00001H17.3ZM15.8499 10.7333C15.3225 11.091 14.6867 11.3 14 11.3V12.7C14.9757 12.7 15.8839 12.4019 16.6358 11.8918L15.8499 10.7333ZM11.9378 5.42349C12.5029 4.97049 13.2189 4.7 14 4.7V3.3C12.8892 3.3 11.8667 3.68622 11.0622 4.33114L11.9378 5.42349ZM14 11.3C13.3133 11.3 12.6775 11.091 12.1501 10.7333L11.3642 11.8918C12.1161 12.4019 13.0243 12.7 14 12.7V11.3Z" fill="#000000"/></svg>                            
                             </div>
                             <div class="text-end">
                                 PPKS<br>&nbsp;
@@ -90,8 +106,10 @@
                 <div class="card">
                    <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
-                         <div class="bg-success text-white rounded p-3">
-                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path d="M12.2744 19.75V4.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M18.299 13.7002L12.275 19.7502L6.25 13.7002" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                                                   
+                         <div class="bg-info text-white rounded p-3">
+                           <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M14 21.0001V15.0001H10V21.0001M19 9.77818V16.2001C19 17.8802 19 18.7203 18.673 19.362C18.3854 19.9265 17.9265 20.3855 17.362 20.6731C16.7202 21.0001 15.8802 21.0001 14.2 21.0001H9.8C8.11984 21.0001 7.27976 21.0001 6.63803 20.6731C6.07354 20.3855 5.6146 19.9265 5.32698 19.362C5 18.7203 5 17.8802 5 16.2001V9.77753M21 12.0001L15.5668 5.96405C14.3311 4.59129 13.7133 3.9049 12.9856 3.65151C12.3466 3.42894 11.651 3.42899 11.0119 3.65165C10.2843 3.90516 9.66661 4.59163 8.43114 5.96458L3 12.0001" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>                                                   
                          </div>
                          <div class="text-end">
                             Gedung Asrama<br>&nbsp;
@@ -105,12 +123,12 @@
                 <div class="card">
                    <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
-                         <div class="bg-success text-white rounded p-3">
-                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path d="M12.2744 19.75V4.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M18.299 13.7002L12.275 19.7502L6.25 13.7002" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                                                   
+                         <div class="bg-primary text-white rounded p-3">
+                           <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.1043 4.17701L14.9317 7.82776C15.1108 8.18616 15.4565 8.43467 15.8573 8.49218L19.9453 9.08062C20.9554 9.22644 21.3573 10.4505 20.6263 11.1519L17.6702 13.9924C17.3797 14.2718 17.2474 14.6733 17.3162 15.0676L18.0138 19.0778C18.1856 20.0698 17.1298 20.8267 16.227 20.3574L12.5732 18.4627C12.215 18.2768 11.786 18.2768 11.4268 18.4627L7.773 20.3574C6.87023 20.8267 5.81439 20.0698 5.98724 19.0778L6.68385 15.0676C6.75257 14.6733 6.62033 14.2718 6.32982 13.9924L3.37368 11.1519C2.64272 10.4505 3.04464 9.22644 4.05466 9.08062L8.14265 8.49218C8.54354 8.43467 8.89028 8.18616 9.06937 7.82776L10.8957 4.17701C11.3477 3.27433 12.6523 3.27433 13.1043 4.17701Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                                                                               
                          </div>
                          <div class="text-end">
                             Terminasi<br>&nbsp;
-                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['gedungasrama'])}}</h2>
+                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['terminasi'])}}</h2>
                          </div>
                       </div>
                    </div>
@@ -121,11 +139,11 @@
                    <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
                          <div class="bg-success text-white rounded p-3">
-                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path d="M12.2744 19.75V4.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M18.299 13.7002L12.275 19.7502L6.25 13.7002" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                                                   
+                           <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                    <path d="M16.8397 20.1642V6.54639" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M20.9173 16.0681L16.8395 20.1648L12.7617 16.0681" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M6.91102 3.83276V17.4505" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                    <path d="M2.8335 7.92894L6.91127 3.83228L10.9891 7.92894" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>                                </svg>                                                                               
                          </div>
                          <div class="text-end">
                             Intervensi<br>&nbsp;
-                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['gedungasrama'])}}</h2>
+                               <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['intervensi'])}}</h2>
                          </div>
                       </div>
                    </div>
