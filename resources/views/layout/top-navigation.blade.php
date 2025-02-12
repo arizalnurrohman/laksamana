@@ -37,7 +37,7 @@
                         <div class="breadcrumb-title border-end me-3 pe-3 d-none d-xl-block">
                             <small class="mb-0 text-capitalize">@if ($activeMenu) {{ $activeMenu->menu }} @else Dashboard @endif</small>
                         </div>
-                        
+                        <strong>{{Auth::user()->name}}</strong>
                       </div>
                       <div class="d-flex align-items-center">
                          <button id="navbar-toggle" class="navbar-toggler" type="button" data-bs-toggle="collapse"
