@@ -643,6 +643,9 @@ class AssessementController extends Controller
             'ppks_kategori'          =>$kategori->kategori,
             'ppks_status_kawin'      =>"Belum Kawin",
             'ppks_pendidikan'        =>$pendidikan->pendidikan,
+            'ppks_fisik'             =>"-",
+            'ppks_fisik_detail'      =>"-",
+
 
             'pengampu_nama'         =>$pengampu->nama_pengampu,
             'pengampu_hp'           =>$pengampu->nohp,
@@ -665,6 +668,12 @@ class AssessementController extends Controller
 
             'assessor_nama'         =>($this->user_login)->name,
             'rekomendasi_catatan'   =>$assessment->rekomendasi_catatan,
+
+            'kategori_lansia_disabilitas'   =>"-",
+            'kategori_bencana'              =>"-",
+            'kategori_anak'                 =>"-",
+            'kategori_disabilitas'          =>"-",
+
 
             #KONDISI_PPKS
 
