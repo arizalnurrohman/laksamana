@@ -28,8 +28,8 @@
                 <label class="form-label">Tentukan Pendamping Sosial: *</label>
                 <select class="form-select" name="layanan_manajer_kasus" id="layanan_manajer_kasus">
                     <option value="">Pilih Pendamping Sosial</option>
-                    @foreach($petugas as $petugasx)
-                        <option value="{{$petugasx->id}}">{{$petugasx->nama}}</option>
+                    @foreach($pendamping as $pendampingx)
+                        <option value="{{$pendampingx->id}}">{{$pendampingx->nama_petugas}}</option>
                     @endforeach
                 </select>
             </div>

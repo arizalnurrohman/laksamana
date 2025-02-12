@@ -29,6 +29,7 @@ use App\Models\KategoriPPKSSub;
 use App\Models\FormAssessmentSub;
 use App\Models\KomponenIntervensi;
 use App\Models\FormAssessmentFormValue;
+use App\Models\PendampingSosial;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class AssessementController extends Controller
@@ -86,7 +87,7 @@ class AssessementController extends Controller
         $pengampu      = $pengampu->leftJoin('laksa_ms_pendidikan', 'laksa_ms_pengampu.pendidikan_id', '=', 'laksa_ms_pendidikan.id')
                         ->leftJoin('laksa_ms_agama', 'laksa_ms_pengampu.agama_id', '=', 'laksa_ms_agama.id');
         $pengampu    = $pengampu->first();
-        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_pendamping_sosial.*","laksa_ms_pendamping_sosial.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip_nik")->get();
+        $pendamping = PendampingSosial::all();
         
         $detail_ppks_value=[];
         // dd(json_decode($residensial->kategori_ppks_json));
@@ -130,7 +131,7 @@ class AssessementController extends Controller
 
         // dd($assessement_form);
         
-        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan','assessement_form','komponen_layanan_yang_diberikan','komponen_intervensi','petugas'));
+        return view('assessement.assessment', compact('residensial','pasien','pengampu','agama','pendidikan','bantuan','assessement_form','komponen_layanan_yang_diberikan','komponen_intervensi','pendamping'));
     }
 
     public function edit_Assessment($id){

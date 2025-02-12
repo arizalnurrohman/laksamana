@@ -29,7 +29,7 @@
                 <select class="form-select" data-trigger name="residense_petugas" id="petugas_penerimaan">
                     <option value="">Pilih Petugas Penerimaan</option>
                     @foreach($petugas as $petugasx)
-                        <option value="{{$petugasx->id}}">{{$petugasx->nama}}</option>
+                        <option value="{{$petugasx->id}}">{{$petugasx->nama_petugas}}</option>
                     @endforeach
                 </select>
             </div>

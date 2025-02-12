@@ -26,6 +26,7 @@ use App\Models\SumberRujukan;
 use App\Models\KategoriPPKSSub;
 
 use App\Models\LaporanTerminasi;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Process\Process;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -35,8 +36,10 @@ class ResidensialController extends Controller
     private $error;
     private $success;
     private $status_usulan;
+    private $user_login;
     function __construct()
     {
+        $this->user_login = Auth::user();
     //     $fix_roles      =array();
     //     $this->page_attribut  =getPageAttribute();
         
@@ -65,12 +68,14 @@ class ResidensialController extends Controller
     {
         #$sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $residensial = [];
-        $petugas    =Petugas::leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip_nik")->get();
+        $petugas    =Petugas::get();
         return view('residensial.index', compact('residensial','petugas'));
     }
     public function create()
     {
-        $petugas = Petugas::select("laksa_ms_pegawai.*","laksa_ms_pendamping_sosial.*","laksa_ms_pendamping_sosial.id as petugas_id")->leftjoin("laksa_ms_pegawai","laksa_ms_pegawai.nip","=","laksa_ms_pendamping_sosial.nip_nik")->get();
+        
+
+        $petugas = Petugas::where("user_id",($this->user_login)->id)->get();
         $sumber_rujukan=SumberRujukan::all();
         $agama = Agama::all();
         $provinsi = Provinsi::all();
