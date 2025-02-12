@@ -425,7 +425,6 @@ class AssessementController extends Controller
             $data[$no]['Aksi']              ='<div class="btn-group" role="group" aria-label="Group Aksi">
                                                 '.$tombol_send_data.'
                                                 '.$tombol_assesment.'
-                                                '.$tombol_edit.'
                                                 '.$tombol_reviu.'
                                             </div>';
             $no++;

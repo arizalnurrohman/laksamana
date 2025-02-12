@@ -22,6 +22,8 @@ use Illuminate\Http\Request;
 use App\Models\FormAssessmentSub;
 use App\Models\KomponenPerkembangan;
 use App\Models\FormAssessmentFormValue;
+use App\Models\PendampingSosial;
+use App\Models\PetugasLayanan;
 use App\Models\RehabilitasiPerkembangan;
 use PhpOffice\PhpWord\TemplateProcessor;
 use App\Models\RehabilitasiPerkembanganNilai;
@@ -618,7 +620,7 @@ class RehabilitasiController extends Controller
         
         #get data residensial
         $residensial=Residensial::where("id",$rehabilitasi->residensial_id)->first();
-        $petugas    =Petugas::where("id",$residensial->petugas_id)->first();#pendamping sosial
+        $pendamping    =PendampingSosial::where("id",$residensial->petugas_id)->first();#pendamping sosial
 
         $ppks       =Pasien::where("laksa_ms_ppks.id",$residensial->pasien_id);
         $ppks       =$ppks->select('laksa_ms_ppks.*','laksa_ms_provinsi.*','laksa_ms_kabupaten_kota.*','laksa_ms_kecamatan.*',"laksa_ms_ppks.id as pasien_id")
@@ -646,7 +648,7 @@ class RehabilitasiController extends Controller
             'ppks_kabupaten'         =>$ppks->kabupaten_kota,
             'ppks_kecamatan'         =>$ppks->kecamatan,
             'ppks_kelurahan'         =>$ppks->kelurahan_desa_id,
-            'ppks_desa'              =>"Nama Desa",
+            'ppks_desa'              =>$ppks->kelurahan_desa_id,
             'ppks_domisili'          =>$ppks->domisili,
             'ppks_nama'              =>$ppks->nama_depan." ".$ppks->nama_belakang,
             'ppks_ttl'               =>$ppks->tmp_lahir.", ".date("d",strtotime($ppks->tgl_lahir))." Bulan ".date("Y"),
@@ -671,7 +673,7 @@ class RehabilitasiController extends Controller
             'layanan_masa_rehab'     =>$residensial->masa_layanan,
             'layanan_kategori'       =>$kategori->kategori,
             'layanan_kasus'          =>$kategori->kategori,
-            'layanan_pendamping'     =>isset($petugas->nama_petugas) ? $petugas->nama_petugas : 'Nama Petugas',
+            'layanan_pendamping'     =>isset($pendamping->nama_petugas) ? $pendamping->nama_petugas : 'Nama Petugas',
         ];
         $data_rehabilitasi['rehabilitasi']           =[
             "2024"=>[
