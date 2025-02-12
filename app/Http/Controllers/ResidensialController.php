@@ -205,14 +205,16 @@ class ResidensialController extends Controller
     }
 
     public function load_residensial(){
-        $sub_child = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_pendamping_sosial.*","laksa_ms_pegawai.*","laksa_ms_status.*");
+        $petugas   =Petugas::where("user_id",($this->user_login)->id)->first();
+        $sub_child = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas_layanan.*","laksa_ms_status.*");
         // $sub_child = $sub_child->orderby("laksa_tr_layanan.created_at","DESC");
-        $sub_child = $sub_child->leftJoin('laksa_ms_pendamping_sosial', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_pendamping_sosial.id');
-        $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        $sub_child = $sub_child->leftJoin('laksa_ms_petugas_layanan', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_petugas_layanan.id');
+        // $sub_child = $sub_child->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
         $sub_child = $sub_child->whereIn("status_id",$this->status_usulan);
+        $sub_child = $sub_child->where("petugas_id",$petugas->id);
         $sub_child = $sub_child->orderBy("laksa_ms_status.sort","ASC");
         $sub_child = $sub_child->get();
         $data = array();
