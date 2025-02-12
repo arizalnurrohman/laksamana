@@ -59,7 +59,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">Pangkat / Jabatan</label>
-                        <input type="text" class="form-control" id="pangkat_jabatan" name="pangkat_jabatan" required>
+                        <input type="text" class="form-control" id="jabatan" name="jabatan" required>
                     </div>
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">Email Petugas</label>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">Pangkat / Jabatan</label>
-                        <input type="text" class="form-control" id="pangkat_jabatan" name="pangkat_jabatan" required>
+                        <input type="text" class="form-control" id="jabatan" name="jabatan" required>
                     </div>
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">Email Petugas</label>
@@ -320,12 +320,12 @@
             success: function (data) {
                 if($.isEmptyObject(data.errors)){
                     // var mlink=data.data.static_link;
-                    $("#update{{ $activeMenu->access }}Form [name=\"nip_nrp\"]").val(data.data.nip_nrp);
+                    $("#update{{ $activeMenu->access }}Form [name=\"nip_nrp\"]").val(data.data.nip_nik);
                     $("#update{{ $activeMenu->access }}Form [name=\"no_hp\"]").val(data.data.no_hp);
                     $("#update{{ $activeMenu->access }}Form [name=\"telp_kantor\"]").val(data.data.telp_kantor);
                     $("#update{{ $activeMenu->access }}Form [name=\"alamat_kantor\"]").val(data.data.alamat_kantor);
-                    $("#update{{ $activeMenu->access }}Form [name=\"instansi\"]").val(data.data.instansi_petugas);
-                    $("#update{{ $activeMenu->access }}Form [name=\"pangkat_jabatan\"]").val(data.data.pangkat_jabatan);
+                    $("#update{{ $activeMenu->access }}Form [name=\"email_petugas\"]").val(data.data.email_petugas);
+                    $("#update{{ $activeMenu->access }}Form [name=\"jabatan\"]").val(data.data.jabatan);
                     $("#update{{ $activeMenu->access }}Form [name=\"nama_petugas\"]").val(data.data.nama_petugas);
                     $("#update{{ $activeMenu->access }}Form [name=\"petugas_id\"]").val(data.data.id);
                     

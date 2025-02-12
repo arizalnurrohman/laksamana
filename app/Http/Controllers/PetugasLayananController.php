@@ -55,8 +55,8 @@ class PetugasLayananController extends Controller
             $payload = [
                 'id'                => Str::uuid()->toString(),
                 'nama_petugas'      => $request->nama_petugas,
-                'nip_nrp'           => $request->nip_nrp,
-                'pangkat_jabatan'   => $request->pangkat_jabatan,
+                'nip_nik'           => $request->nip_nrp,
+                'jabatan'           => $request->jabatan,
                 'email_petugas'     => $request->email_petugas,
                 'alamat_kantor'     => $request->alamat_kantor,
                 'telp_kantor'       => $request->telp_kantor,
@@ -134,7 +134,7 @@ class PetugasLayananController extends Controller
             $petugas = PetugasLayanan::where('id', $request->petugas_id)->firstOrFail();
             $payload=[
                 'nama_petugas'      => $request->nama_petugas,
-                'nip_nrp'           => $request->nip_nrp,
+                'nip_nik'           => $request->nip_nrp,
                 'jabatan'           => $request->jabatan,
                 'email_petugas'     => $request->email_petugas,
                 'alamat_kantor'     => $request->alamat_kantor,
