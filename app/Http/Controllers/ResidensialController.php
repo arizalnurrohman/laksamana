@@ -23,8 +23,9 @@ use App\Models\Rehabilitasi;
 use App\Models\StatusUsulan;
 use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
-use App\Models\KategoriPPKSSub;
+use App\Models\PetugasLayanan;
 
+use App\Models\KategoriPPKSSub;
 use App\Models\LaporanTerminasi;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Process\Process;
@@ -75,7 +76,7 @@ class ResidensialController extends Controller
     {
         
 
-        $petugas = Petugas::where("user_id",($this->user_login)->id)->get();
+        $petugas = PetugasLayanan::where("user_id",($this->user_login)->id)->get();
         $sumber_rujukan=SumberRujukan::all();
         $agama = Agama::all();
         $provinsi = Provinsi::all();
@@ -215,7 +216,7 @@ class ResidensialController extends Controller
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
         $sub_child = $sub_child->whereIn("status_id",$this->status_usulan);
         if(($this->user_login)->id != 1){
-            $petugas   =Petugas::where("user_id",($this->user_login)->id)->first();
+            $petugas   =PetugasLayanan::where("user_id",($this->user_login)->id)->first();
             $sub_child = $sub_child->where("petugas_id",$petugas->id);
         }
         $sub_child = $sub_child->orderBy("laksa_ms_status.sort","ASC");
@@ -504,7 +505,7 @@ class ResidensialController extends Controller
             }
             // Panggil function generate_ba
             $baGenerated = $this->generate_ba($id);
-
+            
             // Jika generate_ba gagal, kembalikan respons gagal
             if (!$baGenerated) {
                 return response()->json([
@@ -767,7 +768,7 @@ class ResidensialController extends Controller
         Carbon::setLocale('id');
         #get data residensial
         $residensial=Residensial::where("id",$id)->first();
-        $petugas    =Petugas::where("id",$residensial->petugas_id)->first();
+        $petugas    =PetugasLayanan::where("id",$residensial->petugas_id)->first();
         $pengampu   =Pengampu::where("id",$residensial->pengampu_id)->first();
         $ppks       =Pasien::where("id",$residensial->pasien_id)->first();
 
@@ -870,7 +871,7 @@ class ResidensialController extends Controller
         
         #get data residensial
         $residensial=Residensial::where("id",$id)->first();
-        $petugas    =Petugas::where("id",$residensial->petugas_id)->first();
+        $petugas    =PetugasLayanan::where("id",$residensial->petugas_id)->first();
         $ppks       =Pasien::where("id",$residensial->pasien_id)->first();
         $perujuk    =Perujuk::where("id",$residensial->perujuk_id)->first();
         $kategori   =KategoriPPKS::where("id",$residensial->kategori_ppks_id)->first();

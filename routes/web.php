@@ -201,7 +201,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/petugas/store', [PetugasController::class, 'store'])->name('petugas.store');
     Route::get('/petugas/edit/{id}', [PetugasController::class, 'edit'])->name('petugas.edit');
     Route::post('/petugas/update', [PetugasController::class, 'update'])->name('petugas.update');
-    Route::delete('/petugas/delete/{id}', [PetugasController::class, 'destroy'])->name('petugas.delete');
+    Route::get('/petugas/delete/{id}', [PetugasController::class, 'destroy'])->name('petugas.delete');
 
     Route::get('/perujuk', [PerujukController::class, 'index'])->name('perujuk');
     Route::get('/perujuk/load-perujuk', [PerujukController::class, 'load_data'])->name('load_perujuk');

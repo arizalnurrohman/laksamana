@@ -18,13 +18,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">NIK: *</label>
-                <input type="text" class="form-control" name="pengampu_nik" placeholder="NIK"  value="{{isset($pengampu->nik) ? $pengampu->nik : ''}}"/>
+                <input type="text" class="form-control" name="pengampu_nik" placeholder="NIK"  value="{{isset($pengampu->nik) ? $pengampu->nik : ''}}" maxlength="18"/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label">NO KK: *</label>
-                <input type="text" class="form-control" name="pengampu_nokk" placeholder="NO KK."  value="{{isset($pengampu->nokk) ? $pengampu->nokk : ''}}"/>
+                <input type="text" class="form-control" name="pengampu_nokk" placeholder="NO KK."  value="{{isset($pengampu->nokk) ? $pengampu->nokk : ''}}" maxlength="18"/>
             </div>
         </div>
         <div class="col-md-6">

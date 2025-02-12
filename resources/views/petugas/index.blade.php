@@ -111,7 +111,7 @@
  
 @endsection
 @section('add-js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url('assets/js/sweetalert.js') }}"></script>
 <script>
     function load_this_data(){
         loadTabelData("list-data", "{{route('load_petugas')}}", ['No', 'NIP','Petugas','Aksi']);
@@ -197,7 +197,7 @@
             type: 'GET',
             success: function (data) {
                 $('#updateId').val(data.id);
-                $('#updateNIP').val(data.nip);
+                $('#updateNIP').val(data.nip_nik);
                 $('#updateNama').val(data.nama_petugas);
                 $('#updateKabupaptenKota').val(data.kabupaten_kota_id);
 

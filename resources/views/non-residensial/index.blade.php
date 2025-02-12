@@ -109,7 +109,7 @@
  
 @endsection
 @section('add-js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url('assets/js/sweetalert.js') }}"></script>
 <script>
     function load_this_data(){
         loadTabelData("list-data", "{{route('load_residensial')}}", ['No', 'Nama Pasien','Tgl Penerimaan','Sumber','Petugas','Aksi']);

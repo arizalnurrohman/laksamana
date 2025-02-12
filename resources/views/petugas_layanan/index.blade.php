@@ -132,7 +132,7 @@
  
 @endsection
 @section('add-js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url('assets/js/sweetalert.js') }}"></script>
 <script>
     function load_this_data(){
         loadTabelData("list-data", "{{route('load_petugaslayanan')}}", ['No', 'Petugas','Jabatan','Aksi']);
@@ -369,7 +369,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/petugas/delete/${id}`,
+                    url: `/petugas-layanan/delete/${id}`,
                     type: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
