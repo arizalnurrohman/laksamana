@@ -620,8 +620,8 @@ class RehabilitasiController extends Controller
         
         #get data residensial
         $residensial=Residensial::where("id",$rehabilitasi->residensial_id)->first();
-        $pendamping    =PendampingSosial::where("id",$residensial->petugas_id)->first();#pendamping sosial
-
+        $rehabilitasi=Rehabilitasi::where("residensial_id",$residensial->id)->first();
+        $pendamping    =PendampingSosial::where("id",$rehabilitasi->petugas_id)->first();#pendamping sosial
         $ppks       =Pasien::where("laksa_ms_ppks.id",$residensial->pasien_id);
         $ppks       =$ppks->select('laksa_ms_ppks.*','laksa_ms_provinsi.*','laksa_ms_kabupaten_kota.*','laksa_ms_kecamatan.*',"laksa_ms_ppks.id as pasien_id")
         ->leftJoin('laksa_ms_kabupaten_kota', 'laksa_ms_ppks.kota_id', '=', 'laksa_ms_kabupaten_kota.id')
