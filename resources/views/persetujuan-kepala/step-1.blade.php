@@ -11,7 +11,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-label" for="petugas_penerimaan">Petugas Penerimaan</label>
-                <input type="text" class="form-control" name="residense_petugas" value="{{$residensial->nama}}" />
+                <input type="text" class="form-control" name="residense_petugas" value="{{$residensial->nama_petugas}}" />
             </div>
         </div>
         <div class="col-md-6">
@@ -44,7 +44,7 @@
                 <input type="text" class="form-control" name="residense_rencana_terminasi" placeholder="Rencana Terminasi" value="{{date("d-m-Y",strtotime($residensial->rencana_tgl_terminasi))}}"/>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 d-none">
             <div class="form-group">
                 <label class="form-label">Nama Pengampu: *</label>
                 <input type="text" class="form-control" name="residense_pengampu" placeholder="Nama Pengampu" value="{{$residensial->nama_pengampu}}"/>
