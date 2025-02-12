@@ -112,7 +112,7 @@
                               </svg>                                                   
                          </div>
                          <div class="text-end">
-                            Gedung Asrama<br>&nbsp;
+                            Kamar<br>Terpakai
                                <h2 class="counter" style="visibility: visible;">{{number_format($nilai_total['gedungasrama'])}}</h2>
                          </div>
                       </div>
