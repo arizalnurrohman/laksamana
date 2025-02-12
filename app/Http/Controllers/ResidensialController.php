@@ -205,7 +205,7 @@ class ResidensialController extends Controller
     }
 
     public function load_residensial(){
-        $petugas   =Petugas::where("user_id",($this->user_login)->id)->first();
+        
         $sub_child = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas_layanan.*","laksa_ms_status.*");
         // $sub_child = $sub_child->orderby("laksa_tr_layanan.created_at","DESC");
         $sub_child = $sub_child->leftJoin('laksa_ms_petugas_layanan', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_petugas_layanan.id');
@@ -214,7 +214,10 @@ class ResidensialController extends Controller
         $sub_child = $sub_child->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $sub_child = $sub_child->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
         $sub_child = $sub_child->whereIn("status_id",$this->status_usulan);
-        $sub_child = $sub_child->where("petugas_id",$petugas->id);
+        if(($this->user_login)->id != 1){
+            $petugas   =Petugas::where("user_id",($this->user_login)->id)->first();
+            $sub_child = $sub_child->where("petugas_id",$petugas->id);
+        }
         $sub_child = $sub_child->orderBy("laksa_ms_status.sort","ASC");
         $sub_child = $sub_child->get();
         $data = array();
