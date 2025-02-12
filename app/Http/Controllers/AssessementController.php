@@ -26,10 +26,11 @@ use Illuminate\Http\Request;
 use App\Models\SumberRujukan;
 use App\Models\FormAssessment;
 use App\Models\KategoriPPKSSub;
+use App\Models\PendampingSosial;
 use App\Models\FormAssessmentSub;
 use App\Models\KomponenIntervensi;
+use Illuminate\Support\Facades\Auth;
 use App\Models\FormAssessmentFormValue;
-use App\Models\PendampingSosial;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class AssessementController extends Controller
@@ -37,8 +38,10 @@ class AssessementController extends Controller
     private $error;
     private $success;
     private $status_usulan;
+    private $user_login;
     function __construct()
     {
+        $this->user_login = Auth::user();
     //     $fix_roles      =array();
     //     $this->page_attribut  =getPageAttribute();
         
@@ -617,14 +620,14 @@ class AssessementController extends Controller
         $data_bsc = [
             'assessment_no'          => $ex_nomor_surat[0],
             'assessment_tgl'         =>Carbon::now()->translatedFormat('d F Y'), 
-            'assessment_nama'        =>"Nama Assessor",
-            'assessment_jabatan'     =>"Jabatan Assessor",
+            'assessment_nama'        =>($this->user_login)->name,
+            'assessment_jabatan'     =>"Pekerja Sosial",
 
             'ppks_provinsi'          =>$ppks->provinsi,
             'ppks_kabupaten'         =>$ppks->kabupaten_kota,
             'ppks_kecamatan'         =>$ppks->kecamatan,
             'ppks_kelurahan'         =>$ppks->kelurahan_desa_id,
-            'ppks_desa'              =>"Nama Desa",
+            'ppks_desa'              =>$ppks->kelurahan_desa_id,
             'ppks_domisili'          =>$ppks->domisili,
             'ppks_nama'              =>$ppks->nama_depan." ".$ppks->nama_belakang,
             'ppks_ttl'               =>$ppks->tmp_lahir.", ".date("d",strtotime($ppks->tgl_lahir))." Bulan ".date("Y"),
@@ -660,7 +663,7 @@ class AssessementController extends Controller
             'kategori_ppks'         =>$kategori->kategori,
             'tmp_catatan'           =>$assessment->tmp_catatan,
 
-            'assessor_nama'         =>isset($assesor->nama_petugas) ? $assesor->nama_petugas : 'Nama Petugas',
+            'assessor_nama'         =>($this->user_login)->name,
             'rekomendasi_catatan'   =>$assessment->rekomendasi_catatan,
 
             #KONDISI_PPKS
@@ -707,6 +710,12 @@ class AssessementController extends Controller
             'layanan_mulai'          =>Carbon::parse($residensial->tgl_penerimaan)->translatedFormat('d F Y'),
             'layanan_selesai'        =>Carbon::parse($residensial->rencana_tgl_terminasi)->translatedFormat('d F Y'),
             'layanan_kategori'       =>$kategori->kategori,
+
+            'permasalahan_ppks'      =>FormAssessmentFormValue::where("form_assessment_sub_id","=","3e100749-03bf-4fb5-9df3-7c031d584259")->where("assessment_id",$assessment->id)->first()->assessment_value,
+            'permasalahan_diterima'  =>FormAssessmentFormValue::where("form_assessment_sub_id","=","5a6af5f4-2dc8-432a-b9e3-6ad8e6eb4e5d")->where("assessment_id",$assessment->id)->first()->assessment_value,
+            'permasalahan_potensi'   =>FormAssessmentFormValue::where("form_assessment_sub_id","=","b80a7047-0bdb-4b86-b1c1-32399523ebb4")->where("assessment_id",$assessment->id)->first()->assessment_value,
+            'permasalahan_sumber'    =>FormAssessmentFormValue::where("form_assessment_sub_id","=","a01d6da8-a517-4dde-81c4-091e93978a92")->where("assessment_id",$assessment->id)->first()->assessment_value,
+            'permasalahan_komponen'  =>"-",
         ];
         
         $data=array_merge($data_bsc,$data_acc);
