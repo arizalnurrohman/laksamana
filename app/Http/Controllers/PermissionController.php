@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -46,11 +47,76 @@ class PermissionController extends Controller
         // $role = Role::findByName('admin'); // Ganti 'role_name' dengan nama role yang ingin dihapus
         // $role->delete();
         // exit;
+        #check has roles    
+        
+        // $admin = User::find(1);
+        // // Assign role
+        // $roleNames = Role::pluck('name')->toArray();
+        // $admin->syncRoles($roleNames);
+
+        // // Cek role yang dimiliki user
+        // return response()->json([
+        //     'user_roles' => $admin->getRoleNames() // Mengambil daftar role yang dimiliki user
+        // ]);
+        // exit;
+
+
+        // Ambil semua role yang ada di database
+        #SET ROLES ADMIN
+        // $assygn=$admin->syncRoles($roleNames);
+        $roles      = Role::all(); 
+        $admin      = User::find(1);
+        $roleNames  = []; // Array untuk menyimpan nama role
+        foreach ($roles as $role) {
+            $roleNames[] = $role->name; // Simpan nama role
+        }
+        print implode(",",$roleNames);
+        dd($roleNames);
+        $assygn=$admin->syncRoles($roleNames);
+        // if ($admin->hasRole('administrator')) {
+        //     return "User ini adalah admin";
+        // }else{
+        //     return "User ini bukan admin";
+        // }
         
 
-        $role = Role::all();
-        // dd($role);
-        return view('permission.index', compact('role'));
+        #set kepala
+        $kepala      = User::find(2);
+        $kepala->assignRole('kepala');
+
+
+        #SET ROLES ASSESSOR
+        $assesor1 = User::find(8); // Temukan user dengan ID 1
+        $assesor1->assignRole("assesor");
+        $assesor2 = User::find(9); // Temukan user dengan ID 1
+        $assesor2->assignRole("assesor");
+        $assesor3 = User::find(10); // Temukan user dengan ID 1
+        $assesor3->assignRole("assesor");
+
+        $petugas1 = User::find(4); 
+        $petugas1->assignRole("petugas");
+        $petugas2 = User::find(6); 
+        $petugas2->assignRole("petugas");
+        $petugas3 = User::find(8); 
+        $petugas3->assignRole("petugas");
+        $petugas4 = User::find(9); 
+        $petugas4->assignRole("petugas");
+        $petugas5 = User::find(10); 
+        $petugas5->assignRole("petugas");
+
+        for($x=11;$x<20;$x++){
+            $pendamping[$x] = User::find($x); 
+            $pendamping[$x]->assignRole("pendamping");
+        }
+
+        dd($roles);
+        return response()->json([
+            'message' => 'Semua role berhasil diberikan ke user!',
+            // 'user' => $user->name,
+            'roles' => $roleNames
+        ]);
+        // $user->assignRole(['admin', 'editor']); 
+        // return view('permission.index', compact('role'));
     }
 
     public function store(Request $request)

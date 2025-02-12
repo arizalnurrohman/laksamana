@@ -55,9 +55,9 @@
     <div class="col-sm-12 col-lg-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                    <h4 class="card-title">Form Residensial</h4>
-                </div>
+            <div class="header-title">
+                <h4 class="card-title">Form Residensial</h4>
+            </div>
             </div>
             <div class="card-body">
             <form id="form-wizard1" class="mt-3 text-center" action="{{route('residensial.store')}}"  method="POST" enctype="multipart/form-data">
@@ -111,21 +111,21 @@
                 </ul>
                 <!-- fieldsets -->
                 <fieldset>
-                    @include('residensial.step-1')
+                    {{-- @include('residensial.step-1') --}}
                     <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
                 </fieldset>
                 <fieldset>
-                    @include('residensial.step-2')
-                    <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
-                    <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
-                </fieldset>
-                <fieldset>
-                    @include('residensial.step-3')
+                    {{-- @include('residensial.step-2') --}}
                     <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
                 <fieldset>
-                    @include('residensial.step-4')
+                    {{-- @include('residensial.step-3') --}}
+                    <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
+                    <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
+                </fieldset>
+                <fieldset>
+                    {{-- @include('residensial.step-4') --}}
                     <button type="submit" name="next" class="btn btn-primary action-button float-end" value="Submit" >Submit</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>

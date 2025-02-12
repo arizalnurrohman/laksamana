@@ -48,22 +48,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="add{{ $activeMenu->access }}Form" action="{{ route("perujuk.store") }}" method="POST">
+                <form id="add{{ $activeMenu->access }}Form" action="{{ route("petugaslayanan.store") }}" method="POST">
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">NIP/NRP</label>
                         <input type="text" class="form-control" id="nip_nrp" name="nip_nrp" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nip_nrp" class="form-label">Nama Perujuk</label>
-                        <input type="text" class="form-control" id="nama_perujuk" name="nama_perujuk" required>
+                        <label for="nip_nrp" class="form-label">Nama Petugas</label>
+                        <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
                     </div>
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">Pangkat / Jabatan</label>
                         <input type="text" class="form-control" id="pangkat_jabatan" name="pangkat_jabatan" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nip_nrp" class="form-label">Instansi Perujuk</label>
-                        <input type="text" class="form-control" id="instansi" name="instansi" required>
+                        <label for="nip_nrp" class="form-label">Email Petugas</label>
+                        <input type="text" class="form-control" id="email_petugas" name="email_petugas" required>
                     </div>
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">Alamat Kantor</label>
@@ -74,7 +74,7 @@
                         <input type="text" class="form-control" id="telp_kantor" name="telp_kantor" required>
                     </div>
                     <div class="mb-3">
-                        <label for="JumlahKamar" class="form-label">no_hp</label>
+                        <label for="JumlahKamar" class="form-label">No HP</label>
                         <input type="text" class="form-control" id="no_hp" name="no_hp" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -93,23 +93,23 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="update{{ $activeMenu->access }}Form" action="{{ route("perujuk.update") }}" method="POST">
-                    <input type="hidden" name="perujuk_id">
+                <form id="update{{ $activeMenu->access }}Form" action="{{ route("petugaslayanan.update") }}" method="POST">
+                    <input type="hidden" name="petugas_id">
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">NIP/NRP</label>
                         <input type="text" class="form-control" id="nip_nrp" name="nip_nrp" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nip_nrp" class="form-label">Nama Perujuk</label>
-                        <input type="text" class="form-control" id="nama_perujuk" name="nama_perujuk" required>
+                        <label for="nip_nrp" class="form-label">Nama Petugas</label>
+                        <input type="text" class="form-control" id="nama_petugas" name="nama_petugas" required>
                     </div>
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">Pangkat / Jabatan</label>
                         <input type="text" class="form-control" id="pangkat_jabatan" name="pangkat_jabatan" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nip_nrp" class="form-label">Instansi Perujuk</label>
-                        <input type="text" class="form-control" id="instansi" name="instansi" required>
+                        <label for="nip_nrp" class="form-label">Email Petugas</label>
+                        <input type="text" class="form-control" id="email_petugas" name="email_petugas" required>
                     </div>
                     <div class="mb-3">
                         <label for="nip_nrp" class="form-label">Alamat Kantor</label>
@@ -120,7 +120,7 @@
                         <input type="text" class="form-control" id="telp_kantor" name="telp_kantor" required>
                     </div>
                     <div class="mb-3">
-                        <label for="JumlahKamar" class="form-label">no_hp</label>
+                        <label for="JumlahKamar" class="form-label">No HP</label>
                         <input type="text" class="form-control" id="no_hp" name="no_hp" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -147,7 +147,7 @@
             e.preventDefault();
 
             $.ajax({
-                url: '{{ route("perujuk.store") }}',
+                url: '{{ route("petugas.store") }}',
                 method: 'POST',
                 data:new FormData(this),
                 headers: {
@@ -204,7 +204,7 @@
                             container: 'swal-container'
                         }
                     }).then(function() {
-                        window.location = "{{ route('perujuk') }}";
+                        window.location = "{{ route('petugaslayanan') }}";
                     });
                   }else{
                     $(btnx).removeAttr("disabled");
@@ -273,7 +273,7 @@
                             container: 'swal-container'
                         }
                     }).then(function() {
-                        window.location = "{{ route('perujuk') }}";
+                        window.location = "{{ route('petugaslayanan') }}";
                     });
                   }else{
                     $(btnx).removeAttr("disabled");
@@ -315,7 +315,7 @@
 
     function update_form(id) {
         $.ajax({
-            url: `/perujuk/edit/${id}`,
+            url: `/petugas-layanan/edit/${id}`,
             type: 'GET',
             success: function (data) {
                 if($.isEmptyObject(data.errors)){
@@ -324,10 +324,10 @@
                     $("#update{{ $activeMenu->access }}Form [name=\"no_hp\"]").val(data.data.no_hp);
                     $("#update{{ $activeMenu->access }}Form [name=\"telp_kantor\"]").val(data.data.telp_kantor);
                     $("#update{{ $activeMenu->access }}Form [name=\"alamat_kantor\"]").val(data.data.alamat_kantor);
-                    $("#update{{ $activeMenu->access }}Form [name=\"instansi\"]").val(data.data.instansi_perujuk);
+                    $("#update{{ $activeMenu->access }}Form [name=\"instansi\"]").val(data.data.instansi_petugas);
                     $("#update{{ $activeMenu->access }}Form [name=\"pangkat_jabatan\"]").val(data.data.pangkat_jabatan);
-                    $("#update{{ $activeMenu->access }}Form [name=\"nama_perujuk\"]").val(data.data.nama_perujuk);
-                    $("#update{{ $activeMenu->access }}Form [name=\"perujuk_id\"]").val(data.data.id);
+                    $("#update{{ $activeMenu->access }}Form [name=\"nama_petugas\"]").val(data.data.nama_petugas);
+                    $("#update{{ $activeMenu->access }}Form [name=\"petugas_id\"]").val(data.data.id);
                     
                 }else{
                     Swal.fire({
@@ -369,7 +369,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/perujuk/delete/${id}`,
+                    url: `/petugas/delete/${id}`,
                     type: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

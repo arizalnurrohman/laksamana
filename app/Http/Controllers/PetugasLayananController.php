@@ -51,16 +51,18 @@ class PetugasLayananController extends Controller
         }
 
         if (!$this->error) {
+            
             $payload = [
                 'id'                => Str::uuid()->toString(),
-                'nama_perujuk'      => $request->nama_perujuk,
+                'nama_petugas'      => $request->nama_petugas,
                 'nip_nrp'           => $request->nip_nrp,
                 'pangkat_jabatan'   => $request->pangkat_jabatan,
-                'instansi_perujuk'  => $request->instansi,
+                'email_petugas'     => $request->email_petugas,
                 'alamat_kantor'     => $request->alamat_kantor,
                 'telp_kantor'       => $request->telp_kantor,
                 'no_hp'             => $request->no_hp,
             ];
+            
             // Simpan ke database
             if (PetugasLayanan::create($payload)) {
                 $this->success = true;
@@ -89,12 +91,12 @@ class PetugasLayananController extends Controller
     {
         $rules = [
             'nip_nrp'          => 'required',
-            'nama_perujuk'      => 'required',
+            'nama_petugas'      => 'required',
         ];
 
         $messages = [
             'nip_nrp.required'         => 'Kolom NIP wajib diisi.',
-            'nama_perujuk.required'     => 'Kolom Nama wajib diisi.',
+            'nama_petugas.required'     => 'Kolom Nama wajib diisi.',
         ];
 
         return array("RULE" => $rules, "MESSAGE" => $messages);
@@ -102,8 +104,8 @@ class PetugasLayananController extends Controller
 
     public function edit(Request $request)
     {
-        // $perujuk = PetugasLayanan::findOrFail($request->id);
-        // return response()->json($perujuk);
+        // $petugas = PetugasLayanan::findOrFail($request->id);
+        // return response()->json($petugas);
         $get_data   = PetugasLayanan::findOrFail($request->id);
         if($get_data){
             $return['success']  ='ok';
@@ -116,30 +118,31 @@ class PetugasLayananController extends Controller
 
     public function update(Request $request)
     {
+        
         $validator = \Validator::make($request->all(), $this->detail_rules()['RULE'],$this->detail_rules()['MESSAGE']);
         if ($validator->fails()){
             $this->error[]=($validator->errors()->all())[0];
         }else{
-            $perujuk = new PetugasLayanan;
-            if ($perujuk->where('id', $request->perujuk_id)->exists()) {
+            $petugas = new PetugasLayanan;
+            if ($petugas->where('id', $request->petugas_id)->exists()) {
                 
             }else{
                 $this->error[]="Data PetugasLayanan tidak ada";
             }
         }
         if(!($this->error)){
-            $perujuk = PetugasLayanan::where('id', $request->perujuk_id)->firstOrFail();
+            $petugas = PetugasLayanan::where('id', $request->petugas_id)->firstOrFail();
             $payload=[
-                'nama_perujuk'      => $request->nama_perujuk,
+                'nama_petugas'      => $request->nama_petugas,
                 'nip_nrp'           => $request->nip_nrp,
-                'pangkat_jabatan'   => $request->pangkat_jabatan,
-                'instansi_perujuk'  => $request->instansi,
+                'jabatan'           => $request->jabatan,
+                'email_petugas'     => $request->email_petugas,
                 'alamat_kantor'     => $request->alamat_kantor,
                 'telp_kantor'       => $request->telp_kantor,
                 'no_hp'             => $request->no_hp,
             ];
             
-            $update_model=PetugasLayanan::where('id', $request->perujuk_id)->update($payload);
+            $update_model=PetugasLayanan::where('id', $request->petugas_id)->update($payload);
             if ($update_model) {
                 $this->success=true;
             }
@@ -148,7 +151,7 @@ class PetugasLayananController extends Controller
             $response=[
                 'status'=>'success',
                 'message'=>"Update Data PetugasLayanan Berhasil",
-                'redirect'=>route('perujuk')
+                'redirect'=>route('petugas')
             ];
         }
         if($this->error){
@@ -161,14 +164,14 @@ class PetugasLayananController extends Controller
         exit;
         // $request->validate([
         //     'id' => 'required|exists:laksa_ms_gedung,id',
-        //     'nama_perujuk' => 'required|string|max:255',
+        //     'nama_petugas' => 'required|string|max:255',
         //     // 'status_gedung' =>'required',
         //     // 'jumlah_kamar'  =>'required'
         // ]);
 
-        // $perujuk = PetugasLayanan::findOrFail($request->id);
-        // $perujuk->update([
-        //     'nama_perujuk' => $request->nama_perujuk,
+        // $petugas = PetugasLayanan::findOrFail($request->id);
+        // $petugas->update([
+        //     'nama_petugas' => $request->nama_petugas,
         //     // 'status_gedung' =>$request->status_gedung,
         //     // 'jumlah_kamar'  =>$request->jumlah_kamar,
         // ]);
@@ -180,8 +183,8 @@ class PetugasLayananController extends Controller
     {
         try {
             // Cari dan hapus data
-            $perujuk = PetugasLayanan::findOrFail($id);
-            $perujuk->delete();
+            $petugas = PetugasLayanan::findOrFail($id);
+            $petugas->delete();
 
             return response()->json(['message' => 'Data deleted successfully!'], 200);
         } catch (\Exception $e) {
@@ -191,13 +194,13 @@ class PetugasLayananController extends Controller
 
     public function load_data()
     {
-        $perujuk = PetugasLayanan::orderby("nama_petugas","asc")->get();
+        $petugas = PetugasLayanan::orderby("nama_petugas","asc")->get();
         $no=0;
         $data=[];
-        foreach ($perujuk as $val) {
+        foreach ($petugas as $val) {
             $data[$no]['No']            =($no+1);
             $data[$no]['Petugas']       ="<strong>".$val->nip_nik."</strong><br>".$val->nama_petugas;
-            $data[$no]['Pangkat']       =$val->jabatan;
+            $data[$no]['Jabatan']       =$val->jabatan;
             $data[$no]['Aksi']          ='<div class="btn-group" role="group" aria-label="Group Aksi">
                                             <button class="btn btn-sm btn-icon btn-warning" Onclick="update_form(\''.$val->id.'\')">
                                                 <span class="btn-inner">

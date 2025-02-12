@@ -85,6 +85,12 @@ class ResidensialController extends Controller
 
         return view('residensial.create', compact('petugas','sumber_rujukan','agama','provinsi','kabupaten','kecamatan','pendidikan','kategori','pasien','gedung','pengampu','perujuk'));
     }
+
+    public function edit($id){
+        $residensial=Residensial::where("id","=",$id)->first();
+        $pasien = Pasien::where("id",$residensial->pasien_id)->first();
+        return view('residensial.edit', compact('residensial','pasien'));   
+    }
     public function store(Request $request)
     {
         // dd($request->all());
