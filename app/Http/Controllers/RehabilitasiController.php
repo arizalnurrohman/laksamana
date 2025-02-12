@@ -805,6 +805,10 @@ class RehabilitasiController extends Controller
                     'kedisiplinan' => 'cukup',
                     'ketekunan' => 'cukup',
                     'kreatifitas' => 'cukup'
+
+                    // 'kedisiplinan' => ['cukup', 'cukup', 'cukup'],
+                    // 'ketekunan' => ['cukup', 'cukup', 'cukup'],
+                    // 'kreatifitas' => ['cukup', 'cukup', 'cukup']
                 ],
                 'desc' => 'Cukup',
                 'catatan' => ''
