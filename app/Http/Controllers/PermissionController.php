@@ -70,8 +70,8 @@ class PermissionController extends Controller
         foreach ($roles as $role) {
             $roleNames[] = $role->name; // Simpan nama role
         }
-        print implode(",",$roleNames);
-        dd($roleNames);
+        #print implode(",",$roleNames);
+       
         $assygn=$admin->syncRoles($roleNames);
         // if ($admin->hasRole('administrator')) {
         //     return "User ini adalah admin";
@@ -109,7 +109,7 @@ class PermissionController extends Controller
             $pendamping[$x]->assignRole("pendamping");
         }
 
-        dd($roles);
+        // dd($roles);
         return response()->json([
             'message' => 'Semua role berhasil diberikan ke user!',
             // 'user' => $user->name,
