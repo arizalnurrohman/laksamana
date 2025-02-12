@@ -675,20 +675,7 @@ class RehabilitasiController extends Controller
             'layanan_kasus'          =>$kategori->kategori,
             'layanan_pendamping'     =>isset($pendamping->nama_petugas) ? $pendamping->nama_petugas : 'Nama Petugas',
         ];
-        $data_rehabilitasi['rehabilitasi']           =[
-            "2024"=>[
-                "jenis_nama"     =>"ibadah",
-                "nilai_disiplin" =>1,
-                "nilai_tekun"    =>2,
-                "nilai_kreatif"  =>3,
-            ],
-            "2025"=>[
-                "jenis_nama"     =>"ibadah",
-                "nilai_disiplin" =>2,
-                "nilai_tekun"    =>2,
-                "nilai_kreatif"  =>2,
-            ],
-        ];
+        
         $data=array_merge(array_merge($data_ppks,$data_nilaix));
        
         // dd($data);
@@ -696,15 +683,94 @@ class RehabilitasiController extends Controller
         
         // Mengganti placeholder di template dengan data
         $templateProcessor->setValues($data);
-        $rowIndex = 1;
-        foreach ($data_rehabilitasi['rehabilitasi'] as $tahun => $rehab) {
-            $templateProcessor->setValue("tahun#{$rowIndex}", $tahun);
+
+        /*
+        $data_rehabilitasi = [
+            ['tahun' => 2023, 'jenis_nama' => 'Terapi Musik', 'nilai_disiplin' => 85, 'nilai_tekun' => 90, 'nilai_kreatif' => 88],
+            ['tahun' => 2024, 'jenis_nama' => 'Kelas Seni', 'nilai_disiplin' => 80, 'nilai_tekun' => 85, 'nilai_kreatif' => 90],
+            ['tahun' => 2025, 'jenis_nama' => 'Terapi Drama', 'nilai_disiplin' => 88, 'nilai_tekun' => 87, 'nilai_kreatif' => 92]
+        ];
+        $templateProcessor->cloneRow('tahun', count($data_rehabilitasi));
+        foreach ($data_rehabilitasi as $index => $rehab) {
+            $rowIndex = $index + 1; // CloneRow menggunakan indeks mulai dari 1
+            $templateProcessor->setValue("tahun#{$rowIndex}", $rehab['tahun']);
             $templateProcessor->setValue("jenis_nama#{$rowIndex}", $rehab['jenis_nama']);
             $templateProcessor->setValue("nilai_disiplin#{$rowIndex}", $rehab['nilai_disiplin']);
             $templateProcessor->setValue("nilai_tekun#{$rowIndex}", $rehab['nilai_tekun']);
             $templateProcessor->setValue("nilai_kreatif#{$rowIndex}", $rehab['nilai_kreatif']);
-            $rowIndex++;
         }
+            */
+
+        $rehabilitasi_perkembangan=$this->get_perkembangan($rehabilitasi->id);
+        // dd($rehabilitasi_perkembangan);
+        $datax= [
+            [
+                'no' => 1,
+                'waktu' => 'MINGGU 1',
+                'komponen' => [
+                    ['nama' => 'Ibadah'],
+                    ['nama' => 'Piket Asrama'],
+                    ['nama' => 'Morning Meeting']
+                ],
+                'aspek' => [
+                    'kedisiplinan' => 'cukup',
+                    'ketekunan' => 'cukup',
+                    'kreatifitas' => 'cukup'
+                ],
+                'desc' => 'Cukup',
+                'catatan' => ''
+            ],
+            [
+                'no' => 2,
+                'waktu' => 'MINGGU 2',
+                'komponen' => [
+                    ['nama' => 'Ibadah'],
+                    ['nama' => 'Piket Asrama'],
+                    ['nama' => 'Morning Meeting']
+                ],
+                'aspek' => [
+                    'kedisiplinan' => 'cukup',
+                    'ketekunan' => 'cukup',
+                    'kreatifitas' => 'cukup'
+                ],
+                'desc' => 'Cukup',
+                'catatan' => ''
+            ]
+        ];
+        $templateProcessor->cloneRow('no', count($rehabilitasi_perkembangan));
+
+        // Looping untuk mengisi data
+        foreach ($rehabilitasi_perkembangan as $index => $item) {
+            $row = $index + 1;
+
+            $templateProcessor->setValue("no#{$row}", $item['no']);
+            $templateProcessor->setValue("waktu#{$row}", $item['waktu']);
+            $templateProcessor->setValue("dsc#{$row}", $item['desc']);
+            $templateProcessor->setValue("ktr#{$row}", $item['catatan']);
+
+            // Komponen Intervensi
+            $komponenText = "";
+            foreach ($item['komponen'] as $idx => $komponen) {
+                $komponenText .= ($idx + 1) . ". " . $komponen['nama'] . "\n";
+            }
+            $templateProcessor->setValue("komponen#{$row}", trim($komponenText));
+
+            // Aspek Kedisiplinan
+            $templateProcessor->setValue("nak#{$row}", $item['aspek']['kedisiplinan'] == 'kurang' ? '✔' : '');
+            $templateProcessor->setValue("nac#{$row}", $item['aspek']['kedisiplinan'] == 'cukup' ? '✔' : '');
+            $templateProcessor->setValue("nab#{$row}", $item['aspek']['kedisiplinan'] == 'baik' ? '✔' : '');
+
+            // Aspek Ketekunan
+            $templateProcessor->setValue("ntk#{$row}", $item['aspek']['ketekunan'] == 'kurang' ? '✔' : '');
+            $templateProcessor->setValue("ntc#{$row}", $item['aspek']['ketekunan'] == 'cukup' ? '✔' : '');
+            $templateProcessor->setValue("ntb#{$row}", $item['aspek']['ketekunan'] == 'baik' ? '✔' : '');
+
+            // Aspek Kreatifitas/Inisiatif
+            $templateProcessor->setValue("nkk#{$row}", $item['aspek']['kreatifitas'] == 'kurang' ? '✔' : '');
+            $templateProcessor->setValue("nkc#{$row}", $item['aspek']['kreatifitas'] == 'cukup' ? '✔' : '');
+            $templateProcessor->setValue("nkb#{$row}", $item['aspek']['kreatifitas'] == 'baik' ? '✔' : '');
+        }
+
         
         // Lokasi file output yang akan disimpan
         $outputPath = public_path('storage/rehabilitasi/'.$id.'.docx');
@@ -718,6 +784,36 @@ class RehabilitasiController extends Controller
         }else{
             return true;
         }
+    }
+
+    public function get_perkembangan($id){
+        $perkembangan=RehabilitasiPerkembangan::where("rehabilitasi_id",$id)->get();
+        $return=[];
+        $no=1;
+        foreach($perkembangan as $perkembanganx){
+            $perkembangan_nilai=RehabilitasiPerkembanganNilai::select("laksa_ms_komponen_perkembangan.komponen")->leftJoin('laksa_ms_komponen_perkembangan', 'laksa_tr_rehabilitasi_perkembangan_nilai.komponen_id', '=', 'laksa_ms_komponen_perkembangan.id')->where("rehabilitasi_perkembangan_id",$perkembanganx->id)->groupBy("laksa_ms_komponen_perkembangan.komponen")->orderBy("laksa_ms_komponen_perkembangan.sort","ASC")->get();
+            $nama_x=[];
+            foreach($perkembangan_nilai as $perkembangan_nilaix){
+                $nama_x[]['nama']=$perkembangan_nilaix->komponen;
+            }
+            // dd($nama_x);
+            $return[]=[
+                'no' => $no,
+                'waktu' => $perkembanganx->tgl_perkembangan,
+                'komponen' =>$nama_x,
+                'aspek' => [
+                    'kedisiplinan' => 'cukup',
+                    'ketekunan' => 'cukup',
+                    'kreatifitas' => 'cukup'
+                ],
+                'desc' => 'Cukup',
+                'catatan' => ''
+            ];
+            $no++;
+        }
+        // dd($return);
+
+        return $return;
     }
 
     public function generate_pdf_rehabilitasi($id){
