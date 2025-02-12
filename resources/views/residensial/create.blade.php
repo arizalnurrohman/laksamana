@@ -126,7 +126,7 @@
                 </fieldset>
                 <fieldset>
                     @include('residensial.step-4')
-                    <button type="submit" name="next" class="btn btn-primary action-button float-end" value="Submit" >Submit</button>
+                    <button type="submit" name="next" class="btn btn-primary action-button float-end btn-submit" value="Submit" >Submit</button>
                     <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
                 </fieldset>
             </form>

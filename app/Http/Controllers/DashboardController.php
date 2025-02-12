@@ -65,7 +65,7 @@ class DashboardController extends Controller
             "rehabilitasi"      =>Rehabilitasi::count(),#rehabilitasi
             "gedungasrama"      =>Residensial::where("gedung_id","!=",null)->count(),#Gedung::count(),#gedungasrama
             "intervensi"        =>Assessment::where("intervensi_komponen_yang_diberikan","!=",null)->count(),#intervensi
-            "persetujuan_kepala"=>Residensial::where("status_id","7918fc82-db8a-11ef-9f06-244bfebc0c45")->count(),#persetujuan_kepala
+            "persetujuan_kepala"=>Residensial::where("status_id","7078dbc5-db8a-11ef-9f06-244bfebc0c45")->count(),#persetujuan_kepala
             "assessment"        =>Residensial::where("status_id","23ac51ea-db8b-11ef-9f06-244bfebc0c45")->count(),#assessment
             "terminasi"         =>LaporanTerminasi::count(),#assessment
             
