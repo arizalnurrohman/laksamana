@@ -299,7 +299,7 @@ class AssessementController extends Controller
     function detail_rules(){
         $rules=[
             'residensial_id'            =>'required',
-            // "pengampu_nama" => 'required',
+            "pengampu_nama" => 'required',
             // "pengampu_nik" => 'required',
             // "pengampu_nokk" => 'required',
             // "pengampu_tmp_lahir" => 'required',
@@ -313,6 +313,7 @@ class AssessementController extends Controller
             // "pengampu_status_kawin" => 'required',
             // "pengampu_pekerjaan" => 'required',
             // "pengampu_pengeluaran_per_bulan" => 'required',
+            "layanan_manajer_kasus" =>'required',
             
         ];
         $messages=[
@@ -331,6 +332,7 @@ class AssessementController extends Controller
             "pengampu_status_kawin"                 => 'Kolom Status Kawin Pengampu Wajib Di isi',
             "pengampu_pekerjaan"                    => 'Kolom Pekerjaan Pengampu Wajib Di isi',
             "pengampu_pengeluaran_per_bulan"        => 'Kolom Pengeluaran per Bulan Pengampu Wajib Di isi',
+            "layanan_manajer_kasus.required"        => 'Kolom Manajer Kasus Wajib Di isi',
         ];
         return array("RULE"=>$rules,"MESSAGE"=>$messages);
     }
