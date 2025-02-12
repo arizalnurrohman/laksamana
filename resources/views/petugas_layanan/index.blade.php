@@ -26,7 +26,7 @@
                             <tr>
                                 <th width="25">No</th>
                                 <th>Petugas</th>
-                                <th>Pangkat</th>
+                                <th width="40">Jabatan</th>
                                 <th width="40">Aksi</th>
                             </tr>
                         </thead>
@@ -135,7 +135,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function load_this_data(){
-        loadTabelData("list-data", "{{route('load_petugaslayanan')}}", ['No', 'Petugas','Pangkat','Aksi']);
+        loadTabelData("list-data", "{{route('load_petugaslayanan')}}", ['No', 'Petugas','Jabatan','Aksi']);
     }
     $(document).ready(function () {
         load_this_data();
