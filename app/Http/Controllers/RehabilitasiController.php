@@ -700,8 +700,6 @@ class RehabilitasiController extends Controller
             $templateProcessor->setValue("nilai_kreatif#{$rowIndex}", $rehab['nilai_kreatif']);
         }
             */
-
-        $rehabilitasi_perkembangan=$this->get_perkembangan($rehabilitasi->id);
         // dd($rehabilitasi_perkembangan);
         $datax= [
             [
@@ -737,6 +735,9 @@ class RehabilitasiController extends Controller
                 'catatan' => ''
             ]
         ];
+
+        $rehabilitasi_perkembangan=$this->get_perkembangan($rehabilitasi->id);
+        
         $templateProcessor->cloneRow('no', count($rehabilitasi_perkembangan));
 
         // Looping untuk mengisi data
@@ -749,12 +750,46 @@ class RehabilitasiController extends Controller
             $templateProcessor->setValue("ktr#{$row}", $item['catatan']);
 
             // Komponen Intervensi
+            $checkText['nak'] ="";
+            $checkText['nac'] ="";
+            $checkText['nab'] ="";
+
+            $checkText['ntk'] ="";
+            $checkText['ntc'] ="";
+            $checkText['ntb'] ="";
+
+            $checkText['nkk'] ="";
+            $checkText['nkc'] ="";
+            $checkText['nkb'] ="";
             $komponenText = "";
             foreach ($item['komponen'] as $idx => $komponen) {
                 $komponenText .= ($idx + 1) . ". " . $komponen['nama'] . "\n";
+                $checkText['nak'] .= "✔\n";
+                $checkText['nac'] .= "\n";
+                $checkText['nab'] .= "\n";
+
+                $checkText['ntk'] .= "\n";
+                $checkText['ntc'] .= "\n";
+                $checkText['ntb'] .= "✔\n";
+
+                $checkText['nkk'] .= "\n";
+                $checkText['nkc'] .= "✔\n";
+                $checkText['nkb'] .= "\n";
             }
             $templateProcessor->setValue("komponen#{$row}", trim($komponenText));
 
+            $templateProcessor->setValue("nak#{$row}", trim($checkText['nak']));
+            $templateProcessor->setValue("nac#{$row}", trim($checkText['nac']));
+            $templateProcessor->setValue("nab#{$row}", trim($checkText['nab']));
+
+            $templateProcessor->setValue("ntk#{$row}", trim($checkText['ntk']));
+            $templateProcessor->setValue("ntc#{$row}", trim($checkText['ntc']));
+            $templateProcessor->setValue("ntb#{$row}", trim($checkText['ntb']));
+
+            $templateProcessor->setValue("nkk#{$row}", trim($checkText['nkk']));
+            $templateProcessor->setValue("nkc#{$row}", trim($checkText['nkc']));
+            $templateProcessor->setValue("nkb#{$row}", trim($checkText['nkb']));
+            /*
             // Aspek Kedisiplinan
             $templateProcessor->setValue("nak#{$row}", $item['aspek']['kedisiplinan'] == 'kurang' ? '✔' : '');
             $templateProcessor->setValue("nac#{$row}", $item['aspek']['kedisiplinan'] == 'cukup' ? '✔' : '');
@@ -769,6 +804,7 @@ class RehabilitasiController extends Controller
             $templateProcessor->setValue("nkk#{$row}", $item['aspek']['kreatifitas'] == 'kurang' ? '✔' : '');
             $templateProcessor->setValue("nkc#{$row}", $item['aspek']['kreatifitas'] == 'cukup' ? '✔' : '');
             $templateProcessor->setValue("nkb#{$row}", $item['aspek']['kreatifitas'] == 'baik' ? '✔' : '');
+            */
         }
 
         
@@ -787,7 +823,7 @@ class RehabilitasiController extends Controller
     }
 
     public function get_perkembangan($id){
-        $perkembangan=RehabilitasiPerkembangan::where("rehabilitasi_id",$id)->get();
+        $perkembangan=RehabilitasiPerkembangan::where("rehabilitasi_id",$id)->orderBy("tgl_perkembangan","ASC")->get();
         $return=[];
         $no=1;
         foreach($perkembangan as $perkembanganx){
@@ -799,7 +835,7 @@ class RehabilitasiController extends Controller
             // dd($nama_x);
             $return[]=[
                 'no' => $no,
-                'waktu' => $perkembanganx->tgl_perkembangan,
+                'waktu' => date("d m Y",strtotime($perkembanganx->tgl_perkembangan)),
                 'komponen' =>$nama_x,
                 'aspek' => [
                     'kedisiplinan' => 'cukup',
