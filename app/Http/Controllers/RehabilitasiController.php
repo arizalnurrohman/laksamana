@@ -450,7 +450,7 @@ class RehabilitasiController extends Controller
     
     public function destroy($id)
     {
-        // dd($id);
+        dd($id);
         try {
             // Cari dan hapus data
             $perkembangan   = RehabilitasiPerkembangan::findOrFail($id);
@@ -469,7 +469,7 @@ class RehabilitasiController extends Controller
                 
                 return response()->json(['message' => 'Data deleted successfully!'], 200);
             } else {
-                return response()->json(['message' => 'Failed to delete data.'], 500);
+                return response()->json(['message' => 'Failed to delete data.x'], 500);
             }
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to delete data.'], 500);
@@ -776,17 +776,17 @@ class RehabilitasiController extends Controller
                 // $checkText['nkc'] .= "✔\n";
                 // $checkText['nkb'] .= "\n";
 
-                $item['perkembangan'][$komponen['nama']]['Kedisiplinan'] == 1 ? $checkText['nak'] .= "✔\n" : $checkText['nak'] .= "\n";
-                $item['perkembangan'][$komponen['nama']]['Kedisiplinan'] == 2 ? $checkText['nac'] .= "✔\n" : $checkText['nac'] .= "\n";
-                $item['perkembangan'][$komponen['nama']]['Kedisiplinan'] == 3 ? $checkText['nab'] .= "✔\n" : $checkText['nab'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce00ea-dcbb-11ef-beef-244bfebc0c45'] == 1 ? $checkText['nak'] .= "✔\n" : $checkText['nak'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce00ea-dcbb-11ef-beef-244bfebc0c45'] == 2 ? $checkText['nac'] .= "✔\n" : $checkText['nac'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce00ea-dcbb-11ef-beef-244bfebc0c45'] == 3 ? $checkText['nab'] .= "✔\n" : $checkText['nab'] .= "\n";
 
-                $item['perkembangan'][$komponen['nama']]['Ketekunan'] == 1 ? $checkText['ntk'] .= "✔\n" : $checkText['ntk'] .= "\n";
-                $item['perkembangan'][$komponen['nama']]['Ketekunan'] == 2 ? $checkText['ntc'] .= "✔\n" : $checkText['ntc'] .= "\n";
-                $item['perkembangan'][$komponen['nama']]['Ketekunan'] == 3 ? $checkText['ntb'] .= "✔\n" : $checkText['ntb'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce0997-dcbb-11ef-beef-244bfebc0c45'] == 1 ? $checkText['ntk'] .= "✔\n" : $checkText['ntk'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce0997-dcbb-11ef-beef-244bfebc0c45'] == 2 ? $checkText['ntc'] .= "✔\n" : $checkText['ntc'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce0997-dcbb-11ef-beef-244bfebc0c45'] == 3 ? $checkText['ntb'] .= "✔\n" : $checkText['ntb'] .= "\n";
 
-                $item['perkembangan'][$komponen['nama']]['Kreatifiitas'] == 1 ? $checkText['nkk'] .= "✔\n" : $checkText['nkk'] .= "\n";
-                $item['perkembangan'][$komponen['nama']]['Kreatifiitas'] == 2 ? $checkText['nkc'] .= "✔\n" : $checkText['nkc'] .= "\n";
-                $item['perkembangan'][$komponen['nama']]['Kreatifiitas'] == 3 ? $checkText['nkb'] .= "✔\n" : $checkText['nkb'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce12f6-dcbb-11ef-beef-244bfebc0c45'] == 1 ? $checkText['nkk'] .= "✔\n" : $checkText['nkk'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce12f6-dcbb-11ef-beef-244bfebc0c45'] == 2 ? $checkText['nkc'] .= "✔\n" : $checkText['nkc'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['e7ce12f6-dcbb-11ef-beef-244bfebc0c45'] == 3 ? $checkText['nkb'] .= "✔\n" : $checkText['nkb'] .= "\n";
 
                 
             }
@@ -854,7 +854,7 @@ class RehabilitasiController extends Controller
                                                                      ->get();
             
             foreach($perkembangan_nilai_value as $pkn){
-                $aspek_nilai[$pkn->komponen][$pkn->aspek]=$pkn->komponen_aspek_nilai;
+                $aspek_nilai[$pkn->komponen][$pkn->aspek_id]=$pkn->komponen_aspek_nilai;
             }
             
             $return[]=[
@@ -871,7 +871,7 @@ class RehabilitasiController extends Controller
                     // 'kreatifitas' => ['cukup', 'cukup', 'cukup']
                 ],
                 'perkembangan'=>$aspek_nilai,
-                'desc' => 'Cukup',
+                'desc' => '',
                 'catatan' => ''
             ];
             $no++;
