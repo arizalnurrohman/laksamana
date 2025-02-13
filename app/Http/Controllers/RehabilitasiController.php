@@ -764,17 +764,31 @@ class RehabilitasiController extends Controller
             $komponenText = "";
             foreach ($item['komponen'] as $idx => $komponen) {
                 $komponenText .= ($idx + 1) . ". " . $komponen['nama'] . "\n";
-                $checkText['nak'] .= "✔\n";
-                $checkText['nac'] .= "\n";
-                $checkText['nab'] .= "\n";
+                // $checkText['nak'] .= "✔\n";
+                // $checkText['nac'] .= "\n";
+                // $checkText['nab'] .= "\n";
 
-                $checkText['ntk'] .= "\n";
-                $checkText['ntc'] .= "\n";
-                $checkText['ntb'] .= "✔\n";
+                // $checkText['ntk'] .= "\n";
+                // $checkText['ntc'] .= "\n";
+                // $checkText['ntb'] .= "✔\n";
 
-                $checkText['nkk'] .= "\n";
-                $checkText['nkc'] .= "✔\n";
-                $checkText['nkb'] .= "\n";
+                // $checkText['nkk'] .= "\n";
+                // $checkText['nkc'] .= "✔\n";
+                // $checkText['nkb'] .= "\n";
+
+                $item['perkembangan'][$komponen['nama']]['Kedisiplinan'] == 1 ? $checkText['nak'] .= "✔\n" : $checkText['nak'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['Kedisiplinan'] == 2 ? $checkText['nac'] .= "✔\n" : $checkText['nac'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['Kedisiplinan'] == 3 ? $checkText['nab'] .= "✔\n" : $checkText['nab'] .= "\n";
+
+                $item['perkembangan'][$komponen['nama']]['Ketekunan'] == 1 ? $checkText['ntk'] .= "✔\n" : $checkText['ntk'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['Ketekunan'] == 2 ? $checkText['ntc'] .= "✔\n" : $checkText['ntc'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['Ketekunan'] == 3 ? $checkText['ntb'] .= "✔\n" : $checkText['ntb'] .= "\n";
+
+                $item['perkembangan'][$komponen['nama']]['Kreatifiitas'] == 1 ? $checkText['nkk'] .= "✔\n" : $checkText['nkk'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['Kreatifiitas'] == 2 ? $checkText['nkc'] .= "✔\n" : $checkText['nkc'] .= "\n";
+                $item['perkembangan'][$komponen['nama']]['Kreatifiitas'] == 3 ? $checkText['nkb'] .= "✔\n" : $checkText['nkb'] .= "\n";
+
+                
             }
             $templateProcessor->setValue("komponen#{$row}", trim($komponenText));
 
@@ -826,13 +840,23 @@ class RehabilitasiController extends Controller
         $perkembangan=RehabilitasiPerkembangan::where("rehabilitasi_id",$id)->orderBy("tgl_perkembangan","ASC")->get();
         $return=[];
         $no=1;
+        $aspek_nilai=[];
         foreach($perkembangan as $perkembanganx){
             $perkembangan_nilai=RehabilitasiPerkembanganNilai::select("laksa_ms_komponen_perkembangan.komponen")->leftJoin('laksa_ms_komponen_perkembangan', 'laksa_tr_rehabilitasi_perkembangan_nilai.komponen_id', '=', 'laksa_ms_komponen_perkembangan.id')->where("rehabilitasi_perkembangan_id",$perkembanganx->id)->groupBy("laksa_ms_komponen_perkembangan.komponen")->orderBy("laksa_ms_komponen_perkembangan.sort","ASC")->get();
             $nama_x=[];
             foreach($perkembangan_nilai as $perkembangan_nilaix){
                 $nama_x[]['nama']=$perkembangan_nilaix->komponen;
             }
-            // dd($nama_x);
+            $perkembangan_nilai_value=RehabilitasiPerkembanganNilai::leftJoin('laksa_ms_komponen_perkembangan', 'laksa_tr_rehabilitasi_perkembangan_nilai.komponen_id', '=', 'laksa_ms_komponen_perkembangan.id')
+                                                                     ->leftJoin('laksa_ms_aspek', 'laksa_tr_rehabilitasi_perkembangan_nilai.aspek_id', '=', 'laksa_ms_aspek.id')
+                                                                     ->where("rehabilitasi_perkembangan_id",$perkembanganx->id)
+                                                                     ->orderBy("laksa_ms_komponen_perkembangan.sort","ASC")
+                                                                     ->get();
+            
+            foreach($perkembangan_nilai_value as $pkn){
+                $aspek_nilai[$pkn->komponen][$pkn->aspek]=$pkn->komponen_aspek_nilai;
+            }
+            
             $return[]=[
                 'no' => $no,
                 'waktu' => date("d m Y",strtotime($perkembanganx->tgl_perkembangan)),
@@ -846,11 +870,13 @@ class RehabilitasiController extends Controller
                     // 'ketekunan' => ['cukup', 'cukup', 'cukup'],
                     // 'kreatifitas' => ['cukup', 'cukup', 'cukup']
                 ],
+                'perkembangan'=>$aspek_nilai,
                 'desc' => 'Cukup',
                 'catatan' => ''
             ];
             $no++;
         }
+        // dd($aspek_nilai);
         // dd($return);
 
         return $return;
