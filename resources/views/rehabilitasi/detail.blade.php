@@ -344,7 +344,7 @@
                                         <label class="form-label">Tanggal Perkembangan: *</label>
                                         <input type="date" class="form-control" name="perkembangan_tanggal" placeholder="Tanggal Perkembangan" />
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group d-none">
                                         <label class="form-label" for="kategori_ppks">Foto Perkembangan</label>
                                         <div class="custom-dropzone" onclick="document.getElementById('fotoInput').click();">
                                             <p class="text-secondary">Drag & drop files here or click to select files</p>
@@ -352,7 +352,7 @@
                                         </div>
                                         <div class="file-list" id="fileListFoto"></div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group d-none">
                                         <label class="form-label" for="kategori_ppks">Upload File</label>
                                         <div class="custom-dropzone" onclick="document.getElementById('fileInput').click();">
                                             <p class="text-secondary">Drag & drop files here or click to select files</p>
@@ -433,7 +433,7 @@
                                         <label class="form-label">Tanggal Perkembangan: *</label>
                                         <input type="date" class="form-control" name="perkembangan_tanggal" placeholder="Tanggal Perkembangan" id="edit_perkembangan_tanggal" />
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group d-none">
                                         <label class="form-label" for="kategori_ppks">Foto Perkembangan</label>
                                         <img src="" id="edit_perkembangan_foto" width="100%">
                                         <div class="custom-dropzone" onclick="document.getElementById('fotoInput').click();">
@@ -442,7 +442,7 @@
                                         </div>
                                         <div class="file-list" id="edit_fileListFoto"></div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group d-none">
                                         <label class="form-label" for="kategori_ppks">Upload File</label>
                                         <div class="row edit_perkembangan_file d-none">
                                             <div class="form-group col-md-12">
