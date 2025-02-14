@@ -561,11 +561,11 @@ class RehabilitasiController extends Controller
         }
 
         foreach ($rata_rata as $key => $value) {
-            if ($value >= 1 && $value < 2) {
+            if ($value >= 1 && $value <= 1.6) {
                 $kategori[$key] = "Kurang";
-            } elseif ($value >= 2 && $value < 3) {
+            } elseif ($value >= 1.7 && $value < 2.3) {
                 $kategori[$key] = "Cukup";
-            } elseif ($value == 3) {
+            } elseif ($value >= 1.4 && $value <=3) {
                 $kategori[$key] = "Baik";
             } else {
                 $kategori[$key] = "Tidak Diketahui";
