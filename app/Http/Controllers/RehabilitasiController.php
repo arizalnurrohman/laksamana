@@ -832,7 +832,7 @@ class RehabilitasiController extends Controller
         $no=1;
         $aspek_nilai=[];
         foreach($perkembangan as $perkembanganx){
-            $perkembangan_nilai=RehabilitasiPerkembanganNilai::select("laksa_ms_komponen_perkembangan.komponen")->leftJoin('laksa_ms_komponen_perkembangan', 'laksa_tr_rehabilitasi_perkembangan_nilai.komponen_id', '=', 'laksa_ms_komponen_perkembangan.id')->where("rehabilitasi_perkembangan_id",$perkembanganx->id)->groupBy("laksa_ms_komponen_perkembangan.komponen")->orderBy("laksa_ms_komponen_perkembangan.sort","ASC")->get();
+            $perkembangan_nilai=RehabilitasiPerkembanganNilai::select("laksa_ms_komponen_perkembangan.komponen")->leftJoin('laksa_ms_komponen_perkembangan', 'laksa_tr_rehabilitasi_perkembangan_nilai.komponen_id', '=', 'laksa_ms_komponen_perkembangan.id')->where("rehabilitasi_perkembangan_id",$perkembanganx->id)->groupBy("laksa_ms_komponen_perkembangan.komponen")->groupBy("laksa_ms_komponen_perkembangan.sort")->orderBy("laksa_ms_komponen_perkembangan.sort","ASC")->get();
             $nama_x=[];
             foreach($perkembangan_nilai as $perkembangan_nilaix){
                 $nama_x[]['nama']=$perkembangan_nilaix->komponen;
