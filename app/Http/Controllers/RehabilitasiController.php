@@ -862,7 +862,7 @@ class RehabilitasiController extends Controller
                 ],
                 'perkembangan'=>$aspek_nilai,
                 'desc' => '',
-                'catatan' => ''
+                'catatan' => $perkembanganx->catatan_perkembangan
             ];
             $no++;
         }
