@@ -153,10 +153,10 @@ class PersetujuanKepalaController extends Controller
     }
 
     public function load_persetujuan_kepala(){
-        $residensial = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_pendamping_sosial.*","laksa_ms_pegawai.*","laksa_ms_status.*");
+        $residensial = Residensial::select("laksa_tr_layanan.id as residensial_id","laksa_tr_layanan.*","laksa_ms_ppks.*","laksa_ms_sumber_rujukan.*","laksa_ms_petugas_layanan.*","laksa_ms_status.*");
         $residensial = $residensial->orderby("laksa_tr_layanan.created_at","DESC");
-        $residensial = $residensial->leftJoin('laksa_ms_pendamping_sosial', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_pendamping_sosial.id');
-        $residensial = $residensial->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
+        $residensial = $residensial->leftJoin('laksa_ms_petugas_layanan', 'laksa_tr_layanan.petugas_id', '=', 'laksa_ms_petugas_layanan.id');
+        // $residensial = $residensial->leftJoin('laksa_ms_pegawai', 'laksa_ms_pendamping_sosial.pegawai_id', '=', 'laksa_ms_pegawai.id');
         $residensial = $residensial->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $residensial = $residensial->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
         $residensial = $residensial->leftJoin('laksa_ms_status', 'laksa_tr_layanan.status_id', '=', 'laksa_ms_status.id');
@@ -199,7 +199,7 @@ class PersetujuanKepalaController extends Controller
             $data[$no]['Nama PPKS']       =$val->nama_depan.' '.$val->nama_belakang.'<br><span class="badge rounded-pill bg-warning">'.$val->status.'</span>';
             $data[$no]['Tgl Penerimaan']    =date("d-m-Y",strtotime($val->tgl_penerimaan));
             $data[$no]['Sumber']            =$val->sumber;
-            $data[$no]['Petugas']           =$val->nama;
+            $data[$no]['Petugas']           =$val->nama_petugas;
             $data[$no]['Aksi']              ='<div class="btn-group" role="group" aria-label="Group Aksi">
                                                 '.$tombol_setuju_kepala.'
                                                 '.$tombol_setuju_reviu.'

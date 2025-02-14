@@ -912,7 +912,7 @@ class ResidensialController extends Controller
 
             'petugas_nama'           =>$petugas->nama_petugas,
             'petugas_nik'            =>$petugas->nip_nik,
-            'petugas_jabatan'        =>$petugas->pangkat_jabatan,
+            'petugas_jabatan'        =>$petugas->jabatan,
             'petugas_alamat_kantor'  =>$petugas->alamat_kantor,
             'petugas_telp_kantor'    =>$petugas->telp_kantor,
 
