@@ -565,7 +565,7 @@ class RehabilitasiController extends Controller
                 $kategori[$key] = "Kurang";
             } elseif ($value >= 1.7 && $value < 2.3) {
                 $kategori[$key] = "Cukup";
-            } elseif ($value >= 1.4 && $value <=3) {
+            } elseif ($value >= 2.4 && $value <=3) {
                 $kategori[$key] = "Baik";
             } else {
                 $kategori[$key] = "Tidak Diketahui";
