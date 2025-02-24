@@ -85,49 +85,43 @@ class LaporanPenerimaanPPKSController extends Controller
         $tahun   =$request->tahun ? $request->tahun :date("Y");
 
         $selisih=$bln_akhr-$bln_awal;
-        
-        
 
         $kategori=KategoriPPKS::orderBy("sort","ASC");
         $kategori=$kategori->select("kategori","id");
-        // for($x=0;$x<=$selisih;$x++){
-        //     $kategori=$kategori->addSelect([
-        //         date("F",strtotime(date($tahun."-".($x+1)."-01"))) => Residensial::selectRaw('COUNT(*)')
-        //             ->whereColumn('kategori_ppks_id', '=', 'laksa_ms_kategori_ppks.id')
-        //             ->whereRaw('MONTH(tgl_penerimaan) = ?', [$x + 1])
-        //             ->whereRaw('YEAR(tgl_penerimaan) = ?', [$tahun])
-        //             ->take(1)
-        //     ]);
-        // }
         $kategori=$kategori->get();
         foreach($kategori as $cat){
             $cat->bulan=$this->getPelayanan($cat->id,$bln_awal,$bln_akhr,$tahun,$selisih);
         }
+        // dd($kategori);
         $filename = 'laporan_penerimaan_ppks_' . date('Y_m_d_H_i_s') . '.xls';
-        // header("Content-Type: application/vnd-ms-excel");
-        // header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=$filename");
 
         // Mulai output HTML
         echo "<table border='1'>";
         $no=1;
+        $total_per_bulan=[];
+        echo "Laporan Penerimaan PPKS Perbulan";
+        echo "<br>";
         echo '<thead>
                 <tr>
                     <th width="30" style="vertical-align:middle">NO</th>
                     <th style="text-align:left">Kategori PPKS</th>';
-                    for($x=0;$x<=$selisih;$x++){
+                    for($x=$bln_awal;$x<=$bln_akhr;$x++){
+                        $total_per_bulan[$x]=0;
                     echo '<th style="text-align:left">'.date("F",strtotime(date($tahun."-".($x+1)."-01"))).'</th>';
                     }
                     echo '<th width="5%" style="vertical-align:middle">Total</th>
                 </tr>
             <thead/>';
             echo "<tbody>";
-            $total_per_bulan=[];    
+            // exit;
             foreach ($kategori as $row) {
                 echo "<tr>";
                 echo "<td>".$no++."</td>";
                 echo '<td style="text-align:left">'.$row->kategori.'</td>'; // Ganti </th> menjadi </td>
                 $jumlah_per_kategori=0;
-                $angka=0;
+                $angka=$bln_awal;
                 foreach ($row->bulan as $x => $bulanx) {
                     $jumlah_per_kategori=$jumlah_per_kategori + $bulanx;
                     $total_per_bulan[$angka]=$total_per_bulan[$angka] + $bulanx;
@@ -140,22 +134,22 @@ class LaporanPenerimaanPPKSController extends Controller
             echo "<tr>";
                 echo "<td>&nbsp;</td>";
                 echo "<td>Grand Total</td>";
-                for($x=0;$x<=$selisih;$x++){
-                    echo '<th style="text-align:left">-</th>';
+                for($x=$bln_awal;$x<=$bln_akhr;$x++){
+                    echo '<th style="text-align:left">'.$total_per_bulan[$x].'</th>';
                 }
-                echo "<td>&nbsp;</td>";
+                echo "<td>".array_sum($total_per_bulan)."</td>";
             echo "</tr>";
             echo "</tbody>";
             
         echo "</table>";
-        print "<pre>";
-        print_r($total_per_bulan);
+        // print "<pre>";
+        // print_r($total_per_bulan);
 
         exit;
     }
 
     public function getPelayanan($kategori,$bulan_awal,$bulan_akhir,$tahun,$selisih){
-        for($x=0;$x<=$selisih;$x++){
+        for($x=$bulan_awal;$x<=$bulan_akhir;$x++){
             $pelayanan[date("F",strtotime(date($tahun."-".($x+1)."-01")))]=Residensial::
                     where('kategori_ppks_id', '=', $kategori)
                     ->whereRaw('MONTH(tgl_penerimaan) = ?', [$x+1])
