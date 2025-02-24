@@ -57,25 +57,19 @@ class LaporanPenerimaanPPKSController extends Controller
         // dd($request->all());
         $bln_awal=$request->bulan_awal ? $request->bulan_awal : date("m");
         $bln_akhr=$request->bulan_akhir ? $request->bulan_akhir : date("m");
-        $tahun   =date("Y");
+        $tahun   =$request->tahun ? $request->tahun :date("Y");
 
         $selisih=$bln_akhr-$bln_awal;
 
         $kategori=KategoriPPKS::orderBy("sort","ASC");
-        $kategori=$kategori->select("kategori");
-        for($x=0;$x<=$selisih;$x++){
-            $kategori=$kategori->addSelect([
-                date("M",strtotime(date($tahun."-".($x+1)."-01"))) => Residensial::selectRaw('COUNT(*)')
-                    ->whereColumn('kategori_ppks_id', '=', 'laksa_ms_kategori_ppks.id')
-                    ->whereRaw('MONTH(tgl_penerimaan) = ?', [$x + 1])
-                    ->whereRaw('YEAR(tgl_penerimaan) = ?', [$tahun])
-                    ->take(1)
-            ]);
-        }
+        $kategori=$kategori->select("kategori","id");
         $kategori=$kategori->get();
+        foreach($kategori as $cat){
+            $cat->bulan=$this->getPelayanan($cat->id,$bln_awal,$bln_akhr,$tahun,$selisih);
+        }
         // dd($kategori);
         $data=$kategori;
-        return view('laporan_penerimaan_ppks.index',\compact('data'))->with('no', 1);
+        return view('laporan_penerimaan_ppks.index',\compact('data','bln_awal','bln_akhr','tahun'))->with('no', 1);
     }
 
     public function download_excel(Request $request){

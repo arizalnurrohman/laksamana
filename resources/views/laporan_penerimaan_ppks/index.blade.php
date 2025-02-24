@@ -53,19 +53,46 @@
                             <tr>
                                 <th width="25">No</th>
                                 <th>Kategori PPKS</th>
-                                <th width="40">{{date("M")}}</th>
+                                @php $total_per_bulan = []; @endphp
+                                @for($x = $bln_awal; $x <= $bln_akhr; $x++)
+                                    @php $total_per_bulan[$x] = 0; @endphp
+                                    <th width="40">{{ date("F", strtotime("$tahun-$x-01")) }}</th>
+                                @endfor
                                 <th width="40">Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($data as $dt)
                                 <tr>
-                                    <td>{{$no++}}</td>
-                                    <td>{{$dt->kategori}}</td>
-                                    <td>{{$no}}</td>
-                                    <td>{{$no}}</td>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $dt->kategori }}</td>
+                                
+                                    @php 
+                                        $jumlah_per_kategori = 0;
+                                        $angka = $bln_awal;
+                                    @endphp
+                                
+                                    @foreach ($dt->bulan as $x => $bulanx)
+                                        @php
+                                            $jumlah_per_kategori += $bulanx;
+                                            $total_per_bulan[$angka] = ($total_per_bulan[$angka] ?? 0) + $bulanx;
+                                            $angka++;
+                                        @endphp
+                                        <td style="text-align:left">{{ $bulanx }}</td> 
+                                    @endforeach
+                                
+                                    <td>{{ $jumlah_per_kategori }}</td>
                                 </tr>
+                            
                             @endforeach
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>Grand Total</td>
+                                @for($x = $bln_awal; $x <= $bln_akhr; $x++)
+                                    <th width="40">{{$total_per_bulan[$x]}}</th>
+                                @endfor
+                                <td>{{array_sum($total_per_bulan)}}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
