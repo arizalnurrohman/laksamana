@@ -83,8 +83,8 @@ class LaporanPendampingSosialController extends Controller
         // dd($pendamping);
 
         $filename = 'Lap. Dampingan Pendamping Sosia_' . date('Y_m_d_H_i_s') . '.xls';
-        // header("Content-Type: application/vnd-ms-excel");
-        // header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=$filename");
 
 
         echo "<table border='1'>";
