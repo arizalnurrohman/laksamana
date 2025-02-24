@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="{{ route('download_laporanpenerimaanppks') }}" method="post" class="form-horizontal" id='monitoring-usulan'>
+                <form action="{{ route('download_laporanpendampingsosial') }}" method="post" class="form-horizontal" id='monitoring-usulan'>
                     @csrf
                     <div class="row">
                         @php
@@ -52,9 +52,11 @@
                         <thead>
                             <tr>
                                 <th width="25">No</th>
-                                <th>Kategori PPKS</th>
-                                <th width="40">{{date("M")}}</th>
-                                <th width="40">Total</th>
+                                <th>Nama Pendamping Sosial</th>
+                                <th>Nama PPKS yang didampingi</th>
+                                <th>Asal Rujukan</th>
+                                <th width="40">Klaster</th>
+                                <th width="40">Sub Klaster</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,6 +64,8 @@
                                 <tr>
                                     <td>{{$no++}}</td>
                                     <td>{{$dt->kategori}}</td>
+                                    <td>{{$no}}</td>
+                                    <td>{{$no}}</td>
                                     <td>{{$no}}</td>
                                     <td>{{$no}}</td>
                                 </tr>

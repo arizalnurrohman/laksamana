@@ -240,8 +240,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/laporan-penerimaan-ppks/download', [LaporanPenerimaanPPKSController::class, 'download_excel'])->name('download_laporanpenerimaanppks');
 
     Route::get('/laporan-pendamping-sosial', [LaporanPendampingSosialController::class, 'index'])->name('laporanpendampingsosial');
+    Route::post('/laporan-pendamping-sosial/download', [LaporanPendampingSosialController::class, 'download_excel'])->name('download_laporanpendampingsosial');
+
     Route::get('/laporan-ppks-terminasi', [LaporanPPKSTerminasiController::class, 'index'])->name('laporanppksterminasi');
-    
+    Route::post('/laporan-ppks-terminasi/download', [LaporanPPKSTerminasiController::class, 'download_excel'])->name('download_laporanppksterminasi');    
 
     
     

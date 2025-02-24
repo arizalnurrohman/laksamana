@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="{{ route('download_laporanpenerimaanppks') }}" method="post" class="form-horizontal" id='monitoring-usulan'>
+                <form action="{{ route('download_laporanppksterminasi') }}" method="post" class="form-horizontal" id='monitoring-usulan'>
                     @csrf
                     <div class="row">
                         @php
@@ -52,18 +52,26 @@
                         <thead>
                             <tr>
                                 <th width="25">No</th>
-                                <th>Kategori PPKS</th>
-                                <th width="40">{{date("M")}}</th>
-                                <th width="40">Total</th>
+                                <th>Nama Lengkap</th>
+                                <th>Tanggal Masuk/<br>Penerimaan</th>
+                                <th>Sumber Rujukan</th>
+                                <th width="40">NIK</th>
+                                <th width="40">NO KK</th>
+                                <th width="40">Kategori PPKS</th>
+                                <th width="40">Tanggal Terminasi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($data as $dt)
                                 <tr>
                                     <td>{{$no++}}</td>
+                                    <td>{{$dt->nama_depan." ".$dt->nama_belakang}}</td>
+                                    <td>{{date("d M Y",strtotime($dt->tgl_penerimaan))}}</td>
+                                    <td>{{$dt->sumber}}</td>
+                                    <td>{{$dt->nik}}</td>
+                                    <td>{{$dt->nokk}}</td>
                                     <td>{{$dt->kategori}}</td>
-                                    <td>{{$no}}</td>
-                                    <td>{{$no}}</td>
+                                    <td>{{date("d M Y",strtotime($dt->tgl_terminasi))}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
