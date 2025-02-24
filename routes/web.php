@@ -34,6 +34,9 @@ use App\Http\Controllers\PersetujuanKepalaController;
 use App\Http\Controllers\LaporanBeritaAcaraController;
 use App\Http\Controllers\LaporanPerkembanganController;
 use App\Http\Controllers\KomponenPerkembanganController;
+use App\Http\Controllers\LaporanPPKSTerminasiController;
+use App\Http\Controllers\LaporanPenerimaanPPKSController;
+use App\Http\Controllers\LaporanPendampingSosialController;
 
 Route::get('/dashboards', function () {
     return view('dashboard');
@@ -232,6 +235,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/petugas-layanan/edit/{id}', [PetugasLayananController::class, 'edit'])->name('petugaslayanan.edit');
     Route::post('/ppetugas-layanan/update', [PetugasLayananController::class, 'update'])->name('petugaslayanan.update');
     Route::delete('/petugas-layanan/delete/{id}', [PetugasLayananController::class, 'destroy'])->name('petugaslayanan.delete');
+
+    Route::get('/laporan-penerimaan-ppks', [LaporanPenerimaanPPKSController::class, 'index'])->name('laporanpenerimaanppks');
+    Route::post('/laporan-penerimaan-ppks/download', [LaporanPenerimaanPPKSController::class, 'download_excel'])->name('download_laporanpenerimaanppks');
+
+    Route::get('/laporan-pendamping-sosial', [LaporanPendampingSosialController::class, 'index'])->name('laporanpendampingsosial');
+    Route::get('/laporan-ppks-terminasi', [LaporanPPKSTerminasiController::class, 'index'])->name('laporanppksterminasi');
+    
+
+    
+    
 
 });
 

@@ -141,7 +141,7 @@ class PasienController extends Controller
         $rules=[
             'nama_depan'            =>'required',
             'nama_belakang'         =>'required',
-            'nik'                   =>'required|numeric|min:16',
+            'nik'                   =>'required|numeric|min:16|exists:laksa_ms_ppks,nik',
             'nokk'                  =>'required|numeric|min:16',
             'tmp_lahir'             =>'required',
             'tgl_lahir'             =>'required',

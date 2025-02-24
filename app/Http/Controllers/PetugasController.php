@@ -45,7 +45,7 @@ class PetugasController extends Controller
         // dd($request->all());
         $request->validate([
             'nama_petugas' => 'required|string|max:255',
-            'nip_petugas'     =>'required'
+            'nip_petugas'     =>'required|exists:laksa_ms_pendamping_sosial,nip_petugas'
         ]);
         $petugas=[
             'id'                => Str::uuid()->toString(),
@@ -100,7 +100,7 @@ class PetugasController extends Controller
 
     public function destroy($id)
     {
-        dd($id);
+        // dd($id);
         try {
             // Cari dan hapus data
             $petugas = Petugas::findOrFail($id);

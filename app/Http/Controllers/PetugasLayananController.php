@@ -90,7 +90,7 @@ class PetugasLayananController extends Controller
     public function detail_rules()
     {
         $rules = [
-            'nip_nrp'          => 'required',
+            'nip_nrp'          => 'required|exists:laksa_ms_petugas_layanan,nip_nrp',
             'nama_petugas'      => 'required',
         ];
 
