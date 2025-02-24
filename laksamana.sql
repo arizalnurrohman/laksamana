@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Feb 21, 2025 at 12:41 AM
--- Server version: 8.0.30
--- PHP Version: 8.2.1
+-- Host: 127.0.0.1
+-- Generation Time: Feb 24, 2025 at 01:24 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_general_ci NOT NULL,
-  `expiration` int NOT NULL
+  `key` varchar(255) NOT NULL,
+  `value` mediumtext NOT NULL,
+  `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -40,9 +40,9 @@ CREATE TABLE `cache` (
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `expiration` int NOT NULL
+  `key` varchar(255) NOT NULL,
+  `owner` varchar(255) NOT NULL,
+  `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -52,13 +52,13 @@ CREATE TABLE `cache_locks` (
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_general_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_general_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_general_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_general_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -68,13 +68,13 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_general_ci NOT NULL,
-  `attempts` tinyint UNSIGNED NOT NULL,
-  `reserved_at` int UNSIGNED DEFAULT NULL,
-  `available_at` int UNSIGNED NOT NULL,
-  `created_at` int UNSIGNED NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
+  `attempts` tinyint(3) UNSIGNED NOT NULL,
+  `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+  `available_at` int(10) UNSIGNED NOT NULL,
+  `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -84,16 +84,16 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `total_jobs` int NOT NULL,
-  `pending_jobs` int NOT NULL,
-  `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_general_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_general_ci,
-  `cancelled_at` int DEFAULT NULL,
-  `created_at` int NOT NULL,
-  `finished_at` int DEFAULT NULL
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `total_jobs` int(11) NOT NULL,
+  `pending_jobs` int(11) NOT NULL,
+  `failed_jobs` int(11) NOT NULL,
+  `failed_job_ids` longtext NOT NULL,
+  `options` mediumtext DEFAULT NULL,
+  `cancelled_at` int(11) DEFAULT NULL,
+  `created_at` int(11) NOT NULL,
+  `finished_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -103,8 +103,8 @@ CREATE TABLE `job_batches` (
 --
 
 CREATE TABLE `laksa_ms_agama` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `agama` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `agama` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -129,9 +129,9 @@ INSERT INTO `laksa_ms_agama` (`id`, `agama`, `created_at`, `updated_at`, `delete
 --
 
 CREATE TABLE `laksa_ms_aspek` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `aspek` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` tinyint DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `aspek` varchar(36) DEFAULT NULL,
+  `sort` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -154,9 +154,9 @@ INSERT INTO `laksa_ms_aspek` (`id`, `aspek`, `sort`, `created_at`, `updated_at`,
 --
 
 CREATE TABLE `laksa_ms_form_assessment` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `assessment` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` int DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `assessment` varchar(100) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -178,14 +178,14 @@ INSERT INTO `laksa_ms_form_assessment` (`id`, `assessment`, `sort`, `created_at`
 --
 
 CREATE TABLE `laksa_ms_form_assessment_sub` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `form_assessment_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sub_kategori_assessment` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `variable_laporan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `variable_form` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `type_form` enum('text','combo','file','checkbox','textarea') COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `parent_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` int DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `form_assessment_id` varchar(36) DEFAULT NULL,
+  `sub_kategori_assessment` varchar(100) DEFAULT NULL,
+  `variable_laporan` varchar(100) DEFAULT NULL,
+  `variable_form` varchar(100) DEFAULT NULL,
+  `type_form` enum('text','combo','file','checkbox','textarea') DEFAULT NULL,
+  `parent_id` varchar(36) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -280,11 +280,11 @@ CREATE TABLE `laksa_ms_gedung` (
   `id` varchar(36) NOT NULL,
   `nama_gedung` varchar(100) DEFAULT NULL,
   `status_gedung` enum('Aktif','Tidak Aktif') DEFAULT NULL,
-  `jumlah_kamar` tinyint DEFAULT NULL,
+  `jumlah_kamar` tinyint(4) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `laksa_ms_gedung`
@@ -310,9 +310,9 @@ INSERT INTO `laksa_ms_gedung` (`id`, `nama_gedung`, `status_gedung`, `jumlah_kam
 --
 
 CREATE TABLE `laksa_ms_jenis_bantuan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `jenis_bantuan` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `sort` int NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `jenis_bantuan` varchar(100) NOT NULL,
+  `sort` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -338,9 +338,9 @@ INSERT INTO `laksa_ms_jenis_bantuan` (`id`, `jenis_bantuan`, `sort`, `created_at
 --
 
 CREATE TABLE `laksa_ms_jenis_rujukan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `jenis_rujukan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` int DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `jenis_rujukan` varchar(100) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -353,10 +353,10 @@ CREATE TABLE `laksa_ms_jenis_rujukan` (
 --
 
 CREATE TABLE `laksa_ms_kabupaten_kota` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `provinsi_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kemendagri_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kabupaten_kota` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `provinsi_id` varchar(36) DEFAULT NULL,
+  `kemendagri_id` varchar(36) DEFAULT NULL,
+  `kabupaten_kota` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -387,9 +387,9 @@ INSERT INTO `laksa_ms_kabupaten_kota` (`id`, `provinsi_id`, `kemendagri_id`, `ka
 --
 
 CREATE TABLE `laksa_ms_kategori_ppks` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `kategori` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` int DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `kategori` varchar(100) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -418,12 +418,12 @@ INSERT INTO `laksa_ms_kategori_ppks` (`id`, `kategori`, `sort`, `created_at`, `u
 --
 
 CREATE TABLE `laksa_ms_kategori_ppks_sub` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `kategori_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sub_kategori_ppks` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `variable_form` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `parent_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` int DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `kategori_id` varchar(36) DEFAULT NULL,
+  `sub_kategori_ppks` varchar(100) DEFAULT NULL,
+  `variable_form` varchar(100) DEFAULT NULL,
+  `parent_id` varchar(36) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -557,12 +557,12 @@ INSERT INTO `laksa_ms_kategori_ppks_sub` (`id`, `kategori_id`, `sub_kategori_ppk
 --
 
 CREATE TABLE `laksa_ms_kategori_ppks_sub_old` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `kategori_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sub_kategori_ppks` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `variable_form` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `parent_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` int DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `kategori_id` varchar(36) DEFAULT NULL,
+  `sub_kategori_ppks` varchar(100) DEFAULT NULL,
+  `variable_form` varchar(100) DEFAULT NULL,
+  `parent_id` varchar(36) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -629,10 +629,10 @@ INSERT INTO `laksa_ms_kategori_ppks_sub_old` (`id`, `kategori_id`, `sub_kategori
 --
 
 CREATE TABLE `laksa_ms_kecamatan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `kabupaten_kota_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kemendagri_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kecamatan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `kabupaten_kota_id` varchar(36) DEFAULT NULL,
+  `kemendagri_id` varchar(36) DEFAULT NULL,
+  `kecamatan` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -823,9 +823,9 @@ INSERT INTO `laksa_ms_kecamatan` (`id`, `kabupaten_kota_id`, `kemendagri_id`, `k
 --
 
 CREATE TABLE `laksa_ms_komponen_intervensi` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `nama_komponen` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` tinyint DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `nama_komponen` varchar(100) DEFAULT NULL,
+  `sort` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -851,9 +851,9 @@ INSERT INTO `laksa_ms_komponen_intervensi` (`id`, `nama_komponen`, `sort`, `crea
 --
 
 CREATE TABLE `laksa_ms_komponen_perkembangan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `komponen` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` tinyint DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `komponen` varchar(100) DEFAULT NULL,
+  `sort` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -880,10 +880,10 @@ INSERT INTO `laksa_ms_komponen_perkembangan` (`id`, `komponen`, `sort`, `created
 --
 
 CREATE TABLE `laksa_ms_pegawai` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `nip` varchar(18) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `jk` enum('Laki-laki','Perempuan') COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `nip` varchar(18) DEFAULT NULL,
+  `nama` varchar(100) DEFAULT NULL,
+  `jk` enum('Laki-laki','Perempuan') NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -912,15 +912,15 @@ INSERT INTO `laksa_ms_pegawai` (`id`, `nip`, `nama`, `jk`, `created_at`, `update
 --
 
 CREATE TABLE `laksa_ms_pendamping_sosial` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_id` int DEFAULT NULL,
-  `nip_nik` varchar(18) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nama_petugas` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pangkat_jabatan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `instansi` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `alamat_kantor` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pegawai_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kabupaten_kota_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `nip_nik` varchar(18) DEFAULT NULL,
+  `nama_petugas` varchar(100) DEFAULT NULL,
+  `pangkat_jabatan` varchar(100) DEFAULT NULL,
+  `instansi` varchar(100) DEFAULT NULL,
+  `alamat_kantor` varchar(100) DEFAULT NULL,
+  `pegawai_id` varchar(36) DEFAULT NULL,
+  `kabupaten_kota_id` varchar(36) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -951,7 +951,7 @@ CREATE TABLE `laksa_ms_pendidikan` (
   `id` varchar(36) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '0',
   `pendidikan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `teks` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `level` int DEFAULT '1',
+  `level` int(11) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -986,23 +986,23 @@ INSERT INTO `laksa_ms_pendidikan` (`id`, `pendidikan`, `teks`, `level`, `created
 --
 
 CREATE TABLE `laksa_ms_pengampu` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `nama_pengampu` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `nama_pengampu` varchar(100) DEFAULT NULL,
   `hubungan_dengan_ppks` varbinary(100) DEFAULT NULL,
-  `tmp_lahir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tmp_lahir` varchar(100) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
-  `alamat` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nohp` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `jenis_kelamin` enum('Laki-laki','Perempuan') COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `agama_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nik` varchar(16) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nokk` varchar(16) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sudah_ada_dtks` enum('Belum','Sudah') COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `bantuan_saat_ini` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pendidikan_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status_kawin` enum('Belum Kawin','Kawin','Cerai Hidup','Cerai Mati') COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pekerjaan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pengeluaran_perbulan` int DEFAULT NULL,
+  `alamat` varchar(100) DEFAULT NULL,
+  `nohp` varchar(20) DEFAULT NULL,
+  `jenis_kelamin` enum('Laki-laki','Perempuan') DEFAULT NULL,
+  `agama_id` varchar(36) DEFAULT NULL,
+  `nik` varchar(16) DEFAULT NULL,
+  `nokk` varchar(16) DEFAULT NULL,
+  `sudah_ada_dtks` enum('Belum','Sudah') DEFAULT NULL,
+  `bantuan_saat_ini` varchar(255) DEFAULT NULL,
+  `pendidikan_id` varchar(36) DEFAULT NULL,
+  `status_kawin` enum('Belum Kawin','Kawin','Cerai Hidup','Cerai Mati') DEFAULT NULL,
+  `pekerjaan` varchar(100) DEFAULT NULL,
+  `pengeluaran_perbulan` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1072,9 +1072,9 @@ INSERT INTO `laksa_ms_pengampu` (`id`, `nama_pengampu`, `hubungan_dengan_ppks`, 
 --
 
 CREATE TABLE `laksa_ms_persyaratan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `persyaratan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` int DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `persyaratan` varchar(100) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1101,14 +1101,14 @@ INSERT INTO `laksa_ms_persyaratan` (`id`, `persyaratan`, `sort`, `created_at`, `
 --
 
 CREATE TABLE `laksa_ms_perujuk` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(36) NOT NULL,
   `nama_perujuk` varbinary(100) DEFAULT NULL,
-  `nip_nrp` varchar(18) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'nomor registrasi pegawai',
-  `pangkat_jabatan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `instansi_perujuk` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `alamat_kantor` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `telp_kantor` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `no_hp` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nip_nrp` varchar(18) DEFAULT NULL COMMENT 'nomor registrasi pegawai',
+  `pangkat_jabatan` varchar(100) DEFAULT NULL,
+  `instansi_perujuk` varchar(100) DEFAULT NULL,
+  `alamat_kantor` varchar(100) DEFAULT NULL,
+  `telp_kantor` varchar(20) DEFAULT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1137,15 +1137,15 @@ INSERT INTO `laksa_ms_perujuk` (`id`, `nama_perujuk`, `nip_nrp`, `pangkat_jabata
 --
 
 CREATE TABLE `laksa_ms_petugas_layanan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_id` int DEFAULT NULL,
-  `nip_nik` varchar(18) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nama_petugas` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `jabatan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `alamat_kantor` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `telp_kantor` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `no_hp` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email_petugas` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `nip_nik` varchar(18) DEFAULT NULL,
+  `nama_petugas` varchar(100) DEFAULT NULL,
+  `jabatan` varchar(100) DEFAULT NULL,
+  `alamat_kantor` varchar(100) DEFAULT NULL,
+  `telp_kantor` varchar(20) DEFAULT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `email_petugas` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1166,25 +1166,25 @@ INSERT INTO `laksa_ms_petugas_layanan` (`id`, `user_id`, `nip_nik`, `nama_petuga
 --
 
 CREATE TABLE `laksa_ms_ppks` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `nama_depan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nama_belakang` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `nik` varchar(16) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nokk` varchar(16) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `tmp_lahir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `nama_depan` varchar(100) DEFAULT NULL,
+  `nama_belakang` varchar(100) NOT NULL,
+  `nik` varchar(16) DEFAULT NULL,
+  `nokk` varchar(16) DEFAULT NULL,
+  `tmp_lahir` varchar(100) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
-  `provinsi_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kota_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kecamatan_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kelurahan_desa_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `alamat` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `domisili_alamat` char(1) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `domisili` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `agama_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pendidikan_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `up_foto` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `up_kk` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `up_akte_lahir` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `provinsi_id` varchar(36) DEFAULT NULL,
+  `kota_id` varchar(36) DEFAULT NULL,
+  `kecamatan_id` varchar(36) DEFAULT NULL,
+  `kelurahan_desa_id` varchar(36) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `domisili_alamat` char(1) DEFAULT NULL,
+  `domisili` varchar(255) DEFAULT NULL,
+  `agama_id` varchar(36) DEFAULT NULL,
+  `pendidikan_id` varchar(36) DEFAULT NULL,
+  `up_foto` varchar(100) DEFAULT NULL,
+  `up_kk` varchar(100) DEFAULT NULL,
+  `up_akte_lahir` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1226,9 +1226,9 @@ INSERT INTO `laksa_ms_ppks` (`id`, `nama_depan`, `nama_belakang`, `nik`, `nokk`,
 --
 
 CREATE TABLE `laksa_ms_provinsi` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `kemendagri_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `provinsi` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `kemendagri_id` varchar(36) DEFAULT NULL,
+  `provinsi` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1251,12 +1251,12 @@ INSERT INTO `laksa_ms_provinsi` (`id`, `kemendagri_id`, `provinsi`, `created_at`
 --
 
 CREATE TABLE `laksa_ms_status` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `status` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `jenis_layanan` enum('residensial','non-residensial','','') COLLATE utf8mb4_general_ci NOT NULL,
-  `style` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sort` tinyint NOT NULL,
-  `posisi` enum('petugas_layanan','kepala','assesor','pendamping_sosial') COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `jenis_layanan` enum('residensial','non-residensial','','') NOT NULL,
+  `style` varchar(100) DEFAULT NULL,
+  `sort` tinyint(4) NOT NULL,
+  `posisi` enum('petugas_layanan','kepala','assesor','pendamping_sosial') NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1292,9 +1292,9 @@ INSERT INTO `laksa_ms_status` (`id`, `status`, `jenis_layanan`, `style`, `sort`,
 --
 
 CREATE TABLE `laksa_ms_sumber_rujukan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `sumber` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `prioritas` tinyint DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `sumber` varchar(255) DEFAULT NULL,
+  `prioritas` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1316,25 +1316,25 @@ INSERT INTO `laksa_ms_sumber_rujukan` (`id`, `sumber`, `prioritas`, `created_at`
 --
 
 CREATE TABLE `laksa_tr_assessment` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `residensial_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `petugas_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `residensial_id` varchar(36) DEFAULT NULL,
+  `petugas_id` varchar(36) DEFAULT NULL,
   `tgl_assessment` date DEFAULT NULL,
-  `satuan_kerja` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `bantuan_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `laporan_assessment` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `laporan_assessment_no_urut` int DEFAULT NULL,
-  `laporan_assessment_tahun` int DEFAULT NULL,
-  `laporan_assessment_nomor_surat` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `satuan_kerja` varchar(100) DEFAULT NULL,
+  `bantuan_id` varchar(36) DEFAULT NULL,
+  `laporan_assessment` varchar(100) DEFAULT NULL,
+  `laporan_assessment_no_urut` int(11) DEFAULT NULL,
+  `laporan_assessment_tahun` int(11) DEFAULT NULL,
+  `laporan_assessment_nomor_surat` varchar(100) DEFAULT NULL,
   `laporan_assessment_tanggal` datetime DEFAULT NULL,
-  `assessment_json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
-  `uraian_komponen_layanan` text COLLATE utf8mb4_general_ci,
-  `intervensi_komponen_yang_diberikan` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `intervensi_uraian_komponen_layanan` text COLLATE utf8mb4_general_ci,
+  `assessment_json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `uraian_komponen_layanan` text DEFAULT NULL,
+  `intervensi_komponen_yang_diberikan` varchar(36) DEFAULT NULL,
+  `intervensi_uraian_komponen_layanan` text DEFAULT NULL,
   `intervensi_waktu_pemebrian_layanan` date DEFAULT NULL,
-  `intervensi_pihak_yang_terlibat` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `rencana_intervensi_lanjutan` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
-  `rekomendasi_catatan` text COLLATE utf8mb4_general_ci,
+  `intervensi_pihak_yang_terlibat` varchar(255) DEFAULT NULL,
+  `rencana_intervensi_lanjutan` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `rekomendasi_catatan` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1356,10 +1356,10 @@ INSERT INTO `laksa_tr_assessment` (`id`, `residensial_id`, `petugas_id`, `tgl_as
 --
 
 CREATE TABLE `laksa_tr_assessment_intevensi` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `asessment_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `komponen_id` int DEFAULT NULL,
-  `komponen_uraian` text COLLATE utf8mb4_general_ci,
+  `id` varchar(36) NOT NULL,
+  `asessment_id` varchar(36) DEFAULT NULL,
+  `komponen_id` int(11) DEFAULT NULL,
+  `komponen_uraian` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1372,12 +1372,12 @@ CREATE TABLE `laksa_tr_assessment_intevensi` (
 --
 
 CREATE TABLE `laksa_tr_assessment_value` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `form_assessment_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `form_assessment_sub_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `assessment_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `assessment_value` text COLLATE utf8mb4_general_ci,
-  `assessment_type` enum('text','combo','file','radio','textarea') COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `form_assessment_id` varchar(36) DEFAULT NULL,
+  `form_assessment_sub_id` varchar(36) DEFAULT NULL,
+  `assessment_id` varchar(36) DEFAULT NULL,
+  `assessment_value` text DEFAULT NULL,
+  `assessment_type` enum('text','combo','file','radio','textarea') DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1459,13 +1459,13 @@ INSERT INTO `laksa_tr_assessment_value` (`id`, `form_assessment_id`, `form_asses
 --
 
 CREATE TABLE `laksa_tr_laporan_terminasi` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `layanan_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `dokumen_terminasi` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `layanan_id` varchar(36) DEFAULT NULL,
+  `dokumen_terminasi` varchar(100) DEFAULT NULL,
   `tgl_terminasi` datetime DEFAULT NULL,
-  `no_surat` int DEFAULT NULL,
-  `tahun` int DEFAULT NULL,
-  `nomor_terminasi` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `no_surat` int(11) DEFAULT NULL,
+  `tahun` int(11) DEFAULT NULL,
+  `nomor_terminasi` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1486,40 +1486,40 @@ INSERT INTO `laksa_tr_laporan_terminasi` (`id`, `layanan_id`, `dokumen_terminasi
 --
 
 CREATE TABLE `laksa_tr_layanan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `petugas_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `perujuk_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `jenis_layanan` enum('Residensial','Non Residensial') COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `petugas_id` varchar(36) DEFAULT NULL,
+  `perujuk_id` varchar(36) DEFAULT NULL,
+  `jenis_layanan` enum('Residensial','Non Residensial') DEFAULT NULL,
   `tgl_penerimaan` datetime DEFAULT NULL,
-  `sumber_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pasien_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kategori_ppks_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `kategori_ppks_json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
-  `masa_layanan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `sumber_id` varchar(36) DEFAULT NULL,
+  `pasien_id` varchar(36) DEFAULT NULL,
+  `kategori_ppks_id` varchar(36) DEFAULT NULL,
+  `kategori_ppks_json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `masa_layanan` varchar(100) DEFAULT NULL,
   `rencana_tgl_terminasi` date DEFAULT NULL,
-  `pengampu_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT 'draft',
-  `dokumen_ba` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `pengampu_id` varchar(36) DEFAULT NULL,
+  `status_id` varchar(36) DEFAULT 'draft',
+  `dokumen_ba` varchar(255) DEFAULT NULL,
   `dokumen_ba_tgl` datetime DEFAULT NULL,
-  `dokumen_ba_tempat` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `dokumen_ba_nomor_urut` int DEFAULT NULL,
-  `dokumen_ba_tahun` int DEFAULT NULL,
-  `dokumen_ba_nomor` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `gedung_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `up_dokumen_rujukan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ragam_abh` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `informasi_kasus` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `jenis_rujukan` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `no_putusan_pengadilan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ragam_anak` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ragam_kelompok_rentan` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ragam_penyandang_disabilitas` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ragam_disabilitas_fisik` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ragam_disabilitas_intelektual` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ragam_disabilitas_mental` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ragam_disabilitas_sensorik` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `disabilitas_ganda_multi` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `penerima_atensi` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `dokumen_ba_tempat` varchar(100) DEFAULT NULL,
+  `dokumen_ba_nomor_urut` int(11) DEFAULT NULL,
+  `dokumen_ba_tahun` int(11) DEFAULT NULL,
+  `dokumen_ba_nomor` varchar(100) DEFAULT NULL,
+  `gedung_id` varchar(36) DEFAULT NULL,
+  `up_dokumen_rujukan` varchar(100) DEFAULT NULL,
+  `ragam_abh` varchar(36) DEFAULT NULL,
+  `informasi_kasus` varchar(36) DEFAULT NULL,
+  `jenis_rujukan` varchar(36) DEFAULT NULL,
+  `no_putusan_pengadilan` varchar(100) DEFAULT NULL,
+  `ragam_anak` varchar(36) DEFAULT NULL,
+  `ragam_kelompok_rentan` varchar(36) DEFAULT NULL,
+  `ragam_penyandang_disabilitas` varchar(36) DEFAULT NULL,
+  `ragam_disabilitas_fisik` varchar(36) DEFAULT NULL,
+  `ragam_disabilitas_intelektual` varchar(36) DEFAULT NULL,
+  `ragam_disabilitas_mental` varchar(36) DEFAULT NULL,
+  `ragam_disabilitas_sensorik` varchar(36) DEFAULT NULL,
+  `disabilitas_ganda_multi` varchar(36) DEFAULT NULL,
+  `penerima_atensi` varchar(36) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1547,13 +1547,13 @@ INSERT INTO `laksa_tr_layanan` (`id`, `petugas_id`, `perujuk_id`, `jenis_layanan
 --
 
 CREATE TABLE `laksa_tr_rehabilitasi` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `residensial_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `petugas_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `laporan_rehabilitasi` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `residensial_id` varchar(36) DEFAULT NULL,
+  `petugas_id` varchar(36) DEFAULT NULL,
+  `laporan_rehabilitasi` varchar(100) DEFAULT NULL,
   `laporan_tanggal` datetime DEFAULT NULL,
-  `laporan_akumulasi` text COLLATE utf8mb4_general_ci,
-  `assessor_catatan` text COLLATE utf8mb4_general_ci,
+  `laporan_akumulasi` text DEFAULT NULL,
+  `assessor_catatan` text DEFAULT NULL,
   `assessor_catatan_tgl` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1576,12 +1576,12 @@ INSERT INTO `laksa_tr_rehabilitasi` (`id`, `residensial_id`, `petugas_id`, `lapo
 --
 
 CREATE TABLE `laksa_tr_rehabilitasi_perkembangan` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `rehabilitasi_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `rehabilitasi_id` varchar(36) DEFAULT NULL,
   `tgl_perkembangan` date DEFAULT NULL,
-  `foto_perkembangan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `file_perkembangan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `catatan_perkembangan` text COLLATE utf8mb4_general_ci,
+  `foto_perkembangan` varchar(100) DEFAULT NULL,
+  `file_perkembangan` varchar(100) DEFAULT NULL,
+  `catatan_perkembangan` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1610,11 +1610,11 @@ INSERT INTO `laksa_tr_rehabilitasi_perkembangan` (`id`, `rehabilitasi_id`, `tgl_
 --
 
 CREATE TABLE `laksa_tr_rehabilitasi_perkembangan_nilai` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `rehabilitasi_perkembangan_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `komponen_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `aspek_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `komponen_aspek_nilai` tinyint DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `rehabilitasi_perkembangan_id` varchar(36) DEFAULT NULL,
+  `komponen_id` varchar(36) DEFAULT NULL,
+  `aspek_id` varchar(36) DEFAULT NULL,
+  `komponen_aspek_nilai` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1874,11 +1874,11 @@ INSERT INTO `laksa_tr_rehabilitasi_perkembangan_nilai` (`id`, `rehabilitasi_perk
 --
 
 CREATE TABLE `laksa_tr_status` (
-  `id` varchar(36) COLLATE utf8mb4_general_ci NOT NULL,
-  `jenis_layanan` enum('residensial','non-residensial') COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `layanan_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `user_id` varchar(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `jenis_layanan` enum('residensial','non-residensial') DEFAULT NULL,
+  `layanan_id` varchar(36) DEFAULT NULL,
+  `status_id` varchar(36) DEFAULT NULL,
+  `user_id` varchar(36) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1903,15 +1903,15 @@ INSERT INTO `laksa_tr_status` (`id`, `jenis_layanan`, `layanan_id`, `status_id`,
 --
 
 CREATE TABLE `menu` (
-  `id` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `parent_id` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `roles` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `menu` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `icon` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `url` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `access` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `sort` tinyint NOT NULL,
+  `id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parent_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `roles` varchar(255) DEFAULT NULL,
+  `menu` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `icon` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `url` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `access` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `sort` tinyint(4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1935,12 +1935,15 @@ INSERT INTO `menu` (`id`, `parent_id`, `roles`, `menu`, `description`, `icon`, `
 ('395ce80f-368d-4e02-a10d-14db29bfc2a7', NULL, 'administrator,pendamping', 'Pendamping Sosial', 'desc', '<svg class=\"icon-20\" width=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">                                    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M11.9849 15.3462C8.11731 15.3462 4.81445 15.931 4.81445 18.2729C4.81445 20.6148 8.09636 21.2205 11.9849 21.2205C15.8525 21.2205 19.1545 20.6348 19.1545 18.2938C19.1545 15.9529 15.8735 15.3462 11.9849 15.3462Z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>                                    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M11.9849 12.0059C14.523 12.0059 16.5801 9.94779 16.5801 7.40969C16.5801 4.8716 14.523 2.81445 11.9849 2.81445C9.44679 2.81445 7.3887 4.8716 7.3887 7.40969C7.38013 9.93922 9.42394 11.9973 11.9525 12.0059H11.9849Z\" stroke=\"currentColor\" stroke-width=\"1.42857\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>                                </svg>', 'petugas', 'petugas', 6, '2025-02-01 13:15:26', '2025-02-01 13:15:26', NULL),
 ('3a13cd66-29d4-476e-8398-3fbecbf038df', NULL, 'administrator', 'Konfigurasi', 'konf desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\">\r\n                                        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M20.4023 13.58C20.76 13.77 21.036 14.07 21.2301 14.37C21.6083 14.99 21.5776 15.75 21.2097 16.42L20.4943 17.62C20.1162 18.26 19.411 18.66 18.6855 18.66C18.3278 18.66 17.9292 18.56 17.6022 18.36C17.3365 18.19 17.0299 18.13 16.7029 18.13C15.6911 18.13 14.8429 18.96 14.8122 19.95C14.8122 21.1 13.872 22 12.6968 22H11.3069C10.1215 22 9.18125 21.1 9.18125 19.95C9.16081 18.96 8.31259 18.13 7.30085 18.13C6.96361 18.13 6.65702 18.19 6.40153 18.36C6.0745 18.56 5.66572 18.66 5.31825 18.66C4.58245 18.66 3.87729 18.26 3.49917 17.62L2.79402 16.42C2.4159 15.77 2.39546 14.99 2.77358 14.37C2.93709 14.07 3.24368 13.77 3.59115 13.58C3.87729 13.44 4.06125 13.21 4.23498 12.94C4.74596 12.08 4.43937 10.95 3.57071 10.44C2.55897 9.87 2.23194 8.6 2.81446 7.61L3.49917 6.43C4.09191 5.44 5.35913 5.09 6.38109 5.67C7.27019 6.15 8.425 5.83 8.9462 4.98C9.10972 4.7 9.20169 4.4 9.18125 4.1C9.16081 3.71 9.27323 3.34 9.4674 3.04C9.84553 2.42 10.5302 2.02 11.2763 2H12.7172C13.4735 2 14.1582 2.42 14.5363 3.04C14.7203 3.34 14.8429 3.71 14.8122 4.1C14.7918 4.4 14.8838 4.7 15.0473 4.98C15.5685 5.83 16.7233 6.15 17.6226 5.67C18.6344 5.09 19.9118 5.44 20.4943 6.43L21.179 7.61C21.7718 8.6 21.4447 9.87 20.4228 10.44C19.5541 10.95 19.2475 12.08 19.7687 12.94C19.9322 13.21 20.1162 13.44 20.4023 13.58ZM9.10972 12.01C9.10972 13.58 10.4076 14.83 12.0121 14.83C13.6165 14.83 14.8838 13.58 14.8838 12.01C14.8838 10.44 13.6165 9.18 12.0121 9.18C10.4076 9.18 9.10972 10.44 9.10972 12.01Z\" fill=\"currentColor\" />\r\n                                      </svg>', '#', 'konfigurasi', 21, '2025-01-12 00:02:58', NULL, NULL),
 ('42c50614-5602-4b72-b48c-479a25eaf001', NULL, 'kepala,assesor,pendamping,administrator,petugas', 'Laporan', 'desc laporan', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\">\r\n    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.92574 16.39H14.3119C14.7178 16.39 15.0545 16.05 15.0545 15.64C15.0545 15.23 14.7178 14.9 14.3119 14.9H8.92574C8.5198 14.9 8.18317 15.23 8.18317 15.64C8.18317 16.05 8.5198 16.39 8.92574 16.39ZM12.2723 9.9H8.92574C8.5198 9.9 8.18317 10.24 8.18317 10.65C8.18317 11.06 8.5198 11.39 8.92574 11.39H12.2723C12.6782 11.39 13.0149 11.06 13.0149 10.65C13.0149 10.24 12.6782 9.9 12.2723 9.9ZM19.3381 9.02561C19.5708 9.02292 19.8242 9.02 20.0545 9.02C20.302 9.02 20.5 9.22 20.5 9.47V17.51C20.5 19.99 18.5099 22 16.0545 22H8.17327C5.59901 22 3.5 19.89 3.5 17.29V6.51C3.5 4.03 5.5 2 7.96535 2H13.2525C13.5099 2 13.7079 2.21 13.7079 2.46V5.68C13.7079 7.51 15.203 9.01 17.0149 9.02C17.4381 9.02 17.8112 9.02316 18.1377 9.02593C18.3917 9.02809 18.6175 9.03 18.8168 9.03C18.9578 9.03 19.1405 9.02789 19.3381 9.02561ZM19.6111 7.566C18.7972 7.569 17.8378 7.566 17.1477 7.559C16.0527 7.559 15.1507 6.648 15.1507 5.542V2.906C15.1507 2.475 15.6685 2.261 15.9646 2.572C16.5004 3.13476 17.2368 3.90834 17.9699 4.67837C18.7009 5.44632 19.4286 6.21074 19.9507 6.759C20.2398 7.062 20.0279 7.565 19.6111 7.566Z\" fill=\"currentColor\" />\r\n  </svg>', 'laporan', 'laporan', 22, '2025-01-11 19:59:24', '2025-01-11 19:59:24', NULL),
+('4ee9d026-ca31-4cf3-aeaa-0d2a0873399f', '42c50614-5602-4b72-b48c-479a25eaf001', NULL, 'Penerimaan PPKS', 'desc', 'LP', 'laporan-penerimaan-ppks', 'laporanpenerimaanppks', 5, '2025-02-23 22:42:37', '2025-02-23 22:42:37', NULL),
 ('671424b8-096d-4389-8f34-8141f1ac85a3', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', '', 'Pengampu', 'desc', '<svg width=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M11.9488 14.54C8.49884 14.54 5.58789 15.1038 5.58789 17.2795C5.58789 19.4562 8.51765 20.0001 11.9488 20.0001C15.3988 20.0001 18.3098 19.4364 18.3098 17.2606C18.3098 15.084 15.38 14.54 11.9488 14.54Z\" fill=\"currentColor\"></path>\n    <path opacity=\"0.4\" d=\"M11.949 12.467C14.2851 12.467 16.1583 10.5831 16.1583 8.23351C16.1583 5.88306 14.2851 4 11.949 4C9.61293 4 7.73975 5.88306 7.73975 8.23351C7.73975 10.5831 9.61293 12.467 11.949 12.467Z\" fill=\"currentColor\"></path>\n    <path opacity=\"0.4\" d=\"M21.0881 9.21923C21.6925 6.84176 19.9205 4.70654 17.664 4.70654C17.4187 4.70654 17.1841 4.73356 16.9549 4.77949C16.9244 4.78669 16.8904 4.802 16.8725 4.82902C16.8519 4.86324 16.8671 4.90917 16.8895 4.93889C17.5673 5.89528 17.9568 7.0597 17.9568 8.30967C17.9568 9.50741 17.5996 10.6241 16.9728 11.5508C16.9083 11.6462 16.9656 11.775 17.0793 11.7948C17.2369 11.8227 17.3981 11.8371 17.5629 11.8416C19.2059 11.8849 20.6807 10.8213 21.0881 9.21923Z\" fill=\"currentColor\"></path>\n    <path d=\"M22.8094 14.817C22.5086 14.1722 21.7824 13.73 20.6783 13.513C20.1572 13.3851 18.747 13.205 17.4352 13.2293C17.4155 13.232 17.4048 13.2455 17.403 13.2545C17.4003 13.2671 17.4057 13.2887 17.4316 13.3022C18.0378 13.6039 20.3811 14.916 20.0865 17.6834C20.074 17.8032 20.1698 17.9068 20.2888 17.8888C20.8655 17.8059 22.3492 17.4853 22.8094 16.4866C23.0637 15.9589 23.0637 15.3456 22.8094 14.817Z\" fill=\"currentColor\"></path>\n    <path opacity=\"0.4\" d=\"M7.04459 4.77973C6.81626 4.7329 6.58077 4.70679 6.33543 4.70679C4.07901 4.70679 2.30701 6.84201 2.9123 9.21947C3.31882 10.8216 4.79355 11.8851 6.43661 11.8419C6.60136 11.8374 6.76343 11.8221 6.92013 11.7951C7.03384 11.7753 7.09115 11.6465 7.02668 11.551C6.3999 10.6234 6.04263 9.50765 6.04263 8.30991C6.04263 7.05904 6.43303 5.89462 7.11085 4.93913C7.13234 4.90941 7.14845 4.86348 7.12696 4.82926C7.10906 4.80135 7.07593 4.78694 7.04459 4.77973Z\" fill=\"currentColor\"></path>\n    <path d=\"M3.32156 13.5127C2.21752 13.7297 1.49225 14.1719 1.19139 14.8167C0.936203 15.3453 0.936203 15.9586 1.19139 16.4872C1.65163 17.4851 3.13531 17.8066 3.71195 17.8885C3.83104 17.9065 3.92595 17.8038 3.91342 17.6832C3.61883 14.9167 5.9621 13.6046 6.56918 13.3029C6.59425 13.2885 6.59962 13.2677 6.59694 13.2542C6.59515 13.2452 6.5853 13.2317 6.5656 13.2299C5.25294 13.2047 3.84358 13.3848 3.32156 13.5127Z\" fill=\"currentColor\"></path>\n  </svg>', 'pengampu', 'pengampu', 6, '2025-01-26 09:41:27', '2025-01-26 09:41:27', NULL),
 ('732e5455-380d-4b20-9d80-0657782c2fcd', NULL, 'administrator,kepala', 'Persetujuan Kepala', 'desc', '<svg height=\"20px\" width=\"20px\" version=\"1.1\" id=\"Capa_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" \n	 viewBox=\"0 0 211.931 211.931\" xml:space=\"preserve\">\n<path d=\"M145.49,199.781H4c-2.209,0-4-1.791-4-4V16.149c0-2.209,1.791-4,4-4h141.49c2.209,0,4,1.791,4,4v43.488l39.477-39.477\n	c1.563-1.562,4.095-1.562,5.657,0l16.136,16.136c1.562,1.563,1.562,4.095,0,5.657l-61.27,61.269v92.559\n	C149.49,197.99,147.699,199.781,145.49,199.781z M8,191.781h133.49v-80.547l-19.313,19.314c-0.514,0.514-1.159,0.878-1.865,1.054\n	l-21.464,5.329c-0.319,0.079-0.643,0.118-0.964,0.118c-0.004,0-0.007,0-0.011,0c-1.048,0-2.069-0.412-2.829-1.171\n	c-0.992-0.992-1.392-2.431-1.054-3.792l5.329-21.464c0.175-0.706,0.54-1.35,1.054-1.865l41.118-41.117V20.149H8V191.781z\n	 M106.826,113.626l-3.459,13.937l13.927-3.458l84.98-84.98l-10.479-10.479L148.491,71.95c-0.055,0.063-0.113,0.125-0.172,0.184\n	L106.826,113.626z M120.084,178.152H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h94.978c2.209,0,4,1.791,4,4\n	S122.293,178.152,120.084,178.152z M120.084,155.434H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h94.978c2.209,0,4,1.791,4,4\n	S122.293,155.434,120.084,155.434z M83.888,109.997H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h58.782c2.209,0,4,1.791,4,4\n	S86.097,109.997,83.888,109.997z M104.555,87.278H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h79.449c2.209,0,4,1.791,4,4\n	S106.764,87.278,104.555,87.278z M120.084,41.842H25.106c-2.209,0-4-1.791-4-4s1.791-4,4-4h94.978c2.209,0,4,1.791,4,4\n	S122.293,41.842,120.084,41.842z\"/>\n</svg>', 'persetujuan-kepala', 'persetujuankepala', 3, '2025-01-25 19:49:13', '2025-01-25 19:49:13', NULL),
 ('743c06c5-123e-41e1-9b54-2a9ddaed4506', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', '', 'Komponen Perkembangan', 'desc', '<svg width=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path opacity=\"0.4\" d=\"M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z\" fill=\"currentColor\"></path>\r\n                                                <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z\" fill=\"currentColor\"></path>\r\n                                              </svg>', 'komponen-perkembangan', 'komponenperkembangan', 2, '2025-01-11 17:58:40', '2025-01-11 17:58:40', NULL),
 ('7ca9b226-45cb-475d-8a52-0cb192f46cd2', NULL, 'administrator', 'Asrama', 'desc', '<svg width=\"20px\" height=\"20px\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n<path d=\"M14 21.0001V15.0001H10V21.0001M19 9.77818V16.2001C19 17.8802 19 18.7203 18.673 19.362C18.3854 19.9265 17.9265 20.3855 17.362 20.6731C16.7202 21.0001 15.8802 21.0001 14.2 21.0001H9.8C8.11984 21.0001 7.27976 21.0001 6.63803 20.6731C6.07354 20.3855 5.6146 19.9265 5.32698 19.362C5 18.7203 5 17.8802 5 16.2001V9.77753M21 12.0001L15.5668 5.96405C14.3311 4.59129 13.7133 3.9049 12.9856 3.65151C12.3466 3.42894 11.651 3.42899 11.0119 3.65165C10.2843 3.90516 9.66661 4.59163 8.43114 5.96458L3 12.0001\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n</svg>', 'gedung-asrama', 'gedung_asrama', 9, '2025-01-25 13:43:56', '2025-01-25 13:43:56', NULL),
 ('829ef2c9-6839-49bd-a556-0fc2f2c2c545', '42c50614-5602-4b72-b48c-479a25eaf001', '', 'Laporan Perkembangan', 'Laporan PPKS selama menjalani masa rehabilitasi sosial', 'LP', 'laporan-perkembangan', 'laporanperkembangan', 3, '2025-02-07 22:55:22', '2025-02-07 22:55:22', NULL),
 ('87c3cbf6-0d9f-4c74-9b12-3d772f603272', '3a13cd66-29d4-476e-8398-3fbecbf038df', '', 'Permission', 'desc', '<svg width=\"20\" class=\"icon-20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\r\n                                                xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path opacity=\"0.4\"\r\n                                                    d=\"M16.6756 2H7.33333C3.92889 2 2 3.92889 2 7.33333V16.6667C2 20.0711 3.92889 22 7.33333 22H16.6756C20.08 22 22 20.0711 22 16.6667V7.33333C22 3.92889 20.08 2 16.6756 2Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M7.36866 9.3689C6.91533 9.3689 6.54199 9.74223 6.54199 10.2045V17.0756C6.54199 17.5289 6.91533 17.9022 7.36866 17.9022C7.83088 17.9022 8.20421 17.5289 8.20421 17.0756V10.2045C8.20421 9.74223 7.83088 9.3689 7.36866 9.3689Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M12.0352 6.08887C11.5818 6.08887 11.2085 6.4622 11.2085 6.92442V17.0755C11.2085 17.5289 11.5818 17.9022 12.0352 17.9022C12.4974 17.9022 12.8707 17.5289 12.8707 17.0755V6.92442C12.8707 6.4622 12.4974 6.08887 12.0352 6.08887Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                                <path\r\n                                                    d=\"M16.6398 12.9956C16.1775 12.9956 15.8042 13.3689 15.8042 13.8312V17.0756C15.8042 17.5289 16.1775 17.9023 16.6309 17.9023C17.0931 17.9023 17.4664 17.5289 17.4664 17.0756V13.8312C17.4664 13.3689 17.0931 12.9956 16.6398 12.9956Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                            </svg>', 'permission', 'permission', 4, '2025-01-11 17:57:53', '2025-01-11 17:57:53', NULL),
+('89cc971e-f091-4ebd-aa29-12b5b8f7589c', '42c50614-5602-4b72-b48c-479a25eaf001', NULL, 'PPKS Terminasi', 'desc', 'LP', 'laporan-ppks-terminasi', 'laporanppksterminasi', 7, '2025-02-23 22:46:04', '2025-02-23 22:46:04', NULL),
+('91fa19b6-721d-4f86-a179-3cc04a0d6013', '42c50614-5602-4b72-b48c-479a25eaf001', NULL, 'Pendamping Sosial', 'desc', 'LP', 'laporan-pendamping-sosial', 'laporanpendampingsosial', 6, '2025-02-23 22:43:25', '2025-02-23 22:43:25', NULL),
 ('9cec834a-2300-4d2d-9a04-d287c4add3c1', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', '', 'Aspek', 'desc', '<svg width=\"20px\" height=\"20px\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" stroke=\"#6666\">\r\n<g id=\"SVGRepo_bgCarrier\" stroke-width=\"0\"/>\r\n<g id=\"SVGRepo_tracerCarrier\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\r\n<g id=\"SVGRepo_iconCarrier\"> <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M5.3783 2C5.3905 2 5.40273 2 5.415 2L7.62171 2C8.01734 1.99998 8.37336 1.99996 8.66942 2.02454C8.98657 2.05088 9.32336 2.11052 9.65244 2.28147C10.109 2.51866 10.4813 2.89096 10.7185 3.34757C10.8895 3.67665 10.9491 4.01343 10.9755 4.33059C11 4.62664 11 4.98265 11 5.37828V9.62172C11 10.0174 11 10.3734 10.9755 10.6694C10.9491 10.9866 10.8895 11.3234 10.7185 11.6524C10.4813 12.109 10.109 12.4813 9.65244 12.7185C9.32336 12.8895 8.98657 12.9491 8.66942 12.9755C8.37337 13 8.01735 13 7.62172 13H5.37828C4.98265 13 4.62664 13 4.33059 12.9755C4.01344 12.9491 3.67665 12.8895 3.34757 12.7185C2.89096 12.4813 2.51866 12.109 2.28147 11.6524C2.11052 11.3234 2.05088 10.9866 2.02454 10.6694C1.99996 10.3734 1.99998 10.0173 2 9.62171L2 5.415C2 5.40273 2 5.3905 2 5.3783C1.99998 4.98266 1.99996 4.62664 2.02454 4.33059C2.05088 4.01343 2.11052 3.67665 2.28147 3.34757C2.51866 2.89096 2.89096 2.51866 3.34757 2.28147C3.67665 2.11052 4.01343 2.05088 4.33059 2.02454C4.62664 1.99996 4.98266 1.99998 5.3783 2ZM4.27752 4.05297C4.27226 4.05488 4.27001 4.05604 4.26952 4.0563C4.17819 4.10373 4.10373 4.17819 4.0563 4.26952C4.05604 4.27001 4.05488 4.27226 4.05297 4.27752C4.05098 4.28299 4.04767 4.29312 4.04372 4.30961C4.03541 4.34427 4.02554 4.40145 4.01768 4.49611C4.00081 4.69932 4 4.9711 4 5.415V9.585C4 10.0289 4.00081 10.3007 4.01768 10.5039C4.02554 10.5986 4.03541 10.6557 4.04372 10.6904C4.04767 10.7069 4.05098 10.717 4.05297 10.7225C4.05488 10.7277 4.05604 10.73 4.0563 10.7305C4.10373 10.8218 4.17819 10.8963 4.26952 10.9437C4.27001 10.944 4.27226 10.9451 4.27752 10.947C4.28299 10.949 4.29312 10.9523 4.30961 10.9563C4.34427 10.9646 4.40145 10.9745 4.49611 10.9823C4.69932 10.9992 4.9711 11 5.415 11H7.585C8.02891 11 8.30068 10.9992 8.5039 10.9823C8.59855 10.9745 8.65574 10.9646 8.6904 10.9563C8.70688 10.9523 8.71701 10.949 8.72249 10.947C8.72775 10.9451 8.72999 10.944 8.73049 10.9437C8.82181 10.8963 8.89627 10.8218 8.94371 10.7305C8.94397 10.73 8.94513 10.7277 8.94704 10.7225C8.94903 10.717 8.95234 10.7069 8.95629 10.6904C8.96459 10.6557 8.97446 10.5986 8.98232 10.5039C8.9992 10.3007 9 10.0289 9 9.585V5.415C9 4.9711 8.9992 4.69932 8.98232 4.49611C8.97446 4.40145 8.96459 4.34427 8.95629 4.30961C8.95234 4.29312 8.94903 4.28299 8.94704 4.27752C8.94513 4.27226 8.94397 4.27001 8.94371 4.26952C8.89627 4.17819 8.82181 4.10373 8.73049 4.0563C8.72999 4.05604 8.72775 4.05488 8.72249 4.05297C8.71701 4.05098 8.70688 4.04767 8.6904 4.04372C8.65574 4.03541 8.59855 4.02554 8.5039 4.01768C8.30068 4.00081 8.02891 4 7.585 4H5.415C4.9711 4 4.69932 4.00081 4.49611 4.01768C4.40145 4.02554 4.34427 4.03541 4.30961 4.04372C4.29312 4.04767 4.28299 4.05098 4.27752 4.05297ZM16.3783 2H18.6217C19.0173 1.99998 19.3734 1.99996 19.6694 2.02454C19.9866 2.05088 20.3234 2.11052 20.6524 2.28147C21.109 2.51866 21.4813 2.89096 21.7185 3.34757C21.8895 3.67665 21.9491 4.01343 21.9755 4.33059C22 4.62665 22 4.98267 22 5.37832V5.62168C22 6.01733 22 6.37336 21.9755 6.66942C21.9491 6.98657 21.8895 7.32336 21.7185 7.65244C21.4813 8.10905 21.109 8.48135 20.6524 8.71854C20.3234 8.88948 19.9866 8.94912 19.6694 8.97546C19.3734 9.00005 19.0173 9.00003 18.6217 9H16.3783C15.9827 9.00003 15.6266 9.00005 15.3306 8.97546C15.0134 8.94912 14.6766 8.88948 14.3476 8.71854C13.891 8.48135 13.5187 8.10905 13.2815 7.65244C13.1105 7.32336 13.0509 6.98657 13.0245 6.66942C13 6.37337 13 6.01735 13 5.62172V5.37828C13 4.98265 13 4.62664 13.0245 4.33059C13.0509 4.01344 13.1105 3.67665 13.2815 3.34757C13.5187 2.89096 13.891 2.51866 14.3476 2.28147C14.6766 2.11052 15.0134 2.05088 15.3306 2.02454C15.6266 1.99996 15.9827 1.99998 16.3783 2ZM15.2775 4.05297C15.2723 4.05488 15.27 4.05604 15.2695 4.0563C15.1782 4.10373 15.1037 4.17819 15.0563 4.26952C15.056 4.27001 15.0549 4.27226 15.053 4.27752C15.051 4.28299 15.0477 4.29312 15.0437 4.30961C15.0354 4.34427 15.0255 4.40145 15.0177 4.49611C15.0008 4.69932 15 4.9711 15 5.415V5.585C15 6.02891 15.0008 6.30068 15.0177 6.5039C15.0255 6.59855 15.0354 6.65574 15.0437 6.6904C15.0477 6.70688 15.051 6.71701 15.053 6.72249C15.0549 6.72775 15.056 6.72999 15.0563 6.73049C15.1037 6.82181 15.1782 6.89627 15.2695 6.94371C15.27 6.94397 15.2723 6.94512 15.2775 6.94704C15.283 6.94903 15.2931 6.95234 15.3096 6.95629C15.3443 6.96459 15.4015 6.97446 15.4961 6.98232C15.6993 6.9992 15.9711 7 16.415 7H18.585C19.0289 7 19.3007 6.9992 19.5039 6.98232C19.5986 6.97446 19.6557 6.96459 19.6904 6.95629C19.7069 6.95234 19.717 6.94903 19.7225 6.94704C19.7277 6.94512 19.73 6.94397 19.7305 6.94371C19.8218 6.89627 19.8963 6.82181 19.9437 6.73049C19.944 6.72999 19.9451 6.72775 19.947 6.72249C19.949 6.71701 19.9523 6.70688 19.9563 6.6904C19.9646 6.65573 19.9745 6.59855 19.9823 6.5039C19.9992 6.30068 20 6.02891 20 5.585V5.415C20 4.9711 19.9992 4.69932 19.9823 4.49611C19.9745 4.40145 19.9646 4.34427 19.9563 4.30961C19.9523 4.29312 19.949 4.28299 19.947 4.27752C19.9451 4.27226 19.944 4.27001 19.9437 4.26952C19.8963 4.17819 19.8218 4.10373 19.7305 4.0563C19.73 4.05604 19.7277 4.05488 19.7225 4.05297C19.717 4.05098 19.7069 4.04767 19.6904 4.04372C19.6557 4.03541 19.5986 4.02554 19.5039 4.01768C19.3007 4.00081 19.0289 4 18.585 4H16.415C15.9711 4 15.6993 4.00081 15.4961 4.01768C15.4015 4.02554 15.3443 4.03541 15.3096 4.04372C15.2931 4.04767 15.283 4.05098 15.2775 4.05297ZM16.3783 11H18.6217C19.0173 11 19.3734 11 19.6694 11.0245C19.9866 11.0509 20.3234 11.1105 20.6524 11.2815C21.109 11.5187 21.4813 11.891 21.7185 12.3476C21.8895 12.6766 21.9491 13.0134 21.9755 13.3306C22 13.6266 22 13.9827 22 14.3783V18.6217C22 19.0173 22 19.3734 21.9755 19.6694C21.9491 19.9866 21.8895 20.3234 21.7185 20.6524C21.4813 21.109 21.109 21.4813 20.6524 21.7185C20.3234 21.8895 19.9866 21.9491 19.6694 21.9755C19.3734 22 19.0173 22 18.6217 22H16.3783C15.9827 22 15.6266 22 15.3306 21.9755C15.0134 21.9491 14.6766 21.8895 14.3476 21.7185C13.891 21.4813 13.5187 21.109 13.2815 20.6524C13.1105 20.3234 13.0509 19.9866 13.0245 19.6694C13 19.3734 13 19.0174 13 18.6217V14.3783C13 13.9827 13 13.6266 13.0245 13.3306C13.0509 13.0134 13.1105 12.6766 13.2815 12.3476C13.5187 11.891 13.891 11.5187 14.3476 11.2815C14.6766 11.1105 15.0134 11.0509 15.3306 11.0245C15.6266 11 15.9827 11 16.3783 11ZM15.2775 13.053C15.2723 13.0549 15.27 13.056 15.2695 13.0563C15.1782 13.1037 15.1037 13.1782 15.0563 13.2695C15.056 13.27 15.0549 13.2723 15.053 13.2775C15.051 13.283 15.0477 13.2931 15.0437 13.3096C15.0354 13.3443 15.0255 13.4015 15.0177 13.4961C15.0008 13.6993 15 13.9711 15 14.415V18.585C15 19.0289 15.0008 19.3007 15.0177 19.5039C15.0255 19.5986 15.0354 19.6557 15.0437 19.6904C15.0477 19.7069 15.051 19.717 15.053 19.7225C15.0549 19.7277 15.056 19.73 15.0563 19.7305C15.1037 19.8218 15.1782 19.8963 15.2695 19.9437C15.27 19.944 15.2723 19.9451 15.2775 19.947C15.283 19.949 15.2931 19.9523 15.3096 19.9563C15.3443 19.9646 15.4015 19.9745 15.4961 19.9823C15.6993 19.9992 15.9711 20 16.415 20H18.585C19.0289 20 19.3007 19.9992 19.5039 19.9823C19.5986 19.9745 19.6557 19.9646 19.6904 19.9563C19.7069 19.9523 19.717 19.949 19.7225 19.947C19.7277 19.9451 19.73 19.944 19.7305 19.9437C19.8218 19.8963 19.8963 19.8218 19.9437 19.7305C19.944 19.73 19.9451 19.7277 19.947 19.7225C19.949 19.717 19.9523 19.7069 19.9563 19.6904C19.9646 19.6557 19.9745 19.5986 19.9823 19.5039C19.9992 19.3007 20 19.0289 20 18.585V14.415C20 13.9711 19.9992 13.6993 19.9823 13.4961C19.9745 13.4015 19.9646 13.3443 19.9563 13.3096C19.9523 13.2931 19.949 13.283 19.947 13.2775C19.9451 13.2723 19.944 13.27 19.9437 13.2695C19.8963 13.1782 19.8218 13.1037 19.7305 13.0563C19.73 13.056 19.7277 13.0549 19.7225 13.053C19.717 13.051 19.7069 13.0477 19.6904 13.0437C19.6557 13.0354 19.5986 13.0255 19.5039 13.0177C19.3007 13.0008 19.0289 13 18.585 13H16.415C15.9711 13 15.6993 13.0008 15.4961 13.0177C15.4015 13.0255 15.3443 13.0354 15.3096 13.0437C15.2931 13.0477 15.283 13.051 15.2775 13.053ZM5.37828 15H7.62172C8.01735 15 8.37337 15 8.66942 15.0245C8.98657 15.0509 9.32336 15.1105 9.65244 15.2815C10.109 15.5187 10.4813 15.891 10.7185 16.3476C10.8895 16.6766 10.9491 17.0134 10.9755 17.3306C11 17.6266 11 17.9827 11 18.3783V18.6217C11 19.0174 11 19.3734 10.9755 19.6694C10.9491 19.9866 10.8895 20.3234 10.7185 20.6524C10.4813 21.109 10.109 21.4813 9.65244 21.7185C9.32336 21.8895 8.98657 21.9491 8.66942 21.9755C8.37336 22 8.01733 22 7.62168 22H5.37832C4.98267 22 4.62665 22 4.33059 21.9755C4.01343 21.9491 3.67665 21.8895 3.34757 21.7185C2.89096 21.4813 2.51866 21.109 2.28147 20.6524C2.11052 20.3234 2.05088 19.9866 2.02454 19.6694C1.99996 19.3734 1.99998 19.0173 2 18.6217V18.3783C1.99998 17.9827 1.99996 17.6266 2.02454 17.3306C2.05088 17.0134 2.11052 16.6766 2.28147 16.3476C2.51866 15.891 2.89096 15.5187 3.34757 15.2815C3.67665 15.1105 4.01344 15.0509 4.33059 15.0245C4.62664 15 4.98265 15 5.37828 15ZM4.27752 17.053C4.27226 17.0549 4.27001 17.056 4.26952 17.0563C4.17819 17.1037 4.10373 17.1782 4.0563 17.2695C4.05604 17.27 4.05488 17.2723 4.05297 17.2775C4.05098 17.283 4.04767 17.2931 4.04372 17.3096C4.03541 17.3443 4.02554 17.4015 4.01768 17.4961C4.00081 17.6993 4 17.9711 4 18.415V18.585C4 19.0289 4.00081 19.3007 4.01768 19.5039C4.02554 19.5986 4.03541 19.6557 4.04372 19.6904C4.04767 19.7069 4.05098 19.717 4.05297 19.7225C4.05488 19.7277 4.05604 19.73 4.0563 19.7305C4.10373 19.8218 4.17819 19.8963 4.26952 19.9437C4.27001 19.944 4.27226 19.9451 4.27752 19.947C4.28299 19.949 4.29312 19.9523 4.30961 19.9563C4.34427 19.9646 4.40145 19.9745 4.49611 19.9823C4.69932 19.9992 4.9711 20 5.415 20H7.585C8.02891 20 8.30068 19.9992 8.5039 19.9823C8.59855 19.9745 8.65573 19.9646 8.6904 19.9563C8.70688 19.9523 8.71701 19.949 8.72249 19.947C8.72775 19.9451 8.72999 19.944 8.73049 19.9437C8.82181 19.8963 8.89627 19.8218 8.94371 19.7305C8.94397 19.73 8.94513 19.7277 8.94704 19.7225C8.94903 19.717 8.95234 19.7069 8.95629 19.6904C8.96459 19.6557 8.97446 19.5986 8.98232 19.5039C8.9992 19.3007 9 19.0289 9 18.585V18.415C9 17.9711 8.9992 17.6993 8.98232 17.4961C8.97446 17.4015 8.96459 17.3443 8.95629 17.3096C8.95234 17.2931 8.94903 17.283 8.94704 17.2775C8.94513 17.2723 8.94397 17.27 8.94371 17.2695C8.89627 17.1782 8.82181 17.1037 8.73049 17.0563C8.72999 17.056 8.72775 17.0549 8.72249 17.053C8.71701 17.051 8.70688 17.0477 8.6904 17.0437C8.65574 17.0354 8.59855 17.0255 8.5039 17.0177C8.30068 17.0008 8.02891 17 7.585 17H5.415C4.9711 17 4.69932 17.0008 4.49611 17.0177C4.40145 17.0255 4.34427 17.0354 4.30961 17.0437C4.29312 17.0477 4.28299 17.051 4.27752 17.053Z\" fill=\"#c0c0c0\"/> </g>\r\n</svg>', 'list-aspek', 'listaspek', 9, '2025-01-28 05:03:30', '2025-01-28 05:03:30', NULL),
 ('a6cf6e26-e1ea-4271-9fce-82961f3b5ca7', '3a13cd66-29d4-476e-8398-3fbecbf038df', '', 'Menu', 'menu desc', '<svg width=\"20\" class=\"icon-20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\r\n                                                xmlns=\"http://www.w3.org/2000/svg\">\r\n                                                <path\r\n                                                    d=\"M9.14373 20.7821V17.7152C9.14372 16.9381 9.77567 16.3067 10.5584 16.3018H13.4326C14.2189 16.3018 14.8563 16.9346 14.8563 17.7152V20.7732C14.8562 21.4473 15.404 21.9951 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0007C21.1356 20.3586 21.5 19.4868 21.5 18.5775V9.86585C21.5 9.13139 21.1721 8.43471 20.6046 7.9635L13.943 2.67427C12.7785 1.74912 11.1154 1.77901 9.98539 2.74538L3.46701 7.9635C2.87274 8.42082 2.51755 9.11956 2.5 9.86585V18.5686C2.5 20.4637 4.04738 22 5.95617 22H7.87229C8.19917 22.0023 8.51349 21.8751 8.74547 21.6464C8.97746 21.4178 9.10793 21.1067 9.10792 20.7821H9.14373Z\"\r\n                                                    fill=\"currentColor\"></path>\r\n                                            </svg>', 'menu', 'menu', 2, '2025-01-12 00:15:49', NULL, NULL),
 ('acf5f180-8c43-4795-ad3e-7b32c1307afc', '2d87fa58-a82b-4e24-a8c5-7fd7377b16b8', '', 'Kategori PPKS', 'desc', '<svg fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\">\r\n    <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M7.33049 2.00049H16.6695C20.0705 2.00049 21.9905 3.92949 22.0005 7.33049V16.6705C22.0005 20.0705 20.0705 22.0005 16.6695 22.0005H7.33049C3.92949 22.0005 2.00049 20.0705 2.00049 16.6705V7.33049C2.00049 3.92949 3.92949 2.00049 7.33049 2.00049ZM12.0495 17.8605C12.4805 17.8605 12.8395 17.5405 12.8795 17.1105V6.92049C12.9195 6.61049 12.7705 6.29949 12.5005 6.13049C12.2195 5.96049 11.8795 5.96049 11.6105 6.13049C11.3395 6.29949 11.1905 6.61049 11.2195 6.92049V17.1105C11.2705 17.5405 11.6295 17.8605 12.0495 17.8605ZM16.6505 17.8605C17.0705 17.8605 17.4295 17.5405 17.4805 17.1105V13.8305C17.5095 13.5095 17.3605 13.2105 17.0895 13.0405C16.8205 12.8705 16.4805 12.8705 16.2005 13.0405C15.9295 13.2105 15.7805 13.5095 15.8205 13.8305V17.1105C15.8605 17.5405 16.2195 17.8605 16.6505 17.8605ZM8.21949 17.1105C8.17949 17.5405 7.82049 17.8605 7.38949 17.8605C6.95949 17.8605 6.59949 17.5405 6.56049 17.1105V10.2005C6.53049 9.88949 6.67949 9.58049 6.95049 9.41049C7.21949 9.24049 7.56049 9.24049 7.83049 9.41049C8.09949 9.58049 8.25049 9.88949 8.21949 10.2005V17.1105Z\" fill=\"currentColor\" />', 'kategori-kkps', 'kategorikkps', 6, '2025-01-11 18:02:19', '2025-01-11 18:02:19', NULL),
@@ -1962,9 +1965,9 @@ INSERT INTO `menu` (`id`, `parent_id`, `roles`, `menu`, `description`, `icon`, `
 --
 
 CREATE TABLE `migrations` (
-  `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `batch` int NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1984,9 +1987,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `model_has_permissions` (
-  `permission_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `model_id` bigint UNSIGNED NOT NULL
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1996,9 +1999,9 @@ CREATE TABLE `model_has_permissions` (
 --
 
 CREATE TABLE `model_has_roles` (
-  `role_id` bigint UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `model_id` bigint UNSIGNED NOT NULL
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2007,19 +2010,12 @@ CREATE TABLE `model_has_roles` (
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (4, 'App\\Models\\User', 1),
-(6, 'App\\Models\\User', 1),
-(7, 'App\\Models\\User', 1),
-(8, 'App\\Models\\User', 1),
-(9, 'App\\Models\\User', 1),
 (4, 'App\\Models\\User', 2),
-(9, 'App\\Models\\User', 4),
-(9, 'App\\Models\\User', 6),
+(6, 'App\\Models\\User', 1),
 (6, 'App\\Models\\User', 8),
-(9, 'App\\Models\\User', 8),
 (6, 'App\\Models\\User', 9),
-(9, 'App\\Models\\User', 9),
 (6, 'App\\Models\\User', 10),
-(9, 'App\\Models\\User', 10),
+(7, 'App\\Models\\User', 1),
 (7, 'App\\Models\\User', 11),
 (7, 'App\\Models\\User', 12),
 (7, 'App\\Models\\User', 13),
@@ -2029,6 +2025,13 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (7, 'App\\Models\\User', 17),
 (7, 'App\\Models\\User', 18),
 (7, 'App\\Models\\User', 19),
+(8, 'App\\Models\\User', 1),
+(9, 'App\\Models\\User', 1),
+(9, 'App\\Models\\User', 4),
+(9, 'App\\Models\\User', 6),
+(9, 'App\\Models\\User', 8),
+(9, 'App\\Models\\User', 9),
+(9, 'App\\Models\\User', 10),
 (9, 'App\\Models\\User', 20);
 
 -- --------------------------------------------------------
@@ -2038,8 +2041,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -2050,9 +2053,9 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `permissions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -2064,9 +2067,9 @@ CREATE TABLE `permissions` (
 --
 
 CREATE TABLE `roles` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -2089,8 +2092,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 --
 
 CREATE TABLE `role_has_permissions` (
-  `permission_id` bigint UNSIGNED NOT NULL,
-  `role_id` bigint UNSIGNED NOT NULL
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2100,12 +2103,12 @@ CREATE TABLE `role_has_permissions` (
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_general_ci,
-  `payload` longtext COLLATE utf8mb4_general_ci NOT NULL,
-  `last_activity` int NOT NULL
+  `id` varchar(255) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `payload` longtext NOT NULL,
+  `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2115,12 +2118,12 @@ CREATE TABLE `sessions` (
 --
 
 CREATE TABLE `users` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -2464,37 +2467,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
