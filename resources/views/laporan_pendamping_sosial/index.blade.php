@@ -63,12 +63,17 @@
                             @foreach($data as $dt)
                                 <tr>
                                     <td>{{$no++}}</td>
-                                    <td>{{$dt->kategori}}</td>
-                                    <td>{{$no}}</td>
-                                    <td>{{$no}}</td>
-                                    <td>{{$no}}</td>
-                                    <td>{{$no}}</td>
+                                    <td colspan="5">{{$dt->nama_petugas}}</td>
                                 </tr>
+                                @foreach($dt->ppks as $ppks)
+                                    <tr>
+                                        <td colspan="2">&nbsp;</td>
+                                        <td>{{$ppks->nama_depan." ".$ppks->nama_belakang}}</td>
+                                        <td>{{$ppks->sumber}}</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                         </tbody>
                     </table>

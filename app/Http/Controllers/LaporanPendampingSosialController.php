@@ -57,7 +57,17 @@ class LaporanPendampingSosialController extends Controller
         $bln_awal=$request->bulan_awal ? $request->bulan_awal : date("m");
         $bln_akhr=$request->bulan_akhir ? $request->bulan_akhir : date("m");
         $tahun   =date("Y");
-        $data=[];
+
+        $bln_awal=$request->bulan_awal ? $request->bulan_awal : date("m");
+        $bln_akhr=$request->bulan_akhir ? $request->bulan_akhir : date("m");
+        $tahun   =$request->tahun ? $request->tahun :date("Y");
+
+        $pendamping=Petugas::orderBy("nama_petugas","ASC")->get();
+        foreach($pendamping as $pdp){
+            $pdp->ppks=$this->getPPKS($pdp->id,$bln_awal,$bln_akhr,$tahun);
+        }
+
+        $data=$pendamping;
         return view('laporan_pendamping_sosial.index',\compact('data'))->with('no', 1);
     }
 
@@ -73,8 +83,8 @@ class LaporanPendampingSosialController extends Controller
         // dd($pendamping);
 
         $filename = 'Lap. Dampingan Pendamping Sosia_' . date('Y_m_d_H_i_s') . '.xls';
-        header("Content-Type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=$filename");
+        // header("Content-Type: application/vnd-ms-excel");
+        // header("Content-Disposition: attachment; filename=$filename");
 
 
         echo "<table border='1'>";
