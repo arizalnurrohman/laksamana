@@ -57,7 +57,7 @@ class LaporanPPKSTerminasiController extends Controller
         $bln_awal=$request->bulan_awal ? $request->bulan_awal : date("m");
         $bln_akhr=$request->bulan_akhir ? $request->bulan_akhir : date("m");
         $tahun   =date("Y");
-        
+
         $terminasi=LaporanTerminasi::where("laksa_tr_laporan_terminasi.id","!=",null);
         $terminasi=$terminasi->leftJoin('laksa_tr_layanan', 'laksa_tr_laporan_terminasi.layanan_id', '=', 'laksa_tr_layanan.id');
         $terminasi=$terminasi->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
@@ -111,8 +111,8 @@ class LaporanPPKSTerminasiController extends Controller
                     echo '<td style="text-align:left">'.$row->nama_depan." ".$row->nama_belakang.'</td>';
                     echo '<td style="text-align:left">'.date("d M Y",strtotime($row->tgl_penerimaan)).'</td>';
                     echo '<td style="text-align:left">'.$row->sumber.'</td>';
-                    echo '<td style="text-align:left">'.$row->nik.'</td>';
-                    echo '<td style="text-align:left">'.$row->nokk.'</td>';
+                    echo '<td style="text-align:left">\''.$row->nik.'</td>';
+                    echo '<td style="text-align:left">\''.$row->nokk.'</td>';
                     echo '<td style="text-align:left">'.$row->kategori.'</td>';
                     echo '<td style="text-align:left">'.date("d M Y",strtotime($row->tgl_terminasi)).'</td>';
                 echo '</tr>';
