@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="{{ route('download_laporanpendampingsosial') }}" method="post" class="form-horizontal" id='monitoring-usulan'>
+                <form action="{{ route('post_laporanpendampingsosial') }}" method="post" class="form-horizontal" id='monitoring-usulan'>
                     @csrf
                     <div class="row">
                         @php
@@ -43,7 +43,7 @@
                                 @endfor
                             </select>
                         </div>
-                        <div class="col-md-2 d-grid"><strong></strong><br /><button type="submit" class="btn btn-block btn-primary"> Download</button></div>
+                        <div class="col-md-2 d-grid"><strong></strong><br /><button type="submit" class="btn btn-block btn-primary"> Filter</button></div>
                     </div>
                 </form>
                 <br><br>
