@@ -70,8 +70,8 @@
                                         <td colspan="2">&nbsp;</td>
                                         <td>{{$ppks->nama_depan." ".$ppks->nama_belakang}}</td>
                                         <td>{{$ppks->sumber}}</td>
-                                        <td>-</td>
-                                        <td>-</td>
+                                        <td>{{$ppks->kategori}}</td>
+                                        <td>{{$ppks->subklaster}}</td>
                                     </tr>
                                 @endforeach
                             @endforeach

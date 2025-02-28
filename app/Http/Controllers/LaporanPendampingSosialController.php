@@ -65,7 +65,11 @@ class LaporanPendampingSosialController extends Controller
         $pendamping=Petugas::orderBy("nama_petugas","ASC")->get();
         foreach($pendamping as $pdp){
             $pdp->ppks=$this->getPPKS($pdp->id,$bln_awal,$bln_akhr,$tahun);
+            foreach($pdp->ppks as $ppks_d){
+                $ppks_d->subklaster=$this->kategori_detail($ppks_d->kategori_ppks_json);
+            }
         }
+        // dd($pendamping);
 
         $data=$pendamping;
         return view('laporan_pendamping_sosial.index',\compact('data'))->with('no', 1);
@@ -79,6 +83,9 @@ class LaporanPendampingSosialController extends Controller
         $pendamping=Petugas::orderBy("nama_petugas","ASC")->get();
         foreach($pendamping as $pdp){
             $pdp->ppks=$this->getPPKS($pdp->id,$bln_awal,$bln_akhr,$tahun);
+            foreach($pdp->ppks as $ppks_d){
+                $pdp->ppks->subklaster=$this->kategori_detail($ppks_d->kategori_ppks_json);
+            }
         }
         // dd($pendamping);
 
@@ -130,9 +137,20 @@ class LaporanPendampingSosialController extends Controller
         $data=$data->leftJoin('laksa_tr_layanan', 'laksa_tr_layanan.id', '=', 'laksa_tr_rehabilitasi.residensial_id');
         $data=$data->leftJoin('laksa_ms_ppks', 'laksa_tr_layanan.pasien_id', '=', 'laksa_ms_ppks.id');
         $data=$data->leftJoin('laksa_ms_sumber_rujukan', 'laksa_tr_layanan.sumber_id', '=', 'laksa_ms_sumber_rujukan.id');
+        $data=$data->leftJoin('laksa_ms_kategori_ppks', 'laksa_tr_layanan.kategori_ppks_id', '=', 'laksa_ms_kategori_ppks.id');
         $data=$data->whereRaw('MONTH(tgl_penerimaan) BETWEEN ? AND ?', [$bln_awal, $bln_akhr])->whereRaw('YEAR(tgl_penerimaan) = ?', [$tahun]);
         $data=$data->get();
         // dd($data);
         return $data;
+    }
+
+    public function kategori_detail($json){
+        $json_decode = json_decode($json, true); // Decode sebagai array
+
+        $key = array_keys($json_decode)[0]; // Ambil kunci pertama secara dinamis
+        $value = $json_decode[$key]; // Ambil nilai berdasarkan kunci yang ditemukan
+
+        $sub_klaster=KategoriPPKSSub::where("id",$value)->first();
+        return $sub_klaster->sub_kategori_ppks;
     }
 }
